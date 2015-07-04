@@ -1,0 +1,80 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/base_layout"
+    android:background="@drawable/base_layout_background"
+    android:layout_gravity="center_vertical|center_horizontal"
+    >
+
+    <RelativeLayout
+        android:id="@+id/data_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/data_layout_background"
+    >
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="User Login"
+            android:id="@+id/cap_text"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="#D1DADA"
+            android:background="#05595A"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+
+            android:text="User Name"
+
+            android:background="@drawable/user_name_background"
+            android:singleLine="true"
+            />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:id="@+id/user_icon"
+            android:src="@mipmap/ic_user"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+
+            android:text="Password"
+            android:background="@drawable/user_name_background"
+
+            android:singleLine="true"
+        />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:id="@+id/password_icon"
+            android:src="@mipmap/ic_password"
+            android:layout_alignParentRight="true" />
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:text="Login"
+            android:textColor="#EEF7F6"
+            android:background="@drawable/login_button_selector"
+            android:onClick="clickLoginButton"
+         />
+    </RelativeLayout>
+</RelativeLayout>

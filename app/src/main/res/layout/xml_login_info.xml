@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/xml_login_info">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="code"
+        android:id="@+id/xml_login_code"
+        android:paddingLeft="5dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:id="@+id/xml_login_id"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"
+        android:paddingLeft="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="oridinator"
+        android:id="@+id/xml_login_orididnator"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="descr"
+        android:id="@+id/xml_login_descr"
+        android:layout_gravity="center_horizontal"
+        android:phoneNumber="true"
+        android:paddingLeft="5dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:id="@+id/xml_login_name"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="role"
+            android:id="@+id/xml_login_role"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="company"
+            android:id="@+id/xml_login_company"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="companyID"
+            android:id="@+id/xml_login_company_id"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/button"
+            android:onClick="clickOkButton"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
