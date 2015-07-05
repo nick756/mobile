@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml.xmllogin.Operator;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     private PlaceViews                    pv;
     private FormResizing                  FR;
     private Vocabulary                    voc;// = new Vocabulary();
+    private Parameters                    params;
+    private FileManager                   FM;
 
     private String                        base_url = "http://103.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
 //    private String                        base_url = "http://667.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
@@ -99,6 +103,10 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
         MAIN_INFO = getApplicationContext().getPackageName();
         voc       = new Vocabulary();
+
+        params    = new Parameters();
+        FM        = new FileManager(this);
+        FM.readData(params);
 
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -164,6 +172,10 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                 // todo something
                 return;
             }
+            // debugging for
+            params.getFromXML(xml_login);
+            FM.writeData(params);
+            FM.readData(params);
 
             String code       = xml_login.getCode();
             String id         = xml_login.getId();
@@ -171,10 +183,10 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             String descr      = xml_login.getDescription();
 
             Operator operator = xml_login.getOperator();
-            String name      = "empty";
-            String role      = "empty";
-            String company   = "empty";
-            String companyID = "empty";
+            String name      = "no data";
+            String role      = "no data";
+            String company   = "no data";
+            String companyID = "no data";
 
             if (operator != null) {
                 name       = operator.getName();
@@ -262,6 +274,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
     @Override
     protected void onStop() {
+        FM.writeData(params); // here temporarily, in sake of test
         setAutoOrientationEnabled(autorotation);
         super.onStop();
     }
