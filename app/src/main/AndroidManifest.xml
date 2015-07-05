@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+
 
     <application
         android:allowBackup="true"
@@ -24,6 +29,10 @@
         <activity
             android:name=".xml.xmllogin.XML_Login_Activity"
             android:label="@string/title_activity_xml__login_" >
+        </activity>
+        <activity
+            android:name=".miscellanea.Select_Language"
+            android:label="@string/title_activity_select__language" >
         </activity>
     </application>
 
