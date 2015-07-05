@@ -1,13 +1,11 @@
 package com.nova.sme.sme01;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml.xmllogin.Operator;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login_Activity;
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     private EditText                      password;
     private PlaceViews                    pv;
     private FormResizing                  FR;
+    private Vocabulary                    voc;// = new Vocabulary();
 
     private String                        base_url = "http://103.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
 //    private String                        base_url = "http://667.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
@@ -97,11 +97,11 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         password  = pv.getPassword();
 
 
-        MAIN_INFO    = getApplicationContext().getPackageName();
+        MAIN_INFO = getApplicationContext().getPackageName();
+        voc       = new Vocabulary();
 
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
-
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
             @Override
@@ -189,11 +189,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             String error_message;
             try {
                 // error?
-/*
-1 - Роль пользователя не поддерживается для мобильного интерфейса
-2 - Ошибка аутентификации (имя или пароль не найдены)
-3 - Истекший тайм-аут
-*/
 
                 if (code.equals("0")) {
                     resultIntent = new Intent(base_layout.getContext(), XML_Login_Activity.class);
@@ -213,7 +208,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
                     final Dialog dialog = new Dialog(base_layout.getContext());
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.custom_dialog);
+                    dialog.setContentView(R.layout.login_failed_layout);
                     TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
                     text.setText(error_message);
 
@@ -226,6 +221,9 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                         }
                     });
 
+
+//                    base_layout.getRootView().setBackgroundColor(Color.parseColor("#0000"));
+
                     dialog.show();
                 }
             } catch(Exception err) {
@@ -234,10 +232,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         }
     }//java.lang.RuntimeException: Parcelable encountered IOException writing serializable object (name = com.nova.sme.sme01.CommonClass)
 
-    void showDialog(String message) {
-
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
