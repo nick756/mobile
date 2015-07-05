@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
@@ -102,9 +103,10 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
 
         MAIN_INFO = getApplicationContext().getPackageName();
-        voc       = new Vocabulary();
 
+        voc       = new Vocabulary();
         params    = new Parameters();
+        params.setLangauge(voc.getLanguage());
         FM        = new FileManager(this);
         FM.readData(params);
 
@@ -174,6 +176,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             }
             // debugging for
             params.getFromXML(xml_login);
+            params.setLangauge(voc.getLanguage());
             FM.writeData(params);
             FM.readData(params);
 
@@ -253,6 +256,15 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_language);
+        if (menu != null)
+            voc.change_caption(item);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -261,10 +273,46 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_language) {
+            final Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.activity_select__language);
+
+            final TextView text = (TextView) dialog.findViewById(R.id.select_language);
+            final RadioButton en_rb = (RadioButton) dialog.findViewById(R.id.EngRB);
+            final RadioButton my_rb = (RadioButton) dialog.findViewById(R.id.MalayRB);
+            voc.change_caption(text);
+            voc.change_caption(en_rb);
+            voc.change_caption(my_rb);
+
+            Button dialogButton = (Button) dialog.findViewById(R.id.ok_select_language);
+            voc.change_caption(dialogButton);
+
+            if (voc.getLanguage().equals("EN"))
+                en_rb.setChecked(true);
+            else
+                my_rb.setChecked(true);
+
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (en_rb.isChecked())
+                        voc.setLanguage("EN");
+                    else
+                        voc.setLanguage("MY");
+
+                    set_new_language();
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void set_new_language() {
+ //       MenuItem item = (MenuItem) findViewById(R.id.action_language);
+ //       voc.change_caption(item);
     }
 
     @Override
