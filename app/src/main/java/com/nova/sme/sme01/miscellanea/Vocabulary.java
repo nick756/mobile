@@ -24,9 +24,9 @@ public class Vocabulary {
             {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
             {"Lock Company",                                   "Syarikat Lock"},                // correct
             {"Log Out",                                        "Log Keluar"},                   // correct
-            {"Perform Transaction",                            "Melaksanakan Transaks"},     // correct
-            {"View Transactions",                              "Lihat Transaksi"},           // correct
-            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},// correct
+            {"Perform Transaction",                            "Melaksanakan Transaks"},        // correct
+            {"View Transactions",                              "Lihat Transaksi"},              // correct
+            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
             {"User Name",                                      "Gelaran"},
             {"Password",                                       "Kata laluan"},
             {"Login",                                          "Log Masuk"},
