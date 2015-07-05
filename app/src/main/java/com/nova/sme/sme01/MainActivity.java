@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         user_name = pv.getUserName();
         password  = pv.getPassword();
 
-
         MAIN_INFO = getApplicationContext().getPackageName();
 
         voc       = new Vocabulary();
@@ -229,10 +228,13 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
                     Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
 
+                    voc.change_caption(text);
+                    voc.change_caption(dialogButton);
+
                     dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            dialog.dismiss();
+                        dialog.dismiss();
                         }
                     });
 
@@ -311,8 +313,14 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     }
 
     private void set_new_language() {
- //       MenuItem item = (MenuItem) findViewById(R.id.action_language);
- //       voc.change_caption(item);
+         try {
+            voc.change_caption(pv.getUserName());
+            voc.change_caption(pv.getPassword());
+            voc.change_caption(pv.getCaption());
+            voc.change_caption(pv.getLoginButton());
+        } catch(Exception err) {
+
+        }
     }
 
     @Override
