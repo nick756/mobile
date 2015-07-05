@@ -50,8 +50,10 @@ public class PlaceViews {
 
     void set_parent_margins(float w, float h) {this.width_margin = w;this.height_margin = h;}
 
-    EditText getUserName(){return this.user_name;}
-    EditText getPassword(){return this.password;}
+    public EditText getUserName(){return this.user_name;}
+    public EditText getPassword(){return this.password;}
+    public TextView getCaption() {return caption;}
+    public Button   getLoginButton() {return login_button;}
 
     public void Placing() {
         // DATA_LAYOUT
