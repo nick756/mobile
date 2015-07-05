@@ -8,6 +8,9 @@ package com.nova.sme.sme01.miscellanea;
  **************************************************
  */
 
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,11 +59,24 @@ public class Vocabulary {
     }
 
     public String getEnglish(String malay) {
-        return MalayToEng.get(malay);
+        String ret = MalayToEng.get(malay);
+        if (ret == null)
+            return malay;
+        if (ret.length() == 0)
+            return malay;
+
+        return ret;
     }
 
-    public String getMalay(String malay) {
-        return EngToMalay.get(malay);
+    public String getMalay(String eng) {
+        String ret =  EngToMalay.get(eng);
+        if (ret == null)
+            return eng;
+        if (ret.length() == 0)
+            return eng;
+
+        return ret;
+
     }
 
     public void setLanguage(String lang) {
@@ -68,5 +84,18 @@ public class Vocabulary {
     }
     public String getLanguage() {
         return current_language;
+    }
+
+    public void change_caption(TextView view) {
+        if (getLanguage().equals("MY"))
+            view.setText(getMalay(view.getText().toString()));
+        else
+            view.setText(getEnglish(view.getText().toString()));
+    }
+    public void change_caption(MenuItem item) {
+        if (getLanguage().equals("MY"))
+            item.setTitle(getMalay(item.getTitle().toString()));
+        else
+            item.setTitle(getEnglish(item.getTitle().toString()));
     }
 }
