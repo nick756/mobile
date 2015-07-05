@@ -18,13 +18,16 @@ public class Vocabulary {
 
     private Map<String, String> EngToMalay = new HashMap<String, String>();
     private Map<String, String> MalayToEng = new HashMap<String, String>();
+    private String      current_language   = "EN"; //"MY"
 
     private String arr[][] = {
-            {"Synchronize Operations List", "#Menyegerak Senarai Operasi"},
-            {"Lock Company",                                   "Syarikat Lock"},  // correct
-            {"Lock Company",                                   "Syarikat Lock"},  // correct
-            {"Log Out",                                        "Log Keluar"},     // correct
-            {"User Name",                                      "Gelaran"},        // Google transl
+            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
+            {"Lock Company",                                   "Syarikat Lock"},                // correct
+            {"Log Out",                                        "Log Keluar"},                   // correct
+            {"Perform Transaction",                            "Melaksanakan Transaks"},     // correct
+            {"View Transactions",                              "Lihat Transaksi"},           // correct
+            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},// correct
+            {"User Name",                                      "Gelaran"},
             {"Password",                                       "Kata laluan"},
             {"Login",                                          "Log Masuk"},
             {"User Login",                                     "Log masuk pengguna"},
@@ -33,9 +36,8 @@ public class Vocabulary {
             {"Authentication failed",                          "Pengesahan gagal"},
             {"Timeout is over",                                "Had masa tamat"},
             {"Unknown error",                                  "Ralat tidak diketahui"},
-            {"Perform Transaction",                            "Melaksanakan Transaks"},     // correct
-            {"View Transactions",                              "Lihat Transaksi"},           // correct
-            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},// correct
+            {"English",                                        "Bahasa Inggeris"},
+            {"Malay",                                          "Melayu"},
       };
 
     public Vocabulary() {
@@ -61,4 +63,10 @@ public class Vocabulary {
         return EngToMalay.get(malay);
     }
 
+    public void setLanguage(String lang) {
+        current_language = lang;
+    }
+    public String getLanguage() {
+        return current_language;
+    }
 }
