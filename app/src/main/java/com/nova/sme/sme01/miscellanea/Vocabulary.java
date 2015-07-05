@@ -41,6 +41,8 @@ public class Vocabulary {
             {"Unknown error",                                  "Ralat tidak diketahui"},
             {"English",                                        "Bahasa Inggeris"},
             {"Malay",                                          "Melayu"},
+            {"Ok",                                             "Okey"},
+            {"OK",                                             "OKey"},
       };
 
     public Vocabulary() {
