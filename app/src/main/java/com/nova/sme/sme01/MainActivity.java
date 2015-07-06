@@ -107,9 +107,11 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
         voc       = new Vocabulary();
         params    = new Parameters();
-        params.setLangauge(voc.getLanguage());
         FM        = new FileManager(this);
+
         FM.readData(params);
+        voc.setLanguage(params.getLanguage());
+
 
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -121,6 +123,8 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                 FR.resize_n();
                 pv.set_parent_margins(FR.get_width_margin(), FR.get_height_margin());
                 pv.Placing();
+
+                set_new_language();
             }
         });
     }
@@ -236,13 +240,9 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                     dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                        dialog.dismiss();
+                            dialog.dismiss();
                         }
                     });
-
-
-//                    base_layout.getRootView().setBackgroundColor(Color.parseColor("#0000"));
-
                     dialog.show();
                 }
             } catch(Exception err) {
@@ -270,17 +270,10 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
- //       String hint = password.getHint().toString();
- //       if (hint.equals("scsdfc"))
- //           return false;
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_language) {
+
             final Dialog dialog = new Dialog(this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.activity_select__language);
@@ -338,7 +331,9 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
     @Override
     protected void onStop() {
+        params.setLangauge(voc.getLanguage());
         FM.writeData(params); // here temporarily, in sake of test
+
         setAutoOrientationEnabled(autorotation);
         super.onStop();
     }
