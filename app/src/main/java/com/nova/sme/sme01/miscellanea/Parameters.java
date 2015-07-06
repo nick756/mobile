@@ -17,7 +17,11 @@ import static java.sql.DriverManager.println;
 public class Parameters {
 
     private String language;// EN MY
-    public  String getLanguage() {return this.language;}
+    public  String getLanguage() {
+        if (this.language == null)
+            return "EN";
+        return this.language;
+    }
     public  void setLangauge(String lan) {this.language = lan;}
 
 
