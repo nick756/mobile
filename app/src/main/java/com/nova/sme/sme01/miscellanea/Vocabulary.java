@@ -9,6 +9,7 @@ package com.nova.sme.sme01.miscellanea;
  */
 
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -100,4 +101,12 @@ public class Vocabulary {
         else
             item.setTitle(getEnglish(item.getTitle().toString()));
     }
+
+    public void change_caption(EditText edit) {
+        if (getLanguage().equals("MY"))
+            edit.setHint(getMalay(edit.getHint().toString()));
+        else
+            edit.setHint(getEnglish(edit.getHint().toString()));
+    }
+
 }
