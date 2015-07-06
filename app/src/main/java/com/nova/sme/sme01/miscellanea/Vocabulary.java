@@ -72,17 +72,17 @@ public class Vocabulary {
     }
 
     public String getMalay(String eng) {
-        String ret =  EngToMalay.get(eng);
+        String ret = EngToMalay.get(eng);
         if (ret == null)
             return eng;
         if (ret.length() == 0)
             return eng;
 
         return ret;
-
     }
 
     public void setLanguage(String lang) {
+        if (lang == null) lang = "EN";
         current_language = lang;
     }
     public String getLanguage() {
