@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout"
-        android:background="@drawable/base_layout_background">
+        android:background="@drawable/base_layout_background"
+        android:padding="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +39,11 @@
             android:id="@+id/EngRB"
             android:checked="true"
             android:layout_margin="3dp"
-            android:padding="2dp" />
+            android:textColor="#000000"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -46,7 +51,13 @@
             android:text="Malay"
             android:id="@+id/MalayRB"
             android:layout_margin="3dp"
-            android:padding="2dp" />
+            android:textColor="#000000"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+            />
         </RadioGroup>
 
         <Button
