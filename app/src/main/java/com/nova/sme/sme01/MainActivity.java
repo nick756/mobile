@@ -1,6 +1,7 @@
 package com.nova.sme.sme01;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -273,15 +275,20 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+ //       String hint = password.getHint().toString();
+ //       if (hint.equals("scsdfc"))
+ //           return false;
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_language) {
             final Dialog dialog = new Dialog(this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.activity_select__language);
 
-            final TextView text = (TextView) dialog.findViewById(R.id.select_language);
+            final TextView text     = (TextView)    dialog.findViewById(R.id.select_language);
             final RadioButton en_rb = (RadioButton) dialog.findViewById(R.id.EngRB);
             final RadioButton my_rb = (RadioButton) dialog.findViewById(R.id.MalayRB);
+
             voc.change_caption(text);
             voc.change_caption(en_rb);
             voc.change_caption(my_rb);
@@ -294,18 +301,19 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             else
                 my_rb.setChecked(true);
 
-            dialogButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (en_rb.isChecked())
-                        voc.setLanguage("EN");
-                    else
-                        voc.setLanguage("MY");
+             dialogButton.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     if (en_rb.isChecked())
+                         voc.setLanguage("EN");
+                     else
+                         voc.setLanguage("MY");
 
-                    set_new_language();
-                    dialog.dismiss();
-                }
-            });
+                     set_new_language();
+                     dialog.dismiss();
+                 }
+             });
+
             dialog.show();
             return true;
         }
