@@ -39,8 +39,6 @@ public class FormResizing {
 
     public void resize_n() {
         float action_bar_height = action_bar_height_in_pixels();
-
-
         float width_area  = base_layout.getWidth();  // 1080
         float height_area = base_layout.getHeight(); // 1752
 
