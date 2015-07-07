@@ -9,7 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 
 public class FirstTimeLoginActivity extends AppCompatActivity {
@@ -20,6 +24,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
     private TextView                      role;
     private android.widget.RelativeLayout base_layout;
     private FormResizing                  FR;
+    private Vocabulary                    voc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,24 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         originator.setText(c_c.originator);
         role.setText(c_c.role);
 
-        FR = new FormResizing(this, base_layout);
+        FR  = new FormResizing(this, base_layout);
+        voc = new Vocabulary();
+        voc.setLanguage(c_c.curr_language);
+
+
+        LinearLayout sub_base_id = (LinearLayout) findViewById(R.id.sub_base_id);
+
+        View view;
+        String type, bt = new String("Button");
+
+
+        for (int i = 0; i < sub_base_id.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
+            view = sub_base_id.getChildAt(i);
+            type = view.getClass().getName();
+
+            if (type.substring(type.length() - bt.length()).equals("Button"))
+                voc.change_caption((Button) view);
+        }
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -52,7 +74,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize_n();
-                  }
+            }
         });
 
     }
