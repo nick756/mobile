@@ -1,12 +1,100 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.nova.sme.sme01.RegularLoginActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    tools:context="com.nova.sme.sme01.RegularLoginActivity"
+    android:background="@drawable/base_layout_background"
+    android:id="@+id/base_layout_reg">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/linearLayout2">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/reg_user_name_id"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/reg_company_name_id"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/reg_originator_id"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/reg_role_id"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Perform Transaction"
+        android:id="@+id/reg_perf_trans_id"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/login_button_selector"
+        android:onClick="clickButton" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="View Transactions"
+        android:id="@+id/reg_view_trans_id"
+        android:layout_marginTop="5dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:onClick="clickButton"
+        android:background="@drawable/login_button_selector"
+        android:layout_below="@+id/reg_perf_trans_id" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Synchronize Operations List"
+        android:id="@+id/reg_sop_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:onClick="clickButton"
+        android:background="@drawable/login_button_selector"
+        android:layout_below="@+id/reg_view_trans_id" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:id="@+id/reg_logout_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:onClick="clickButton"
+        android:background="@drawable/login_button_selector"
+        android:layout_below="@+id/reg_sop_id" />
 
 </RelativeLayout>
