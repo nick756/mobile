@@ -32,7 +32,10 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.xml.SimpleXmlHttpMessageConverter;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
 
 import static java.sql.DriverManager.println;
 
@@ -143,25 +146,35 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             new HttpRequestTask().execute();
         }
     }
-
+//http://103.6.239.242:8080/sme/mobile/login/?name=andrea&passw=1234
     private class HttpRequestTask extends AsyncTask<Void, String, XML_Login> {
         @Override
         protected XML_Login doInBackground(Void... params) {
             String error;
 
             XML_Login xml_login;
+            URI uri;// = new URI(login_request);
             try {
-                RestTemplate               restTemplate = new RestTemplate();
-                StringHttpMessageConverter converter    =  new StringHttpMessageConverter();
+                uri = new URI(login_request);
+
+                RestTemplate restTemplate = new RestTemplate();
+                StringHttpMessageConverter converter = new StringHttpMessageConverter();
                 restTemplate.getMessageConverters().add(converter);
 
-                String                        xml           = restTemplate.getForObject(login_request, String.class, "SpringSource");
-                Serializer                    serializer    = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
+//                String xml = restTemplate.getForObject(login_request, String.class, "SpringSource");
+                String xml            = restTemplate.getForObject(uri, String.class);
+                Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
                 xml_login = serializer.read(XML_Login.class, xml);
 
                 return xml_login;
+            } catch (java.net.URISyntaxException e) {
+                error = e.getMessage();
+                Log.e("MainActivity", error, e);
+            } catch (RestClientException e){
+                error = e.getMessage();
+                Log.e("MainActivity", error, e);
             } catch (Exception e) {
                 error = e.getMessage();
                 Log.e("MainActivity", error, e);
@@ -209,7 +222,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             String error_message;
             try {
                 // error?
-
                 if (code.equals("0")) {
                     resultIntent = new Intent(base_layout.getContext(), XML_Login_Activity.class);
                     c_c          = new CommonClass(code, id, originator, descr, name, role, company, companyID);
@@ -240,7 +252,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                     dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            dialog.dismiss();
+                        dialog.dismiss();
                         }
                     });
                     dialog.show();
