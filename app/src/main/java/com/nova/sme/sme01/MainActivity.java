@@ -233,16 +233,11 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                     else
                         resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
 
-                    c_c          = new CommonClass(code, id, originator, descr, name, role, company, companyID);
+                    c_c               = new CommonClass(code, id, originator, descr, name, role, company, companyID);
+                    c_c.curr_language = voc.getLanguage();
                     resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
                     startActivity(resultIntent);
 
-/*
-                    resultIntent = new Intent(base_layout.getContext(), XML_Login_Activity.class);
-                    c_c          = new CommonClass(code, id, originator, descr, name, role, company, companyID);
-                    resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
-                    startActivity(resultIntent);
-*/
                 } else {// everything is ok
                     if (code.equals("1"))
                         error_message = "User's role is not supported for mobile device";
@@ -288,12 +283,24 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_language);
-        if (menu != null)
-            voc.change_caption(item);
-
+        MenuCaptions(menu);
         return super.onPrepareOptionsMenu(menu);
     }
+
+    private void MenuCaptions(Menu menu) {
+        MenuItem item;
+        Menu     inner_menu;
+
+        for (int i = 0; i < menu.size(); i ++) {
+            item = menu.getItem(i);
+            voc.change_caption(item);
+
+            inner_menu = item.getSubMenu();
+            if (inner_menu != null)
+                MenuCaptions(inner_menu);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
