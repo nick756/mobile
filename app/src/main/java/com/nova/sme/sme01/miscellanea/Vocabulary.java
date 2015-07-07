@@ -9,6 +9,7 @@ package com.nova.sme.sme01.miscellanea;
  */
 
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,6 +45,9 @@ public class Vocabulary {
             {"Malay",                                          "Melayu"},
             {"Ok",                                             "Okey"},
             {"OK",                                             "OKey"},
+            {"Settings",                                       "Tetapan"},
+            {"Url Address",                                    "Url Alamat"},
+            {"Color's Themes",                                 "Tema warna ini"},
       };
 
     public Vocabulary() {
@@ -54,10 +58,23 @@ public class Vocabulary {
             if (!EngToMalay.containsKey(key))
                 EngToMalay.put(key, value);
 
+            key   = key.toUpperCase();
+            value = value.toUpperCase();
+            if (!EngToMalay.containsKey(key))
+                EngToMalay.put(key, value);
+
+
+
             key   = arr[i][1];
             value = arr[i][0];
             if (!MalayToEng.containsKey(key))
                 MalayToEng.put(key, value);
+
+            key   = key.toUpperCase();
+            value = value.toUpperCase();
+            if (!EngToMalay.containsKey(key))
+                EngToMalay.put(key, value);
+
         }
     }
 
@@ -107,6 +124,13 @@ public class Vocabulary {
             edit.setHint(getMalay(edit.getHint().toString()));
         else
             edit.setHint(getEnglish(edit.getHint().toString()));
+    }
+
+    public void change_caption(Button bt) {
+        if (getLanguage().equals("MY"))
+            bt.setText(getMalay(bt.getText().toString()));
+        else
+            bt.setText(getEnglish(bt.getText().toString()));
     }
 
 }
