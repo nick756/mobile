@@ -1,10 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.nova.sme.sme01.FirstTimeLoginActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/base_layout_background"
+    tools:context="com.nova.sme.sme01.FirstTimeLoginActivity"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:id="@+id/base_layout_first"
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/linearLayout2"
+        android:baselineAligned="true">
 
         <TextView
             android:layout_width="fill_parent"
@@ -52,33 +55,41 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Synchronize Operations List "
+        android:text="Synchronize Operations List"
         android:id="@+id/sopl_id"
         android:layout_below="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:onClick="clickSynchronizeButton" />
+        android:background="@drawable/login_button_selector"
+        android:onClick="clickButton"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Lock Company "
+        android:text="Lock Company"
         android:id="@+id/lock_company_id"
         android:layout_marginTop="5dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/sopl_id"
-        android:onClick="clickLockButton" />
+        android:background="@drawable/login_button_selector"
+        android:onClick="clickButton"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Log Out "
+        android:text="Log Out"
         android:id="@+id/button2"
         android:layout_below="@+id/lock_company_id"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:onClick="clickLogoutButton" />
+        android:background="@drawable/login_button_selector"
+        android:onClick="clickButton"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 </RelativeLayout>
