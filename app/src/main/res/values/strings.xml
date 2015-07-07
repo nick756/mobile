@@ -5,4 +5,8 @@
     <string name="action_language">Select Language</string>
     <string name="title_activity_xml__login_">XML_Login_Activity</string>
     <string name="title_activity_select__language">Select_Language</string>
+    <string name="title_activity_first_time_login">FirstTimeLoginActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_regular_login">RegularLoginActivity</string>
 </resources>
