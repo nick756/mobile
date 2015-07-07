@@ -44,7 +44,7 @@ public class FileManager {
     }
     public boolean readData(Parameters params) {
         boolean result = true;
-        int     len;
+
         try {
             File file = this.context.getFileStreamPath(file_name);
 
