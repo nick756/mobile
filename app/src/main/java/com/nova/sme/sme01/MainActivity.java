@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     private Parameters                    params;
     private FileManager                   FM;
 
-    private String                        base_url = "http://103.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
+    private String                        base_url = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
 //    private String                        base_url = "http://667.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
 
     private String                        login_request;
-    private String                        debug_request = "http://103.6.239.242:8080/sme/mobile/login/?name=vlad&passw=1234";
+    private String                        debug_request = "http://103.6.239.242:80/sme/mobile/login/?name=vlad&passw=1234";
 
     private boolean                       block_login_button = false;
 
@@ -115,8 +115,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         FM.readData(params);
         voc.setLanguage(params.getLanguage());
 
-
-
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
@@ -144,7 +142,13 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             password.setText("");
             user_name.setText("");
             new HttpRequestTask().execute();
-        }
+        } else { // debugging, temporarily
+            this.login_request = this.base_url + "name=andrea&passw=1234";
+            block_login_button = true;
+            password.setText("");
+            user_name.setText("");
+            new HttpRequestTask().execute();
+         }
     }
 //http://103.6.239.242:8080/sme/mobile/login/?name=andrea&passw=1234
     private class HttpRequestTask extends AsyncTask<Void, String, XML_Login> {
@@ -223,11 +227,22 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             try {
                 // error?
                 if (code.equals("0")) {
-                    resultIntent = new Intent(base_layout.getContext(), XML_Login_Activity.class);
+
+                    if (true)
+                        resultIntent = new Intent(base_layout.getContext(), FirstTimeLoginActivity.class);
+                    else
+                        resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
+
                     c_c          = new CommonClass(code, id, originator, descr, name, role, company, companyID);
                     resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
                     startActivity(resultIntent);
 
+/*
+                    resultIntent = new Intent(base_layout.getContext(), XML_Login_Activity.class);
+                    c_c          = new CommonClass(code, id, originator, descr, name, role, company, companyID);
+                    resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
+                    startActivity(resultIntent);
+*/
                 } else {// everything is ok
                     if (code.equals("1"))
                         error_message = "User's role is not supported for mobile device";
