@@ -1,18 +1,60 @@
 package com.nova.sme.sme01;
 
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 
-public class FirstTimeLoginActivity extends ActionBarActivity {
+public class FirstTimeLoginActivity extends AppCompatActivity {
+
+    private TextView                      user;
+    private TextView                      company_name;
+    private TextView                      originator;
+    private TextView                      role;
+    private android.widget.RelativeLayout base_layout;
+    private FormResizing                  FR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_first_time_login);
+        super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        this.setTitle("First Time Login");
+
+        CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
+
+        base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_first);
+        user         = (TextView) findViewById(R.id.user_name_id);
+        company_name = (TextView) findViewById(R.id.company_name_id);
+        originator   = (TextView) findViewById(R.id.originator_id);
+        role         = (TextView) findViewById(R.id.role_id);
+
+        user.setText(c_c.name);
+        company_name.setText(c_c.company);
+        originator.setText(c_c.originator);
+        role.setText(c_c.role);
+
+        FR = new FormResizing(this, base_layout);
+
+        ViewTreeObserver vto = base_layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                FR.resize_n();
+                  }
+        });
+
     }
 
     @Override
@@ -22,16 +64,9 @@ public class FirstTimeLoginActivity extends ActionBarActivity {
         return true;
     }
 
-    public void clickSynchronizeButton(View v) {
+    public void clickButton(View v) {
 
     }
-    public void clickLockButton(View v) {
-
-    }
-    public void clickLogoutButton(View v) {
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
