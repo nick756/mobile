@@ -14,6 +14,8 @@ import java.io.Serializable;
  */
 
 public class CommonClass implements Serializable {
+    public String curr_language;
+
     public String code;
     public String id;// 3
     public String originator;
