@@ -11,9 +11,12 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+
+import java.util.Vector;
 
 
 public class FirstTimeLoginActivity extends AppCompatActivity {
@@ -22,9 +25,11 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
     private TextView                      company_name;
     private TextView                      originator;
     private TextView                      role;
-    private android.widget.RelativeLayout base_layout;
+    private RelativeLayout                base_layout;
+    private LinearLayout                  sub_base;
     private FormResizing                  FR;
     private Vocabulary                    voc;
+    private Vector<Button>                bt_vector = new <Button>Vector();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_time_login);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        this.setTitle("First Time Login");
+
 
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
 
@@ -52,19 +57,21 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         voc = new Vocabulary();
         voc.setLanguage(c_c.curr_language);
 
+        this.setTitle(voc.change_caption("First Time Login"));
 
-        LinearLayout sub_base_id = (LinearLayout) findViewById(R.id.sub_base_id);
+        sub_base = (LinearLayout) findViewById(R.id.sub_base_id);
 
         View view;
         String type, bt = new String("Button");
 
-
-        for (int i = 0; i < sub_base_id.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
-            view = sub_base_id.getChildAt(i);
+        for (int i = 0; i < sub_base.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
+            view = sub_base.getChildAt(i);
             type = view.getClass().getName();
 
-            if (type.substring(type.length() - bt.length()).equals("Button"))
+            if (type.substring(type.length() - bt.length()).equals("Button")) {
                 voc.change_caption((Button) view);
+                bt_vector.add((Button)view);
+            }
         }
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -72,8 +79,9 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-                base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                FR.resize_n();
+            base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            FR.resize_n();
+            FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
             }
         });
 
