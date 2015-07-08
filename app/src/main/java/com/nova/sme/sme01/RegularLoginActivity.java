@@ -16,6 +16,17 @@ import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import java.util.Vector;
 
+/*
+ **************************************************
+ *                                                *
+ *   Regular login implies that company ID is     *
+ *   already saved locally (smart phone is bound  *
+ *   with a company). Upon successful login,      *
+ *   mobile application shows screen with         *
+ *   options (main menu):                         *
+ *                                                *
+ **************************************************
+ */
 
 public class RegularLoginActivity extends AppCompatActivity {
     private TextView                      user;
