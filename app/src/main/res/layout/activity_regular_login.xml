@@ -24,7 +24,8 @@
             android:id="@+id/reg_user_name_id"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:background="@drawable/ordinary_text_background"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -32,7 +33,8 @@
             android:id="@+id/reg_company_name_id"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:background="@drawable/ordinary_text_background"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -40,7 +42,8 @@
             android:id="@+id/reg_originator_id"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:background="@drawable/ordinary_text_background"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -48,7 +51,8 @@
             android:id="@+id/reg_role_id"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:background="@drawable/ordinary_text_background"/>
 
         <Button
             android:layout_width="fill_parent"
