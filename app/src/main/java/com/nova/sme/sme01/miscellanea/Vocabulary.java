@@ -48,6 +48,10 @@ public class Vocabulary {
             {"Settings",                                       "Tetapan"},
             {"Url Address",                                    "Url Alamat"},
             {"Color's Themes",                                 "Tema warna ini"},
+            {"First Time Login",                               "Login Kali Pertama"},
+            {"Regular Login",                                  "Log Masuk Biasa"},
+//            {"", ""},
+//            {"", ""},
       };
 
     public Vocabulary() {
@@ -131,6 +135,13 @@ public class Vocabulary {
             bt.setText(getMalay(bt.getText().toString()));
         else
             bt.setText(getEnglish(bt.getText().toString()));
+    }
+
+    public String  change_caption(String str) {
+        if (getLanguage().equals("MY"))
+            return getMalay(str);
+        else
+            return str;
     }
 
 }
