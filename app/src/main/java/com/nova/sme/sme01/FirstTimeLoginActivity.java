@@ -18,6 +18,17 @@ import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import java.util.Vector;
 
+/*
+ **************************************************
+ *                                                *
+ *   First time login assumes pre-registration    *
+ *   of User and Business on the server side      *
+ *   before any operations on the mobile          *
+ *   application. MainActivity provides           *
+ *   login's functionality                        *
+ *                                                *
+ **************************************************
+ */
 
 public class FirstTimeLoginActivity extends AppCompatActivity {
 
