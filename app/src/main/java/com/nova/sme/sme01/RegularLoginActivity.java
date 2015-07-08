@@ -7,7 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.nova.sme.sme01.miscellanea.Vocabulary;
+
+import java.util.Vector;
 
 
 public class RegularLoginActivity extends AppCompatActivity {
@@ -15,8 +22,11 @@ public class RegularLoginActivity extends AppCompatActivity {
     private TextView                      company_name;
     private TextView                      originator;
     private TextView                      role;
-    private android.widget.RelativeLayout base_layout;
+    private RelativeLayout                base_layout;
+    private LinearLayout                  sub_base;
     private FormResizing                  FR;
+    private Vocabulary                    voc;
+    private Vector<Button>                bt_vector = new <Button>Vector();
 
 
     @Override
@@ -38,6 +48,26 @@ public class RegularLoginActivity extends AppCompatActivity {
         role.setText(c_c.role);
 
         FR = new FormResizing(this, base_layout);
+        voc = new Vocabulary();
+        voc.setLanguage(c_c.curr_language);
+
+        this.setTitle(voc.change_caption("Regular Login"));
+
+        sub_base = (LinearLayout) findViewById(R.id.sub_base_reg_id);
+
+        View view;
+        String type, bt = new String("Button");
+
+        for (int i = 0; i < sub_base.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
+            view = sub_base.getChildAt(i);
+            type = view.getClass().getName();
+
+            if (type.substring(type.length() - bt.length()).equals("Button")) {
+                voc.change_caption((Button) view);
+                bt_vector.add((Button)view);
+            }
+        }
+
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -46,6 +76,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize_n();
+                FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
             }
         });
 
