@@ -87,7 +87,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Log Out"
-            android:id="@+id/button2"
+            android:id="@+id/log_out_id"
             android:layout_below="@+id/lock_company_id"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
