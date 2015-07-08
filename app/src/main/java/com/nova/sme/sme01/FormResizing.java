@@ -2,12 +2,18 @@ package com.nova.sme.sme01;
 
 //import android.app.Activity;
 import android.app.Activity;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Vector;
 
 
 /*
@@ -38,11 +44,11 @@ public class FormResizing {
 //    }
 
     public void resize_n() {
-        float action_bar_height = action_bar_height_in_pixels();
+//        float action_bar_height = action_bar_height_in_pixels();
         float width_area  = base_layout.getWidth();  // 1080
         float height_area = base_layout.getHeight(); // 1752
 
-        height_area -= action_bar_height;//1696
+        height_area -= (float)(getTitleBarHeight() + getStatusBarHeight());//1696
 
         float height_to_width_etalon_factor = height_virt / width_virt; //1.777777...
         float height_to_width_real_factor = height_area / width_area; //1.47
@@ -72,34 +78,37 @@ public class FormResizing {
     public float get_height_margin() {return this.height_margin;}
     public float get_width_margin()  {return this.width_margin;}
 
-    private int action_bar_height_in_pixels() {
-        int h = 0;
-        int heightInPixels = 0;
-        try {
-            TypedValue tv = new TypedValue();
-            if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-                h = TypedValue.complexToDimensionPixelSize(tv.data, activity.getResources().getDisplayMetrics());
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-
-            float d = displaymetrics.density;
-            heightInPixels = (int) (h / d);
-        } catch (Exception err) {
-            heightInPixels = 0;
-        }
-        return heightInPixels;
+    private int getStatusBarHeight() {
+        Rect r = new Rect();
+        Window w = activity.getWindow();
+        w.getDecorView().getWindowVisibleDisplayFrame(r);
+        return r.top;
     }
 
-    public void resize_indirectly(TextView target, android.widget.RelativeLayout layout, float percent) {
-        if (target == null || layout == null || percent == 0)
-            return;
+    private int getTitleBarHeight() {
+        int viewTop = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        return (viewTop - getStatusBarHeight());
+    }
+    //0.092
+    void resizeFirstRegularLogins(RelativeLayout base_layout, LinearLayout layout, Vector<Button> bt_vector, float factor) {
+        float  total_height = (float)(base_layout.getHeight() - getTitleBarHeight() - getStatusBarHeight()); //770
+        float  sub_height   = (float)layout.getHeight();      //500
+        float  init_factor  = sub_height/total_height;
 
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layout.getLayoutParams();
-        int width = params.width;
+        float new_button_height  = total_height * factor;              //70.84
+        float old_button_height  = (float)bt_vector.elementAt(0).getHeight(); //72
 
-        params = (ViewGroup.MarginLayoutParams) target.getLayoutParams();
-        width = (int)(((float)width)*percent);
-        params.width = width;
+        for (int i = 0; i < bt_vector.size(); i ++)
+            bt_vector.elementAt(i).setHeight((int)new_button_height);
+
+        float incr_height_factor = (new_button_height - old_button_height)*bt_vector.size();
+
+        sub_height += incr_height_factor;//420 - 3.48
+        float x_pad = (total_height - sub_height)/2.0f;
+
+        layout.setPadding(0, (int)x_pad, 0, (int)x_pad);
+
+//        if (init_factor == 0.88776f)return;
+
     }
 }
