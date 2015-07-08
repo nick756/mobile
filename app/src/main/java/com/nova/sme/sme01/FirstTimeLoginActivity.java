@@ -106,7 +106,19 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
     }
 
     public void clickButton(View v) {
+        int id = v.getId();
 
+        switch (id) {
+            case R.id.sopl_id:
+
+                break;
+            case R.id.lock_company_id:
+
+                break;
+            case R.id.log_out_id:
+
+                break;
+         }
     }
 
     @Override
