@@ -85,9 +85,9 @@ public class RegularLoginActivity extends AppCompatActivity {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-                base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                FR.resize_n();
-                FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
+            base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            FR.resize_n();
+            FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
             }
         });
 
@@ -101,7 +101,22 @@ public class RegularLoginActivity extends AppCompatActivity {
     }
 
     public void clickButton(View v) {
+        int id = v.getId();
 
+        switch (id) {
+            case R.id.reg_perf_trans_id:
+
+                break;
+            case R.id.reg_view_trans_id:
+
+                break;
+            case R.id.reg_sop_id:
+
+                break;
+            case R.id.reg_logout_id:
+
+                break;
+        }
     }
 
 
