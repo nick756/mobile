@@ -13,12 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class Vocabulary {
+public class Vocabulary implements Serializable {
     // The list is quiet short so that we use hardcoded info
 
     private Map<String, String> EngToMalay = new HashMap<String, String>();

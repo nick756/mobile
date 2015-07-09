@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     private String                        debug_request = "http://103.6.239.242:80/sme/mobile/login/?name=vlad&passw=1234";
 
     private boolean                       block_login_button = false;
+    private String                        params_file_name   = "parameters.bin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,11 +110,14 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         MAIN_INFO = getApplicationContext().getPackageName();
 
         voc       = new Vocabulary();
-        params    = new Parameters();
+ //       params    = new Parameters();
         FM        = new FileManager(this);
 
-        FM.readData(params);
-        voc.setLanguage(params.getLanguage());
+        params = (Parameters) FM.readFromFile(params_file_name);
+        if (params == null)
+            params = new Parameters();
+ //       FM.readData(params);
+       voc.setLanguage(params.getLanguage());
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -199,8 +203,9 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             // debugging for
             params.getFromXML(xml_login);
             params.setLangauge(voc.getLanguage());
-            FM.writeData(params);
-            FM.readData(params);
+            FM.writeToFile(params_file_name, params);
+//            FM.writeData(params);
+//            FM.readData(params);
 
             String code       = xml_login.getCode();
             String id         = xml_login.getId();
@@ -366,7 +371,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     @Override
     protected void onStop() {
         params.setLangauge(voc.getLanguage());
-        FM.writeData(params); // here temporarily, in sake of test
+        FM.writeToFile(params_file_name, params); // here temporarily, in sake of test
 
         setAutoOrientationEnabled(autorotation);
         super.onStop();

@@ -12,11 +12,13 @@ package com.nova.sme.sme01.miscellanea;
 import com.nova.sme.sme01.xml.xmllogin.Operator;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login;
 
+import java.io.Serializable;
+
 import static java.sql.DriverManager.println;
 
-public class Parameters {
+public class Parameters implements Serializable  {
 
-    private String language;// EN MY
+    private String language = "EN";// EN MY
     public  String getLanguage() {
         if (this.language == null)
             return "EN";
@@ -79,7 +81,7 @@ public class Parameters {
         }
     }
 
-
+/*
     public String getSerializedString() {
         String str = "";
 
@@ -144,16 +146,5 @@ public class Parameters {
 
         return val;
     }
-
-    private AllowedOperations  allowed_operations;
-
-    public Parameters() {
-        allowed_operations = new AllowedOperations();
-
-    }
-
-    private class AllowedOperations {
-
-    }
-
+*/
 }

@@ -47,7 +47,7 @@ public class FileManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();//java.io.NotSerializableException: com.nova.sme.sme01.miscellanea.Parameters$AllowedOperations
         }
         return false;
     }
@@ -70,6 +70,7 @@ public class FileManager {
         }
         return null;
     }
+/*
     public void writeData(Parameters params) {
         try {
             File   file = this.context.getFileStreamPath(file_name);
@@ -121,6 +122,6 @@ public class FileManager {
         }
         return result;
     }
-
+*/
 
 }
