@@ -9,12 +9,19 @@ package com.nova.sme.sme01.miscellanea;
  */
 
 import android.content.Context;
+import android.util.Log;
+
+import com.nova.sme.sme01.transactions.GetOperations;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 
 public class FileManager {
     private Context context;
@@ -23,7 +30,46 @@ public class FileManager {
     public FileManager(Context context) {
         this.context = context;
     }
-    
+
+    public boolean writeToFile(String file_name, Object object){
+        File file;
+        try {
+            file = this.context.getFileStreamPath(file_name);
+
+            if (!file.exists())
+                file.createNewFile();
+
+            FileOutputStream writer = context.openFileOutput(file.getName(), Context.MODE_PRIVATE);
+            ObjectOutputStream oos  = new ObjectOutputStream(writer);
+            oos.writeObject(object);
+            oos.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public Object readFromFile(String file_name){
+        try {
+            FileInputStream fis  = context.openFileInput(file_name);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            Object readObject    = is.readObject();
+            is.close();
+
+            return readObject;
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public void writeData(Parameters params) {
         try {
             File   file = this.context.getFileStreamPath(file_name);

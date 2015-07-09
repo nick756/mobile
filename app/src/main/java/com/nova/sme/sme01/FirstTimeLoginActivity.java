@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.transactions.GetOperations;
 import com.nova.sme.sme01.transactions.Operation;
@@ -27,6 +28,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -58,6 +60,9 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
 
     private boolean                       block_login_button = false;
     private String                        url_request        = "http://103.6.239.242/sme/mobile/getoperations/?";
+    private GetOperations                 operaions_list;
+    private FileManager                   FM;
+
 //    private String                        id;
 //    private String                        companyID;
 
@@ -67,6 +72,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_first_time_login);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        FM = new FileManager(this);
 
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
 
@@ -131,11 +138,13 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
             case R.id.sopl_id:
                 if (block_login_button)
                     return;
-                block_login_button = true;
+                block_login_button  = true;
+                this.operaions_list = null;
                 new HttpRequestTask().execute();
                 break;
             case R.id.lock_company_id:
-
+                if (this.operaions_list != null)
+                    lock_list();
                 break;
             case R.id.log_out_id:
 
@@ -187,25 +196,45 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
                 return;
             }
 
-//            SupportedOperations so;
-            List<Operation>     list;
-
-
-            try {
-                list = xml_operation_list.getOperationsList();
-                if (list == null) {
-                    // do something
-                    return;
-                }
-
-
-
-            } catch(Exception err) {
-                println (err.getMessage().toString());
-            }
+            implementXMLRespond(xml_operation_list);
         }
-    }//java.lang.RuntimeException: Parcelable encountered IOException writing serializable object (name = com.nova.sme.sme01.CommonClass)
+    }
 
+    private void implementXMLRespond(GetOperations xml_operation_list) {
+        this.operaions_list = new GetOperations(xml_operation_list);
+
+        ArrayList<Operation> list;
+        int                  size;
+
+        String ss;
+        try {
+            list = this.operaions_list.getOperationsList();
+
+            if (list == null) {
+                // do something
+                return;
+            }
+        } catch(Exception err) {
+            println (err.getMessage().toString());
+        }
+    }
+
+    private void lock_list() {
+        GetOperations local;
+
+       if (FM.writeToFile("operations_list.bin", this.operaions_list)) {
+           local = (GetOperations) FM.readFromFile("operations_list.bin");
+
+           // compare
+           if (!local.equals(this.operaions_list))
+               println("error");
+
+       } else {
+           // error writing a file
+
+       }
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
