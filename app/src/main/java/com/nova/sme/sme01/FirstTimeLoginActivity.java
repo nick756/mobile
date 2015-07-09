@@ -1,9 +1,10 @@
 package com.nova.sme.sme01;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.ActionBarActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+import com.nova.sme.sme01.transactions.GetOperations;
+import com.nova.sme.sme01.transactions.Operation;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.xml.SimpleXmlHttpMessageConverter;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+import java.util.List;
 import java.util.Vector;
+
+import static java.sql.DriverManager.println;
 
 /*
  **************************************************
@@ -42,6 +56,11 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
     private Vocabulary                    voc;
     private Vector<Button>                bt_vector = new <Button>Vector();
 
+    private boolean                       block_login_button = false;
+    private String                        url_request        = "http://103.6.239.242/sme/mobile/getoperations/?";
+//    private String                        id;
+//    private String                        companyID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +68,9 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_time_login);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
-
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
+
+        url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
 
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_first);
         user         = (TextView) findViewById(R.id.user_name_id);
@@ -110,7 +129,10 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.sopl_id:
-
+                if (block_login_button)
+                    return;
+                block_login_button = true;
+                new HttpRequestTask().execute();
                 break;
             case R.id.lock_company_id:
 
@@ -120,6 +142,70 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
                 break;
          }
     }
+
+    private class HttpRequestTask extends AsyncTask<Void, String, GetOperations> {
+        @Override
+        protected GetOperations doInBackground(Void... params) {
+            String error;
+
+            GetOperations xml_operaions_list;
+            URI uri;
+            try {
+                uri = new URI(url_request);
+
+                RestTemplate restTemplate = new RestTemplate();
+                StringHttpMessageConverter converter = new StringHttpMessageConverter();
+                restTemplate.getMessageConverters().add(converter);
+
+                String xml            = restTemplate.getForObject(uri, String.class);
+                Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
+                SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
+
+                xml_operaions_list = serializer.read(GetOperations.class, xml);
+
+                return xml_operaions_list;
+            } catch (java.net.URISyntaxException e) {
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
+            } catch (RestClientException e){
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
+            } catch (Exception e) {
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
+            }
+
+            return null;
+        }
+        //Element 'operation' does not have a match in class com.nova.sme.sme01.transactions.SupportedOperations at line 1
+
+        @Override
+        protected void onPostExecute(GetOperations xml_operation_list) {
+            block_login_button = false;
+            if (xml_operation_list == null) {
+                // todo something
+                return;
+            }
+
+//            SupportedOperations so;
+            List<Operation>     list;
+
+
+            try {
+                list = xml_operation_list.getOperationsList();
+                if (list == null) {
+                    // do something
+                    return;
+                }
+
+
+
+            } catch(Exception err) {
+                println (err.getMessage().toString());
+            }
+        }
+    }//java.lang.RuntimeException: Parcelable encountered IOException writing serializable object (name = com.nova.sme.sme01.CommonClass)
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
