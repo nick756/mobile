@@ -1,18 +1,24 @@
 package com.nova.sme.sme01;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
@@ -50,9 +56,10 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
 
     private TextView                      user;
     private TextView                      company_name;
-    private TextView                      originator;
+//    private TextView                      originator;
     private TextView                      role;
     private RelativeLayout                base_layout;
+//    private LinearLayout                  base_layout;//base_layout_first_n;
     private LinearLayout                  sub_base;
     private FormResizing                  FR;
     private Vocabulary                    voc;
@@ -80,14 +87,15 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
 
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_first);
+
         user         = (TextView) findViewById(R.id.user_name_id);
         company_name = (TextView) findViewById(R.id.company_name_id);
-        originator   = (TextView) findViewById(R.id.originator_id);
+//        originator   = (TextView) findViewById(R.id.originator_id);
         role         = (TextView) findViewById(R.id.role_id);
 
         user.setText(c_c.name);
         company_name.setText(c_c.company);
-        originator.setText(c_c.originator);
+//        originator.setText(c_c.originator);
         role.setText(c_c.role);
 
         FR  = new FormResizing(this, base_layout);
@@ -118,7 +126,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
             public void onGlobalLayout() {
             base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             FR.resize_n();
-            FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
+//            FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
             }
         });
 
@@ -201,6 +209,41 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
     }
 
     private void implementXMLRespond(GetOperations xml_operation_list) {
+        String code = xml_operation_list.getCode();
+        String error;
+        if (!code.equals("0")) {
+            if (code.equals("1"))
+                error = "Mismatching Company ID";
+            else if (code.equals("2"))
+                error = "Authentication failed";
+            else if (code.equals("3"))
+                error = "Session expired";
+            else
+                error = code + " - unknown error";
+
+            final Dialog dialog = new Dialog(base_layout.getContext());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.login_failed_layout);
+            TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
+            text.setText(error);
+
+            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+
+            voc.change_caption(text);
+            voc.change_caption(dialogButton);
+
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+
+            return;
+        }
+
+
         this.operaions_list = new GetOperations(xml_operation_list);
 
         ArrayList<Operation> list;
@@ -214,8 +257,49 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
                 // do something
                 return;
             }
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            size = list.size();
+            LinearLayout sv = (LinearLayout) findViewById(R.id.op_list_scrollView);
+            sv.removeAllViews();
+            Operation operation;
+
+            TextView  code_operation = (TextView)  findViewById(R.id.code_operation);
+            TextView  name_operation = (TextView)  findViewById(R.id.name_opeartion);
+            TextView  type_operation = (TextView)  findViewById(R.id.type_operation);
+            ImageView inbound        = (ImageView) findViewById(R.id.inbound_icon);
+            ImageView outbound       = (ImageView) findViewById(R.id.out_bound_icon);
+            for (int i = 0; i < size; i ++) {
+                operation = list.get(i);
+                if (operation.getInbound().equals("true")) {
+//                    inbound.setBackgroundResource(R.id);
+                } else {
+
+                }
+                if (operation.getOutbound().equals("true")) {
+
+                } else {
+
+                }
+                code_operation.setText(operation.getCode());
+                name_operation.setText(operation.getName());
+                type_operation.setText(operation.getType());
+
+
+                LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.operations_template, null);
+                sv.addView(ll);
+            }
+            //@mipmap/ic_checked
+            //@mipmap/ic_uncheck
+            /*
+            out_bound_icon
+            inbound_icon
+            code_operation
+            name_opeartion
+            type_operation
+             */
         } catch(Exception err) {
-            println (err.getMessage().toString());
+            println (err.getMessage().toString());//java.lang.IllegalStateException: ScrollView can host only one direct child
         }
     }
 

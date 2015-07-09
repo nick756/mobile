@@ -51,8 +51,9 @@ public class Vocabulary implements Serializable {
             {"Color's Themes",                                 "Tema warna ini"},
             {"First Time Login",                               "Login Kali Pertama"},
             {"Regular Login",                                  "Log Masuk Biasa"},
-//            {"", ""},
-//            {"", ""},
+            {"Mismatching Company ID",                         "Syarikat yang tidak sepadan ID"},
+            {"Authentication failed",                          "Pengesahan gagal"},
+            {"Session expired",                                "Sesi tamat"},
       };
 
     public Vocabulary() {
