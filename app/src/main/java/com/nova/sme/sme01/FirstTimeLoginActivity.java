@@ -1,7 +1,6 @@
 package com.nova.sme.sme01;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
@@ -35,7 +33,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -52,15 +49,13 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 
-public class FirstTimeLoginActivity extends AppCompatActivity {
+public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
 
     private TextView                      user;
     private TextView                      company_name;
-//    private TextView                      originator;
     private TextView                      role;
     private RelativeLayout                base_layout;
-//    private LinearLayout                  base_layout;//base_layout_first_n;
-    private LinearLayout                  sub_base;
+    private LinearLayout                  buttons_set;
     private FormResizing                  FR;
     private Vocabulary                    voc;
     private Vector<Button>                bt_vector = new <Button>Vector();
@@ -70,13 +65,19 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
     private GetOperations                 operaions_list;
     private FileManager                   FM;
 
-//    private String                        id;
-//    private String                        companyID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        try {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+ //           requestWindowFeature(Window.FEATURE_NO_TITLE);
+        } catch(Exception err) {
+            println(err.getMessage().toString());
+        }
+ //       final ActionBar bar = getSupportActionBar();
+ //       bar.setDisplayShowTitleEnabled(false);
+
         setContentView(R.layout.activity_first_time_login);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -104,13 +105,13 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
 
         this.setTitle(voc.change_caption("First Time Login"));
 
-        sub_base = (LinearLayout) findViewById(R.id.sub_base_id);
+        buttons_set = (LinearLayout) findViewById(R.id.buttons_set);
 
         View view;
         String type, bt = new String("Button");
 
-        for (int i = 0; i < sub_base.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
-            view = sub_base.getChildAt(i);
+        for (int i = 0; i < buttons_set.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
+            view = buttons_set.getChildAt(i);
             type = view.getClass().getName();
 
             if (type.substring(type.length() - bt.length()).equals("Button")) {
@@ -125,8 +126,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
             @Override
             public void onGlobalLayout() {
             base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-            FR.resize_n();
-//            FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
+            FR.resize();
+            FR.resizeFirstRegularLogins(base_layout, bt_vector, 0.062f);// height's button/total_height
             }
         });
 
@@ -143,18 +144,18 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
         int id = v.getId();
 
         switch (id) {
-            case R.id.sopl_id:
+            case R.id.synchronize_operation_list:
                 if (block_login_button)
                     return;
                 block_login_button  = true;
                 this.operaions_list = null;
                 new HttpRequestTask().execute();
                 break;
-            case R.id.lock_company_id:
+            case R.id.lock_company:
                 if (this.operaions_list != null)
                     lock_list();
                 break;
-            case R.id.log_out_id:
+            case R.id.logout_id:
 
                 break;
          }
@@ -243,64 +244,69 @@ public class FirstTimeLoginActivity extends AppCompatActivity {
             return;
         }
 
-
         this.operaions_list = new GetOperations(xml_operation_list);
 
         ArrayList<Operation> list;
-        int                  size;
-
-        String ss;
         try {
             list = this.operaions_list.getOperationsList();
 
-            if (list == null) {
-                // do something
+            if (list == null)
                 return;
-            }
+
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-
-            size = list.size();
-            LinearLayout sv = (LinearLayout) findViewById(R.id.op_list_scrollView);
+            LinearLayout   sv       = (LinearLayout) findViewById(R.id.op_list_scrollView);
             sv.removeAllViews();
-            Operation operation;
 
-            TextView  code_operation = (TextView)  findViewById(R.id.code_operation);
-            TextView  name_operation = (TextView)  findViewById(R.id.name_opeartion);
-            TextView  type_operation = (TextView)  findViewById(R.id.type_operation);
-            ImageView inbound        = (ImageView) findViewById(R.id.inbound_icon);
-            ImageView outbound       = (ImageView) findViewById(R.id.out_bound_icon);
-            for (int i = 0; i < size; i ++) {
-                operation = list.get(i);
-                if (operation.getInbound().equals("true")) {
-//                    inbound.setBackgroundResource(R.id);
-                } else {
-
-                }
-                if (operation.getOutbound().equals("true")) {
-
-                } else {
-
-                }
-                code_operation.setText(operation.getCode());
-                name_operation.setText(operation.getName());
-                type_operation.setText(operation.getType());
-
-
+            for (int i = 0; i < list.size(); i ++) {
                 LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.operations_template, null);
                 sv.addView(ll);
+                setValues(ll, list.get(i));
             }
-            //@mipmap/ic_checked
-            //@mipmap/ic_uncheck
-            /*
-            out_bound_icon
-            inbound_icon
-            code_operation
-            name_opeartion
-            type_operation
-             */
         } catch(Exception err) {
-            println (err.getMessage().toString());//java.lang.IllegalStateException: ScrollView can host only one direct child
+            println (err.getMessage().toString());
         }
+    }
+
+    void setValues(LinearLayout layout, Operation operation) {
+        View         view;
+        LinearLayout inner_layout;
+        String       tag;
+        TextView     text;
+        ImageView    img;
+        for (int i = 0; i < layout.getChildCount(); i ++) {
+            inner_layout = (LinearLayout) layout.getChildAt(i);
+            for (int j = 0; j < inner_layout.getChildCount(); j ++) {
+                view = inner_layout.getChildAt(j);
+                tag  = (String) view.getTag();
+                if (tag != null) {
+                    if (tag.equals("code")) {
+                        text = (TextView) view;
+                        text.setText(operation.getCode());
+                    } else if (tag.equals("name")) {
+                        text = (TextView) view;
+                        text.setText(operation.getName());
+                    } else if (tag.equals("inbound")) {
+                        img = (ImageView) view;//R.drawable.someImageId
+                        if (operation.getInbound().equals("true"))
+                            img.setImageResource(R.mipmap.ic_checked);
+                        else
+                            img.setImageResource(R.mipmap.ic_uncheck);
+                    } else if (tag.equals("outbound")) {
+                        img = (ImageView) view;
+                        if (operation.getOutbound().equals("true"))
+                            img.setImageResource(R.mipmap.ic_checked);
+                        else
+                            img.setImageResource(R.mipmap.ic_uncheck);
+                    } else if (tag.equals("type")) {
+                        text = (TextView) view;
+                        text.setText(operation.getType());
+                    }
+                }
+            }
+
+        }
+
+
     }
 
     private void lock_list() {

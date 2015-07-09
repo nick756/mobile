@@ -25,7 +25,7 @@ import java.util.Vector;
  */
 
 public class FormResizing {
-    private AppCompatActivity activity;
+    private Activity/*AppCompatActivity*/ activity;
     private android.widget.RelativeLayout base_layout;
 
  //   private int   base_height = 0;
@@ -34,17 +34,12 @@ public class FormResizing {
     private float   width_margin   = 0.0f;
     private float   height_margin  = 0.0f;
 
-    public FormResizing(AppCompatActivity activity, RelativeLayout base_layout) {
+    public FormResizing(/*AppCompatActivity*/Activity activity, RelativeLayout base_layout) {
         this.base_layout = base_layout;
         this.activity = activity;
     }
 
-//    public int getBaseHeight() {
-//        return this.base_height;
-//    }
-
-    public void resize_n() {
-//        float action_bar_height = action_bar_height_in_pixels();
+    public void resize() {
         float width_area  = base_layout.getWidth();  // 1080
         float height_area = base_layout.getHeight(); // 1752
 
@@ -87,29 +82,17 @@ public class FormResizing {
 
     private int getTitleBarHeight() {
         int viewTop = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        return (viewTop - getStatusBarHeight());
+        int height  = (viewTop - getStatusBarHeight());
+        return height;
     }
     //0.092
-    void resizeFirstRegularLogins(RelativeLayout base_layout, LinearLayout layout, Vector<Button> bt_vector, float factor) {
-        float  total_height = (float)(base_layout.getHeight() - getTitleBarHeight() - getStatusBarHeight()); //770
-        float  sub_height   = (float)layout.getHeight();      //500
-        float  init_factor  = sub_height/total_height;
-
-        float new_button_height  = total_height * factor;              //70.84
-        float old_button_height  = (float)bt_vector.elementAt(0).getHeight(); //72
+    void resizeFirstRegularLogins(RelativeLayout base_layout, Vector<Button> bt_vector, float factor) {
+        int    viewTop            = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        float  total_height       = (float)(base_layout.getHeight() - viewTop);//getTitleBarHeight() - getStatusBarHeight()); //770
+        float  new_button_height  = total_height * factor;              //70.84
 
         for (int i = 0; i < bt_vector.size(); i ++)
             bt_vector.elementAt(i).setHeight((int)new_button_height);
-
-        float incr_height_factor = (new_button_height - old_button_height)*bt_vector.size();
-
-        sub_height += incr_height_factor;//420 - 3.48
-        float x_pad = (total_height - sub_height)/2.0f;
-
-        layout.setPadding(0, (int)x_pad, 0, (int)x_pad);
-
-//        if (init_factor == 0.88776f)return;
-
     }
 
 

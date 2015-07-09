@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             @Override
             public void onGlobalLayout() {
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                FR.resize_n();
+                FR.resize();
                 pv.set_parent_margins(FR.get_width_margin(), FR.get_height_margin());
                 pv.Placing();
 

@@ -31,10 +31,10 @@ import java.util.Vector;
 public class RegularLoginActivity extends AppCompatActivity {
     private TextView                      user;
     private TextView                      company_name;
-    private TextView                      originator;
     private TextView                      role;
     private RelativeLayout                base_layout;
-    private LinearLayout                  sub_base;
+    private LinearLayout                  buttons_set;
+//    private LinearLayout                  sub_base;
     private FormResizing                  FR;
     private Vocabulary                    voc;
     private Vector<Button>                bt_vector = new <Button>Vector();
@@ -43,19 +43,17 @@ public class RegularLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regular_login);
+        setContentView(R.layout.regular_login);
 
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
 
-        base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_reg);
+        base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_regular);
         user         = (TextView) findViewById(R.id.reg_user_name_id);
         company_name = (TextView) findViewById(R.id.reg_company_name_id);
-        originator   = (TextView) findViewById(R.id.reg_originator_id);
-        role         = (TextView) findViewById(R.id.reg_role_id);
+          role         = (TextView) findViewById(R.id.reg_role_id);
 
         user.setText(c_c.name);
         company_name.setText(c_c.company);
-        originator.setText(c_c.originator);
         role.setText(c_c.role);
 
         FR = new FormResizing(this, base_layout);
@@ -63,14 +61,13 @@ public class RegularLoginActivity extends AppCompatActivity {
         voc.setLanguage(c_c.curr_language);
 
         this.setTitle(voc.change_caption("Regular Login"));
-
-        sub_base = (LinearLayout) findViewById(R.id.sub_base_reg_id);
+        buttons_set = (LinearLayout) findViewById(R.id.reg_buttons_set);
 
         View view;
         String type, bt = new String("Button");
 
-        for (int i = 0; i < sub_base.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
-            view = sub_base.getChildAt(i);
+        for (int i = 0; i < buttons_set.getChildCount(); i ++) {//android.support.v7.widget.AppCompatButton
+            view = buttons_set.getChildAt(i);
             type = view.getClass().getName();
 
             if (type.substring(type.length() - bt.length()).equals("Button")) {
@@ -86,8 +83,8 @@ public class RegularLoginActivity extends AppCompatActivity {
             @Override
             public void onGlobalLayout() {
             base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-            FR.resize_n();
-            FR.resizeFirstRegularLogins(base_layout, sub_base, bt_vector, 0.092f);// height's button/total_height
+            FR.resize();
+            FR.resizeFirstRegularLogins(base_layout, bt_vector, 0.062f);// height's button/total_height
             }
         });
 
@@ -104,16 +101,16 @@ public class RegularLoginActivity extends AppCompatActivity {
         int id = v.getId();
 
         switch (id) {
-            case R.id.reg_perf_trans_id:
+            case R.id.perform_transaction:
 
                 break;
-            case R.id.reg_view_trans_id:
+            case R.id.view_transactions:
 
                 break;
-            case R.id.reg_sop_id:
+            case R.id.synch_oper_list:
 
                 break;
-            case R.id.reg_logout_id:
+            case R.id.reg_log_out_id:
 
                 break;
         }
