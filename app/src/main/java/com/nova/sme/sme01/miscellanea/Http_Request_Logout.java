@@ -79,14 +79,16 @@ public class Http_Request_Logout {
 
         @Override
         protected void onPostExecute(BaseXML xml_logout) {
-//            block_button = false;
+            boolean ok = false;
             if (xml_logout != null) {
                 if (xml_logout.getCode().equals("0")) {
+                    ok = true;
                     // erase the file and go to the first page
                     //"parameters.bin";
                     //operations_list.bin
                     FM.deleteFile("parameters.bin");
                     FM.deleteFile("operations_list.bin");
+
                     if (by_finish) {
                         activity.finish();//goto main view
                     } else {
@@ -94,7 +96,8 @@ public class Http_Request_Logout {
                     }
                 }
             }
-            my_dialog.show("Error occured");
+            if (!ok)
+                my_dialog.show("Error occured");
         }
     }
 }
