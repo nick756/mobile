@@ -9,6 +9,7 @@ package com.nova.sme.sme01.miscellanea;
  **************************************************
  */
 
+import com.nova.sme.sme01.CommonClass;
 import com.nova.sme.sme01.xml.xmllogin.Operator;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login;
 
@@ -79,6 +80,16 @@ public class Parameters implements Serializable  {
             this.company   = "no data";
             this.companyID = "no data";
         }
+    }
+    public void getFromCommonClass(CommonClass c_c){
+        this.setId(c_c.id);
+        this.setOrdinator(c_c.originator);
+        this.setDescription(c_c.descr);
+        this.setName(c_c.name);
+        this.setRole(c_c.role);
+        this.setCompany(c_c.company);
+        this.setcompanyID(c_c.companyID);
+        this.setLangauge(c_c.curr_language);
     }
 
 /*

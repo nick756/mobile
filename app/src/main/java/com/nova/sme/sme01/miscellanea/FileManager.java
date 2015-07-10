@@ -52,7 +52,13 @@ public class FileManager {
         return false;
     }
     public Object readFromFile(String file_name){
+        File file;
         try {
+
+            file = this.context.getFileStreamPath(file_name);//data/data/com.nova.sme.sme01/files/parameters.bin
+            if (!file.exists())                              //data/data/com.nova.sme.sme01/files/parameters.bin
+                return null;
+
             FileInputStream fis  = context.openFileInput(file_name);
             ObjectInputStream is = new ObjectInputStream(fis);
             Object readObject    = is.readObject();
@@ -80,7 +86,9 @@ public class FileManager {
                 return false;
 
             file.delete();
-            return true;
+
+            return !file.exists();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+import com.nova.sme.sme01.transactions.GetOperations;
 import com.nova.sme.sme01.xml.xmllogin.Operator;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login;
 import com.nova.sme.sme01.xml.xmllogin.XML_Login_Activity;
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             // debugging for
             params.getFromXML(xml_login);
             params.setLangauge(voc.getLanguage());
-            FM.writeToFile(params_file_name, params);
+//            FM.writeToFile(params_file_name, params);
 
             String code       = xml_login.getCode();
             String id         = xml_login.getId();
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                 // error?
                 if (code.equals("0")) {
 
-                    if (true)
+                    if (isFirstLogin())
                         resultIntent = new Intent(base_layout.getContext(), FirstTimeLoginActivity.class);
                     else
                         resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
@@ -240,7 +241,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                     c_c.curr_language = voc.getLanguage();
                     resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
                     startActivity(resultIntent);
-
                 } else {// everything is ok
                     if (code.equals("1"))
                         error_message = "User's role is not supported for mobile device";
@@ -276,6 +276,14 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         }
     }//java.lang.RuntimeException: Parcelable encountered IOException writing serializable object (name = com.nova.sme.sme01.CommonClass)
 
+    private boolean isFirstLogin() {
+        // criteria is if we have operations list
+        GetOperations local = (GetOperations) FM.readFromFile("operations_list.bin");
+        if (local == null)
+            return true;
+        return local.getOperationsList().size() == 0;
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -334,13 +342,13 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
              dialogButton.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     if (en_rb.isChecked())
-                         voc.setLanguage("EN");
-                     else
-                         voc.setLanguage("MY");
+                 if (en_rb.isChecked())
+                     voc.setLanguage("EN");
+                 else
+                     voc.setLanguage("MY");
 
-                     set_new_language();
-                     dialog.dismiss();
+                 set_new_language();
+                 dialog.dismiss();
                  }
              });
 
@@ -356,6 +364,8 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             voc.change_caption(pv.getPassword());
             voc.change_caption(pv.getCaption());
             voc.change_caption(pv.getLoginButton());
+
+            params.setLangauge(voc.getLanguage());
         } catch(Exception err) {
 
         }
@@ -369,7 +379,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     @Override
     protected void onStop() {
         params.setLangauge(voc.getLanguage());
-        FM.writeToFile(params_file_name, params); // here temporarily, in sake of test
+//        FM.writeToFile(params_file_name, params); // here temporarily, in sake of test
 
         setAutoOrientationEnabled(autorotation);
         super.onStop();
