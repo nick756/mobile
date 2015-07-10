@@ -30,17 +30,18 @@ import static java.sql.DriverManager.println;
  */
 public class FillWithOperationsList {
     public FillWithOperationsList(Activity activity, GetOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
+        MyDialog my_dialog = new MyDialog(voc, base_layout);
 
         ArrayList<Operation> list;
         try {
             list = operations.getOperationsList();
 
             if (list == null) {
-                dialog("Operations List is empty", voc, base_layout);
+                my_dialog.show("Operations List is empty");
                 return;
             }
             if (list.size() == 0) {
-                dialog("Operations List is empty", voc, base_layout);
+                my_dialog.show("Operations List is empty");
                 return;
             }
 
@@ -96,27 +97,4 @@ public class FillWithOperationsList {
             }
         }
     }
-
-
-    private void dialog(String message, Vocabulary voc, RelativeLayout base_layout) {
-        final Dialog dialog = new Dialog(base_layout.getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.login_failed_layout);
-        TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
-        text.setText(message);
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-        voc.change_caption(text);
-        voc.change_caption(dialogButton);
-
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
 }

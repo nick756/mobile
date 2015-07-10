@@ -28,6 +28,7 @@ public class Http_Request_Logout {
     private FileManager    FM;
     private boolean        by_finish;
     private Activity       activity;
+    private MyDialog       my_dialog;
 
     public Http_Request_Logout(Activity activity, String url_logout, FileManager FM, Vocabulary voc, RelativeLayout base_layout, boolean by_finish) {
         this.activity    = activity;
@@ -36,6 +37,8 @@ public class Http_Request_Logout {
         this.base_layout = base_layout;
         this.FM          = FM;
         this.by_finish   = by_finish;
+
+        my_dialog        = new MyDialog(voc, base_layout);
 
         new HttpRequestLogout().execute();
     }
@@ -91,29 +94,7 @@ public class Http_Request_Logout {
                     }
                 }
             }
-            dialog("Error occured", voc, base_layout);
+            my_dialog.show("Error occured");
         }
     }
-    private void dialog(String message, Vocabulary voc, RelativeLayout base_layout) {
-        final Dialog dialog = new Dialog(base_layout.getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.login_failed_layout);
-        TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
-        text.setText(message);
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-        voc.change_caption(text);
-        voc.change_caption(dialogButton);
-
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-
 }
