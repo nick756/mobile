@@ -204,8 +204,6 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             params.getFromXML(xml_login);
             params.setLangauge(voc.getLanguage());
             FM.writeToFile(params_file_name, params);
-//            FM.writeData(params);
-//            FM.readData(params);
 
             String code       = xml_login.getCode();
             String id         = xml_login.getId();

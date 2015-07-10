@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.BaseXML;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.transactions.GetOperations;
@@ -60,10 +61,12 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
     private Vocabulary                    voc;
     private Vector<Button>                bt_vector = new <Button>Vector();
 
-    private boolean                       block_login_button = false;
-    private String                        url_request        = "http://103.6.239.242/sme/mobile/getoperations/?";
+    private boolean                       block_button    = false;
+    private String                        url_request     = "http://103.6.239.242/sme/mobile/getoperations/?";
+    private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
     private GetOperations                 operaions_list;
     private FileManager                   FM;
+    private int                           selected_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
 
         url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
+        url_logout  += "id=" + c_c.id + "&companyID=" + c_c.companyID;
 
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_first);
 
@@ -140,25 +144,28 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         return true;
     }
 
-    public void clickButton(View v) {
-        int id = v.getId();
+    public void clickButton(View view) {
+        if (block_button)
+            return;
 
-        switch (id) {
+        switch (view.getId()) {
             case R.id.synchronize_operation_list:
-                if (block_login_button)
-                    return;
-                block_login_button  = true;
+                block_button        = true;
                 this.operaions_list = null;
                 new HttpRequestTask().execute();
                 break;
             case R.id.lock_company:
-                if (this.operaions_list != null)
-                    lock_list();
+                if (this.operaions_list == null) {
+                    dialog("Operations List is empty");
+                    break;
+                }
+                lock_list();
                 break;
             case R.id.logout_id:
-
+                block_button = true;
+                new HttpRequestLogout().execute();
                 break;
-         }
+        }
     }
 
     private class HttpRequestTask extends AsyncTask<Void, String, GetOperations> {
@@ -169,8 +176,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
             GetOperations xml_operaions_list;
             URI uri;
             try {
-                uri = new URI(url_request);
-
+                uri = new URI(url_request);//http://103.6.239.242/sme/mobile/getoperations/?id=4&companyID=2
+                                           //http://103.6.239.242/sme/mobile/getoperations/?id=3&companyID=1
                 RestTemplate restTemplate = new RestTemplate();
                 StringHttpMessageConverter converter = new StringHttpMessageConverter();
                 restTemplate.getMessageConverters().add(converter);
@@ -195,11 +202,10 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
 
             return null;
         }
-        //Element 'operation' does not have a match in class com.nova.sme.sme01.transactions.SupportedOperations at line 1
 
         @Override
         protected void onPostExecute(GetOperations xml_operation_list) {
-            block_login_button = false;
+            block_button = false;
             if (xml_operation_list == null) {
                 // todo something
                 return;
@@ -222,25 +228,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
             else
                 error = code + " - unknown error";
 
-            final Dialog dialog = new Dialog(base_layout.getContext());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.login_failed_layout);
-            TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
-            text.setText(error);
-
-            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-            voc.change_caption(text);
-            voc.change_caption(dialogButton);
-
-            dialogButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-
+            dialog(error);
             return;
         }
 
@@ -250,8 +238,14 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         try {
             list = this.operaions_list.getOperationsList();
 
-            if (list == null)
+            if (list == null) {
+                dialog("Operations List is empty");
                 return;
+            }
+            if (list.size() == 0) {
+                dialog("Operations List is empty");
+                return;
+            }
 
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout   sv       = (LinearLayout) findViewById(R.id.op_list_scrollView);
@@ -303,27 +297,51 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                     }
                 }
             }
-
         }
-
-
     }
 
     private void lock_list() {
+        String        confirmed_message;
         GetOperations local;
+        if (this.operaions_list.getOperationsList().size() == 0) {
+            dialog("Operations List is empty");
+            return;
+        }
 
-       if (FM.writeToFile("operations_list.bin", this.operaions_list)) {
-           local = (GetOperations) FM.readFromFile("operations_list.bin");
 
-           // compare
-           if (!local.equals(this.operaions_list))
-               println("error");
+        if (FM.writeToFile("operations_list.bin", this.operaions_list)) {
+            // validating
+            local = (GetOperations) FM.readFromFile("operations_list.bin");
+            if (!local.equals(this.operaions_list))
+                confirmed_message = "Error of saving Operations List";
+            else
+                confirmed_message = "Operations List has been saved successfully";
+        } else {
+           confirmed_message = "Error of saving Operations List";
+        }
 
-       } else {
-           // error writing a file
+        dialog(confirmed_message);
+    }
 
-       }
+    private void dialog(String message) {
+        final Dialog dialog = new Dialog(base_layout.getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.login_failed_layout);
+        TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
+        text.setText(message);
 
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+
+        voc.change_caption(text);
+        voc.change_caption(dialogButton);
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
@@ -340,4 +358,57 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class HttpRequestLogout extends AsyncTask<Void, String, BaseXML> {
+        @Override
+        protected BaseXML doInBackground(Void... params) {
+            String error;
+
+            BaseXML xml_logout;
+            URI uri;
+            try {
+                uri = new URI(url_logout);
+
+                RestTemplate restTemplate = new RestTemplate();
+                StringHttpMessageConverter converter = new StringHttpMessageConverter();
+                restTemplate.getMessageConverters().add(converter);
+
+                String xml            = restTemplate.getForObject(uri, String.class);
+                Serializer serializer = new Persister();
+                SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
+
+                xml_logout = serializer.read(BaseXML.class, xml);
+
+                return xml_logout;
+            } catch (java.net.URISyntaxException e) {
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
+            } catch (RestClientException e){
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
+            } catch (Exception e) {
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(BaseXML xml_logout) {
+            block_button = false;
+            if (xml_logout != null) {
+                if (xml_logout.getCode().equals("0")) {
+                    // erase the file and go to the first page
+                    //"parameters.bin";
+                    //operations_list.bin
+                    FM.deleteFile("parameters.bin");
+                    FM.deleteFile("operations_list.bin");
+                    finish();
+                }
+            }
+            dialog("Error occured");
+        }
+    }
+
 }
