@@ -33,5 +33,4 @@ public class BaseXML {
     @Element
     private String description;
     public  String getDescription(){return description;}
-
 }

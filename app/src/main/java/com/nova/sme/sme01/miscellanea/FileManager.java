@@ -25,7 +25,7 @@ import java.io.StreamCorruptedException;
 
 public class FileManager {
     private Context context;
-    private String  file_name = "sme_data.txt";
+//    private String  file_name = "sme_data.txt";
 
     public FileManager(Context context) {
         this.context = context;
@@ -69,6 +69,22 @@ public class FileManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean deleteFile(String file_name) {
+        File file;
+        try {
+            file = this.context.getFileStreamPath(file_name);
+
+            if (!file.exists())
+                return false;
+
+            file.delete();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 /*
     public void writeData(Parameters params) {

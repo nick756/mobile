@@ -54,7 +54,12 @@ public class Vocabulary implements Serializable {
             {"Mismatching Company ID",                         "Syarikat yang tidak sepadan ID"},
             {"Authentication failed",                          "Pengesahan gagal"},
             {"Session expired",                                "Sesi tamat"},
-      };
+            {"Operations List has been saved successfully",    "Senarai Operasi telah berjaya disimpan"},
+            {"Error of saving Operations List",                "Ralat penjimatan Senarai Operasi"},
+            {"Error occured",                                   "Ralat berlaku"},
+            {"Operations List is empty",                        "Senarai Operasi kosong"},
+
+    };
 
     public Vocabulary() {
         String key, value;
