@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
+import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.transactions.GetOperations;
 
@@ -48,6 +49,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private GetOperations                 operaions_list;
     private FileManager                   FM;
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
+    private MyDialog                      my_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class RegularLoginActivity extends AppCompatActivity {
 
         FM                  = new FileManager(this);
         this.operaions_list = (GetOperations) FM.readFromFile("operations_list.bin");
-
+        my_dialog = new MyDialog(voc, base_layout);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

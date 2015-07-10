@@ -22,6 +22,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
+import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.transactions.GetOperations;
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     private Vocabulary                    voc;// = new Vocabulary();
     private Parameters                    params;
     private FileManager                   FM;
+    private MyDialog                      my_dialog;
+    private String                        url_logout;//     = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        base_url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
 
     private String                        base_url = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
 //    private String                        base_url = "http://667.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
@@ -117,8 +122,14 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         params = (Parameters) FM.readFromFile(params_file_name);
         if (params == null)
             params = new Parameters();
- //       FM.readData(params);
-       voc.setLanguage(params.getLanguage());
+
+        voc.setLanguage(params.getLanguage());
+
+        my_dialog        = new MyDialog(voc, base_layout);
+        this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+
+        if (isFirstLogin())
+            hide_logout_button();
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -135,6 +146,40 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         });
     }
 
+    private void getParams() {
+        this.params = (Parameters) FM.readFromFile(params_file_name);
+        if (this.params == null)
+            this.params = new Parameters();
+    }
+
+    @Override
+    protected void onResume() {
+        getParams();
+        if (isFirstLogin())
+            hide_logout_button();
+        else
+            show_logout_button();
+
+        super.onResume();
+    }
+
+    public void hide_logout_button() {
+        Button bt = (Button)findViewById(R.id.logout_main);
+        bt.setVisibility(View.INVISIBLE);
+    }
+    public void show_logout_button() {
+        Button bt = (Button)findViewById(R.id.logout_main);
+        bt.setVisibility(View.VISIBLE);
+    }
+
+    public void clickLogoutButton(View v) {
+        this.url_logout = this.base_url_logout + "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+        new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
+        FM.deleteFile("parameters.bin");
+        FM.deleteFile("operations_list.bin");
+
+        hide_logout_button();
+    }
     public void clickLoginButton(View v) {
         if (block_login_button) return;
         String user = user_name.getText().toString();
@@ -202,8 +247,8 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                 return;
             }
             // debugging for
-            params.getFromXML(xml_login);
-            params.setLangauge(voc.getLanguage());
+//            params.getFromXML(xml_login);
+//            params.setLangauge(voc.getLanguage());
 //            FM.writeToFile(params_file_name, params);
 
             String code       = xml_login.getCode();
@@ -232,10 +277,18 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                 // error?
                 if (code.equals("0")) {
 
-                    if (isFirstLogin())
+                    if (isFirstLogin()) {
                         resultIntent = new Intent(base_layout.getContext(), FirstTimeLoginActivity.class);
-                    else
-                        resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
+                    } else {
+                        // check indentity
+                        if (checkIndentity(xml_login)) {
+                            resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
+                        } else {
+                            String msg = "Only a single Company (Business) can be managed from Mobile Application. If a User needs to manage more than one company using smart phone, two login names must be used, and each time re-synchronization to be performed.";
+                            my_dialog.show(msg);
+                            return;
+                        }
+                    }
 
                     c_c               = new CommonClass(code, id, originator, descr, name, role, company, companyID);
                     c_c.curr_language = voc.getLanguage();
@@ -251,24 +304,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                     else
                         error_message = "Unknown error";
 
-                    final Dialog dialog = new Dialog(base_layout.getContext());
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.login_failed_layout);
-                    TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
-                    text.setText(error_message);
-
-                    Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-                    voc.change_caption(text);
-                    voc.change_caption(dialogButton);
-
-                    dialogButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
+                    my_dialog.show(error_message);
                 }
             } catch(Exception err) {
                 println (err.getMessage().toString());
@@ -283,6 +319,24 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             return true;
         return local.getOperationsList().size() == 0;
 
+    }
+
+    private boolean checkIndentity(XML_Login xml_login) {
+        String id      =  xml_login.getId();
+        String inner_id = this.params.getId();
+        if (!id.equals(inner_id))
+            return false;
+
+        String companyID       = xml_login.getOperator().getCompanyID();
+        String inner_companyId = this.params.getcompanyID();
+
+        return companyID.equals(inner_companyId);
+
+        //      String companyID = xml_login.get
+/*
+andrea 4, 2
+vlad   3, 1
+ */
     }
 
     @Override

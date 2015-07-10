@@ -23,6 +23,7 @@ import com.nova.sme.sme01.miscellanea.BaseXML;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
+import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.transactions.GetOperations;
@@ -70,7 +71,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
     private GetOperations                 operaions_list;
     private FileManager                   FM;
     private int                           selected_id;
-    private Parameters                    params;
+    private Parameters                    params = new Parameters();
+    private MyDialog                      my_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +84,6 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         } catch(Exception err) {
             println(err.getMessage().toString());
         }
- //       final ActionBar bar = getSupportActionBar();
- //       bar.setDisplayShowTitleEnabled(false);
 
         setContentView(R.layout.activity_first_time_login);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -91,7 +91,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         FM = new FileManager(this);
 
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
-        recover_parameters(c_c);
+        this.params.getFromCommonClass(c_c);
 
         url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
         url_logout  += "id=" + c_c.id + "&companyID=" + c_c.companyID;
@@ -100,12 +100,10 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
 
         user         = (TextView) findViewById(R.id.user_name_id);
         company_name = (TextView) findViewById(R.id.company_name_id);
-//        originator   = (TextView) findViewById(R.id.originator_id);
         role         = (TextView) findViewById(R.id.role_id);
 
         user.setText(c_c.name);
         company_name.setText(c_c.company);
-//        originator.setText(c_c.originator);
         role.setText(c_c.role);
 
         FR  = new FormResizing(this, base_layout);
@@ -128,6 +126,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 bt_vector.add((Button)view);
             }
         }
+        my_dialog = new MyDialog(voc, base_layout);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -140,11 +139,6 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
             }
         });
 
-    }
-
-    private void recover_parameters(CommonClass c_c) {
-        Parameters params = new Parameters();
-        params.getFromCommonClass(c_c);
     }
 
     @Override
@@ -166,7 +160,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 break;
             case R.id.lock_company:
                 if (this.operaions_list == null) {
-                    dialog("Operations List is empty");
+//                    dialog("Operations List is empty");
+                    my_dialog.show("Operations List is empty");
                     break;
                 }
                 lock_list();
@@ -242,7 +237,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 error = code + " - unknown error";
             }
 
-            dialog(error);
+//            dialog(error);
+            my_dialog.show(error);
             return;
         }
 
@@ -254,11 +250,11 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         String        confirmed_message;
         GetOperations local;
         if (this.operaions_list.getOperationsList().size() == 0) {
-            dialog("Operations List is empty");
+            my_dialog.show("Operations List is empty");
             return;
         }
 
-        FM.writeToFile("parameters.bin", params);
+        FM.writeToFile("parameters.bin", this.params);
 
         if (FM.writeToFile("operations_list.bin", this.operaions_list)) {
             // validating
@@ -271,9 +267,9 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
            confirmed_message = "Error of saving Operations List";
         }
 
-        dialog(confirmed_message);
+        my_dialog.show(confirmed_message);
     }
-
+/*
     private void dialog(String message) {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -294,7 +290,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         });
         dialog.show();
     }
-
+*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
