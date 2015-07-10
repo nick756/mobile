@@ -37,9 +37,14 @@ public class GetOperations implements Serializable {
     private String description;
     public  String getDescription(){return this.description;}
 
+    @Element(required=false, name="operationsList")
+    private String operationsList; // always empty
+    public  String getOperationaList(){return this.operationsList;}
+
     @ElementList(required=false, name="supportedOperations")
     private ArrayList<Operation> list;
     public  ArrayList<Operation> getOperationsList(){return this.list;}
+
 
     public GetOperations(){}
 
