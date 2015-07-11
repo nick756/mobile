@@ -33,6 +33,7 @@ public class FormResizing {
     private float   height_virt    = 1696.0f;
     private float   width_margin   = 0.0f;
     private float   height_margin  = 0.0f;
+    private int     real_width;
 
     public FormResizing(/*AppCompatActivity*/Activity activity, RelativeLayout base_layout) {
         this.base_layout = base_layout;
@@ -43,7 +44,9 @@ public class FormResizing {
         float width_area  = base_layout.getWidth();  // 1080
         float height_area = base_layout.getHeight(); // 1752
 
-        height_area -= (float)(getTitleBarHeight() + getStatusBarHeight());//1696
+        this.real_width   = (int)width_area;
+
+                height_area -= (float)(getTitleBarHeight() + getStatusBarHeight());//1696
 
         float height_to_width_etalon_factor = height_virt / width_virt; //1.777777...
         float height_to_width_real_factor = height_area / width_area; //1.47
@@ -68,8 +71,12 @@ public class FormResizing {
             params.bottomMargin = 0;
 
             this.width_margin = margin_px;
+
+            this.real_width -=  params.leftMargin*2;
         }
+
     }
+    public int getRealWidth() {return this.real_width;}
     public float get_height_margin() {return this.height_margin;}
     public float get_width_margin()  {return this.width_margin;}
 

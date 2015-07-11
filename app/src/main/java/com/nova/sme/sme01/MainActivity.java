@@ -1,5 +1,6 @@
 package com.nova.sme.sme01;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,18 +8,24 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
@@ -50,7 +57,7 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 
-public class MainActivity extends AppCompatActivity {//AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {//AppCompatActivity
     public static String  MAIN_INFO;
     public static String  LANGUAGE = "EN";// "MY"
 
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     private Parameters                    params;
     private FileManager                   FM;
     private MyDialog                      my_dialog;
-    private String                        url_logout;//     = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        url_logout;
     private String                        base_url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
 
     private String                        base_url = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
@@ -77,13 +84,26 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
     private boolean                       block_login_button = false;
     private String                        params_file_name   = "parameters.bin";
+    boolean                               customTitleSupported = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*
+        final Window window = getWindow();
+        try {
+            if (window.getContainer() == null)
+                customTitleSupported = requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        } catch(Exception err){//android.util.AndroidRuntimeException: requestFeature() must be called before adding content
+            println(err.getMessage().toString());
+        }
+*/
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        try {
+            setContentView(R.layout.activity_main);
+        } catch(Exception err) {
+            println(err.getMessage().toString());//android.util.AndroidRuntimeException: You cannot combine custom titles with other title features
+        }
 
         this.setTitle("SME Cashflow Management System");
 
@@ -128,8 +148,9 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
         my_dialog        = new MyDialog(voc, base_layout);
         this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
-        if (isFirstLogin())
-            hide_logout_button();
+ //       if (isFirstLogin())
+ //           hide_logout_button();
+
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -142,9 +163,71 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
                 pv.Placing();
 
                 set_new_language();
-            }
+
+                View view = create_custom_bar();
+                if (view != null) {
+                    try {
+                        if (isFirstLogin())
+                            view.setVisibility(View.GONE);
+                        else
+                            view.setVisibility(View.VISIBLE);
+
+                    } catch (Exception err) {
+
+                    }
+                }
+             }
         });
     }
+
+    private View create_custom_bar() {
+        try {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
+            RelativeLayout layout     = (RelativeLayout) inflater.inflate(R.layout.custom_title_bar, null);
+            layout.setPadding(0, 10, 0, 10);
+
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+
+            actionBar.setCustomView(layout);//create_custom_bar());
+            float button_factor = 0.25f;
+            int width = base_layout.getWidth();//FR.getRealWidth();
+            float height;
+            float h_margin;
+            Button button = (Button) findViewById(R.id.logout_button);
+            if (button != null) {
+                button.setWidth((int) ((float) width * button_factor));//title_id}
+                button.setOnClickListener(this);
+            }
+            return layout;
+        } catch(Exception err) {
+            println(err.getMessage().toString());
+        }
+        return null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.logout_button) {
+            this.url_logout = this.base_url_logout + "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+            new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
+            FM.deleteFile("parameters.bin");
+            FM.deleteFile("operations_list.bin");
+
+            View v = getSupportActionBar().getCustomView();
+
+            if (v != null) { // redundancy, it must be as a first login -> v.setVisibility(View.GONE);
+                if (isFirstLogin())
+                    v.setVisibility(View.GONE);
+                else
+                    v.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+
 
     private void getParams() {
         this.params = (Parameters) FM.readFromFile(params_file_name);
@@ -155,14 +238,20 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
     @Override
     protected void onResume() {
         getParams();
-        if (isFirstLogin())
-            hide_logout_button();
-        else
-            show_logout_button();
+
+        View view = getSupportActionBar().getCustomView();
+
+
+        if (view != null) {
+            if (isFirstLogin())
+                view.setVisibility(View.GONE);
+            else
+                view.setVisibility(View.VISIBLE);
+        }
 
         super.onResume();
     }
-
+/*
     public void hide_logout_button() {
         Button bt = (Button)findViewById(R.id.logout_main);
         bt.setVisibility(View.INVISIBLE);
@@ -180,6 +269,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
 
         hide_logout_button();
     }
+*/
     public void clickLoginButton(View v) {
         if (block_login_button) return;
         String user = user_name.getText().toString();
@@ -197,7 +287,7 @@ public class MainActivity extends AppCompatActivity {//AppCompatActivity
             block_login_button = true;
             password.setText("");
             user_name.setText("");
-            new HttpRequestTask().execute();
+            new HttpRequestTask().execute();//http://103.6.239.242:80/sme/mobile/login/?name=andrea&passw=1234
          }
     }
 //http://103.6.239.242:8080/sme/mobile/login/?name=andrea&passw=1234

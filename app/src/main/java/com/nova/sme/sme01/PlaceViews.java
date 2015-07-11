@@ -21,7 +21,7 @@ import android.widget.TextView;
  */
 
 public class PlaceViews {
-    private AppCompatActivity activity      = null;
+    private AppCompatActivity               activity      = null;
     private android.widget.RelativeLayout   base_layout    = null;
     private android.widget.RelativeLayout   data_layout    = null;
     private TextView                        caption        = null;
