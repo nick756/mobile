@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/custom_layout"
+    android:background="@android:color/black"
+    android:gravity="fill_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SME Cashflow Management System"
+        android:id="@+id/title_id_"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/background_dark"
+        android:paddingLeft="5dp"
+        android:textColor="@android:color/white"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/logout_button"
+        android:textAlignment="center"
+        android:textStyle="normal"
+        android:typeface="normal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/logout_button"
+        android:background="@drawable/login_button_selector"
+        android:layout_gravity="right"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>
