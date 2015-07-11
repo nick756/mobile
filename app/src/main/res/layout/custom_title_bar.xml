@@ -4,13 +4,15 @@
     android:layout_height="wrap_content"
     android:id="@+id/custom_layout"
     android:background="@android:color/black"
-    android:gravity="fill_horizontal">
+    android:gravity="fill_horizontal"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SME Cashflow Management System"
-        android:id="@+id/title_id_"
+        android:id="@+id/title_id"
         android:layout_marginRight="5dp"
         android:background="@android:color/background_dark"
         android:paddingLeft="5dp"
