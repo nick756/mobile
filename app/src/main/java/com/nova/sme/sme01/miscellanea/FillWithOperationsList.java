@@ -17,6 +17,7 @@ import com.nova.sme.sme01.transactions.GetOperations;
 import com.nova.sme.sme01.transactions.Operation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.sql.DriverManager.println;
 
@@ -32,7 +33,7 @@ public class FillWithOperationsList {
     public FillWithOperationsList(Activity activity, GetOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
         MyDialog my_dialog = new MyDialog(voc, base_layout);
 
-        ArrayList<Operation> list;
+        List<Operation> list;
         try {
             list = operations.getOperationsList();
 
