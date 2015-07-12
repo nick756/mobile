@@ -66,7 +66,10 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     private MyDialog                      my_dialog;
     private String                        sender = "";
     private boolean                       block_button;
-    private Parameters                    params = new Parameters();
+    private Parameters                    params               = new Parameters();
+    private String                        params_file_name     = "parameters.bin";
+    private String                        operations_list_name = "operations_list.bin";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +138,16 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
 
     }
     private void fill_operation_list() { // if empty - we hide some buttons
-        new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
+        FillWithOperationsList fwol =  new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
+        if (!fwol.implement()) {
+            // hide some buttons
+            Button button;
+            for (int i = 0; i < bt_vector.size(); i ++) {
+                button = bt_vector.get(i);
+                if (button.getId() != R.id.synch_oper_list)
+                    button.setVisibility(View.GONE);
+            }
+        }
     }
     private void create_custom_bar() {
         Button button = (new CreateCustomBar(this, base_layout)).getButton();
@@ -173,12 +185,18 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.synch_oper_list:
                 block_button = true;
+
+                FM.deleteFile(this.operations_list_name);
+                this.operaions_list = null;
+                fill_operation_list();
+
                 new HttpRequestTask().execute();
-//                FillWithOperationsList fwl = new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
                 break;
             case R.id.reset_oper_list:
+                // delete all
+                FM.deleteFile(this.params_file_name);
+                FM.deleteFile(this.operations_list_name);
                 finish();
- //               new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
                 break;
         }
     }
@@ -241,6 +259,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 error = "Authentication failed";
             } else if (code.equals("3")) {
                 error = "Session expired";
+                my_dialog.show(error);
                 finish();
             } else {
                 error = code + " - unknown error";
@@ -254,14 +273,10 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             return;
         } else {
             if (lock_list(xml_operation_list)) {
-                Intent resultIntent;
-                resultIntent    = new Intent(base_layout.getContext(), RegularLoginActivity.class);
-                CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
-
-                c_c.sender        = "FirstTimeLoginActive";
-                c_c.curr_language = voc.getLanguage();
-                resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
-                startActivity(resultIntent);
+                for (int i = 0; i < bt_vector.size(); i ++)
+                    bt_vector.get(i).setVisibility(View.VISIBLE);
+                this.operaions_list = xml_operation_list;
+                fill_operation_list();
             }
         }
     }

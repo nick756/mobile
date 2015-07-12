@@ -349,8 +349,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             try {
                 // error?
                 if (code.equals("0")) {
-                    if (false/*isFirstLogin()*/) {
-                        resultIntent = new Intent(base_layout.getContext(), FirstTimeLoginActivity.class);
+                    if (isFirstLogin()) {
+                        resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
                     } else {
                         // check indentity
                         if (checkIndentity(xml_login)) {
@@ -507,7 +507,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     void writeParameters(XML_Login xml_login) {
         this.params.setLangauge(voc.getLanguage());
         this.params.getFromXML(xml_login);
-        FM.writeToFile(params_file_name, params);
+        FM.writeToFile(params_file_name, this.params);
     }
 /*
     @Override
