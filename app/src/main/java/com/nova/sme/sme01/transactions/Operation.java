@@ -70,11 +70,4 @@ public class Operation implements Serializable {
 
     }
 
-    Operation(Operation obj) {
-        this.code     = obj.getCode();
-        this.name     = obj.getName();
-        this.inbound  = obj.getInbound();
-        this.outbound = obj.getOutbound();
-        this.type     = obj.getType();
-    }
 }
