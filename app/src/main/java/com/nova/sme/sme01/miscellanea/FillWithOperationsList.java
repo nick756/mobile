@@ -30,24 +30,41 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 public class FillWithOperationsList {
+    private Activity      activity;
+    private GetOperations operations;
+    private int           id;
+    private Vocabulary    voc;
+    private RelativeLayout base_layout;
+
     public FillWithOperationsList(Activity activity, GetOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
-//        MyDialog my_dialog = new MyDialog(voc, base_layout);
+        this.activity = activity;
+        this.operations = operations;
+        this.id = id;
+        this.voc = voc;
+        this.base_layout = base_layout;
+    }
+
+    public boolean implement() {
+        if (this.operations == null) {
+            clean_scroll();
+            return false;
+        }
 
         List<Operation> list;
         try {
-            list = operations.getOperationsList();
+            list = this.operations.getOperationsList();
 
             if (list == null) {
-//                my_dialog.show("Operations List is empty");
-                return;
+                clean_scroll();
+                return false;
             }
             if (list.size() == 0) {
-////                my_dialog.show("Operations List is empty");
-                return;
+                clean_scroll();
+                return false;
             }
 
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);//reg_op_list_scrollView
-            LinearLayout sv = (LinearLayout) activity.findViewById(id);
+            LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
             sv.removeAllViews();
 
             for (int i = 0; i < list.size(); i++) {
@@ -55,9 +72,16 @@ public class FillWithOperationsList {
                 sv.addView(ll);
                 setValues(ll, list.get(i));
             }
+            return true;
         } catch (Exception err) {
             println(err.getMessage().toString());
         }
+        return false;
+    }
+
+    private void clean_scroll() {
+        LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
+        sv.removeAllViews();
     }
 
     private void setValues(LinearLayout layout, Operation operation) {
