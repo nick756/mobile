@@ -73,7 +73,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="2dp"
-        android:id="@+id/buttons_set">
+        android:id="@+id/buttons_set"
+        android:layout_marginTop="2dp">
 
         <Button
             android:layout_width="fill_parent"
@@ -87,36 +88,7 @@
             android:onClick="clickButton"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Lock Company"
-            android:id="@+id/lock_company"
-            android:layout_marginTop="5dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/synchronize_operation_list"
-            android:background="@drawable/login_button_selector"
-            android:onClick="clickButton"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Log Out"
-            android:id="@+id/logout_id"
-            android:layout_centerHorizontal="true"
-            android:onClick="clickButton"
-            android:background="@drawable/login_button_selector"
-            android:layout_below="@+id/reg_sop_id"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginBottom="5dp" />
 
     </LinearLayout>
 
