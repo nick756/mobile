@@ -56,8 +56,9 @@ public class Vocabulary implements Serializable {
             {"Session expired",                                "Sesi tamat"},
             {"Operations List has been saved successfully",    "Senarai Operasi telah berjaya disimpan"},
             {"Error of saving Operations List",                "Ralat penjimatan Senarai Operasi"},
-            {"Error occured",                                   "Ralat berlaku"},
-            {"Operations List is empty",                        "Senarai Operasi kosong"},
+            {"Error occured",                                  "Ralat berlaku"},
+            {"Operations List is empty",                       "Senarai Operasi kosong"},
+            {"Reset Operations List",                          "Set Semula Senarai Operasi"},
 
     };
 
