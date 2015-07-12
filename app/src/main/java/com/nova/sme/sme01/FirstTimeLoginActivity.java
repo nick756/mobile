@@ -73,6 +73,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
     private int                           selected_id;
     private Parameters                    params = new Parameters();
     private MyDialog                      my_dialog;
+//    private GetOperations                 xml_operaions_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +178,9 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
     private class HttpRequestTask extends AsyncTask<Void, String, GetOperations> {
         @Override
         protected GetOperations doInBackground(Void... params) {
+            // debug
+ //           String empty_xml = "<result code='0' id='4'><originator>77.49.216.250</originator><description>Successful Request</description><profile name='Trading Activities'></profile></result>";
+ //           String one_oper  ="<result code='0' id='4'><originator>77.49.216.250</originator><description>Successful Request</description><profile name='Trading Activities'><operation><code>1</code><name>Additional Capital</name><inbound>true</inbound><outbound>false</outbound><type>Capital</type></operation></profile></result>";
             String error;
 
             GetOperations xml_operaions_list;
@@ -193,6 +197,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
+//                xml_operaions_list = serializer.read(GetOperations.class, one_oper);
+
                 xml_operaions_list = serializer.read(GetOperations.class, xml);
 
                 return xml_operaions_list;
@@ -207,8 +213,8 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 Log.e("FirstTimeLoginActivity", error, e);
             }
 
-            return null;
-        }
+            return null;//Element 'operation' does not have a match in class com.nova.sme.sme01.transactions.GetOperations$Profile at line 1
+        }               //Element 'profile' does not have a match in class com.nova.sme.sme01.transactions.GetOperations at line 1
 
         @Override
         protected void onPostExecute(GetOperations xml_operation_list) {
@@ -242,11 +248,12 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
             return;
         }
 
-        this.operaions_list = new GetOperations(xml_operation_list);
+        this.operaions_list = xml_operation_list;//new GetOperations(xml_operation_list);
         FillWithOperationsList fwl = new FillWithOperationsList(this, this.operaions_list, R.id.op_list_scrollView, voc, base_layout);
     }
 
     private void lock_list() {
+
         String        confirmed_message;
         GetOperations local;
         if (this.operaions_list.getOperationsList().size() == 0) {
@@ -268,29 +275,9 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         }
 
         my_dialog.show(confirmed_message);
+
     }
-/*
-    private void dialog(String message) {
-        final Dialog dialog = new Dialog(base_layout.getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.login_failed_layout);
-        TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
-        text.setText(message);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-        voc.change_caption(text);
-        voc.change_caption(dialogButton);
-
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

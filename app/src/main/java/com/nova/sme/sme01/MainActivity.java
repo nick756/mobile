@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String                        login_request;
     private String                        debug_request = "http://103.6.239.242:80/sme/mobile/login/?name=vlad&passw=1234";
 
-    private boolean                       block_login_button = false;
-    private String                        params_file_name   = "parameters.bin";
-    boolean                               customTitleSupported = false;
+    private boolean                       block_login_button   = false;
+    private String                        params_file_name     = "parameters.bin";
+    private String                        operations_list_name = "operations_list.bin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,8 +213,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.logout_button) {
             this.url_logout = this.base_url_logout + "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
             new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
-            FM.deleteFile("parameters.bin");
-            FM.deleteFile("operations_list.bin");
+            FM.deleteFile(params_file_name);
+            FM.deleteFile(operations_list_name);
 
             View v = getSupportActionBar().getCustomView();
 
@@ -226,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
 
 
     private void getParams() {
@@ -241,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         View view = getSupportActionBar().getCustomView();
 
-
         if (view != null) {
             if (isFirstLogin())
                 view.setVisibility(View.GONE);
@@ -251,25 +249,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onResume();
     }
-/*
-    public void hide_logout_button() {
-        Button bt = (Button)findViewById(R.id.logout_main);
-        bt.setVisibility(View.INVISIBLE);
-    }
-    public void show_logout_button() {
-        Button bt = (Button)findViewById(R.id.logout_main);
-        bt.setVisibility(View.VISIBLE);
-    }
 
-    public void clickLogoutButton(View v) {
-        this.url_logout = this.base_url_logout + "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
-        new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
-        FM.deleteFile("parameters.bin");
-        FM.deleteFile("operations_list.bin");
 
-        hide_logout_button();
-    }
-*/
     public void clickLoginButton(View v) {
         if (block_login_button) return;
         String user = user_name.getText().toString();
@@ -287,10 +268,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             block_login_button = true;
             password.setText("");
             user_name.setText("");
-            new HttpRequestTask().execute();//http://103.6.239.242:80/sme/mobile/login/?name=andrea&passw=1234
+            new HttpRequestTask().execute();
          }
     }
-//http://103.6.239.242:8080/sme/mobile/login/?name=andrea&passw=1234
+
     private class HttpRequestTask extends AsyncTask<Void, String, XML_Login> {
         @Override
         protected XML_Login doInBackground(Void... params) {
