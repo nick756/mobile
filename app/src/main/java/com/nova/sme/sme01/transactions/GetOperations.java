@@ -9,6 +9,8 @@ package com.nova.sme.sme01.transactions;
  *************************************************
 */
 
+import com.nova.sme.sme01.xml.xmllogin.Profile;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -37,27 +39,15 @@ public class GetOperations implements Serializable {
     private String description;
     public  String getDescription(){return this.description;}
 
-    @Element(required=false, name="operationsList")
-    private String operationsList; // always empty
-    public  String getOperationaList(){return this.operationsList;}
-
-    @ElementList(required=false, name="supportedOperations")
-    private ArrayList<Operation> list;
-    public  ArrayList<Operation> getOperationsList(){return this.list;}
-
+    @Element
+    private Profile profile;
+    public  Profile getProfile(){return profile;}
+    public  List<Operation> getOperationsList() {return profile.getOperationsList(); }
 
     public GetOperations(){}
 
-    public GetOperations(GetOperations obj) {
-        this.code        = obj.getCode();
-        this.id          = obj.getId();
-        this.originator  = obj.getOriginator();
-        this.description = obj.getDescription();
-
-        this.list = new ArrayList<Operation>(obj.getOperationsList());
-    }
-
     public boolean equals(GetOperations obj) {
+
         if (!this.code.equals(obj.getCode()))
             return false;
 
@@ -70,8 +60,11 @@ public class GetOperations implements Serializable {
         if (!this.description.equals(obj.getDescription()))
             return false;
 
+        if (!this.profile.getName().equals(obj.getProfile().getName()))
+            return false;
 
-        ArrayList<Operation> olist = obj.getOperationsList();
+        List<Operation> olist = obj.getOperationsList();
+        List<Operation> list  = getOperationsList();
         if (list == null && olist != null)
             return false;
         if (list != null && olist == null)
