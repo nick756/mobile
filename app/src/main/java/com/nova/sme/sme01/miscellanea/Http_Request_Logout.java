@@ -2,6 +2,7 @@ package com.nova.sme.sme01.miscellanea;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 
 import org.simpleframework.xml.Serializer;
@@ -20,6 +22,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class Http_Request_Logout {
     private String         url_logout;
@@ -83,16 +87,12 @@ public class Http_Request_Logout {
             if (xml_logout != null) {
                 if (xml_logout.getCode().equals("0")) {
                     ok = true;
-                    // erase the file and go to the first page
-                    //"parameters.bin";
-                    //operations_list.bin
-                    FM.deleteFile("parameters.bin");
-                    FM.deleteFile("operations_list.bin");
-
                     if (by_finish) {
-                        activity.finish();//goto main view
+                        activity.finish();//goto login view
                     } else {
-
+                        Intent intent = new Intent(activity, MainActivity.class );
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                        activity.startActivity(intent);
                     }
                 }
             }

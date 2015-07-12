@@ -31,18 +31,18 @@ import static java.sql.DriverManager.println;
  */
 public class FillWithOperationsList {
     public FillWithOperationsList(Activity activity, GetOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
-        MyDialog my_dialog = new MyDialog(voc, base_layout);
+//        MyDialog my_dialog = new MyDialog(voc, base_layout);
 
         List<Operation> list;
         try {
             list = operations.getOperationsList();
 
             if (list == null) {
-                my_dialog.show("Operations List is empty");
+//                my_dialog.show("Operations List is empty");
                 return;
             }
             if (list.size() == 0) {
-                my_dialog.show("Operations List is empty");
+////                my_dialog.show("Operations List is empty");
                 return;
             }
 

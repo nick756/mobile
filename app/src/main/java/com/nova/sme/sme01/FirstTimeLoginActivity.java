@@ -1,9 +1,11 @@
 package com.nova.sme.sme01;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.BaseXML;
+import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
@@ -54,7 +57,7 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 
-public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
+public class FirstTimeLoginActivity extends AppCompatActivity implements View.OnClickListener {//Activity
 
     private TextView                      user;
     private TextView                      company_name;
@@ -68,12 +71,10 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
     private boolean                       block_button    = false;
     private String                        url_request     = "http://103.6.239.242/sme/mobile/getoperations/?";
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
-    private GetOperations                 operaions_list;
     private FileManager                   FM;
     private int                           selected_id;
     private Parameters                    params = new Parameters();
     private MyDialog                      my_dialog;
-//    private GetOperations                 xml_operaions_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +138,26 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
             base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             FR.resize();
             FR.resizeFirstRegularLogins(base_layout, bt_vector, 0.062f);// height's button/total_height
+
+            create_custom_bar();
             }
         });
 
     }
+    private void create_custom_bar() {
+        Button button = (new CreateCustomBar(this, base_layout)).getButton();
+        if (button != null)
+            button.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.logout_button) {
+            new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,21 +173,7 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
         switch (view.getId()) {
             case R.id.synchronize_operation_list:
                 block_button        = true;
-                this.operaions_list = null;
                 new HttpRequestTask().execute();
-                break;
-            case R.id.lock_company:
-                if (this.operaions_list == null) {
-//                    dialog("Operations List is empty");
-                    my_dialog.show("Operations List is empty");
-                    break;
-                }
-                lock_list();
-                break;
-            case R.id.logout_id:
-//                block_button = true;
-//                new HttpRequestLogout().execute();
-                new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
                 break;
         }
     }
@@ -178,9 +181,6 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
     private class HttpRequestTask extends AsyncTask<Void, String, GetOperations> {
         @Override
         protected GetOperations doInBackground(Void... params) {
-            // debug
- //           String empty_xml = "<result code='0' id='4'><originator>77.49.216.250</originator><description>Successful Request</description><profile name='Trading Activities'></profile></result>";
- //           String one_oper  ="<result code='0' id='4'><originator>77.49.216.250</originator><description>Successful Request</description><profile name='Trading Activities'><operation><code>1</code><name>Additional Capital</name><inbound>true</inbound><outbound>false</outbound><type>Capital</type></operation></profile></result>";
             String error;
 
             GetOperations xml_operaions_list;
@@ -197,8 +197,6 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
-//                xml_operaions_list = serializer.read(GetOperations.class, one_oper);
-
                 xml_operaions_list = serializer.read(GetOperations.class, xml);
 
                 return xml_operaions_list;
@@ -206,15 +204,15 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 error = e.getMessage();
                 Log.e("FirstTimeLoginActivity", error, e);
             } catch (RestClientException e){
-                error = e.getMessage();//<result code='3' id='4'><originator>77.49.216.250</originator><description>Session expired</description><operationsList></operationsList></result>
-                Log.e("FirstTimeLoginActivity", error, e);//Element 'operationsList' does not have a match in class com.nova.sme.sme01.transactions.GetOperations at line 1
+                error = e.getMessage();
+                Log.e("FirstTimeLoginActivity", error, e);
             } catch (Exception e) {
                 error = e.getMessage();
                 Log.e("FirstTimeLoginActivity", error, e);
             }
 
-            return null;//Element 'operation' does not have a match in class com.nova.sme.sme01.transactions.GetOperations$Profile at line 1
-        }               //Element 'profile' does not have a match in class com.nova.sme.sme01.transactions.GetOperations at line 1
+            return null;
+        }
 
         @Override
         protected void onPostExecute(GetOperations xml_operation_list) {
@@ -243,39 +241,54 @@ public class FirstTimeLoginActivity extends AppCompatActivity {//Activity
                 error = code + " - unknown error";
             }
 
-//            dialog(error);
             my_dialog.show(error);
             return;
         }
-
-        this.operaions_list = xml_operation_list;//new GetOperations(xml_operation_list);
-        FillWithOperationsList fwl = new FillWithOperationsList(this, this.operaions_list, R.id.op_list_scrollView, voc, base_layout);
-    }
-
-    private void lock_list() {
-
-        String        confirmed_message;
-        GetOperations local;
-        if (this.operaions_list.getOperationsList().size() == 0) {
+        if (xml_operation_list.getOperationsList().size() == 0) {
             my_dialog.show("Operations List is empty");
             return;
-        }
-
-        FM.writeToFile("parameters.bin", this.params);
-
-        if (FM.writeToFile("operations_list.bin", this.operaions_list)) {
-            // validating
-            local = (GetOperations) FM.readFromFile("operations_list.bin");
-            if (!local.equals(this.operaions_list))
-                confirmed_message = "Error of saving Operations List";
-            else
-                confirmed_message = "Operations List has been saved successfully";
         } else {
-           confirmed_message = "Error of saving Operations List";
+            if (lock_list(xml_operation_list)) {
+                Intent resultIntent;
+                resultIntent    = new Intent(base_layout.getContext(), RegularLoginActivity.class);
+                CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
+
+                c_c.sender        = "FirstTimeLoginActive";
+                c_c.curr_language = voc.getLanguage();
+                resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
+                startActivity(resultIntent);
+             }
         }
+    }
 
-        my_dialog.show(confirmed_message);
+    private boolean lock_list(GetOperations xml_operation_list) {
+        String        confirmed_message = "";
+        GetOperations local;
+        boolean       success = true;
 
+        if (FM.writeToFile("parameters.bin", this.params)) {
+            if (FM.writeToFile("operations_list.bin", xml_operation_list)) {
+                // validating
+                local = (GetOperations) FM.readFromFile("operations_list.bin");
+                if (!local.equals(xml_operation_list)) {
+                    confirmed_message = "Error of saving Operations List";
+                    success = false;
+                } else {
+                    confirmed_message = "Operations List has been saved successfully";
+                    success = true;
+                }
+            } else {
+                confirmed_message = "Error of saving Operations List";
+
+            }
+        } else {
+            success           = false;
+            confirmed_message = "Error of saving Operations List";
+        }
+        if (!success)
+            my_dialog.show(confirmed_message);
+
+        return success;
     }
 
     @Override

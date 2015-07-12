@@ -57,7 +57,7 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {//AppCompatActivity
+public class MainActivity extends AppCompatActivity /*implements View.OnClickListener */{//AppCompatActivity
     public static String  MAIN_INFO;
     public static String  LANGUAGE = "EN";// "MY"
 
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MAIN_INFO = getApplicationContext().getPackageName();
 
         voc       = new Vocabulary();
- //       params    = new Parameters();
         FM        = new FileManager(this);
 
         params = (Parameters) FM.readFromFile(params_file_name);
@@ -163,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pv.Placing();
 
                 set_new_language();
-
+/*
                 View view = create_custom_bar();
                 if (view != null) {
                     try {
@@ -176,10 +175,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 }
+*/
+
              }
         });
     }
-
+/*
     private View create_custom_bar() {
         try {
             LayoutInflater inflater = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
@@ -206,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return null;
     }
-
+ */
+/*
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -226,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
+*/
 
     private void getParams() {
         this.params = (Parameters) FM.readFromFile(params_file_name);
@@ -237,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         getParams();
-
+/*
         View view = getSupportActionBar().getCustomView();
 
         if (view != null) {
@@ -246,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else
                 view.setVisibility(View.VISIBLE);
         }
-
+*/
         super.onResume();
     }
 
@@ -347,8 +349,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 // error?
                 if (code.equals("0")) {
-
-                    if (isFirstLogin()) {
+                    if (false/*isFirstLogin()*/) {
                         resultIntent = new Intent(base_layout.getContext(), FirstTimeLoginActivity.class);
                     } else {
                         // check indentity
@@ -360,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             return;
                         }
                     }
-
+                    writeParameters(xml_login);
                     c_c               = new CommonClass(code, id, originator, descr, name, role, company, companyID);
                     c_c.curr_language = voc.getLanguage();
                     resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
@@ -393,21 +394,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean checkIndentity(XML_Login xml_login) {
-        String id      =  xml_login.getId();
-        String inner_id = this.params.getId();
-        if (!id.equals(inner_id))
-            return false;
+//        String id      =  xml_login.getId();
+//        String inner_id = this.params.getId();
+//        if (!id.equals(inner_id))
+//            return false;
 
         String companyID       = xml_login.getOperator().getCompanyID();
         String inner_companyId = this.params.getcompanyID();
 
         return companyID.equals(inner_companyId);
-
-        //      String companyID = xml_login.get
-/*
-andrea 4, 2
-vlad   3, 1
- */
     }
 
     @Override
@@ -508,6 +503,11 @@ vlad   3, 1
 
         setAutoOrientationEnabled(autorotation);
         super.onStop();
+    }
+    void writeParameters(XML_Login xml_login) {
+        this.params.setLangauge(voc.getLanguage());
+        this.params.getFromXML(xml_login);
+        FM.writeToFile(params_file_name, params);
     }
 /*
     @Override
