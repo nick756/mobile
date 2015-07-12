@@ -33,5 +33,4 @@ public class Profile implements Serializable {
     public  List<Operation> getOperationsList(){return this.list;}
 
     Profile(){}
-
 }
