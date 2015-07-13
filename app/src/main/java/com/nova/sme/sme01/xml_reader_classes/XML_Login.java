@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.xml.xmllogin;
+package com.nova.sme.sme01.xml_reader_classes;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;

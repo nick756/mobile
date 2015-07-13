@@ -1,9 +1,7 @@
 package com.nova.sme.sme01;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,7 +22,7 @@ import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.transactions.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.GetOperations;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -186,7 +184,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             case R.id.synch_oper_list:
                 block_button = true;
 
-                FM.deleteFile(this.operations_list_name);
+
                 this.operaions_list = null;
                 fill_operation_list();
 
@@ -205,6 +203,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         @Override
         protected GetOperations doInBackground(Void... params) {
             String error;
+//            String debug = "<result code='3' id='4'><originator>77.49.216.250</originator><description>Session expired</description><profile name='N/A'></profile></result>";
 
             GetOperations xml_operaions_list;
             String xml;//operationsList
@@ -220,6 +219,8 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
+ //               xml_operaions_list = serializer.read(GetOperations.class, debug);
+
                 xml_operaions_list = serializer.read(GetOperations.class, xml);
 
                 return xml_operaions_list;
@@ -229,7 +230,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             } catch (RestClientException e){
                 error = e.getMessage();
                 Log.e("FirstTimeLoginActivity", error, e);
-            } catch (Exception e) {
+            } catch (Exception e) {//http://103.6.239.242/sme/mobile/getoperations/?id=4&companyID=2
                 error = e.getMessage();
                 Log.e("FirstTimeLoginActivity", error, e);
             }
@@ -259,7 +260,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 error = "Authentication failed";
             } else if (code.equals("3")) {
                 error = "Session expired";
-                my_dialog.show(error);
+//                my_dialog.show(error);
                 finish();
             } else {
                 error = code + " - unknown error";
@@ -326,5 +327,10 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // forbid returning to the first page
     }
 }

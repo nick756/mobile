@@ -25,16 +25,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".xml.xmllogin.XML_Login_Activity"
-            android:label="@string/title_activity_xml__login_" >
-        </activity>
-        <activity
             android:name=".miscellanea.Select_Language"
             android:label="@string/title_activity_select__language" >
-        </activity>
-        <activity
-            android:name=".FirstTimeLoginActivity"
-            android:label="@string/title_activity_first_time_login" >
         </activity>
         <activity
             android:name=".RegularLoginActivity"

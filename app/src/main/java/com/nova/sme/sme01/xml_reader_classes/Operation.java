@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.transactions;
+package com.nova.sme.sme01.xml_reader_classes;
 
 /*
  ***************************

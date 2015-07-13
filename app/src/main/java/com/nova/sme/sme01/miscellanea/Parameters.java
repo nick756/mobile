@@ -10,12 +10,10 @@ package com.nova.sme.sme01.miscellanea;
  */
 
 import com.nova.sme.sme01.CommonClass;
-import com.nova.sme.sme01.xml.xmllogin.Operator;
-import com.nova.sme.sme01.xml.xmllogin.XML_Login;
+import com.nova.sme.sme01.xml_reader_classes.Operator;
+import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
 import java.io.Serializable;
-
-import static java.sql.DriverManager.println;
 
 public class Parameters implements Serializable  {
 

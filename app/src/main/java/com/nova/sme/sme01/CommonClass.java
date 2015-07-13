@@ -1,7 +1,5 @@
 package com.nova.sme.sme01;
 
-import com.nova.sme.sme01.xml.xmllogin.XML_Login;
-
 import java.io.Serializable;
 
 /*

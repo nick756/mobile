@@ -1,7 +1,5 @@
 package com.nova.sme.sme01.miscellanea;
 
-import com.nova.sme.sme01.xml.xmllogin.Operator;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

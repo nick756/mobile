@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.transactions;
+package com.nova.sme.sme01.xml_reader_classes;
 
 /*
  *************************************************
@@ -9,15 +9,11 @@ package com.nova.sme.sme01.transactions;
  *************************************************
 */
 
-import com.nova.sme.sme01.xml.xmllogin.Profile;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Root(name="result")

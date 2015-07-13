@@ -1,42 +1,31 @@
 package com.nova.sme.sme01;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
-import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.transactions.GetOperations;
-import com.nova.sme.sme01.xml.xmllogin.Operator;
-import com.nova.sme.sme01.xml.xmllogin.XML_Login;
-import com.nova.sme.sme01.xml.xmllogin.XML_Login_Activity;
+import com.nova.sme.sme01.xml_reader_classes.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.Operator;
+import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
