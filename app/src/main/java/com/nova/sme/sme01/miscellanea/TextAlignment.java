@@ -1,4 +1,4 @@
-package com.nova.sme.sme01;
+package com.nova.sme.sme01.miscellanea;
 
 
 import android.content.Context;

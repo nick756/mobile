@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -93,13 +94,39 @@ public class FormResizing {
         return height;
     }
     //0.092
-    void resizeFirstRegularLogins(RelativeLayout base_layout, Vector<Button> bt_vector, float factor) {
+    void resizeRegularLogins(RelativeLayout base_layout, Vector<Button> bt_vector, Button logout_button, float factor) {
         int    viewTop            = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
         float  total_height       = (float)(base_layout.getHeight() - viewTop);//getTitleBarHeight() - getStatusBarHeight()); //770
         float  new_button_height  = total_height * factor;              //70.84
 
-        for (int i = 0; i < bt_vector.size(); i ++)
-            bt_vector.elementAt(i).setHeight((int)new_button_height);
+        Button button;
+        ViewGroup.LayoutParams params;
+        for (int i = 0; i < bt_vector.size(); i ++) {
+            button = bt_vector.elementAt(i);
+            params = button.getLayoutParams();
+            params.height = (int) new_button_height;
+        }
+        if (logout_button != null) {
+            params = logout_button.getLayoutParams();
+            params.height = (int) new_button_height;
+        }
+    }
+
+    void resizeOperationListTemplate(int id, float factor) {
+        int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        float  total_height = (float)(base_layout.getHeight() - viewTop);//getTitleBarHeight() - getStatusBarHeight()); //770
+        float  new_height   = total_height * factor;              //70.84
+
+        LinearLayout           base = (LinearLayout) activity.getWindow().findViewById(id);
+        LinearLayout           element;
+        ViewGroup.LayoutParams params;
+        if (base != null) {
+            for (int i = 0; i < base.getChildCount(); i ++) {
+                element       = (LinearLayout) base.getChildAt(i);
+                params        = element.getLayoutParams();
+                params.height = (int) new_height;
+            }
+        }
     }
 
 

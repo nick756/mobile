@@ -127,10 +127,15 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             public void onGlobalLayout() {
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
-                FR.resizeFirstRegularLogins(base_layout, bt_vector, 0.062f);// height's button/total_height
 
-                create_custom_bar();
+
+                Button logout_button = create_custom_bar();
+
+                FR.resizeRegularLogins(base_layout, bt_vector, logout_button, 0.062f);// height's button/total_height
+
                 fill_operation_list();
+                FR.resizeOperationListTemplate(R.id.template_operations_id, 0.1f);
+                //template_operations_id
             }
         });
 
@@ -147,10 +152,11 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             }
         }
     }
-    private void create_custom_bar() {
+    private Button create_custom_bar() {
         Button button = (new CreateCustomBar(this, base_layout)).getButton();
         if (button != null)
             button.setOnClickListener(this);
+        return button;
     }
 
     @Override
