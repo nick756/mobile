@@ -42,8 +42,8 @@
             />
 
         <ImageView
-            android:layout_width="2dp"
-            android:layout_height="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/user_icon"
             android:src="@mipmap/ic_user"
             android:layout_alignParentRight="true" />
@@ -61,8 +61,8 @@
         />
 
         <ImageView
-            android:layout_width="2dp"
-            android:layout_height="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/password_icon"
             android:src="@mipmap/ic_password"
             android:layout_alignParentRight="true" />
