@@ -4,9 +4,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/custom_layout"
     android:background="@android:color/black"
-    android:gravity="fill_horizontal"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp">
+    android:gravity="fill_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,12 +16,13 @@
         android:paddingLeft="5dp"
         android:textColor="@android:color/white"
         android:layout_gravity="right"
-        android:gravity="center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/logout_button"
         android:textAlignment="center"
         android:textStyle="normal"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical" />
 
     <Button
         android:layout_width="wrap_content"
@@ -33,6 +32,7 @@
         android:background="@drawable/login_button_selector"
         android:layout_gravity="right"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>

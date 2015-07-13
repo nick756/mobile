@@ -88,14 +88,14 @@
             android:onClick="clickButton"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="View Transactions"
             android:id="@+id/view_transactions"
-            android:layout_marginTop="5dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -103,7 +103,8 @@
             android:background="@drawable/login_button_selector"
             android:onClick="clickButton"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp" />
 
         <Button
             android:layout_width="fill_parent"
@@ -112,12 +113,11 @@
             android:id="@+id/synch_oper_list"
             android:layout_below="@+id/reset_oper_list"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
             android:background="@drawable/login_button_selector"
             android:onClick="clickButton"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="2dp" />
 
         <Button
             android:layout_width="fill_parent"
@@ -129,7 +129,7 @@
             android:background="@drawable/login_button_selector"
             android:onClick="clickButton"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="2dp"
             android:layout_marginBottom="5dp" />
 
     </LinearLayout>
