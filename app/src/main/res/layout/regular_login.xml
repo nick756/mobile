@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/base_layout_background"
-    tools:context="com.nova.sme.sme01.FirstTimeLoginActivity"
+
     android:layout_gravity="center_vertical|center_horizontal"
     android:id="@+id/base_layout_regular"
     >
