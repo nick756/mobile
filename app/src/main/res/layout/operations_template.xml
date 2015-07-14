@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/user_name_background"
+        android:tag="element"
         android:layout_gravity="top">
 
         <ImageView
@@ -40,6 +41,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:tag="element"
         android:background="@drawable/user_name_background">
 
         <ImageView
@@ -65,6 +67,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:tag="element"
         android:background="@drawable/user_name_background">
 
         <ImageView
@@ -86,6 +89,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:tag="element"
         android:background="@drawable/user_name_background">
 
         <ImageView
@@ -107,6 +111,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:tag="element"
         android:background="@drawable/user_name_background">
 
         <ImageView
