@@ -103,11 +103,11 @@ public class FillWithOperationsList {
                         text = (TextView) view;
                         text.setText(operation.getName());
                     } else if (tag.equals("inbound")) {
-                        img = (ImageView) view;//R.drawable.someImageId
+                        img = (ImageView) view;
                         if (operation.getInbound().equals("true")) {
                             img.setImageResource(R.mipmap.ic_checked);
                         } else {
-                            to_remove = inner_layout;//img.setImageResource(R.mipmap.ic_uncheck);
+                            to_remove = inner_layout;
                             break;
                         }
                     } else if (tag.equals("outbound")) {
@@ -115,7 +115,7 @@ public class FillWithOperationsList {
                         if (operation.getOutbound().equals("true")) {
                             img.setImageResource(R.mipmap.ic_checked);
                         } else {
-                            to_remove = inner_layout;//img.setImageResource(R.mipmap.ic_uncheck);
+                            to_remove = inner_layout;
                             break;
                         }
                     } else if (tag.equals("type")) {
@@ -127,8 +127,5 @@ public class FillWithOperationsList {
         }
         if (to_remove != null)
             layout.removeView(to_remove);
-
- //       if (to_remove != null)
- //           layout.removeView(to_remove);
     }
 }

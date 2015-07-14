@@ -1,5 +1,6 @@
 package com.nova.sme.sme01;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -181,18 +182,16 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
 
         switch (id) {
             case R.id.perform_transaction:
-
+//                Intent resultIntent = new Intent(base_layout.getContext(), TransactionActivity.class);
+                startActivity(new Intent(base_layout.getContext(), TransactionActivity.class));
                 break;
             case R.id.view_transactions:
 
                 break;
             case R.id.synch_oper_list:
-                block_button = true;
-
-
+                block_button        = true;
                 this.operaions_list = null;
                 fill_operation_list();
-
                 new HttpRequestTask().execute();
                 break;
             case R.id.reset_oper_list:
