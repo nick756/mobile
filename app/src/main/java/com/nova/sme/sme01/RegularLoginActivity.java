@@ -163,10 +163,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.logout_button) {
-            if (this.sender == null)
-                new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
-            else
-                new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
+            new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
         }
     }
 

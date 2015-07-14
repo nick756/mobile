@@ -111,6 +111,17 @@ public class FormResizing {
             params.height = (int) new_button_height;
         }
     }
+    void resizeLoginButton(RelativeLayout base_layout, Button logout_button, float factor) {
+        int    viewTop            = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        float  total_height       = (float)(base_layout.getHeight() - viewTop);//getTitleBarHeight() - getStatusBarHeight()); //770
+        float  new_button_height  = total_height * factor;              //70.84
+
+        ViewGroup.LayoutParams params;
+        if (logout_button != null) {
+            params = logout_button.getLayoutParams();
+            params.height = (int) new_button_height;
+        }
+    }
 
     void resizeOperationListTemplate(int id, float factor) {
         int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();

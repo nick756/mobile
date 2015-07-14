@@ -9,4 +9,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_regular_login">RegularLoginActivity</string>
+    <string name="title_activity_transaction">TransactionActivity</string>
 </resources>

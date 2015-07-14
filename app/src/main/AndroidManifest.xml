@@ -32,6 +32,10 @@
             android:name=".RegularLoginActivity"
             android:label="@string/title_activity_regular_login" >
         </activity>
+        <activity
+            android:name=".TransactionActivity"
+            android:label="@string/title_activity_transaction" >
+        </activity>
     </application>
 
 </manifest>
