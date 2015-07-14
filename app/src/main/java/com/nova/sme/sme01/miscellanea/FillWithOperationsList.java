@@ -83,14 +83,18 @@ public class FillWithOperationsList {
     private void setValues(LinearLayout layout, Operation operation) {
         View view;
         LinearLayout inner_layout;
+        View         to_remove = null;
         String       tag;
         TextView text;
         ImageView img;
+
+        to_remove = null;
         for (int i = 0; i < layout.getChildCount(); i ++) {
             inner_layout = (LinearLayout) layout.getChildAt(i);
             for (int j = 0; j < inner_layout.getChildCount(); j ++) {
-                view = inner_layout.getChildAt(j);
-                tag  = (String) view.getTag();
+                view      = inner_layout.getChildAt(j);
+                tag       = (String) view.getTag();
+
                 if (tag != null) {
                     if (tag.equals("code")) {
                         text = (TextView) view;
@@ -100,16 +104,20 @@ public class FillWithOperationsList {
                         text.setText(operation.getName());
                     } else if (tag.equals("inbound")) {
                         img = (ImageView) view;//R.drawable.someImageId
-                        if (operation.getInbound().equals("true"))
+                        if (operation.getInbound().equals("true")) {
                             img.setImageResource(R.mipmap.ic_checked);
-                        else
-                            img.setImageResource(R.mipmap.ic_uncheck);
+                        } else {
+                            to_remove = inner_layout;//img.setImageResource(R.mipmap.ic_uncheck);
+                            break;
+                        }
                     } else if (tag.equals("outbound")) {
                         img = (ImageView) view;
-                        if (operation.getOutbound().equals("true"))
+                        if (operation.getOutbound().equals("true")) {
                             img.setImageResource(R.mipmap.ic_checked);
-                        else
-                            img.setImageResource(R.mipmap.ic_uncheck);
+                        } else {
+                            to_remove = inner_layout;//img.setImageResource(R.mipmap.ic_uncheck);
+                            break;
+                        }
                     } else if (tag.equals("type")) {
                         text = (TextView) view;
                         text.setText(operation.getType());
@@ -117,5 +125,10 @@ public class FillWithOperationsList {
                 }
             }
         }
+        if (to_remove != null)
+            layout.removeView(to_remove);
+
+ //       if (to_remove != null)
+ //           layout.removeView(to_remove);
     }
 }

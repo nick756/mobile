@@ -128,13 +128,12 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
 
-
                 Button logout_button = create_custom_bar();
 
                 FR.resizeRegularLogins(base_layout, bt_vector, logout_button, 0.062f);// height's button/total_height
 
                 fill_operation_list();
-                FR.resizeOperationListTemplate(R.id.template_operations_id, 0.1f);
+                FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
                 //template_operations_id
             }
         });

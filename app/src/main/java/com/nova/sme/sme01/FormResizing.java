@@ -114,17 +114,21 @@ public class FormResizing {
 
     void resizeOperationListTemplate(int id, float factor) {
         int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        float  total_height = (float)(base_layout.getHeight() - viewTop);//getTitleBarHeight() - getStatusBarHeight()); //770
-        float  new_height   = total_height * factor;              //70.84
+        float  total_height = (float)(base_layout.getHeight() - viewTop);
+        float  new_height   = total_height * factor;
 
         LinearLayout           base = (LinearLayout) activity.getWindow().findViewById(id);
-        LinearLayout           element;
+        LinearLayout           element, sub_element;
         ViewGroup.LayoutParams params;
+
         if (base != null) {
-            for (int i = 0; i < base.getChildCount(); i ++) {
+            for (int i = 0; i <  base.getChildCount(); i ++) {
                 element       = (LinearLayout) base.getChildAt(i);
-                params        = element.getLayoutParams();
-                params.height = (int) new_height;
+                for (int j = 0; j < element.getChildCount(); j ++) {
+                    sub_element   = (LinearLayout)element.getChildAt(j);
+                    params        = sub_element.getLayoutParams();
+                    params.height = (int) new_height;
+                }
             }
         }
     }
