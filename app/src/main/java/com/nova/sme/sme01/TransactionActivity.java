@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +25,12 @@ import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.Parameters;
+import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.SpinnerModel;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.GetOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,8 +52,13 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     private Vocabulary                    voc;
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
 
-    private DatePicker                    datePicker;
-    private GregorianCalendar             calendar;
+
+//    private GregorianCalendar             calendar = new GregorianCalendar();
+    private RelativeLayout                base_calendar_layout;
+    private Spinner                       year_spinner;
+    private Spinner                       month_spinner;
+    private Spinner                       day_spinner;
+    private SimpleCalendar                simple_calendar;// = new SimpleCalendar();
 
     private Button                        submit_button;
 
@@ -83,33 +91,12 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         url_logout         += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
 
-        datePicker    = (DatePicker)findViewById(R.id.date_picker);
-        this.calendar = new GregorianCalendar();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            this.calendar.add(Calendar.DATE, -365);
-            this.datePicker.setMinDate(this.calendar.getTimeInMillis());
-        } else {
-            final int minYear  = calendar.get(Calendar.YEAR);
-            final int minMonth = calendar.get(Calendar.MONTH);
-            final int minDay   = calendar.get(Calendar.DAY_OF_MONTH);
+        year_spinner         = (Spinner)findViewById(R.id.year_spinner);
+        month_spinner        = (Spinner)findViewById(R.id.month_spinner);
+        day_spinner          = (Spinner)findViewById(R.id.day_spinner);
+        base_calendar_layout = (RelativeLayout)findViewById(R.id.base_calendar);
 
-            this.datePicker.init(minYear, minMonth, minDay,
-                    new DatePicker.OnDateChangedListener() {
-
-                        public void onDateChanged(DatePicker view, int year,
-                                                  int month, int day) {
-                            Calendar newDate = Calendar.getInstance();
-                            newDate.set(year, month, day);
-
-                            if (calendar.after(newDate)) {
-                                view.init(minYear - 1, minMonth, minDay, this);
-                            }
-                        }
-                    });
-        }
-
-//        DateTime minDate = new DateTime();
-//        calendar.setMinDate(System.currentTimeMillis() - 1000);//*60*60*24*365);
+        simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -129,13 +116,13 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 });
 
                 FR.resizeLoginButton(base_layout, button, 0.062f);
-
                 setSpinner();
 
-
+                FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
             }
         });
     }
+
     void setSpinner() {
         spinner = (Spinner) findViewById(R.id.operations_list_spinner);
         fillSpinner();

@@ -1,12 +1,6 @@
 package com.nova.sme.sme01.miscellanea;
 
-/*
- **************************************************
- *                                                *
- *   Support Malay & English User Interface       *
- *                                                *
- **************************************************
- */
+
 
 import android.view.MenuItem;
 import android.widget.Button;
@@ -19,13 +13,36 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+/*
+ **************************************************
+ *                                                *
+ *   Support Malay & English User Interface       *
+ *                                                *
+ **************************************************
+ */
+
 public class Vocabulary implements Serializable {
     // The list is quiet short so that we use hardcoded info
 
     private Map<String, String> EngToMalay = new HashMap<String, String>();
     private Map<String, String> MalayToEng = new HashMap<String, String>();
     private String      current_language   = "EN"; //"MY"
-
+/*
+    public  String      months[] = {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "Augustus",
+            "September",
+            "October",
+            "November",
+            "December"
+    };
+*/
     private String arr[][] = {
             {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
             {"Lock Company",                                   "Syarikat Lock"},                // correct

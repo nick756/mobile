@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/transaction_base_id"
-    android:focusable="true">
+    android:focusable="false"
+    android:background="@drawable/base_layout_background">
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,11 +30,45 @@
         android:spinnerMode="dropdown"
         android:background="@drawable/base_layout_background" />
 
-    <DatePicker
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/date_picker"
+
         android:layout_below="@+id/operations_list_spinner"
-        android:layout_margin="5dp" />
+        android:background="@drawable/base_layout_background"
+        android:id="@+id/base_calendar"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/year_spinner"
+
+            android:layout_margin="5dp"
+            android:background="@drawable/operations_background"
+        />
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/month_spinner"
+
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/year_spinner"
+            android:background="@drawable/operations_background"
+        />
+
+        <Spinner
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/day_spinner"
+
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@+id/month_spinner"
+            android:background="@drawable/operations_background"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

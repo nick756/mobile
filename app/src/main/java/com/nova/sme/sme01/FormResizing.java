@@ -12,6 +12,7 @@ import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Vector;
@@ -142,6 +143,35 @@ public class FormResizing {
                 }
             }
         }
+    }
+    public void resizeCalendar(RelativeLayout base_layout, RelativeLayout base_calendar_layout, Spinner years, Spinner months, Spinner days, float factor) {
+        int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        float  width        = this.real_width;//(float)base_calendar_layout.getWidth() - converDpToPixels(30) - this.real_width ;//1139
+        float  total_height = (float)(base_layout.getHeight() - viewTop);
+        float  new_height   = total_height * factor;
+
+        float  y = 4.0f;
+        float  m = 7.0f;
+        float  d = 3.0f;
+
+        ViewGroup.LayoutParams params;
+        params        = years.getLayoutParams();
+        params.height = (int)new_height;
+        params.width  = (int)(width *y/(y + m + d));//303
+
+        params        = months.getLayoutParams();
+        params.height = (int)new_height;
+        params.width  = (int)(width *m/(y + m + d));//683
+
+        params        = days.getLayoutParams();
+        params.height = (int)new_height;
+        params.width  = (int)(width *d/(y + m + d));//151
+
+
+    }
+
+    private float converDpToPixels(int dp) {
+        return dp * activity.getResources().getDisplayMetrics().density;
     }
 
 
