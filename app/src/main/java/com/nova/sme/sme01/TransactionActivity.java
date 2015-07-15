@@ -17,12 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.HttpRequestTransaction;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
@@ -51,6 +53,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     private FileManager                   FM;
     private Vocabulary                    voc;
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        base_url        = "http://103.6.239.242/sme/mobile/addtransaction/?";
 
 
 //    private GregorianCalendar             calendar = new GregorianCalendar();
@@ -97,6 +100,9 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         base_calendar_layout = (RelativeLayout)findViewById(R.id.base_calendar);
 
         simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
+
+        String deb = "http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/7/2015&operationCode=3&operationAmount=1500.60&operationDescription=This is a test";
+        String ss = deb.substring(144);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -177,6 +183,39 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_transaction, menu);
         return true;
+    }
+
+    public void submitClick(View view) {
+        String http = base_url;
+        http += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+        http += "&date=" + simple_calendar.getDateFormatted();
+        http += "&operationCode="; //this.selected_item
+
+        //------------//
+        Operation       operation;
+        List<Operation> operations_list = this.operaions_list.getOperationsList();
+        operation                       = operations_list.get(this.selected_item);
+
+        http += operation.getCode();
+        //-----------//
+
+        //-----------//
+        EditText edit = (EditText)findViewById(R.id.sum_id);
+        String sum = edit.getText().toString().trim();
+        edit = (EditText)findViewById(R.id.sum_id);
+
+        edit = (EditText)findViewById(R.id.sub_sum_id);
+        sum += "." + edit.getText().toString().trim();
+
+        http += "&operationAmount=" + sum;
+        //-----------//
+
+        edit = (EditText)findViewById(R.id.transaction_description_id);
+        http += "&operationDescription='" + edit.getText().toString().trim() +"'";
+
+        HttpRequestTransaction http_request = new HttpRequestTransaction(this, base_layout, voc, http);
+
+        //http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/7/2015&operationCode=2&operationAmount=59423.89&operationDescription=This is a test
     }
 
     @Override

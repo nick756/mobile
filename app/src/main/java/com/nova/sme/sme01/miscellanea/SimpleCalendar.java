@@ -83,8 +83,8 @@ public class SimpleCalendar {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
                 month_curr_position = position;
-                TextView tv         = (TextView) v;
-                selectedMonth       = tv.getText().toString();
+                TextView tv = (TextView) v;
+                selectedMonth = tv.getText().toString();
                 correct_days();
             }
 
@@ -96,31 +96,6 @@ public class SimpleCalendar {
 
         // DAYS
         setDays(get_days_in_month(year, month));
-/*
-        int days = get_days_in_month(year, month);
-        list = new ArrayList<String>();
-        for (int i = 1; i <= days; i ++)
-            list.add(Integer.toString(i));
-
-        dataAdapter = new ArrayAdapter<String> (activity, android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.day_spinner.setAdapter(dataAdapter);
-        this.day_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
-                day_curr_position = position;
-                TextView tv       = (TextView) v;
-                selectedDay       = tv.getText().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
-*/
-//        set_days(this.getCurrentYear(), this.getCurrentMonth());
-
         int curr_day   = getCurrentDay();
         int curr_month = getCurrentMonth();
         int curr_year  = getCurrentYear();
@@ -140,7 +115,28 @@ public class SimpleCalendar {
 
     }
 
-    void setDays(int days) {
+    public String getDateFormatted() {//dd/mm/yyyy
+        String date = null;
+
+        String day;
+        if (day_curr_position + 1 < 10)
+            day = "0" + Integer.toString(day_curr_position + 1);
+        else
+            day = Integer.toString(day_curr_position + 1);
+
+        String month;
+        if (month_curr_position + 1 < 10)
+            month = "0" + Integer.toString(month_curr_position + 1);
+        else
+            month = Integer.toString(month_curr_position + 1);
+
+        String year = selectedYear;
+
+        date = day + "/" + month + "/" + year;
+
+        return date;
+    }
+    private void setDays(int days) {
 //        int days        = get_days_in_month(Integer.parseInt(this.selectedYear), month_curr_position);
         List<String> list = new ArrayList<String>();
         for (int i = 1; i <= days; i ++)
@@ -153,8 +149,9 @@ public class SimpleCalendar {
         this.day_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
-                TextView tv   = (TextView) v;
-                selectedDay   = tv.getText().toString();
+                TextView tv       = (TextView) v;
+                selectedDay       = tv.getText().toString();
+                day_curr_position = position;
             }
 
             @Override

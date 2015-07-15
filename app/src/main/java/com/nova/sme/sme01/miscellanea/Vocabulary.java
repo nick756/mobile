@@ -76,6 +76,8 @@ public class Vocabulary implements Serializable {
             {"Error occured",                                  "Ralat berlaku"},
             {"Operations List is empty",                       "Senarai Operasi kosong"},
             {"Reset Operations List",                          "Set Semula Senarai Operasi"},
+            {"Please, select operation list",                  "Sila, pilih Senarai operasi"},
+            {"Submit",                                         "Hantar"},
 
     };
 
