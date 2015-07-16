@@ -106,7 +106,8 @@
             android:hint="Amount"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:maxLength="6" />
 
         <EditText
             android:layout_width="80dp"
