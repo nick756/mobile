@@ -155,7 +155,7 @@ public class FormResizing {
         float  d = 3.0f;
 
 
-        float  width  = (float)base_calendar_layout.getWidth() - converDpToPixels(6) - this.width_margin*2;
+        float  width  = (float)base_calendar_layout.getWidth() - converDpToPixels(6*2) - this.width_margin*2;
 
         ViewGroup.LayoutParams params;
 
@@ -177,7 +177,7 @@ public class FormResizing {
         float  total_height = (float)(base_layout.getHeight() - viewTop);
         float  new_height   = total_height * factor;
 
-        float  width  = (float)base_amount_layout.getWidth() - this.width_margin*2 - converDpToPixels(6);
+        float  width  = (float)base_amount_layout.getWidth() - this.width_margin*2 - converDpToPixels(6*2);
 
         ViewGroup.LayoutParams params;
 

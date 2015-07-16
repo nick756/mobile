@@ -3,24 +3,23 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/base_layout_before_transaction_id"
     android:layout_gravity="center_vertical|center_horizontal"
-    android:background="@drawable/base_layout_background">
+    android:background="@drawable/base_layout_background"
+    android:padding="5dp">
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
         android:id="@+id/background_layout"
-        android:layout_margin="10dp"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/base_layout_background"
+        android:background="#D7E5E1"
         android:padding="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/operations_background"
+            android:background="#D7E5E1"
             android:layout_margin="5dp"
             android:padding="5dp"
             android:id="@+id/relativeLayout">
@@ -87,26 +86,26 @@
             android:text="01/01/2016"
             android:id="@+id/date_transaction_id"
             android:layout_below="@+id/relativeLayout"
-            android:background="@drawable/base_layout_background"
-            android:layout_margin="5dp"
+            android:background="#D7E5E1"
             android:padding="5dp"
             android:textAlignment="center"
             android:gravity="center"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="14dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9999.99"
             android:id="@+id/amount_transaction_id"
             android:layout_centerVertical="true"
-            android:layout_margin="5dp"
             android:layout_below="@+id/date_transaction_id"
-            android:background="@drawable/base_layout_background"
+            android:background="#D7E5E1"
             android:padding="5dp"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="15dp"
+            android:text="9999.99" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -117,8 +116,8 @@
             android:textStyle="bold"
             android:padding="5dp"
             android:layout_below="@+id/amount_transaction_id"
-            android:layout_margin="5dp"
-            android:background="@drawable/base_layout_background" />
+            android:background="#D7E5E1"
+            android:layout_marginLeft="14dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -126,9 +125,10 @@
             android:text="Cancel"
             android:id="@+id/cancel_button_trans_id"
             android:layout_below="@+id/before_description"
-            android:layout_margin="5dp"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/login_button_selector" />
+            android:background="@drawable/login_button_selector"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="5dp" />
 
         <Button
             android:layout_width="wrap_content"
