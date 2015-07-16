@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -48,7 +49,7 @@ public class FormResizing {
 
         this.real_width   = (int)width_area;
 
-                height_area -= (float)(getTitleBarHeight() + getStatusBarHeight());//1696
+        height_area -= (float)(getTitleBarHeight() + getStatusBarHeight());//1696
 
         float height_to_width_etalon_factor = height_virt / width_virt; //1.777777...
         float height_to_width_real_factor = height_area / width_area; //1.47
@@ -146,7 +147,6 @@ public class FormResizing {
     }
     public void resizeCalendar(RelativeLayout base_layout, RelativeLayout base_calendar_layout, Spinner years, Spinner months, Spinner days, float factor) {
         int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        float  width        = this.real_width;//(float)base_calendar_layout.getWidth() - converDpToPixels(30) - this.real_width ;//1139
         float  total_height = (float)(base_layout.getHeight() - viewTop);
         float  new_height   = total_height * factor;
 
@@ -154,7 +154,11 @@ public class FormResizing {
         float  m = 7.0f;
         float  d = 3.0f;
 
+
+        float  width  = (float)base_calendar_layout.getWidth() - converDpToPixels(6) - this.width_margin*2;
+
         ViewGroup.LayoutParams params;
+
         params        = years.getLayoutParams();
         params.height = (int)new_height;
         params.width  = (int)(width *y/(y + m + d));//303
@@ -167,6 +171,30 @@ public class FormResizing {
         params.height = (int)new_height;
         params.width  = (int)(width *d/(y + m + d));//151
 
+    }
+    public void resizeAmounts(RelativeLayout base_layout, RelativeLayout base_amount_layout, EditText amount, EditText cents, Button button, float factor) {
+        int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        float  total_height = (float)(base_layout.getHeight() - viewTop);
+        float  new_height   = total_height * factor;
+
+        float  width  = (float)base_amount_layout.getWidth() - this.width_margin*2 - converDpToPixels(6);
+
+        ViewGroup.LayoutParams params;
+
+        if (button != null) {
+            params = button.getLayoutParams();
+            params.height = (int) new_height;
+            params.width  = (int)(width*0.25f);
+        }
+
+
+        params = amount.getLayoutParams();
+        params.width  = (int) (width*0.35f);
+        params.height = (int) new_height;
+
+        params = cents.getLayoutParams();
+        params.width = (int) (width*0.18f);
+        params.height = (int) new_height;
 
     }
 

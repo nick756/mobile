@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:id="@+id/transaction_base_id"
     android:focusable="false"
+    android:layout_gravity="center_vertical|center_horizontal"
     android:background="@drawable/base_layout_background">
 
     <TextView
@@ -11,11 +12,11 @@
         android:layout_height="wrap_content"
         android:text="Please, select operation list"
         android:id="@+id/transaction_caption"
-        android:layout_margin="5dp"
+        android:layout_margin="1dp"
         android:background="@drawable/ordinary_text_background"
         android:gravity="center"
         android:autoText="false"
-        android:padding="5dp"
+        android:padding="1dp"
         android:layout_centerHorizontal="true"
         android:textStyle="bold" />
 
@@ -27,7 +28,7 @@
 
         android:focusableInTouchMode="true"
         android:layout_below="@+id/transaction_caption"
-        android:layout_margin="5dp"
+        android:layout_margin="1dp"
         android:spinnerMode="dropdown"
         android:background="@drawable/base_layout_background" />
 
@@ -39,38 +40,38 @@
         android:layout_below="@+id/operations_list_spinner"
         android:background="@drawable/base_layout_background"
         android:id="@+id/base_calendar"
-        android:layout_margin="5dp"
-        android:padding="5dp">
+        android:layout_margin="1dp"
+        android:padding="1dp">
 
         <Spinner
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/year_spinner"
 
-            android:layout_margin="5dp"
+            android:layout_margin="1dp"
             android:background="@drawable/operations_background"
-        />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Spinner
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/month_spinner"
 
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/year_spinner"
             android:background="@drawable/operations_background"
-        />
+            android:layout_alignTop="@+id/year_spinner"
+            android:layout_toRightOf="@+id/year_spinner"
+            android:layout_toEndOf="@+id/year_spinner" />
 
         <Spinner
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:id="@+id/day_spinner"
 
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/month_spinner"
             android:background="@drawable/operations_background"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_toRightOf="@+id/month_spinner"
+            android:layout_margin="1dp"
+        />
     </RelativeLayout>
 
     <EditText
@@ -79,9 +80,9 @@
         android:id="@+id/transaction_description_id"
         android:hint="Description"
         android:layout_below="@+id/base_calendar"
-        android:layout_margin="5dp"
+        android:layout_margin="1dp"
         android:background="@drawable/base_layout_background"
-        android:padding="5dp"
+        android:padding="1dp"
         android:singleLine="false"
         android:textStyle="bold"
         android:inputType="text|textMultiLine"
@@ -91,44 +92,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/transaction_description_id"
-        android:layout_margin="5dp"
+        android:layout_margin="1dp"
         android:background="@drawable/base_layout_background"
-        android:padding="5dp">
+        android:padding="1dp"
+        android:id="@+id/base_amount_id">
 
         <EditText
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/sum_id"
-            android:layout_margin="5dp"
+            android:layout_margin="1dp"
             android:background="@drawable/text_base_layout"
             android:hint="Amount"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
-            android:padding="5dp"
+            android:padding="1dp"
             android:maxLength="6" />
 
         <EditText
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/sub_sum_id"
             android:layout_toRightOf="@+id/sum_id"
-            android:padding="5dp"
+            android:padding="1dp"
             android:hint="00"
             android:layout_centerVertical="true"
             android:background="@drawable/text_base_layout"
-            android:maxLength="2" />
+            android:maxLength="2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
             android:id="@+id/submit_transaction_button"
-            android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
+            android:layout_margin="1dp"
             android:onClick="submitClick"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

@@ -18,6 +18,14 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
+/*
+ ********************************
+ *                              *
+ *   Provide logout procedure   *
+ *                              *
+ ********************************
+ */
+
 public class Http_Request_Logout {
     private String         url_logout;
     private Vocabulary     voc;
@@ -76,10 +84,10 @@ public class Http_Request_Logout {
 
         @Override
         protected void onPostExecute(BaseXML xml_logout) {
-            boolean ok = false;
-            if (xml_logout != null) {
-                if (xml_logout.getCode().equals("0")) {
-                    ok = true;
+//            boolean ok = false;
+//            if (xml_logout != null) {
+//                if (xml_logout.getCode().equals("0")) {
+//                    ok = true;
                     if (by_finish) {
                         activity.finish();//goto login view
                     } else {
@@ -87,10 +95,10 @@ public class Http_Request_Logout {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
                         activity.startActivity(intent);
                     }
-                }
-            }
-            if (!ok)
-                my_dialog.show("Error occured");
+//                }
+//            }
+//            if (!ok)
+//                my_dialog.show("Error occured");
         }
     }
 }

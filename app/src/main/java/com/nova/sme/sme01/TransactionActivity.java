@@ -113,7 +113,6 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
 
@@ -129,6 +128,11 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 setSpinner();
 
                 FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
+                FR.resizeAmounts( base_layout,
+                                 (RelativeLayout)findViewById(R.id.base_amount_id),
+                                 (EditText)findViewById(R.id.sum_id),
+                                 (EditText)findViewById(R.id.sub_sum_id),
+                                 (Button) findViewById(R.id.submit_transaction_button), 0.062f);
             }
         });
     }
@@ -190,36 +194,34 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     }
 
     public void submitClick(View view) {
+        Operation s_opearion;
+        String    s_date;
+        String    s_descr;
+        String    s_amount;
+/*
+    operation
+    String date
+    String descr
+    String sum
+*/
+
+        EditText edit;
         String http = base_url;
         http += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
         http += "&date=" + simple_calendar.getDateFormatted();
         http += "&operationCode="; //this.selected_item
 
+        s_date = simple_calendar.getDateFormatted();
         //------------//
         Operation       operation;
         List<Operation> operations_list = this.operaions_list.getOperationsList();
         operation                       = operations_list.get(this.selected_item);
 
         http += operation.getCode();
+
+        s_opearion = operation;
         //-----------//
 
-        //-----------//
-        EditText edit = (EditText)findViewById(R.id.sum_id);
-        String sum = edit.getText().toString().trim();
-
-        if (sum.length() == 0)
-            sum = "0";
-
-        edit = (EditText)findViewById(R.id.sub_sum_id);
-        sum += "." + getCents("00" + edit.getText().toString().trim());
-
-
-        if (Double.parseDouble(sum) == 0) {
-            my_dialog.show("Amount can not be empty");
-            return;
-        }
-
-        http += "&operationAmount=" + sum;
         //-----------//
 
         edit = (EditText)findViewById(R.id.transaction_description_id);
@@ -228,14 +230,38 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             my_dialog.show("Description can not be empty");
             return;
         }
+        s_descr = descr;
 
         http += "&operationDescription='" + descr +"'";
 
 
+        //-----------//
+        edit = (EditText)findViewById(R.id.sum_id);
+        String sum = edit.getText().toString().trim();
 
-        HttpRequestTransaction http_request = new HttpRequestTransaction(this, base_layout, voc, http);
+        if (sum.length() == 0)
+            sum = "0";
 
-        //http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/7/2015&operationCode=2&operationAmount=59423.89&operationDescription=This is a test
+        edit = (EditText)findViewById(R.id.sub_sum_id);
+        sum += "." + getCents("00" + edit.getText().toString().trim());
+        s_amount = sum;
+
+        if (Double.parseDouble(sum) == 0) {
+            my_dialog.show("Amount can not be empty");
+            return;
+        }
+
+        http += "&operationAmount=" + sum;
+
+        ConfirmTransaction ct = new ConfirmTransaction(this,
+                                                       this.voc,
+                                                       this.base_layout,
+                                                       http,
+                                                       s_opearion,
+                                                       s_date,
+                                                       descr,
+                                                       s_amount);
+        ct.show();
     }
 
     @Override

@@ -79,6 +79,7 @@ public class HttpRequestTransaction {
             if (xml_transaction != null) {
                 if (xml_transaction.getCode().equals("0")) {
                     ok = true;
+                    my_dialog.show("Success");
 /*
                     if (by_finish) {
                         activity.finish();//goto login view
