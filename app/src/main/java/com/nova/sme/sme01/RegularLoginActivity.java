@@ -291,6 +291,8 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         if (FM.writeToFile("parameters.bin", this.params)) {
             if (FM.writeToFile("operations_list.bin", xml_operation_list)) {
                 // validating
+                // we do not need validating more
+                /*
                 local = (GetOperations) FM.readFromFile("operations_list.bin");
                 if (!local.equals(xml_operation_list)) {
                     confirmed_message = "Error of saving Operations List";
@@ -298,10 +300,9 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     confirmed_message = "Operations List has been saved successfully";
                     success = true;
-                }
+                }*/
             } else {
                 confirmed_message = "Error of saving Operations List";
-
             }
         } else {
             success           = false;

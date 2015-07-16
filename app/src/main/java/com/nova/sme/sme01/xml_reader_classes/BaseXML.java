@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.xml_reader_classes;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -17,18 +17,22 @@ import org.simpleframework.xml.Root;
 public class BaseXML {
 
     @Attribute
-    private String code;
+    protected String code;
     public String getCode() {return code;}
 
     @Attribute
-    private String id;
+    protected String id;
     public  String getId() {return id;}
 
     @Element
-    private String originator;
+    protected String originator;
     public  String getOriginator(){return originator;}
 
-    @Element
-    private String description;
+    @Element(required = false, name = "description") // obsolete
+    protected String description;
     public  String getDescription(){return description;}
+
+    @Element(required = false, name = "resDescription")
+    protected String res_description;
+    public  String getResDescription() {return res_description;}
 }

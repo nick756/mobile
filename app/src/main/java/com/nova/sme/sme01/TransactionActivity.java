@@ -1,6 +1,7 @@
 package com.nova.sme.sme01;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Build;
@@ -26,6 +27,7 @@ import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.HttpRequestTransaction;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
+import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.SpinnerModel;
@@ -54,6 +56,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     private Vocabulary                    voc;
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
     private String                        base_url        = "http://103.6.239.242/sme/mobile/addtransaction/?";
+    private MyDialog                      my_dialog;
 
 
 //    private GregorianCalendar             calendar = new GregorianCalendar();
@@ -85,9 +88,10 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         setContentView(R.layout.activity_transaction);
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.transaction_base_id);
 
-        FM  = new FileManager(this);
-        FR  = new FormResizing(this, base_layout);
-        voc = new Vocabulary();
+        FM        = new FileManager(this);
+        FR        = new FormResizing(this, base_layout);
+        voc       = new Vocabulary();
+        my_dialog = new MyDialog(voc, base_layout);
 
         this.operaions_list = (GetOperations) FM.readFromFile(this.operations_list_name);
         this.params         = (Parameters)    FM.readFromFile(this.params_file_name);
@@ -202,20 +206,46 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         //-----------//
         EditText edit = (EditText)findViewById(R.id.sum_id);
         String sum = edit.getText().toString().trim();
-        edit = (EditText)findViewById(R.id.sum_id);
+
+        if (sum.length() == 0)
+            sum = "0";
 
         edit = (EditText)findViewById(R.id.sub_sum_id);
-        sum += "." + edit.getText().toString().trim();
+        sum += "." + getCents("00" + edit.getText().toString().trim());
+
+
+        if (Double.parseDouble(sum) == 0) {
+            my_dialog.show("Amount can not be empty");
+            return;
+        }
 
         http += "&operationAmount=" + sum;
         //-----------//
 
         edit = (EditText)findViewById(R.id.transaction_description_id);
-        http += "&operationDescription='" + edit.getText().toString().trim() +"'";
+        String descr = edit.getText().toString().trim();
+        if (descr.length() == 0) {
+            my_dialog.show("Description can not be empty");
+            return;
+        }
+
+        http += "&operationDescription='" + descr +"'";
+
+
 
         HttpRequestTransaction http_request = new HttpRequestTransaction(this, base_layout, voc, http);
 
         //http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/7/2015&operationCode=2&operationAmount=59423.89&operationDescription=This is a test
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    }
+
+
+    private String getCents(String val) {
+        return val.substring(val.length() - 2);
     }
 
     @Override
@@ -232,4 +262,6 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

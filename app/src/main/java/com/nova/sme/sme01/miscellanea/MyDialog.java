@@ -2,6 +2,7 @@ package com.nova.sme.sme01.miscellanea;
 
 
 import android.app.Dialog;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,8 +18,6 @@ public class MyDialog {
     public MyDialog(Vocabulary voc, RelativeLayout base_layout) {
         this.voc         = voc;
         this.base_layout = base_layout;
-
-
     }
     public void show(String message) {
         final Dialog dialog = new Dialog(base_layout.getContext());

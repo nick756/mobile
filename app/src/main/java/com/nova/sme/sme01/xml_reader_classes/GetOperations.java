@@ -18,7 +18,6 @@ import java.util.List;
 
 @Root(name="result")
 public class GetOperations implements Serializable {
-
     @Attribute
     private String code;
     public String getCode() {return this.code;}
@@ -31,9 +30,13 @@ public class GetOperations implements Serializable {
     private String originator;
     public  String getOriginator(){return this.originator;}
 
-    @Element
+    @Element(required = false, name = "description") // obsolete
     private String description;
     public  String getDescription(){return this.description;}
+
+    @Element(required = false, name = "resDescription")
+    private String res_description;
+    public  String getResDescription() {return res_description;}
 
     @Element
     private Profile profile;
@@ -53,9 +56,17 @@ public class GetOperations implements Serializable {
         if(!this.originator.equals(obj.getOriginator()))
             return false;
 
-        if (!this.description.equals(obj.getDescription()))
-            return false;
 
+        try {
+            if (!this.description.equals(obj.getDescription()))
+                return false;
+
+            if (!this.res_description.equals(obj.getResDescription()))
+                return false;
+
+        } catch(Exception err) {
+
+        }
         if (!this.profile.getName().equals(obj.getProfile().getName()))
             return false;
 

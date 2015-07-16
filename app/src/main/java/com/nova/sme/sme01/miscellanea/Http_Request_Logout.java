@@ -1,18 +1,13 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.nova.sme.sme01.MainActivity;
-import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.xml_reader_classes.BaseXML;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -22,8 +17,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class Http_Request_Logout {
     private String         url_logout;
@@ -64,7 +57,7 @@ public class Http_Request_Logout {
                 Serializer serializer = new Persister();
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
-                xml_logout = serializer.read(BaseXML.class, xml);
+                xml_logout = serializer.read(BaseXML.class, xml);//<result code='0' id='0'><originator>77.49.216.250</originator><description>User Session terminated</description></result>
 
                 return xml_logout;
             } catch (java.net.URISyntaxException e) {

@@ -1,13 +1,12 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
-import com.nova.sme.sme01.MainActivity;
+import com.nova.sme.sme01.xml_reader_classes.BaseXML;
+import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -37,12 +36,12 @@ public class HttpRequestTransaction {
 
         new Http_Request_Transaction().execute();
     }
-    private class Http_Request_Transaction extends AsyncTask<Void, String, BaseXML> {
+    private class Http_Request_Transaction extends AsyncTask<Void, String, TransactionXML> {
         @Override
-        protected BaseXML doInBackground(Void... params) {
+        protected TransactionXML doInBackground(Void... params) {
             String error;
 
-            BaseXML xml_logout;
+            TransactionXML xml_transaction;
             URI uri;
             try {
 
@@ -57,9 +56,9 @@ public class HttpRequestTransaction {
                 Serializer serializer = new Persister();
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
-                xml_logout = serializer.read(BaseXML.class, xml);
+                xml_transaction = serializer.read(TransactionXML.class, xml);
 
-                return xml_logout;
+                return xml_transaction;
             } catch (java.net.URISyntaxException e) {
                 error = e.getMessage();
                 Log.e("FirstTimeLoginActivity", error, e);
@@ -75,10 +74,10 @@ public class HttpRequestTransaction {
         }
 
         @Override
-        protected void onPostExecute(BaseXML xml_logout) {
+        protected void onPostExecute(TransactionXML xml_transaction) {
             boolean ok = false;
-            if (xml_logout != null) {
-                if (xml_logout.getCode().equals("0")) {
+            if (xml_transaction != null) {
+                if (xml_transaction.getCode().equals("0")) {
                     ok = true;
 /*
                     if (by_finish) {
