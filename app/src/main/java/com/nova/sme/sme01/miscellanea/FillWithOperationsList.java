@@ -96,36 +96,22 @@ public class FillWithOperationsList {
                 tag       = (String) view.getTag();
 
                 if (tag != null) {
-                    if (tag.equals("code")) {
-                        text = (TextView) view;
-                        text.setText(operation.getCode());
-                    } else if (tag.equals("name")) {
+                     if (tag.equals("name")) {
                         text = (TextView) view;
                         text.setText(operation.getName());
-                    } else if (tag.equals("inbound")) {
+                    } else if (tag.equals("in_out_bound")) {
                         img = (ImageView) view;
                         if (operation.getInbound().equals("true")) {
-                            img.setImageResource(R.mipmap.ic_checked);
+                            img.setImageResource(R.mipmap.ic_in_bound);
                         } else {
-                            to_remove = inner_layout;
-                            break;
+                            img.setImageResource(R.mipmap.ic_out_bound);
                         }
-                    } else if (tag.equals("outbound")) {
-                        img = (ImageView) view;
-                        if (operation.getOutbound().equals("true")) {
-                            img.setImageResource(R.mipmap.ic_checked);
-                        } else {
-                            to_remove = inner_layout;
-                            break;
-                        }
-                    } else if (tag.equals("type")) {
+                     } else if (tag.equals("type")) {
                         text = (TextView) view;
                         text.setText(operation.getType());
                     }
                 }
             }
         }
-        if (to_remove != null)
-            layout.removeView(to_remove);
     }
 }

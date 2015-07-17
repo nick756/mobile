@@ -16,13 +16,15 @@
         android:tag="element"
         android:background="@drawable/user_name_background">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_name_transaction"
-            android:layout_margin="5dp" />
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:src="@mipmap/ic_in_bound"
+             android:layout_margin="5dp"
+             android:id="@+id/in_out_bound"
+             android:focusable="false" />
 
-        <TextView
+         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="name"
@@ -34,29 +36,5 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="element"
-        android:background="@drawable/user_name_background">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_in_bound"
-            android:layout_margin="5dp"
-            android:id="@+id/in_out_bound"
-            android:focusable="false" />
-        <ImageView
-            android:tag="inbound"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_checked"
-            android:layout_margin="5dp"
-            android:focusable="false" />
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_locked"
-            android:layout_margin="10dp"
-            android:background="@drawable/base_layout_background" />
+            android:background="@drawable/base_layout_background"
+            android:focusableInTouchMode="true" />
 
         <TextView
             android:id="@+id/dialog_text"

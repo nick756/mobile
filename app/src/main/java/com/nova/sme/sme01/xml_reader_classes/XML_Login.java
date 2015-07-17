@@ -14,8 +14,6 @@ import org.simpleframework.xml.Root;
 
 @Root(name="result")
 public class XML_Login {
-
-
     @Attribute
     private String code;
     public String getCode() {return code;}
@@ -28,9 +26,13 @@ public class XML_Login {
     private String originator;
     public  String getOriginator(){return originator;}
 
-    @Element
+    @Element(required = false, name ="description")
     private String description;
     public  String getDescription(){return description;}
+
+    @Element(required = false, name ="resDescription")
+    private String resDescription;
+    public  String getResDescription(){return resDescription;}
 
     @Element
     private Operator operator;

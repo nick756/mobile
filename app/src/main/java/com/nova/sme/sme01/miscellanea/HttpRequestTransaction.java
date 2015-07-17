@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.xml_reader_classes.BaseXML;
 import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
 
@@ -79,7 +80,7 @@ public class HttpRequestTransaction {
             if (xml_transaction != null) {
                 if (xml_transaction.getCode().equals("0")) {
                     ok = true;
-                    my_dialog.show("Success");
+                    my_dialog.show("Success", R.mipmap.ic_success);
 /*
                     if (by_finish) {
                         activity.finish();//goto login view

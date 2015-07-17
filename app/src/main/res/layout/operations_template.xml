@@ -6,7 +6,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/operations_background"
+        android:background="@drawable/base_layout_background"
     android:id="@+id/template_operations_id"
     android:padding="5dp">
 
@@ -14,41 +14,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/user_name_background"
         android:tag="element"
-        android:layout_gravity="top">
+        android:background="@android:color/white">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_code"
-            android:layout_margin="5dp" />
-
-        <TextView
-            android:tag="code"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="code"
-            android:layout_gravity="center|right"
-            android:layout_margin="5dp"
-            android:gravity="center_vertical"
-            android:id="@+id/code_operation"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_size" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="element"
-        android:background="@drawable/user_name_background">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_name_transaction"
-            android:layout_margin="5dp" />
+            android:src="@mipmap/ic_in_bound"
+            android:tag = "in_out_bound" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,10 +29,11 @@
             android:text="name"
             android:tag="name"
             android:layout_gravity="center|right"
-            android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:id="@+id/name_opeartion"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:lines="1"
+            android:linksClickable="false" />
     </LinearLayout>
 
 
@@ -68,57 +42,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:tag="element"
-        android:background="@drawable/user_name_background">
+        android:background="@android:color/white">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_in_bound"
-            android:layout_margin="5dp" />
-        <ImageView
-            android:tag="inbound"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_checked"
-            android:layout_margin="5dp"
-            android:id="@+id/inbound_icon" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="element"
-        android:background="@drawable/user_name_background">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_out_bound"
-            android:layout_margin="5dp" />
-        <ImageView
-            android:tag="outbound"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_unchecked"
-            android:layout_margin="5dp"
-            android:id="@+id/out_bound_icon" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="element"
-        android:background="@drawable/user_name_background">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_financial_type"
-            android:layout_margin="5dp" />
+            android:src="@mipmap/ic_financial_type" />
 
         <TextView
             android:tag="type"
@@ -126,10 +55,11 @@
             android:layout_height="match_parent"
             android:text="type"
             android:layout_gravity="center|right"
-            android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:id="@+id/type_operation"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:lines="1"
+            android:longClickable="false" />
     </LinearLayout>
 
 </LinearLayout>
