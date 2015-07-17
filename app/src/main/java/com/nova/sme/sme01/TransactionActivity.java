@@ -88,25 +88,23 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         setContentView(R.layout.activity_transaction);
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.transaction_base_id);
 
-        FM        = new FileManager(this);
-        FR        = new FormResizing(this, base_layout);
-        voc       = new Vocabulary();
-        my_dialog = new MyDialog(voc, base_layout);
+        this.FM        = new FileManager(this);
+        this.FR        = new FormResizing(this, base_layout);
+        this.voc       = new Vocabulary();
+        this.my_dialog = new MyDialog(voc, base_layout);
 
         this.operaions_list = (GetOperations) FM.readFromFile(this.operations_list_name);
         this.params         = (Parameters)    FM.readFromFile(this.params_file_name);
-        url_logout         += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+        this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
+        this.voc.setLanguage(this.params.getLanguage());
 
-        year_spinner         = (Spinner)findViewById(R.id.year_spinner);
-        month_spinner        = (Spinner)findViewById(R.id.month_spinner);
-        day_spinner          = (Spinner)findViewById(R.id.day_spinner);
-        base_calendar_layout = (RelativeLayout)findViewById(R.id.base_calendar);
+        this.year_spinner         = (Spinner)findViewById(R.id.year_spinner);
+        this.month_spinner        = (Spinner)findViewById(R.id.month_spinner);
+        this.day_spinner          = (Spinner)findViewById(R.id.day_spinner);
+        this.base_calendar_layout = (RelativeLayout)findViewById(R.id.base_calendar);
 
         simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
-
-        String deb = "http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/7/2015&operationCode=3&operationAmount=1500.60&operationDescription=This is a test";
-        String ss = deb.substring(144);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -128,11 +126,13 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 setSpinner();
 
                 FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
-                FR.resizeAmounts( base_layout,
-                                 (RelativeLayout)findViewById(R.id.base_amount_id),
-                                 (EditText)findViewById(R.id.sum_id),
-                                 (EditText)findViewById(R.id.sub_sum_id),
-                                 (Button) findViewById(R.id.submit_transaction_button), 0.062f);
+                FR.resizeAmounts(base_layout,
+                        (RelativeLayout) findViewById(R.id.base_amount_id),
+                        (EditText) findViewById(R.id.sum_id),
+                        (EditText) findViewById(R.id.sub_sum_id),
+                        (Button) findViewById(R.id.submit_transaction_button), 0.062f);
+
+                //voc.TranslateAll(base_layout);
             }
         });
     }
@@ -198,12 +198,6 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         String    s_date;
         String    s_descr;
         String    s_amount;
-/*
-    operation
-    String date
-    String descr
-    String sum
-*/
 
         EditText edit;
         String http = base_url;
@@ -263,12 +257,12 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                                                        s_amount);
         ct.show();
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
-
+*/
 
     private String getCents(String val) {
         return val.substring(val.length() - 2);

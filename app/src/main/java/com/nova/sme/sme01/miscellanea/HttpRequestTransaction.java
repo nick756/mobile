@@ -80,7 +80,7 @@ public class HttpRequestTransaction {
             if (xml_transaction != null) {
                 if (xml_transaction.getCode().equals("0")) {
                     ok = true;
-                    my_dialog.show("Success", R.mipmap.ic_success);
+                    my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
 /*
                     if (by_finish) {
                         activity.finish();//goto login view

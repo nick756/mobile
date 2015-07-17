@@ -3,8 +3,11 @@ package com.nova.sme.sme01.miscellanea;
 
 
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -78,6 +81,9 @@ public class Vocabulary implements Serializable {
             {"Reset Operations List",                          "Set Semula Senarai Operasi"},
             {"Please, select operation list",                  "Sila, pilih Senarai operasi"},
             {"Submit",                                         "Hantar"},
+            {"Success",                                        "Kejayaan"},
+            {"Description",                                    "Penerangan"},
+            {"Amount",                                         "Jumlah"},
 
     };
 
@@ -137,6 +143,29 @@ public class Vocabulary implements Serializable {
         return current_language;
     }
 
+    public String getTranslatedString(String str) {
+        if (current_language.equals("EN"))
+            return getEnglish(str);
+        else
+            return getMalay(str);
+    }
+    public boolean change_caption(View view) {
+        String class_name = view.getClass().getName().toString();
+        if (class_name.indexOf("Button") != -1) {
+            change_caption((Button) view);
+            return true;
+        } else if(class_name.indexOf("TextView") != -1) {
+            change_caption((TextView) view);
+            return true;
+        } else if(class_name.indexOf("MenuItem") != -1) {
+            change_caption((MenuItem) view);
+            return true;
+        } else if(class_name.indexOf("EditText") != -1) {
+            change_caption((EditText) view);
+            return true;
+        }
+        return false;
+    }
     public void change_caption(TextView view) {
         if (getLanguage().equals("MY"))
             view.setText(getMalay(view.getText().toString()));
@@ -169,6 +198,35 @@ public class Vocabulary implements Serializable {
             return getMalay(str);
         else
             return str;
+    }
+
+    public void TranslateAll(View view) {
+        String class_name = view.getClass().getName().toString();
+
+        if (class_name.indexOf("RelativeLayout") != -1) {
+            RelativeLayout layout =  (RelativeLayout) view;
+            for (int i = 0; i < layout.getChildCount(); i ++) {
+                view = layout.getChildAt(i);
+                try {
+                    if (!change_caption(view))
+                        TranslateAll(view);
+                } catch(Exception err) {
+
+                }
+            }
+
+        } else if (class_name.indexOf("LinearLayout") != -1) {
+            LinearLayout layout = (LinearLayout) view;
+            for (int i = 0; i < layout.getChildCount(); i ++) {
+                view = layout.getChildAt(i);
+                try {
+                    if (change_caption(view))
+                        TranslateAll(view);
+                } catch(Exception err) {
+
+                }
+            }
+        }
     }
 
 }
