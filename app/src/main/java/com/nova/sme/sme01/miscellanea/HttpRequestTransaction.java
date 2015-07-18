@@ -90,10 +90,14 @@ public class HttpRequestTransaction {
                         activity.startActivity(intent);
                     }
 */
+                } else {
+                    my_dialog.show(voc.getTranslatedString(xml_transaction.getResDescription()), R.mipmap.ic_failture);
+                    return;
                 }
             }
-            if (!ok)
-                my_dialog.show("Error occured");
+            if (!ok) {
+                my_dialog.show(voc.getTranslatedString("Error occured"), R.mipmap.ic_failture);
+            }
         }
     }
 

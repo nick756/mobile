@@ -115,6 +115,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 FR.resize();
 
                 Button button = create_custom_bar();
+                voc.change_caption(button);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -132,7 +133,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                         (EditText) findViewById(R.id.sub_sum_id),
                         (Button) findViewById(R.id.submit_transaction_button), 0.062f);
 
-                //voc.TranslateAll(base_layout);
+                voc.TranslateAll(base_layout);
             }
         });
     }

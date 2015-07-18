@@ -67,11 +67,11 @@ public class ConfirmTransaction {
         text.setText(this.opearion.getName());
 
         ImageView img = (ImageView)dialog.findViewById(R.id.before_in_out);
-        if (opearion.getInbound().equals("true")) {
+        if (opearion.getInbound().equals("true"))
             img.setImageResource(R.mipmap.ic_in_bound);
-        } else {
+         else
             img.setImageResource(R.mipmap.ic_out_bound);
-        }
+
 
         Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button_trans_id);
         voc.change_caption(cancelButton);

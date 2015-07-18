@@ -154,8 +154,10 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     }
     private Button create_custom_bar() {
         Button button = (new CreateCustomBar(this, base_layout)).getButton();
-        if (button != null)
+        if (button != null) {
+            voc.change_caption(button);
             button.setOnClickListener(this);
+        }
         return button;
     }
 

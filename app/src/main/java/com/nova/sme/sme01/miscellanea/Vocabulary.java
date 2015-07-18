@@ -50,6 +50,7 @@ public class Vocabulary implements Serializable {
             {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
             {"Lock Company",                                   "Syarikat Lock"},                // correct
             {"Log Out",                                        "Log Keluar"},                   // correct
+            {"Logout",                                         "Log Keluar"},                   // correct
             {"Perform Transaction",                            "Melaksanakan Transaks"},        // correct
             {"View Transactions",                              "Lihat Transaksi"},              // correct
             {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
@@ -84,6 +85,9 @@ public class Vocabulary implements Serializable {
             {"Success",                                        "Kejayaan"},
             {"Description",                                    "Penerangan"},
             {"Amount",                                         "Jumlah"},
+            {"Cancel",                                         "Batal"},
+            {"Make Transaction",                               "Membuat Transaksi"},
+            {"Operation failed",                               "Operasi gagal"},
 
     };
 
@@ -99,7 +103,6 @@ public class Vocabulary implements Serializable {
             value = value.toUpperCase();
             if (!EngToMalay.containsKey(key))
                 EngToMalay.put(key, value);
-
 
 
             key   = arr[i][1];
