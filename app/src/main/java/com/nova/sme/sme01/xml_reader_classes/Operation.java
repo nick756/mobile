@@ -52,7 +52,7 @@ public class Operation implements Serializable {
     }
     public void setType(String type) {this.type = type;}
 
-
+/*
     public boolean equals(Operation obj) {
         if (!this.code.equals(obj.getCode()))
             return false;
@@ -64,7 +64,7 @@ public class Operation implements Serializable {
             return false;
         return this.type.equals(obj.getType());
     }
-
+*/
 
     Operation() {
 

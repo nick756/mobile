@@ -4,6 +4,8 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import java.io.Serializable;
+
 /*
  ***************************
  *                         *
@@ -14,25 +16,26 @@ import org.simpleframework.xml.Root;
  */
 
 @Root(name="result")
-public class BaseXML {
+public class BaseXML implements Serializable {
 
     @Attribute
     protected String code;
-    public String getCode() {return code;}
+    public    String getCode() {return code;}
 
     @Attribute
     protected String id;
-    public  String getId() {return id;}
+    public    String getId() {return id;}
 
     @Element
     protected String originator;
-    public  String getOriginator(){return originator;}
+    public    String getOriginator(){return originator;}
 
-    @Element(required = false, name = "description") // obsolete
+    @Element(required = false, name = "description") // obsolete, to be deleted
     protected String description;
-    public  String getDescription(){return description;}
+    public    String getDescription(){return description;}
 
     @Element(required = false, name = "resDescription")
     protected String res_description;
-    public  String getResDescription() {return res_description;}
+    public    String getResDescription() {return res_description;}
+
 }

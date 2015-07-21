@@ -1,5 +1,6 @@
 package com.nova.sme.sme01;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -10,9 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
+import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.GetOperations;
 
@@ -68,6 +72,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
+    private Button                        logout_button;
 
 
     @Override
@@ -129,13 +134,12 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
 
-                Button logout_button = create_custom_bar();
+                logout_button = create_custom_bar();
 
                 FR.resizeRegularLogins(base_layout, bt_vector, logout_button, 0.062f);// height's button/total_height
 
                 fill_operation_list();
                 FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
-                //template_operations_id
             }
         });
 
@@ -175,17 +179,68 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         getMenuInflater().inflate(R.menu.menu_regular_login, menu);
         return true;
     }
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        MenuCaptions(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void MenuCaptions(Menu menu) {
+        MenuItem item;
+        Menu     inner_menu;
+
+        for (int i = 0; i < menu.size(); i ++) {
+            item = menu.getItem(i);
+            voc.change_caption(item);
+
+            inner_menu = item.getSubMenu();
+            if (inner_menu != null)
+                MenuCaptions(inner_menu);
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_language) {
+            new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void  writeParameters() {
+        this.params.setLangauge(voc.getLanguage());
+        FM.writeToFile(params_file_name, this.params);
+    }
+    @Override
+    protected void onResume() {
+        getParams();
+        voc.TranslateAll(base_layout);
+        if (logout_button != null)
+            voc.change_caption(logout_button);
+        super.onResume();
+    }
+    private void getParams() {
+        this.params = (Parameters) FM.readFromFile(params_file_name);
+        if (this.params == null)
+            this.params = new Parameters();
+        else
+            voc.setLanguage(params.getLanguage());
+    }
 
     public void clickButton(View v) {
         int id = v.getId();
 
         switch (id) {
             case R.id.perform_transaction:
-//                Intent resultIntent = new Intent(base_layout.getContext(), TransactionActivity.class);
                 startActivity(new Intent(base_layout.getContext(), TransactionActivity.class));
                 break;
-            case R.id.view_transactions:
-
+            case R.id.view_transactions: {
+                //http://103.6.239.242/sme/mobile/listtransactions/?id=3&companyID=1&dateFrom=21/07/2015&dateTill=21/07/2015
+                String http = "http://103.6.239.242/sme/mobile/listtransactions/?id=" + this.params.getId();
+                GetFilterViewTransactions get_transactions;
+                get_transactions = new GetFilterViewTransactions(this, this.voc, this.base_layout, this.FR, http);
+            }
                 break;
             case R.id.synch_oper_list:
                 block_button        = true;
@@ -291,21 +346,8 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         boolean       success = true;
 
         if (FM.writeToFile("parameters.bin", this.params)) {
-            if (FM.writeToFile("operations_list.bin", xml_operation_list)) {
-                // validating
-                // we do not need validating more
-                /*
-                local = (GetOperations) FM.readFromFile("operations_list.bin");
-                if (!local.equals(xml_operation_list)) {
-                    confirmed_message = "Error of saving Operations List";
-                    success = false;
-                } else {
-                    confirmed_message = "Operations List has been saved successfully";
-                    success = true;
-                }*/
-            } else {
+            if (!FM.writeToFile("operations_list.bin", xml_operation_list))
                 confirmed_message = "Error of saving Operations List";
-            }
         } else {
             success           = false;
             confirmed_message = "Error of saving Operations List";
@@ -316,22 +358,6 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         return success;
     }
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onBackPressed() {

@@ -6,8 +6,9 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.nova.sme.sme01.R;
-import com.nova.sme.sme01.xml_reader_classes.BaseXML;
+import com.nova.sme.sme01.xml_reader_classes.Record;
 import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
+import com.nova.sme.sme01.xml_reader_classes.Transactions;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -18,41 +19,43 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
+
 
 /*
  *************************************
  *                                   *
- *   Http request for transaction    *
+ *   Http request for implemented    *
+ *   transactions (to view)          *
  *                                   *
  *************************************
- */
+*/
 
-public class HttpRequestTransaction {
+public class HttpRequestViewTransactions {
     private String         url_request;
-    private RelativeLayout base_layout;
+//    private RelativeLayout base_layout;
     private Activity       activity;
-    private MyDialog       my_dialog;
+//    private MyDialog       my_dialog;
     private Vocabulary     voc;
 
-    public HttpRequestTransaction(Activity  activity, RelativeLayout base_layout, Vocabulary voc, String url_request) {
+    public HttpRequestViewTransactions(Activity  activity, /*RelativeLayout base_layout, */Vocabulary voc, String url_request) {
         this.activity    = activity;
         this.url_request = url_request;
-        this.base_layout = base_layout;
+//        this.base_layout = base_layout;
         this.voc         = voc;
 
-        my_dialog        = new MyDialog(voc, base_layout);
+//        my_dialog        = new MyDialog(voc, base_layout);
 
-        new Http_Request_Transaction().execute();
+        new Http_Request_View_Transactions().execute();
     }
-    private class Http_Request_Transaction extends AsyncTask<Void, String, TransactionXML> {
+    private class Http_Request_View_Transactions extends AsyncTask<Void, String, Transactions> {
         @Override
-        protected TransactionXML doInBackground(Void... params) {
+        protected Transactions doInBackground(Void... params) {
             String error;
 
-            TransactionXML xml_transaction;
+            Transactions xml_transactions;
             URI uri;
             try {
-
                 URL url = new URL(url_request);
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
@@ -64,27 +67,28 @@ public class HttpRequestTransaction {
                 Serializer serializer = new Persister();
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
-                xml_transaction = serializer.read(TransactionXML.class, xml);
+                xml_transactions = serializer.read(Transactions.class, xml);
 
-                return xml_transaction;
+                return xml_transactions;
             } catch (java.net.URISyntaxException e) {
                 error = e.getMessage();
             } catch (RestClientException e){
                 error = e.getMessage();
             } catch (Exception e) {
                 error = e.getMessage();
-            }//http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/07/2015&operationCode=1&operationAmount=5000.45&operationDescription='This%20is%20a%20test'
-            //Illegal character in query at index 145: http://103.6.239.242/sme/mobile/addtransaction/?id=4&companyID=2&date=15/7/2015&operationCode=3&operationAmount=1500.60&operationDescription=This is a test
+            }
             return null;
         }
 
         @Override
-        protected void onPostExecute(TransactionXML xml_transaction) {
+        protected void onPostExecute(Transactions xml_transactions) {
             boolean ok = false;
-            if (xml_transaction != null) {
-                if (xml_transaction.getCode().equals("0")) {
+            if (xml_transactions != null) {
+                if (xml_transactions.getCode().equals("0")) {
                     ok = true;
-                    my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
+                    List<Record> list = xml_transactions.getRecordsList();
+
+//                    my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
 /*
                     if (by_finish) {
                         activity.finish();//goto login view
@@ -95,12 +99,12 @@ public class HttpRequestTransaction {
                     }
 */
                 } else {
-                    my_dialog.show(voc.getTranslatedString(xml_transaction.getResDescription()), R.mipmap.ic_failture);
+//                   my_dialog.show(voc.getTranslatedString(xml_transactions.getResDescription()), R.mipmap.ic_failture);
                     return;
                 }
             }
             if (!ok) {
-                my_dialog.show(voc.getTranslatedString("Error occured"), R.mipmap.ic_failture);
+//                my_dialog.show(voc.getTranslatedString("Error occured"), R.mipmap.ic_failture);
             }
         }
     }

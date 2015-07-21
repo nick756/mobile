@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/base_layout_background"
+    android:padding="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:id="@+id/from_id"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp" />
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="#D7E5E1"
+        android:id="@+id/from_calendar"
+        android:layout_below="@+id/from_id">
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/year_spinner_from"
+
+            android:layout_margin="2dp"
+            android:background="@drawable/operations_background"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/month_spinner_from"
+
+            android:background="@drawable/operations_background"
+            android:layout_toRightOf="@+id/year_spinner_from"
+            android:layout_toEndOf="@+id/year_spinner_from"
+            android:layout_margin="2dp" />
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/day_spinner_from"
+
+            android:background="@drawable/operations_background"
+            android:layout_toRightOf="@+id/month_spinner_from"
+            android:layout_margin="2dp"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Till"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:id="@+id/tillid"
+        android:layout_below="@+id/from_calendar"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="5dp" />
+
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="#D7E5E1"
+        android:id="@+id/till_calendar"
+
+        android:layout_below="@+id/tillid">
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/year_spinner_till"
+
+            android:layout_margin="2dp"
+            android:background="@drawable/operations_background"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/month_spinner_till"
+
+            android:background="@drawable/operations_background"
+            android:layout_toRightOf="@+id/year_spinner_till"
+            android:layout_toEndOf="@+id/year_spinner_till"
+            android:layout_margin="2dp" />
+
+        <Spinner
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/day_spinner_till"
+
+            android:background="@drawable/operations_background"
+            android:layout_toRightOf="@+id/month_spinner_till"
+            android:layout_margin="2dp"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/ok_from_till_button"
+        android:layout_below="@+id/till_calendar"
+        android:layout_alignLeft="@+id/till_calendar"
+        android:layout_alignStart="@+id/tillid"
+        android:textColor="@android:color/black"
+        android:background="@drawable/login_button_selector"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp" />
+
+
+</RelativeLayout>

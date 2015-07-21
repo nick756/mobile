@@ -37,6 +37,7 @@ public class FormResizing {
     private float   width_margin   = 0.0f;
     private float   height_margin  = 0.0f;
     private int     real_width;
+    private int     log_button_height = 0;
 
     public FormResizing(/*AppCompatActivity*/Activity activity, RelativeLayout base_layout) {
         this.base_layout = base_layout;
@@ -110,7 +111,8 @@ public class FormResizing {
         }
         if (logout_button != null) {
             params = logout_button.getLayoutParams();
-            params.height = (int) new_button_height;
+            params.height     = (int) new_button_height;
+            log_button_height = params.height;
         }
     }
     void resizeLoginButton(RelativeLayout base_layout, Button logout_button, float factor) {
@@ -122,8 +124,11 @@ public class FormResizing {
         if (logout_button != null) {
             params = logout_button.getLayoutParams();
             params.height = (int) new_button_height;
+
+            log_button_height = params.height;
         }
     }
+    public int getLogButtonHeight(){return log_button_height;}
 
     void resizeOperationListTemplate(int id, float factor) {
         int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
@@ -155,7 +160,9 @@ public class FormResizing {
         float  d = 3.0f;
 
 
-        float  width  = (float)base_calendar_layout.getWidth() - converDpToPixels(6*2) - this.width_margin*2;
+        float  width  = (float)base_calendar_layout.getWidth();//
+        width -= converDpToPixels(6*2);
+        width -= this.width_margin*2;
 
         ViewGroup.LayoutParams params;
 

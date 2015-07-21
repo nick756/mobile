@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
+import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.GetOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operator;
@@ -78,15 +79,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*
-        final Window window = getWindow();
-        try {
-            if (window.getContainer() == null)
-                customTitleSupported = requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        } catch(Exception err){//android.util.AndroidRuntimeException: requestFeature() must be called before adding content
-            println(err.getMessage().toString());
-        }
-*/
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         try {
             setContentView(R.layout.activity_main);
@@ -107,13 +99,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         setAutoOrientationEnabled(0);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //SME Cashflow Management System
-
-        // to hide keyboard, that appeares without our permiossion as default
-       this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); // to see later
-//        StrictMode.setThreadPolicy(policy);
+         // to hide keyboard, that appeares without our permiossion as default
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         base_layout = (android.widget.RelativeLayout) findViewById(R.id.base_layout);
 
@@ -136,108 +123,34 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         my_dialog        = new MyDialog(voc, base_layout);
         this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
- //       if (isFirstLogin())
- //           hide_logout_button();
-
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-                base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                FR.resize();
-                pv.set_parent_margins(FR.get_width_margin(), FR.get_height_margin());
-                pv.Placing();
+            base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            FR.resize();
+            pv.set_parent_margins(FR.get_width_margin(), FR.get_height_margin());
+            pv.Placing();
 
-                set_new_language();
-/*
-                View view = create_custom_bar();
-                if (view != null) {
-                    try {
-                        if (isFirstLogin())
-                            view.setVisibility(View.GONE);
-                        else
-                            view.setVisibility(View.VISIBLE);
-
-                    } catch (Exception err) {
-
-                    }
-                }
-*/
-
+            voc.TranslateAll(base_layout);
              }
         });
     }
-/*
-    private View create_custom_bar() {
-        try {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
-            RelativeLayout layout     = (RelativeLayout) inflater.inflate(R.layout.custom_title_bar, null);
-            layout.setPadding(0, 10, 0, 10);
-
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
-
-            actionBar.setCustomView(layout);//create_custom_bar());
-            float button_factor = 0.25f;
-            int width = base_layout.getWidth();//FR.getRealWidth();
-            float height;
-            float h_margin;
-            Button button = (Button) findViewById(R.id.logout_button);
-            if (button != null) {
-                button.setWidth((int) ((float) width * button_factor));//title_id}
-                button.setOnClickListener(this);
-            }
-            return layout;
-        } catch(Exception err) {
-            println(err.getMessage().toString());
-        }
-        return null;
-    }
- */
-/*
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        if (id == R.id.logout_button) {
-            this.url_logout = this.base_url_logout + "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
-            new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
-            FM.deleteFile(params_file_name);
-            FM.deleteFile(operations_list_name);
-
-            View v = getSupportActionBar().getCustomView();
-
-            if (v != null) { // redundancy, it must be as a first login -> v.setVisibility(View.GONE);
-                if (isFirstLogin())
-                    v.setVisibility(View.GONE);
-                else
-                    v.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-*/
 
     private void getParams() {
         this.params = (Parameters) FM.readFromFile(params_file_name);
         if (this.params == null)
             this.params = new Parameters();
+        else
+            voc.setLanguage(params.getLanguage());
     }
 
     @Override
     protected void onResume() {
         getParams();
-/*
-        View view = getSupportActionBar().getCustomView();
-
-        if (view != null) {
-            if (isFirstLogin())
-                view.setVisibility(View.GONE);
-            else
-                view.setVisibility(View.VISIBLE);
-        }
-*/
+        voc.TranslateAll(base_layout);
         super.onResume();
     }
 
@@ -277,7 +190,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                 StringHttpMessageConverter converter = new StringHttpMessageConverter();
                 restTemplate.getMessageConverters().add(converter);
 
-//                String xml = restTemplate.getForObject(login_request, String.class, "SpringSource");
                 String xml            = restTemplate.getForObject(uri, String.class);
                 Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
@@ -371,7 +283,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                 println (err.getMessage().toString());
             }
         }
-    }//java.lang.RuntimeException: Parcelable encountered IOException writing serializable object (name = com.nova.sme.sme01.CommonClass)
+    }
 
     private boolean isFirstLogin() {
         // criteria is if we have operations list
@@ -383,11 +295,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     }
 
     private boolean checkIndentity(XML_Login xml_login) {
-//        String id      =  xml_login.getId();
-//        String inner_id = this.params.getId();
-//        if (!id.equals(inner_id))
-//            return false;
-
         String companyID       = xml_login.getOperator().getCompanyID();
         String inner_companyId = this.params.getcompanyID();
 
@@ -427,57 +334,10 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         int id = item.getItemId();
 
         if (id == R.id.action_language) {
-
-            final Dialog dialog = new Dialog(this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.activity_select__language);
-
-            final TextView text     = (TextView)    dialog.findViewById(R.id.select_language);
-            final RadioButton en_rb = (RadioButton) dialog.findViewById(R.id.EngRB);
-            final RadioButton my_rb = (RadioButton) dialog.findViewById(R.id.MalayRB);
-
-            voc.change_caption(text);
-            voc.change_caption(en_rb);
-            voc.change_caption(my_rb);
-
-            Button dialogButton = (Button) dialog.findViewById(R.id.ok_select_language);
-            voc.change_caption(dialogButton);
-
-            if (voc.getLanguage().equals("EN"))
-                en_rb.setChecked(true);
-            else
-                my_rb.setChecked(true);
-
-             dialogButton.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                 if (en_rb.isChecked())
-                     voc.setLanguage("EN");
-                 else
-                     voc.setLanguage("MY");
-
-                 set_new_language();
-                 dialog.dismiss();
-                 }
-             });
-
-            dialog.show();
+            new Select_Language(base_layout, voc, FM, params, null, params_file_name);
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void set_new_language() {
-         try {
-            voc.change_caption(pv.getUserName());
-            voc.change_caption(pv.getPassword());
-            voc.change_caption(pv.getCaption());
-            voc.change_caption(pv.getLoginButton());
-
-            params.setLangauge(voc.getLanguage());
-        } catch(Exception err) {
-
-        }
     }
 
     @Override
@@ -488,8 +348,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     @Override
     protected void onStop() {
         params.setLangauge(voc.getLanguage());
-//        FM.writeToFile(params_file_name, params); // here temporarily, in sake of test
-
         setAutoOrientationEnabled(autorotation);
         super.onStop();
     }
@@ -498,14 +356,10 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         this.params.getFromXML(xml_login);
         FM.writeToFile(params_file_name, this.params);
     }
-/*
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-        setAutoOrientationEnabled(autorotation);
+    void writeParameters() {
+        this.params.setLangauge(voc.getLanguage());
+        FM.writeToFile(params_file_name, this.params);
     }
-*/
 
     private void setAutoOrientationEnabled(int enabled) {
         try {

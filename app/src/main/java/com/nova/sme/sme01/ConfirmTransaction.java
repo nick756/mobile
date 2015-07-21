@@ -24,6 +24,7 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
  *                              *
  ********************************
  */
+
 public class ConfirmTransaction {
     private Activity       activity;
     private Vocabulary     voc;

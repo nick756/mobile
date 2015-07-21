@@ -12,8 +12,12 @@ import com.nova.sme.sme01.R;
 
 import static java.sql.DriverManager.println;
 
-/**
- * Created by User on 12.07.2015.
+/*
+ **************************************
+ *                                    *
+ *  Set Logout button on action bar   *
+ *                                    *
+ **************************************
  */
 public class CreateCustomBar {
     private Button button = null;

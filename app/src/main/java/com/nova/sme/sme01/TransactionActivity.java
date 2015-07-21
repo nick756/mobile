@@ -1,6 +1,7 @@
 package com.nova.sme.sme01;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
@@ -13,14 +14,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.CustomAdapter;
@@ -29,6 +33,7 @@ import com.nova.sme.sme01.miscellanea.HttpRequestTransaction;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.Parameters;
+import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.SpinnerModel;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
@@ -44,6 +49,13 @@ import java.util.List;
 
 import static java.sql.DriverManager.println;
 
+/*
+ ***************************************
+ *                                     *
+ *  Provides request for transaction   *
+ *                                     *
+ ***************************************
+ */
 
 public class TransactionActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
     private RelativeLayout                base_layout;
@@ -57,6 +69,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
     private String                        base_url        = "http://103.6.239.242/sme/mobile/addtransaction/?";
     private MyDialog                      my_dialog;
+    private Button                        logout_button;
 
 
 //    private GregorianCalendar             calendar = new GregorianCalendar();
@@ -114,16 +127,16 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
 
-                Button button = create_custom_bar();
-                voc.change_caption(button);
-                button.setOnClickListener(new View.OnClickListener() {
+                logout_button = create_custom_bar();
+                voc.change_caption(logout_button);
+                logout_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        logout_request();
+                 logout_request();
                     }
                 });
 
-                FR.resizeLoginButton(base_layout, button, 0.062f);
+                FR.resizeLoginButton(base_layout, logout_button, 0.062f);
                 setSpinner();
 
                 FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
@@ -186,6 +199,21 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             spinner_array.add(spinnner_model);
         }
     }
+    @Override
+    protected void onResume() {
+        getParams();
+        voc.TranslateAll(base_layout);
+        if (logout_button != null)
+            voc.change_caption(logout_button);
+        super.onResume();
+    }
+    private void getParams() {
+        this.params = (Parameters) FM.readFromFile(params_file_name);
+        if (this.params == null)
+            this.params = new Parameters();
+        else
+            voc.setLanguage(params.getLanguage());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -193,6 +221,40 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         getMenuInflater().inflate(R.menu.menu_transaction, menu);
         return true;
     }
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        MenuCaptions(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void MenuCaptions(Menu menu) {
+        MenuItem item;
+        Menu     inner_menu;
+
+        for (int i = 0; i < menu.size(); i ++) {
+            item = menu.getItem(i);
+            voc.change_caption(item);
+
+            inner_menu = item.getSubMenu();
+            if (inner_menu != null)
+                MenuCaptions(inner_menu);
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_language) {
+            new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void  writeParameters() {
+        this.params.setLangauge(voc.getLanguage());
+        FM.writeToFile(params_file_name, this.params);
+    }
+
 
     public void submitClick(View view) {
         Operation s_opearion;
@@ -222,7 +284,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         edit = (EditText)findViewById(R.id.transaction_description_id);
         String descr = edit.getText().toString().trim();
         if (descr.length() == 0) {
-            my_dialog.show("Description can not be empty");
+            my_dialog.show(voc.getTranslatedString("Description can not be empty"));
             return;
         }
         s_descr = descr;
@@ -242,7 +304,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         s_amount = sum;
 
         if (Double.parseDouble(sum) == 0) {
-            my_dialog.show("Amount can not be empty");
+            my_dialog.show(voc.getTranslatedString("Amount can not be empty"));
             return;
         }
 
@@ -267,21 +329,6 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
     private String getCents(String val) {
         return val.substring(val.length() - 2);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 

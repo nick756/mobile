@@ -88,6 +88,8 @@ public class Vocabulary implements Serializable {
             {"Cancel",                                         "Batal"},
             {"Make Transaction",                               "Membuat Transaksi"},
             {"Operation failed",                               "Operasi gagal"},
+            {"Description can not be empty",                   "Penerangan tidak boleh kosong"},
+            {"Amount can not be empty",                        "Amaun yang tidak boleh kosong"},
 
     };
 

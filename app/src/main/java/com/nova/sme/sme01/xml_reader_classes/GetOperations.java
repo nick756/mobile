@@ -44,7 +44,7 @@ public class GetOperations implements Serializable {
     public  List<Operation> getOperationsList() {return profile.getOperationsList(); }
 
     public GetOperations(){}
-
+/*
     public boolean equals(GetOperations obj) {
 
         if (!this.code.equals(obj.getCode()))
@@ -88,4 +88,5 @@ public class GetOperations implements Serializable {
 
         return true;
     }
+    */
 }
