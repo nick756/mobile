@@ -1,10 +1,12 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.xml_reader_classes.BaseXML;
 import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
@@ -85,15 +87,10 @@ public class HttpRequestTransaction {
                 if (xml_transaction.getCode().equals("0")) {
                     ok = true;
                     my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
-/*
-                    if (by_finish) {
-                        activity.finish();//goto login view
-                    } else {
-                        Intent intent = new Intent(activity, MainActivity.class );
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                        activity.startActivity(intent);
-                    }
-*/
+                } else if (xml_transaction.getCode().equals("3")) { // Session expired
+                    Intent intent = new Intent(activity, MainActivity.class );
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                    activity.startActivity(intent);
                 } else {
                     my_dialog.show(voc.getTranslatedString(xml_transaction.getResDescription()), R.mipmap.ic_failture);
                     return;

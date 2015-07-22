@@ -90,6 +90,10 @@ public class Vocabulary implements Serializable {
             {"Operation failed",                               "Operasi gagal"},
             {"Description can not be empty",                   "Penerangan tidak boleh kosong"},
             {"Amount can not be empty",                        "Amaun yang tidak boleh kosong"},
+            {"From",                                           "Dari"},
+            {"Till",                                           "Hingga"},
+            {"List of transactions",                           "Senarai transaksi"},
+            {"List of transactions is empty",                  "Senarai transaksi kosong"},
 
     };
 

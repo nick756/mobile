@@ -36,6 +36,10 @@
             android:name=".TransactionActivity"
             android:label="@string/title_activity_transaction" >
         </activity>
+        <activity
+            android:name=".TransactionsViewActivity"
+            android:label="@string/title_activity_transactions_view" >
+        </activity>
     </application>
 
 </manifest>

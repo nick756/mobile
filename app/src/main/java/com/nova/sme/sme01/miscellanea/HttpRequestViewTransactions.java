@@ -1,11 +1,15 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.nova.sme.sme01.CommonClass;
+import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.TransactionsViewActivity;
 import com.nova.sme.sme01.xml_reader_classes.Record;
 import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
 import com.nova.sme.sme01.xml_reader_classes.Transactions;
@@ -33,16 +37,22 @@ import java.util.List;
 
 public class HttpRequestViewTransactions {
     private String         url_request;
-//    private RelativeLayout base_layout;
+    private RelativeLayout base_layout;
     private Activity       activity;
-//    private MyDialog       my_dialog;
+    private MyDialog       my_dialog;
     private Vocabulary     voc;
 
-    public HttpRequestViewTransactions(Activity  activity, /*RelativeLayout base_layout, */Vocabulary voc, String url_request) {
+    private String         dateFrom;
+    private String         dateTill;
+
+    public HttpRequestViewTransactions(Activity  activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String dateFrom, String dateTill) {
         this.activity    = activity;
         this.url_request = url_request;
-//        this.base_layout = base_layout;
+        this.base_layout = base_layout;
         this.voc         = voc;
+
+        this.dateFrom    = dateFrom;
+        this.dateTill    = dateTill;
 
 //        my_dialog        = new MyDialog(voc, base_layout);
 
@@ -81,30 +91,45 @@ public class HttpRequestViewTransactions {
         }
         //http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/07/2015&dateTill=22/07/2015
         //http://103.6.239.242/sme/mobile/listtransactions?id=4&dateFrom=21/06/2014&dateTill=22/07/2015
+        /*
+        todo
+        1. check if operator is the same
+        2. size as a recordCount
+
+         */
         @Override
         protected void onPostExecute(Transactions xml_transactions) {
             boolean ok = false;
             int cnt, cnt1;
             if (xml_transactions != null) {
-                if (xml_transactions.getCode().equals("0")) {
+                String code = xml_transactions.getCode();
+                if (code.equals("0")) {
                     ok = true;
                     List<Record> list = xml_transactions.getRecordsList();
-/*
-                    cnt  = Integer.parseInt(xml_transactions.getRecordCount());
-                    cnt1 = list.size();
-                    if (cnt != cnt1)
+
+                    if (list == null) {
+                        empty_list();
                         return;
-*/
-//                    my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
-/*
-                    if (by_finish) {
-                        activity.finish();//goto login view
-                    } else {
-                        Intent intent = new Intent(activity, MainActivity.class );
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                        activity.startActivity(intent);
+                    } else if (list.size() == 0) {
+                        empty_list();
+                        return;
                     }
-*/
+                    FileManager FM = new FileManager(activity);
+                    FM.writeToFile("transactions_view.bin", xml_transactions);
+
+                    CommonClass c_c   = new CommonClass();
+                    c_c.dateFrom      = dateFrom;
+                    c_c.dateTill      = dateTill;
+
+
+                    Intent intent = new Intent(activity, TransactionsViewActivity.class );
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                    intent.putExtra(MainActivity.MAIN_INFO, c_c);
+                    activity.startActivity(intent);
+                } else if (code.equals("3")) { // Session expired
+                    Intent intent = new Intent(activity, MainActivity.class );
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                    activity.startActivity(intent);
                 } else {
 //                   my_dialog.show(voc.getTranslatedString(xml_transactions.getResDescription()), R.mipmap.ic_failture);
                     return;
@@ -113,6 +138,10 @@ public class HttpRequestViewTransactions {
             if (!ok) {
 //                my_dialog.show(voc.getTranslatedString("Error occured"), R.mipmap.ic_failture);
             }
+        }
+        private void empty_list() {
+            my_dialog = new MyDialog(voc, base_layout);
+            my_dialog.show("List of transactions is empty", R.mipmap.ic_zero);
         }
     }
 

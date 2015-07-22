@@ -25,7 +25,9 @@ public class CommonClass implements Serializable {
     public String companyID;
     public String sender;
 
-    CommonClass(String code, String id, String originator,  String descr, String name, String role, String company, String companyID) {
+    public String dateFrom;
+    public String dateTill;
+    public CommonClass(String code, String id, String originator,  String descr, String name, String role, String company, String companyID) {
         this.code       = code;
         this.id         = id;
         this.originator = originator;
@@ -34,5 +36,8 @@ public class CommonClass implements Serializable {
         this.role       = role;
         this.company    = company;
         this.companyID  = companyID;
+    }
+    public CommonClass() {
+
     }
 }

@@ -132,7 +132,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 logout_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                 logout_request();
+                        logout_request();
                     }
                 });
 
@@ -250,11 +250,12 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         }
         return super.onOptionsItemSelected(item);
     }
+/*
     private void  writeParameters() {
         this.params.setLangauge(voc.getLanguage());
         FM.writeToFile(params_file_name, this.params);
     }
-
+*/
 
     public void submitClick(View view) {
         Operation s_opearion;

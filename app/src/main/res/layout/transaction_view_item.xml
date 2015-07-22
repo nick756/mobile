@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/base_layout_background"
+    android:clickable="false">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="code"
+        android:tag="code"
+        android:id="@+id/tr_code_id"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:padding="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22/07/2015"
+        android:id="@+id/tr_date_id"
+        android:tag="date"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:padding="2dp"
+        android:layout_below="@+id/tr_code_id" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="type"
+        android:tag="type"
+        android:id="@+id/tr_type_id"
+        android:layout_below="@+id/tr_date_id"
+        android:textStyle="bold"
+        android:padding="2dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1000,000.00"
+        android:id="@+id/tr_amount_id"
+        android:tag="amount"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:padding="2dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/tr_type_id" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:tag="descr"
+        android:id="@+id/tr_descr_id"
+        android:layout_below="@+id/tr_amount_id"
+        android:padding="2dp"
+        android:textColor="@android:color/black"
+        android:textStyle="normal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Operator"
+        android:tag="operator"
+        android:id="@+id/tr_operator_id"
+        android:layout_below="@+id/tr_descr_id"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="2dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+</RelativeLayout>

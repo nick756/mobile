@@ -75,10 +75,10 @@ public class GetFilterViewTransactions {
         lp.width  = (int)((float)base_layout.getWidth()*0.9f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-//        FR.resizeCalendar(base_layout, (RelativeLayout) dialog.findViewById(R.id.from_calendar), year_from, month_from, day_from, 0.062f);
-//        FR.resizeCalendar(base_layout, (RelativeLayout) dialog.findViewById(R.id.till_calendar), year_till, month_till, day_till, 0.062f);
-
         // make translation
+        //from_till_base_layout
+        RelativeLayout layout = (RelativeLayout)dialog.findViewById(R.id.from_till_base_layout);
+        voc.TranslateAll(layout);
 
         Button okButton = (Button) dialog.findViewById(R.id.ok_from_till_button);
         voc.change_caption(okButton);
@@ -91,7 +91,7 @@ public class GetFilterViewTransactions {
                 http_request += "&dateFrom=" + from;
                 http_request += "&dateTill=" + till;
 
-                new HttpRequestViewTransactions(activity, voc, http_request);
+                new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
 
                 dialog.dismiss();
             }
