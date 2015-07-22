@@ -91,16 +91,6 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
                 FR.resizeLoginButton(base_layout, logout_button, 0.062f);
                 fill_transactions_list();
-/*
-                setSpinner();
-
-                FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
-                FR.resizeAmounts(base_layout,
-                        (RelativeLayout) findViewById(R.id.base_amount_id),
-                        (EditText) findViewById(R.id.sum_id),
-                        (EditText) findViewById(R.id.sub_sum_id),
-                        (Button) findViewById(R.id.submit_transaction_button), 0.062f);
-*/
                 voc.TranslateAll(base_layout);
             }
         });

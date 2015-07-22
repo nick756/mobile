@@ -3,6 +3,8 @@ package com.nova.sme.sme01.miscellanea;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsoluteLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -65,10 +67,15 @@ public class FillWithTransactionsList {
             LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
             sv.removeAllViews();
 
+            ViewGroup.MarginLayoutParams params;
             for (int i = 0; i < list.size(); i++) {
                 RelativeLayout ll = (RelativeLayout) inflater.inflate(R.layout.transaction_view_item, null);
+
                 sv.addView(ll);
                 setValues(ll, list.get(i));
+                params = (ViewGroup.MarginLayoutParams) ll.getLayoutParams();
+                params.topMargin    = 5;
+                params.bottomMargin = 5;
             }
             return true;
         } catch (Exception err) {
@@ -76,8 +83,9 @@ public class FillWithTransactionsList {
         }
         return false;
     }
-
-
+    public float pxToDp(float px) {
+        return px / activity.getResources().getDisplayMetrics().density;
+    }
     private void setValues(RelativeLayout layout, Record record) {
         View           view;
         String         tag;
