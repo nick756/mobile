@@ -55,7 +55,7 @@ public class HttpRequestViewTransactions {
 
             Transactions xml_transactions;
             URI uri;
-            try {
+            try {//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/06/2015&dateTill=22/07/2015
                 URL url = new URL(url_request);
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
@@ -79,15 +79,22 @@ public class HttpRequestViewTransactions {
             }
             return null;
         }
-
+        //http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/07/2015&dateTill=22/07/2015
+        //http://103.6.239.242/sme/mobile/listtransactions?id=4&dateFrom=21/06/2014&dateTill=22/07/2015
         @Override
         protected void onPostExecute(Transactions xml_transactions) {
             boolean ok = false;
+            int cnt, cnt1;
             if (xml_transactions != null) {
                 if (xml_transactions.getCode().equals("0")) {
                     ok = true;
                     List<Record> list = xml_transactions.getRecordsList();
-
+/*
+                    cnt  = Integer.parseInt(xml_transactions.getRecordCount());
+                    cnt1 = list.size();
+                    if (cnt != cnt1)
+                        return;
+*/
 //                    my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
 /*
                     if (by_finish) {

@@ -43,4 +43,9 @@ public class Record  implements Serializable {
     public  String getDescr(){return descr;}
     public  void   setDescr(String descr){this.descr = descr;}
 
+    @Element(required = true, name = "operator")
+    private String operator;
+    public  String getOperator(){return operator;}
+    public  void   setOperator(String operator){this.operator = operator;}
+
 }
