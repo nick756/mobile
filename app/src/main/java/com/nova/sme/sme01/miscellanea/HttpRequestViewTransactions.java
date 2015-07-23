@@ -64,7 +64,7 @@ public class HttpRequestViewTransactions {
             String error;
 
             Transactions xml_transactions;
-            URI uri;
+            URI uri;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=23/07/2015&dateTill=23/07/2015
             try {//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/06/2015&dateTill=22/07/2015
                 URL url = new URL(url_request);
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
@@ -73,7 +73,7 @@ public class HttpRequestViewTransactions {
                 StringHttpMessageConverter converter = new StringHttpMessageConverter();
                 restTemplate.getMessageConverters().add(converter);
 
-                String xml            = restTemplate.getForObject(uri, String.class);
+                String xml            = restTemplate.getForObject(uri, String.class);//<result code='3' id='4'><originator>194.219.45.10</originator><resDescription>Session expired</resDescription></result>
                 Serializer serializer = new Persister();
                 SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
 
@@ -84,7 +84,7 @@ public class HttpRequestViewTransactions {
                 error = e.getMessage();
             } catch (RestClientException e){
                 error = e.getMessage();
-            } catch (Exception e) {
+            } catch (Exception e) {//Unable to satisfy @org.simpleframework.xml.Element(data=false, name=, required=true, type=void) on field 'records' private com.nova.sme.sme01.xml_reader_classes.Records com.nova.sme.sme01.xml_reader_classes.Transactions.records for class com.nova.sme.sme01.xml_reader_classes.Transactions at line 1
                 error = e.getMessage();
             }
             return null;

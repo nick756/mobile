@@ -42,7 +42,7 @@ public class Transactions implements Serializable {
     private String recordCount;
     public  String getRecordCount() {return recordCount;}
 
-    @Element
+    @Element(required=false, name="records")
     private Records records;
     public  Records getRecords(){return records;}
     public List<Record> getRecordsList() {return records.getRecordsList(); }
