@@ -122,8 +122,8 @@ public class HttpRequestViewTransactions {
                     c_c.dateTill      = dateTill;
 
                     // other idea is using real date from the list
-                    c_c.dateFrom = list.get(0).getDate();
-                    c_c.dateTill = list.get(list.size() - 1).getDate();
+//                    c_c.dateFrom = list.get(0).getDate();
+//                    c_c.dateTill = list.get(list.size() - 1).getDate();
 
 
                     Intent intent = new Intent(activity, TransactionsViewActivity.class );
