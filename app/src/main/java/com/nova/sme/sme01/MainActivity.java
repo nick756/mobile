@@ -1,5 +1,6 @@
 package com.nova.sme.sme01;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -17,10 +18,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyDialog;
+import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
@@ -67,7 +70,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private String                        base_url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
 
     private String                        base_url = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
-//    private String                        base_url = "http://667.6.239.242:8080/sme/mobile/login/?";//name=vlad&passw=1234";
 
     private String                        login_request;
     private String                        debug_request = "http://103.6.239.242:80/sme/mobile/login/?name=vlad&passw=1234";
@@ -166,16 +168,19 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             block_login_button = true;
             password.setText("");
             user_name.setText("");
-            new HttpRequestTask().execute();
+
+            new MyHttpRequest(this, base_layout, voc, login_request, "XML_Login");
+//            new HttpRequestTask().execute();
         } else { // debugging, temporarily
             this.login_request = this.base_url + "name=andrea&passw=1234";
             block_login_button = true;
             password.setText("");
             user_name.setText("");
-            new HttpRequestTask().execute();
+            new MyHttpRequest(this, base_layout, voc, login_request, "XML_Login");
+//            new HttpRequestTask().execute();
          }
     }
-
+/*
     private class HttpRequestTask extends AsyncTask<Void, String, XML_Login> {
         @Override
         protected XML_Login doInBackground(Void... params) {
@@ -215,73 +220,73 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         @Override
         protected void onPostExecute(XML_Login xml_login) {
-            block_login_button = false;
-            if (xml_login == null) {
-                // todo something
-                return;
-            }
-            // debugging for
-//            params.getFromXML(xml_login);
-//            params.setLangauge(voc.getLanguage());
-//            FM.writeToFile(params_file_name, params);
+            passExecute(xml_login);
+        }
+    }
+    */
+    public void passExecute(XML_Login xml_login) {
+        block_login_button = false;
+        if (xml_login == null) {
+            // todo something
+            return;
+        }
 
-            String code       = xml_login.getCode();
-            String id         = xml_login.getId();
-            String originator = xml_login.getOriginator();
-            String descr      = xml_login.getDescription();
+        String code       = xml_login.getCode();
+        String id         = xml_login.getId();
+        String originator = xml_login.getOriginator();
+        String descr      = xml_login.getDescription();
 
-            Operator operator = xml_login.getOperator();
-            String name      = "no data";
-            String role      = "no data";
-            String company   = "no data";
-            String companyID = "no data";
+        Operator operator = xml_login.getOperator();
+        String name      = "no data";
+        String role      = "no data";
+        String company   = "no data";
+        String companyID = "no data";
 
-            if (operator != null) {
-                name       = operator.getName();
-                role       = operator.getRole();
-                company    = operator.getCompany();
-                companyID  = operator.getCompanyID();
-            }
+        if (operator != null) {
+            name       = operator.getName();
+            role       = operator.getRole();
+            company    = operator.getCompany();
+            companyID  = operator.getCompanyID();
+        }
 
-            Intent      resultIntent;
-            CommonClass c_c;
+        Intent      resultIntent;
+        CommonClass c_c;
 
-            String error_message;
-            try {
-                // error?
-                if (code.equals("0")) {
-                    if (isFirstLogin()) {
+        String error_message;
+        try {
+            // error?
+            if (code.equals("0")) {
+                if (isFirstLogin()) {
+                    resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
+                } else {
+                    // check indentity
+                    if (checkIndentity(xml_login)) {
                         resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
                     } else {
-                        // check indentity
-                        if (checkIndentity(xml_login)) {
-                            resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
-                        } else {
-                            String msg = "Only a single Company (Business) can be managed from Mobile Application. If a User needs to manage more than one company using smart phone, two login names must be used, and each time re-synchronization to be performed.";
-                            my_dialog.show(msg);
-                            return;
-                        }
+                        String msg = "Only a single Company (Business) can be managed from Mobile Application. If a User needs to manage more than one company using smart phone, two login names must be used, and each time re-synchronization to be performed.";
+                        my_dialog.show(msg);
+                        return;
                     }
-                    writeParameters(xml_login);
-                    c_c               = new CommonClass(code, id, originator, descr, name, role, company, companyID);
-                    c_c.curr_language = voc.getLanguage();
-                    resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
-                    startActivity(resultIntent);
-                } else {// everything is ok
-                    if (code.equals("1"))
-                        error_message = "User's role is not supported for mobile device";
-                    else if (code.equals("2"))
-                        error_message = "Authentication failed";// (user name or password is not found)";
-                    else if (code.equals("3"))
-                        error_message = "Timeout is over";
-                    else
-                        error_message = "Unknown error";
-
-                    my_dialog.show(error_message);
                 }
-            } catch(Exception err) {
-                println (err.getMessage().toString());
+                writeParameters(xml_login);
+                c_c               = new CommonClass(code, id, originator, descr, name, role, company, companyID);
+                c_c.curr_language = voc.getLanguage();
+                resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
+                startActivity(resultIntent);
+            } else {// everything is ok
+                if (code.equals("1"))
+                    error_message = "User's role is not supported for mobile device";
+                else if (code.equals("2"))
+                    error_message = "Authentication failed";// (user name or password is not found)";
+                else if (code.equals("3"))
+                    error_message = "Timeout is over";
+                else
+                    error_message = "Unknown error";
+
+                my_dialog.show(error_message);
             }
+        } catch(Exception err) {
+            println (err.getMessage().toString());
         }
     }
 

@@ -15,20 +15,17 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
 import com.nova.sme.sme01.xml_reader_classes.Record;
 import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
 import com.nova.sme.sme01.xml_reader_classes.Transactions;
+import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.xml.SimpleXmlHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
-
-import java.lang.reflect.Method;
-//import java.util.function.IntConsumer;
 
 /*
  *******************************
@@ -67,11 +64,12 @@ public class MyHttpRequest {
                 URL url = new URL(url_request);
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
-                RestTemplate restTemplate = new RestTemplate();
-                StringHttpMessageConverter converter = new StringHttpMessageConverter();
+                RestTemplate               restTemplate = new RestTemplate();
+                StringHttpMessageConverter converter    = new StringHttpMessageConverter();
+
                 restTemplate.getMessageConverters().add(converter);
 
-                String xml = restTemplate.getForObject(uri, String.class);//<result code='3' id='4'><originator>194.219.45.10</originator><resDescription>Session expired</resDescription></result>
+                String xml = restTemplate.getForObject(uri, String.class);
 
                 return xml;
             } catch (java.net.URISyntaxException e) {
@@ -101,7 +99,8 @@ public class MyHttpRequest {
             }
 
             if (xml != null) {
-                Serializer                    serializer    = new Persister();
+                Serializer serializer = new Persister();
+
                 if ( xml.indexOf("Session expired") != -1) {
                     goStartPage();
                     return;
@@ -112,12 +111,26 @@ public class MyHttpRequest {
                     implementTransaction(xml, serializer);
                 } else if (className.equals("GetOperations")) {
                     implementGetOperations(xml, serializer);
+                } else if (className.equals("XML_Login")) {
+                    implementXmlLogin(xml, serializer);
                 }
             }
-//            if (!ok) {
-//                my_dialog.show(voc.getTranslatedString("Error occured"), R.mipmap.ic_failture);
-//            }
         }
+    }
+    private void implementXmlLogin(String xml, Serializer serializer) {
+        XML_Login xml_login;
+        try {
+            xml_login                  = serializer.read(XML_Login.class, xml);
+            MainActivity main_activity = (MainActivity) activity;
+            main_activity.passExecute(xml_login);
+
+            return;
+        } catch(RestClientException e) {
+
+        } catch(Exception e) {
+
+        }
+        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
     private void implementTransaction(String xml, Serializer serializer) {
         TransactionXML xml_transaction;
@@ -158,9 +171,7 @@ public class MyHttpRequest {
                 }
 
                 RegularLoginActivity rla = (RegularLoginActivity) activity;
-
                 rla.passFunction(xml_operations_list);
-
             } else  {
                 nonZeroCode(code);
             }
@@ -193,9 +204,9 @@ public class MyHttpRequest {
                 FileManager FM = new FileManager(activity);
                 FM.writeToFile("transactions_view.bin", xml_transactions);
 
-                CommonClass c_c   = new CommonClass();
-                c_c.dateFrom      = xml_transactions.getDateStart();
-                c_c.dateTill      = xml_transactions.getDateStop();
+                CommonClass c_c = new CommonClass();
+                c_c.dateFrom    = xml_transactions.getDateStart();
+                c_c.dateTill    = xml_transactions.getDateStop();
 
                 Intent intent = new Intent(activity, TransactionsViewActivity.class );
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
@@ -219,7 +230,7 @@ public class MyHttpRequest {
         } else if (code.equals("1")) {
             my_dialog.show(voc.getTranslatedString("Mismatching Company ID"), R.mipmap.ic_failture);
         } else if (code.equals("2")) {
-            my_dialog.show(voc.getTranslatedString("Authentication failed"), R.mipmap.ic_failture);
+            my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_failture);
         } else {
             my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
         }
