@@ -38,6 +38,14 @@ public class Transactions implements Serializable {
     public  String getResDescription() {return res_description;}
     // --- must be used inheritance finally here
 
+    @Element(required = false, name = "dateStart")
+    private String dateStart;
+    public  String getDateStart(){return dateStart;}
+
+    @Element(required = false, name = "dateStop")
+    private String dateStop;
+    public  String getDateStop(){return dateStop;}
+
     @Element(required = false, name = "recordCount")
     private String recordCount;
     public  String getRecordCount() {return recordCount;}

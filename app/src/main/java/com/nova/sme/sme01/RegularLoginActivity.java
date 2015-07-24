@@ -24,6 +24,7 @@ import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
+import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
@@ -169,7 +170,8 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.logout_button) {
-            new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
+            new MyHttpRequest(this, base_layout, voc, url_request, "BaseXML");
+            //new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
         }
     }
 
@@ -246,7 +248,8 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 block_button        = true;
                 this.operaions_list = null;
                 fill_operation_list();
-                new HttpRequestTask().execute();
+                new MyHttpRequest(this, base_layout, voc, url_request, "GetOperations");
+ //               new HttpRequestTask().execute();
                 break;
             case R.id.reset_oper_list:
                 // delete all
@@ -256,7 +259,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-
+/*
     private class HttpRequestTask extends AsyncTask<Void, String, GetOperations> {
         @Override
         protected GetOperations doInBackground(Void... params) {
@@ -284,13 +287,13 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 return xml_operaions_list;
             } catch (java.net.URISyntaxException e) {
                 error = e.getMessage();
-                Log.e("FirstTimeLoginActivity", error, e);
+//                Log.e("FirstTimeLoginActivity", error, e);
             } catch (RestClientException e){
                 error = e.getMessage();
-                Log.e("FirstTimeLoginActivity", error, e);
+//                Log.e("FirstTimeLoginActivity", error, e);
             } catch (Exception e) {//http://103.6.239.242/sme/mobile/getoperations/?id=4&companyID=2
                 error = e.getMessage();
-                Log.e("FirstTimeLoginActivity", error, e);
+//                Log.e("FirstTimeLoginActivity", error, e);
             }
 
             return null;
@@ -337,6 +340,15 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 this.operaions_list = xml_operation_list;
                 fill_operation_list();
             }
+        }
+    }
+*/
+    public void passFunction(GetOperations xml_operation_list) {
+        if (lock_list(xml_operation_list)) {
+            for (int i = 0; i < bt_vector.size(); i ++)
+                bt_vector.get(i).setVisibility(View.VISIBLE);
+            this.operaions_list = xml_operation_list;
+            fill_operation_list();
         }
     }
 

@@ -24,11 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".miscellanea.Select_Language"
-            android:label="@string/title_activity_select__language" >
-        </activity>
-        <activity
+         <activity
             android:name=".RegularLoginActivity"
             android:label="@string/title_activity_regular_login" >
         </activity>

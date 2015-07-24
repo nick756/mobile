@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.nova.sme.sme01.miscellanea.HttpRequestViewTransactions;
+import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 
@@ -91,7 +89,8 @@ public class GetFilterViewTransactions {
                 http_request += "&dateFrom=" + from;
                 http_request += "&dateTill=" + till;
 
-                new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
+                //new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
+                new MyHttpRequest(activity, base_layout, voc, http_request, "Transactions");
 
                 dialog.dismiss();
             }

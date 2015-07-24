@@ -30,9 +30,9 @@ public class GetOperations implements Serializable {
     private String originator;
     public  String getOriginator(){return this.originator;}
 
-    @Element(required = false, name = "description") // obsolete
-    private String description;
-    public  String getDescription(){return this.description;}
+//    @Element(required = false, name = "description") // obsolete
+//    private String description;
+//    public  String getDescription(){return this.description;}
 
     @Element(required = false, name = "resDescription")
     private String res_description;

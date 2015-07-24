@@ -104,7 +104,6 @@ public class HttpRequestViewTransactions {
             if (xml_transactions != null) {
                 String code = xml_transactions.getCode();
                 if (code.equals("0")) {
-                    ok = true;
                     List<Record> list = xml_transactions.getRecordsList();
 
                     if (list == null) {
@@ -118,8 +117,8 @@ public class HttpRequestViewTransactions {
                     FM.writeToFile("transactions_view.bin", xml_transactions);
 
                     CommonClass c_c   = new CommonClass();
-                    c_c.dateFrom      = dateFrom;
-                    c_c.dateTill      = dateTill;
+                    c_c.dateFrom      = xml_transactions.getDateStart(); //. dateFrom;
+                    c_c.dateTill      = xml_transactions.getDateStop();  // dateTill;
 
                     // other idea is using real date from the list
 //                    c_c.dateFrom = list.get(0).getDate();

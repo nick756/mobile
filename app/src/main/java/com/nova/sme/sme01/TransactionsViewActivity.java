@@ -22,6 +22,7 @@ import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
 import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
+import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
@@ -94,8 +95,6 @@ public class TransactionsViewActivity extends AppCompatActivity {
                 voc.TranslateAll(base_layout);
             }
         });
-
-
     }
 
     private void fill_transactions_list() {
@@ -105,7 +104,8 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
 
     private void logout_request() {
-        new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
+        new MyHttpRequest(this, base_layout, voc, url_logout, "BaseXML");
+        //new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
     }
     private Button create_custom_bar() {
         return  (new CreateCustomBar(this, base_layout)).getButton();
