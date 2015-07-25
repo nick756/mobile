@@ -4,17 +4,13 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
-import com.nova.sme.sme01.xml_reader_classes.GetOperations;
-import com.nova.sme.sme01.xml_reader_classes.Operation;
 import com.nova.sme.sme01.xml_reader_classes.Record;
-import com.nova.sme.sme01.xml_reader_classes.Transactions;
+import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
 import java.util.List;
 
@@ -29,14 +25,14 @@ import static java.sql.DriverManager.println;
  */
 public class FillWithTransactionsList {
     private Activity       activity;
-    private Transactions   transactions;
+    private ListTransactions listTransactions;
     private int            id;
     private Vocabulary     voc;
     private RelativeLayout base_layout;
 
-    public FillWithTransactionsList(Activity activity, Transactions transactions, int id, Vocabulary voc, RelativeLayout base_layout) {
+    public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity     = activity;
-        this.transactions = transactions;
+        this.listTransactions = listTransactions;
         this.id           = id;
         this.voc          = voc;
         this.base_layout  = base_layout;
@@ -45,14 +41,14 @@ public class FillWithTransactionsList {
     }
 
     private boolean implement() {
-        if (this.transactions == null) {
+        if (this.listTransactions == null) {
             clean_scroll();
             return false;
         }
 
         List<Record> list;
         try {
-            list = this.transactions.getRecordsList();
+            list = this.listTransactions.getRecordsList();
 
             if (list == null) {
                 clean_scroll();

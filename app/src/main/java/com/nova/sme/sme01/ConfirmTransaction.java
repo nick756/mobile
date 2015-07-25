@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nova.sme.sme01.miscellanea.HttpRequestTransaction;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
@@ -49,8 +48,7 @@ public class ConfirmTransaction {
         this.amount   = s_sum;
     }
     void send_request() {
-        //new HttpRequestTransaction(activity, base_layout, voc, http_request);
-        new MyHttpRequest(activity, base_layout, voc, http_request, "TransactionXML");
+        new MyHttpRequest(activity, base_layout, voc, http_request, "AddTransaction");
     }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());

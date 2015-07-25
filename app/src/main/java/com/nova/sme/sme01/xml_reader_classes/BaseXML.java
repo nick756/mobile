@@ -30,10 +30,6 @@ public class BaseXML implements Serializable {
     protected String originator;
     public    String getOriginator(){return originator;}
 
-    @Element(required = false, name = "description") // obsolete, to be deleted
-    protected String description;
-    public    String getDescription(){return description;}
-
     @Element(required = false, name = "resDescription")
     protected String res_description;
     public    String getResDescription() {return res_description;}

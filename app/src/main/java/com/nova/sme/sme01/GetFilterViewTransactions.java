@@ -90,7 +90,7 @@ public class GetFilterViewTransactions {
                 http_request += "&dateTill=" + till;
 
                 //new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
-                new MyHttpRequest(activity, base_layout, voc, http_request, "Transactions");
+                new MyHttpRequest(activity, base_layout, voc, http_request, "ListTransactions");
 
                 dialog.dismiss();
             }

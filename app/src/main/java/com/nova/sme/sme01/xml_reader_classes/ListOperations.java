@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Root(name="result")
-public class GetOperations implements Serializable {
+public class ListOperations implements Serializable {
     @Attribute
     private String code;
     public String getCode() {return this.code;}
@@ -43,7 +43,7 @@ public class GetOperations implements Serializable {
     public  Profile getProfile(){return profile;}
     public  List<Operation> getOperationsList() {return profile.getOperationsList(); }
 
-    public GetOperations(){}
+    public ListOperations(){}
 /*
     public boolean equals(GetOperations obj) {
 

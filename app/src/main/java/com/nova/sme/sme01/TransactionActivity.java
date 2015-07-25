@@ -1,36 +1,22 @@
 package com.nova.sme.sme01;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
-import com.nova.sme.sme01.miscellanea.HttpRequestTransaction;
-import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -38,14 +24,11 @@ import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.SpinnerModel;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.xml_reader_classes.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static java.sql.DriverManager.println;
@@ -63,7 +46,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
-    private GetOperations                 operaions_list;
+    private ListOperations operaions_list;
     private FormResizing                  FR;
     private FileManager                   FM;
     private Vocabulary                    voc;
@@ -100,6 +83,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setContentView(R.layout.activity_transaction);
+
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.transaction_base_id);
 
         this.FM        = new FileManager(this);
@@ -107,7 +91,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         this.voc       = new Vocabulary();
         this.my_dialog = new MyDialog(voc, base_layout);
 
-        this.operaions_list = (GetOperations) FM.readFromFile(this.operations_list_name);
+        this.operaions_list = (ListOperations) FM.readFromFile(this.operations_list_name);
         this.params         = (Parameters)    FM.readFromFile(this.params_file_name);
         this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
@@ -118,13 +102,14 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         this.day_spinner          = (Spinner)findViewById(R.id.day_spinner);
         this.base_calendar_layout = (RelativeLayout)findViewById(R.id.base_calendar);
 
-        simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
+//        simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
+
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
 
@@ -140,6 +125,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 FR.resizeLoginButton(base_layout, logout_button, 0.062f);
                 setSpinner();
 
+                create_calendar();
                 FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
                 FR.resizeAmounts(base_layout,
                         (RelativeLayout) findViewById(R.id.base_amount_id),
@@ -150,6 +136,9 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 voc.TranslateAll(base_layout);
             }
         });
+    }
+    void create_calendar() {
+        simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
     }
 
     void setSpinner() {

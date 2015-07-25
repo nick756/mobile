@@ -1,25 +1,16 @@
 package com.nova.sme.sme01;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyDialog;
@@ -27,18 +18,9 @@ import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.xml_reader_classes.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operator;
 import com.nova.sme.sme01.xml_reader_classes.XML_Login;
-
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.xml.SimpleXmlHttpMessageConverter;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
 
 import static java.sql.DriverManager.println;
 
@@ -170,60 +152,15 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             user_name.setText("");
 
             new MyHttpRequest(this, base_layout, voc, login_request, "XML_Login");
-//            new HttpRequestTask().execute();
         } else { // debugging, temporarily
             this.login_request = this.base_url + "name=andrea&passw=1234";
             block_login_button = true;
             password.setText("");
             user_name.setText("");
             new MyHttpRequest(this, base_layout, voc, login_request, "XML_Login");
-//            new HttpRequestTask().execute();
          }
     }
-/*
-    private class HttpRequestTask extends AsyncTask<Void, String, XML_Login> {
-        @Override
-        protected XML_Login doInBackground(Void... params) {
-            String error;
 
-            XML_Login xml_login;
-            URI uri;// = new URI(login_request);
-            try {
-                uri = new URI(login_request);
-
-                RestTemplate restTemplate = new RestTemplate();
-                StringHttpMessageConverter converter = new StringHttpMessageConverter();
-                restTemplate.getMessageConverters().add(converter);
-
-                String xml            = restTemplate.getForObject(uri, String.class);
-                Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
-                SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
-
-                xml_login = serializer.read(XML_Login.class, xml);
-
-                return xml_login;
-            } catch (java.net.URISyntaxException e) {
-                error = e.getMessage();
-                Log.e("MainActivity", error, e);
-            } catch (RestClientException e){
-                error = e.getMessage();
-                Log.e("MainActivity", error, e);
-            } catch (Exception e) {
-                error = e.getMessage();
-                Log.e("MainActivity", error, e);
-            }
-            xml_login = new XML_Login(error);
-
-            return xml_login;
-        }
-
-
-        @Override
-        protected void onPostExecute(XML_Login xml_login) {
-            passExecute(xml_login);
-        }
-    }
-    */
     public void passExecute(XML_Login xml_login) {
         block_login_button = false;
         if (xml_login == null) {
@@ -234,7 +171,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         String code       = xml_login.getCode();
         String id         = xml_login.getId();
         String originator = xml_login.getOriginator();
-        String descr      = xml_login.getDescription();
+        String descr      = xml_login.getResDescription();
 
         Operator operator = xml_login.getOperator();
         String name      = "no data";
@@ -273,17 +210,29 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                 c_c.curr_language = voc.getLanguage();
                 resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
                 startActivity(resultIntent);
-            } else {// everything is ok
+            } else {
+/*
+                Николай писал:
+                LOGIN
+                ----------
+                Code = 0  Successful operations
+                Code = 1 User Role is not supported for Mobile Interface
+                Code = 2 Authentication Failed
+
+                Код 3 для данного метода НИКОГДА не должен быть возвращен - он просто не имеет смысла, хотя на сервере отрабатывается. Логин
+                чаще всего и нужен именно при истекшей сессии.
+
+*/
                 if (code.equals("1"))
-                    error_message = "User's role is not supported for mobile device";
+                    error_message = "User Role is not supported for Mobile Interface";
                 else if (code.equals("2"))
-                    error_message = "Authentication failed";// (user name or password is not found)";
-                else if (code.equals("3"))
-                    error_message = "Timeout is over";
+                    error_message = "Authentication Failed";// (user name or password is not found)";
+//                else if (code.equals("3"))
+//                    error_message = "Timeout is over";
                 else
                     error_message = "Unknown error";
 
-                my_dialog.show(error_message);
+                my_dialog.show(voc.getTranslatedString(error_message));
             }
         } catch(Exception err) {
             println (err.getMessage().toString());
@@ -291,8 +240,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     }
 
     private boolean isFirstLogin() {
-        // criteria is if we have operations list
-        GetOperations local = (GetOperations) FM.readFromFile("operations_list.bin");
+        // criteria: if we have got operations list
+        ListOperations local = (ListOperations) FM.readFromFile("operations_list.bin");
         if (local == null)
             return true;
         return local.getOperationsList().size() == 0;

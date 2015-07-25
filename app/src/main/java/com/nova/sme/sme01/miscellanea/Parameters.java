@@ -64,7 +64,7 @@ public class Parameters implements Serializable  {
        // this.language
         this.id          = xml_login.getId();
         this.originator  = xml_login.getOriginator();
-        this.description = xml_login.getDescription();
+        this.description = xml_login.getResDescription();
 
         Operator operator = xml_login.getOperator();
         if (operator != null) {

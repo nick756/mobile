@@ -1,7 +1,6 @@
 package com.nova.sme.sme01;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,24 +8,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
-import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
-import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
-import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.xml_reader_classes.Transactions;
+import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
 import static java.sql.DriverManager.println;
 
@@ -41,7 +34,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
-    private Transactions                  xml_transactions;
+    private ListTransactions xml_List_transactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +56,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
         getParams();
         this.url_logout += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
-        this.xml_transactions = (Transactions) FM.readFromFile("transactions_view.bin");
+        this.xml_List_transactions = (ListTransactions) FM.readFromFile("transactions_view.bin");
 
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
 
@@ -98,7 +91,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
     }
 
     private void fill_transactions_list() {
-        FillWithTransactionsList fwol =  new FillWithTransactionsList(this, this.xml_transactions, R.id.tv_list_transactions, voc, base_layout);
+        FillWithTransactionsList fwol =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
         // something else ?
     }
 

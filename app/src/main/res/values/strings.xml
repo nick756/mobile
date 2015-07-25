@@ -10,4 +10,7 @@
     <string name="title_activity_regular_login">RegularLoginActivity</string>
     <string name="title_activity_transaction">TransactionActivity</string>
     <string name="title_activity_transactions_view">TransactionsViewActivity</string>
+    <string name="title_activity_transaction_">Transaction_Activity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

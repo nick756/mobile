@@ -47,53 +47,52 @@ public class Vocabulary implements Serializable {
     };
 */
     private String arr[][] = {
-            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
-            {"Lock Company",                                   "Syarikat Lock"},                // correct
-            {"Log Out",                                        "Log Keluar"},                   // correct
-            {"Logout",                                         "Log Keluar"},                   // correct
-            {"Perform Transaction",                            "Melaksanakan Transaks"},        // correct
-            {"View Transactions",                              "Lihat Transaksi"},              // correct
-            {"Synchronize Operations List",                    "Menyegerak Senarai Operasi"},   // correct
-            {"User Name",                                      "Gelaran"},
-            {"Password",                                       "Kata laluan"},
-            {"Login",                                          "Log Masuk"},
-            {"User Login",                                     "Log masuk pengguna"},
-            {"User's role is not supported for mobile device", "Peranan Pengguna tidak disokong untuk peranti mudah alih"},
-            {"Select Language",                                "Pilih Bahasa"},
-            {"Authentication failed",                          "Pengesahan gagal"},
-            {"Timeout is over",                                "Had masa tamat"},
-            {"Unknown error",                                  "Ralat tidak diketahui"},
-            {"English",                                        "Bahasa Inggeris"},
-            {"Malay",                                          "Melayu"},
-            {"Ok",                                             "Okey"},
-            {"OK",                                             "OKey"},
-            {"Settings",                                       "Tetapan"},
-            {"Url Address",                                    "Url Alamat"},
-            {"Color's Themes",                                 "Tema warna ini"},
-            {"First Time Login",                               "Login Kali Pertama"},
-            {"Regular Login",                                  "Log Masuk Biasa"},
-            {"Mismatching Company ID",                         "Syarikat yang tidak sepadan ID"},
-            {"Authentication failed",                          "Pengesahan gagal"},
-            {"Session expired",                                "Sesi tamat"},
-            {"Operations List has been saved successfully",    "Senarai Operasi telah berjaya disimpan"},
-            {"Error of saving Operations List",                "Ralat penjimatan Senarai Operasi"},
-            {"Error occured",                                  "Ralat berlaku"},
-            {"Operations List is empty",                       "Senarai Operasi kosong"},
-            {"Reset Operations List",                          "Set Semula Senarai Operasi"},
-            {"Please, select operation list",                  "Sila, pilih Senarai operasi"},
-            {"Submit",                                         "Hantar"},
-            {"Success",                                        "Kejayaan"},
-            {"Description",                                    "Penerangan"},
-            {"Amount",                                         "Jumlah"},
-            {"Cancel",                                         "Batal"},
-            {"Make Transaction",                               "Membuat Transaksi"},
-            {"Operation failed",                               "Operasi gagal"},
-            {"Description can not be empty",                   "Penerangan tidak boleh kosong"},
-            {"Amount can not be empty",                        "Amaun yang tidak boleh kosong"},
-            {"From",                                           "Dari"},
-            {"Till",                                           "Hingga"},
-            {"List of transactions",                           "Senarai transaksi"},
-            {"List of transactions is empty",                  "Senarai transaksi kosong"},
+            {"Synchronize Operations List",                         "Menyegerak Senarai Operasi"},   // correct
+            {"Lock Company",                                        "Syarikat Lock"},                // correct
+            {"Log Out",                                             "Log Keluar"},                   // correct
+            {"Logout",                                              "Log Keluar"},                   // correct
+            {"Perform Transaction",                                 "Melaksanakan Transaks"},        // correct
+            {"View Transactions",                                   "Lihat Transaksi"},              // correct
+            {"Synchronize Operations List",                         "Menyegerak Senarai Operasi"},   // correct
+            {"User Name",                                           "Gelaran"},
+            {"Password",                                            "Kata laluan"},
+            {"Login",                                               "Log Masuk"},
+            {"User Login",                                          "Log masuk pengguna"},
+            {"User Role is not supported for Mobile Interface",     "Peranan Pengguna tidak disokong untuk antara muka mudah alih"},
+            {"Select Language",                                     "Pilih Bahasa"},
+            {"Authentication Failed",                               "Pengesahan Gagal"},
+            {"Timeout is over",                                     "Had masa tamat"},
+            {"Unknown error",                                       "Ralat tidak diketahui"},
+            {"English",                                             "Bahasa Inggeris"},
+            {"Malay",                                               "Melayu"},
+            {"Ok",                                                  "Okey"},
+            {"OK",                                                  "OKey"},
+            {"Settings",                                            "Tetapan"},
+            {"Url Address",                                         "Url Alamat"},
+            {"Color's Themes",                                      "Tema warna ini"},
+            {"First Time Login",                                    "Login Kali Pertama"},
+            {"Regular Login",                                       "Log Masuk Biasa"},
+            {"Mismatching Company ID",                              "Syarikat yang tidak sepadan ID"},
+            {"Session expired",                                     "Sesi tamat"},
+            {"Operations List has been saved successfully",         "Senarai Operasi telah berjaya disimpan"},
+            {"Error of saving Operations List",                     "Ralat penjimatan Senarai Operasi"},
+            {"Error occured",                                       "Ralat berlaku"},
+            {"Operations List is empty",                            "Senarai Operasi kosong"},
+            {"Reset Operations List",                               "Set Semula Senarai Operasi"},
+            {"Please, select operation list",                       "Sila, pilih Senarai operasi"},
+            {"Submit",                                              "Hantar"},
+            {"Success",                                             "Kejayaan"},
+            {"Description",                                         "Penerangan"},
+            {"Amount",                                              "Jumlah"},
+            {"Cancel",                                              "Batal"},
+            {"Make Transaction",                                    "Membuat Transaksi"},
+            {"Operation failed",                                    "Operasi gagal"},
+            {"Description can not be empty",                        "Penerangan tidak boleh kosong"},
+            {"Amount can not be empty",                             "Amaun yang tidak boleh kosong"},
+            {"From",                                                "Dari"},
+            {"Till",                                                "Hingga"},
+            {"List of transactions",                                "Senarai transaksi"},
+            {"List of transactions is empty",                       "Senarai transaksi kosong"},
 
     };
 

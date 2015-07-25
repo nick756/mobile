@@ -10,11 +10,11 @@ import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.RegularLoginActivity;
 import com.nova.sme.sme01.TransactionsViewActivity;
-import com.nova.sme.sme01.xml_reader_classes.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 import com.nova.sme.sme01.xml_reader_classes.Record;
-import com.nova.sme.sme01.xml_reader_classes.TransactionXML;
-import com.nova.sme.sme01.xml_reader_classes.Transactions;
+import com.nova.sme.sme01.xml_reader_classes.AddTransaction;
+import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
 import org.simpleframework.xml.Serializer;
@@ -58,10 +58,10 @@ public class MyHttpRequest {
         protected String doInBackground(Void... params) {
             String error;
 
-            Transactions xml_transactions;
+            ListTransactions xml_List_transactions;
             URI uri;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=23/07/2015&dateTill=23/07/2015
             try {//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/06/2015&dateTill=22/07/2015
-                URL url = new URL(url_request);
+                URL url = new URL(url_request);//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=25/01/2015&dateTill=25/07/2015
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
                 RestTemplate               restTemplate = new RestTemplate();
@@ -105,18 +105,21 @@ public class MyHttpRequest {
                     goStartPage();
                     return;
                 }
-                if (className.equals("Transactions")) {
+                if (className.equals("ListTransactions")) {
                     implementViewTransactions(xml, serializer);
-                } else if (className.equals("TransactionXML")) {
+                } else if (className.equals("AddTransaction")) {
                     implementTransaction(xml, serializer);
-                } else if (className.equals("GetOperations")) {
+                } else if (className.equals("ListOperations")) {//GetOperations")) {
                     implementGetOperations(xml, serializer);
                 } else if (className.equals("XML_Login")) {
                     implementXmlLogin(xml, serializer);
                 }
+            } else {
+                my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
             }
         }
     }
+
     private void implementXmlLogin(String xml, Serializer serializer) {
         XML_Login xml_login;
         try {
@@ -132,16 +135,36 @@ public class MyHttpRequest {
         }
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
+
+
+    /*
+        Николай писал:
+        ADDTRANSACTION
+        ------------------------------
+        Code = 0 Successful Operation
+        Code = 1 Operation Failed
+        Code = 3 Expired Session
+
+        Код 1 возвращен в случае, если добавление транзакции вызвало ошибку на сервере, по любым причинам. ID транзакции в этом случае
+        равно 0.
+     */
     private void implementTransaction(String xml, Serializer serializer) {
-        TransactionXML xml_transaction;
+        AddTransaction xml_transaction;
         String         code;
         try {
-            xml_transaction = serializer.read(TransactionXML.class, xml);
+            xml_transaction = serializer.read(AddTransaction.class, xml);
             code            = xml_transaction.getCode();
             if (code.equals("0")) {
                 my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
-            } else  {
-                nonZeroCode(code);
+            } else if (code.equals("1")) {
+                my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_success);
+            } else  { // Session expired or other error
+/*
+            Николай писал:
+            Скорее всего, на мобильном приложении должна работать такая логика: если для какого-либо метода возврашен код не
+            указанный во втором списке выше, то всегда делать принудительный лог-аут.
+*/
+                goStartPage();
             }
             return;
         } catch(RestClientException e) {
@@ -152,12 +175,27 @@ public class MyHttpRequest {
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
+
+
+
+
+/*
+        Николай писал:
+
+        GETOPERATIONS
+        -----------------------------
+        Code = 0 Successful Operation
+        Code = 3 Expired Session
+
+        Другие коды при промышленном использовании не возникают. Код 0 возвращен и в случае, если список пуст - просто админы забыли
+        назначить профайл для компании.
+*/
     private void implementGetOperations(String xml, Serializer serializer) {
         String        code;
-        GetOperations xml_operations_list;
+        ListOperations xml_operations_list;
 
         try {
-            xml_operations_list = serializer.read(GetOperations.class, xml);
+            xml_operations_list = serializer.read(ListOperations.class, xml);
             code                = xml_operations_list.getCode();
             if (code.equals("0")) {
                 List<Operation> list = xml_operations_list.getOperationsList();
@@ -172,8 +210,14 @@ public class MyHttpRequest {
 
                 RegularLoginActivity rla = (RegularLoginActivity) activity;
                 rla.passFunction(xml_operations_list);
-            } else  {
-                nonZeroCode(code);
+            } else  {// Expired Session or any error
+/*
+            Николай писал:
+            Скорее всего, на мобильном приложении должна работать такая логика: если для какого-либо метода возврашен код не
+            указанный во втором списке выше, то всегда делать принудительный лог-аут.
+*/
+
+                goStartPage();
             }
             return;
         } catch(RestClientException e) {
@@ -184,15 +228,25 @@ public class MyHttpRequest {
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
+
+
+
+    /*
+        LISTTRANSACTIONS
+        --------------------------------
+        Code = 0
+        Code = 3 Expired Session
+    */
+
     private void implementViewTransactions(String xml, Serializer serializer) {
         String       code;
-        Transactions xml_transactions;
+        ListTransactions xml_List_transactions;
 
         try {
-            xml_transactions = serializer.read(Transactions.class, xml);
-            code             = xml_transactions.getCode();
+            xml_List_transactions = serializer.read(ListTransactions.class, xml);
+            code             = xml_List_transactions.getCode();
             if (code.equals("0")) {
-                List<Record> list = xml_transactions.getRecordsList();
+                List<Record> list = xml_List_transactions.getRecordsList();
 
                 if (list == null) {
                     empty_list("List of transactions is empty");
@@ -202,18 +256,23 @@ public class MyHttpRequest {
                     return;
                 }
                 FileManager FM = new FileManager(activity);
-                FM.writeToFile("transactions_view.bin", xml_transactions);
+                FM.writeToFile("transactions_view.bin", xml_List_transactions);
 
                 CommonClass c_c = new CommonClass();
-                c_c.dateFrom    = xml_transactions.getDateStart();
-                c_c.dateTill    = xml_transactions.getDateStop();
+                c_c.dateFrom    = xml_List_transactions.getDateStart();
+                c_c.dateTill    = xml_List_transactions.getDateStop();
 
                 Intent intent = new Intent(activity, TransactionsViewActivity.class );
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 intent.putExtra(MainActivity.MAIN_INFO, c_c);
                 activity.startActivity(intent);
-            } else {
-                nonZeroCode(code);
+            } else {// Expired Session or any error
+/*
+            Николай писал:
+            Скорее всего, на мобильном приложении должна работать такая логика: если для какого-либо метода возврашен код не
+            указанный во втором списке выше, то всегда делать принудительный лог-аут.
+*/
+                goStartPage();
             }
 
             return;
@@ -224,17 +283,7 @@ public class MyHttpRequest {
         }
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
-    private void nonZeroCode(String code) {
-        if (code.equals("3")) {
-            goStartPage();
-        } else if (code.equals("1")) {
-            my_dialog.show(voc.getTranslatedString("Mismatching Company ID"), R.mipmap.ic_failture);
-        } else if (code.equals("2")) {
-            my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_failture);
-        } else {
-            my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
-        }
-    }
+
     private void empty_list(String message) {
         my_dialog = new MyDialog(voc, base_layout);
         my_dialog.show(voc.getTranslatedString(message), R.mipmap.ic_zero);

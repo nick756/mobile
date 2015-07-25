@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @Root(name="result")
-public class Transactions implements Serializable {
+public class ListTransactions implements Serializable {
     // --- must be used inheritance finally here
     @Attribute
     private String code;
@@ -55,5 +55,5 @@ public class Transactions implements Serializable {
     public  Records getRecords(){return records;}
     public List<Record> getRecordsList() {return records.getRecordsList(); }
 
-    public Transactions(){}
+    public ListTransactions(){}
 }

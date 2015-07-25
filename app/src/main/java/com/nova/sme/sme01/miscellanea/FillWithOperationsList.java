@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
-import com.nova.sme.sme01.xml_reader_classes.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 import java.util.List;
@@ -27,12 +27,12 @@ import static java.sql.DriverManager.println;
  */
 public class FillWithOperationsList {
     private Activity      activity;
-    private GetOperations operations;
+    private ListOperations operations;
     private int           id;
     private Vocabulary    voc;
     private RelativeLayout base_layout;
 
-    public FillWithOperationsList(Activity activity, GetOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
+    public FillWithOperationsList(Activity activity, ListOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity = activity;
         this.operations = operations;
         this.id = id;

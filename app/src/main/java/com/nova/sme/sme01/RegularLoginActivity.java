@@ -1,43 +1,29 @@
 package com.nova.sme.sme01;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
-import com.nova.sme.sme01.miscellanea.Http_Request_Logout;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.xml_reader_classes.GetOperations;
+import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.xml.SimpleXmlHttpMessageConverter;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -63,7 +49,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     private FormResizing                  FR;
     private Vocabulary                    voc;
     private Vector<Button>                bt_vector = new <Button>Vector();
-    private GetOperations                 operaions_list;
+    private ListOperations operaions_list;
     private FileManager                   FM;
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
     private String                        url_request     = "http://103.6.239.242/sme/mobile/getoperations/?";
@@ -124,7 +110,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         }
 
         FM                  = new FileManager(this);
-        this.operaions_list = (GetOperations) FM.readFromFile("operations_list.bin");
+        this.operaions_list = (ListOperations) FM.readFromFile("operations_list.bin");
         my_dialog = new MyDialog(voc, base_layout);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -171,7 +157,6 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         int id = view.getId();
         if (id == R.id.logout_button) {
             new MyHttpRequest(this, base_layout, voc, url_request, "BaseXML");
-            //new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, true);
         }
     }
 
@@ -245,11 +230,10 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             }
                 break;
             case R.id.synch_oper_list:
-                block_button        = true;
+//                block_button        = true;
                 this.operaions_list = null;
                 fill_operation_list();
-                new MyHttpRequest(this, base_layout, voc, url_request, "GetOperations");
- //               new HttpRequestTask().execute();
+                new MyHttpRequest(this, base_layout, voc, url_request, "ListOperations");
                 break;
             case R.id.reset_oper_list:
                 // delete all
@@ -259,91 +243,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-/*
-    private class HttpRequestTask extends AsyncTask<Void, String, GetOperations> {
-        @Override
-        protected GetOperations doInBackground(Void... params) {
-            String error;
-//            String debug = "<result code='3' id='4'><originator>77.49.216.250</originator><description>Session expired</description><profile name='N/A'></profile></result>";
-
-            GetOperations xml_operaions_list;
-            String xml;//operationsList
-            URI uri;
-            try {
-                uri = new URI(url_request);//http://103.6.239.242/sme/mobile/getoperations/?id=4&companyID=2 //andrea
-                //http://103.6.239.242/sme/mobile/getoperations/?id=3&companyID=1
-                RestTemplate restTemplate = new RestTemplate();
-                StringHttpMessageConverter converter = new StringHttpMessageConverter();
-                restTemplate.getMessageConverters().add(converter);
-
-                xml                   = restTemplate.getForObject(uri, String.class);
-                Serializer serializer = new Persister();//new Format("<?xml version=\"1.0\" encoding=\"utf-8\" ?>"));
-                SimpleXmlHttpMessageConverter xml_converter = new SimpleXmlHttpMessageConverter(serializer);
-
- //               xml_operaions_list = serializer.read(GetOperations.class, debug);
-
-                xml_operaions_list = serializer.read(GetOperations.class, xml);
-
-                return xml_operaions_list;
-            } catch (java.net.URISyntaxException e) {
-                error = e.getMessage();
-//                Log.e("FirstTimeLoginActivity", error, e);
-            } catch (RestClientException e){
-                error = e.getMessage();
-//                Log.e("FirstTimeLoginActivity", error, e);
-            } catch (Exception e) {//http://103.6.239.242/sme/mobile/getoperations/?id=4&companyID=2
-                error = e.getMessage();
-//                Log.e("FirstTimeLoginActivity", error, e);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(GetOperations xml_operation_list) {
-            block_button = false;
-            if (xml_operation_list == null) {
-                // todo something
-                return;
-            }
-
-            implementXMLRespond(xml_operation_list);
-        }
-    }
-
-    private void implementXMLRespond(GetOperations xml_operation_list) {
-        String code = xml_operation_list.getCode();
-        String error;
-        if (!code.equals("0")) {
-            if (code.equals("1")) {
-                error = "Mismatching Company ID";
-            } else if (code.equals("2")) {
-                error = "Authentication failed";
-            } else if (code.equals("3")) {
-                error = "Session expired";
-//                my_dialog.show(error);
-                finish();
-            } else {
-                error = code + " - unknown error";
-            }
-
-            my_dialog.show(error);
-            return;
-        }
-        if (xml_operation_list.getOperationsList().size() == 0) {
-            my_dialog.show("Operations List is empty");
-            return;
-        } else {
-            if (lock_list(xml_operation_list)) {
-                for (int i = 0; i < bt_vector.size(); i ++)
-                    bt_vector.get(i).setVisibility(View.VISIBLE);
-                this.operaions_list = xml_operation_list;
-                fill_operation_list();
-            }
-        }
-    }
-*/
-    public void passFunction(GetOperations xml_operation_list) {
+    public void passFunction(ListOperations xml_operation_list) {
         if (lock_list(xml_operation_list)) {
             for (int i = 0; i < bt_vector.size(); i ++)
                 bt_vector.get(i).setVisibility(View.VISIBLE);
@@ -352,9 +252,9 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private boolean lock_list(GetOperations xml_operation_list) {
+    private boolean lock_list(ListOperations xml_operation_list) {
         String        confirmed_message = "";
-        GetOperations local;
+        ListOperations local;
         boolean       success = true;
 
         if (FM.writeToFile("parameters.bin", this.params)) {
