@@ -27,6 +27,8 @@ import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
+import static java.sql.DriverManager.println;
+
 /*
  *******************************
  *                             *
@@ -247,11 +249,23 @@ public class MyHttpRequest {
         Code = 0
         Code = 3 Expired Session
     */
-
+//<result code='0' id='4'><originator>194.219.45.10</originator><resDescription>Successful Operation</resDescription><dateStart>25/07/2015</dateStart><dateStop>25/07/2015</dateStop><recordCount>3</recordCount><records><record><tranCode>24</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>622.33</amount><descr>'test 7'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>25</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>222.55</amount><descr>'test 8'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>26</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>554.22</amount><descr>'test 12'</descr><operator>Andreano Choppolo</operator></record></records></result>
     private void implementViewTransactions(String xml, Serializer serializer) {
         String       code;
         ListTransactions xml_List_transactions;
 
+        String error = "", debug = "<result code='0' id='4'><originator>194.219.45.10</originator><res_Description>Successful Operation</res_Description><dateStart>25/07/2015</dateStart><dateStop>25/07/2015</dateStop><recordCount>3</recordCount><records><record><tranCode>24</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>622.33</amount><descr>'test 7'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>25</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>222.55</amount><descr>'test 8'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>26</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>554.22</amount><descr>'test 12'</descr><operator>Andreano Choppolo</operator></record></records></result>";
+        try {
+            DOMParser dp = new DOMParser(debug);
+//            xml_List_transactions = serializer.read(ListTransactions.class, debug);
+//            if (xml_List_transactions.getCode().equals("sadas"))
+//                return;
+        } catch(RestClientException e) {
+            error = e.toString();
+        } catch(Exception e) {
+            error = e.toString();
+        }
+        println(error);
         try {
             xml_List_transactions = serializer.read(ListTransactions.class, xml);
             code             = xml_List_transactions.getCode();
