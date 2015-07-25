@@ -115,26 +115,33 @@ public class MyHttpRequest {
                     implementXmlLogin(xml, serializer);
                 }
             } else {
-                goStartPage();
-//                my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
+                if (className.equals("XML_Login")) {
+                    implementXmlLogin(null, null);
+                } else {
+                    goStartPage();
+                }
             }
         }
     }
 
     private void implementXmlLogin(String xml, Serializer serializer) {
         XML_Login xml_login;
-        try {
-            xml_login                  = serializer.read(XML_Login.class, xml);
-            MainActivity main_activity = (MainActivity) activity;
-            main_activity.passExecute(xml_login);
+        MainActivity main_activity = (MainActivity) activity;
 
-            return;
-        } catch(RestClientException e) {
+        if (xml != null && serializer != null) {
+            try {
+                xml_login = serializer.read(XML_Login.class, xml);
+                main_activity.passExecute(xml_login);
 
-        } catch(Exception e) {
+                return;
+            } catch (RestClientException e) {
 
+            } catch (Exception e) {
+
+            }
         }
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
+        main_activity.reset_block_login_button();
     }
 
 
@@ -212,6 +219,7 @@ public class MyHttpRequest {
 
                 RegularLoginActivity rla = (RegularLoginActivity) activity;
                 rla.passFunction(xml_operations_list);
+                return;
             } else  {// Expired Session or any error
 /*
             Николай писал:
@@ -221,7 +229,6 @@ public class MyHttpRequest {
 
                 goStartPage();
             }
-            return;
         } catch(RestClientException e) {
 
         } catch(Exception e) {

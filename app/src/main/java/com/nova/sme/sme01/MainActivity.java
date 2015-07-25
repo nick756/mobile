@@ -164,6 +164,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
          }
     }
 
+    public void reset_block_login_button() {
+        block_login_button = false;
+    }
     public void passExecute(XML_Login xml_login) {
         block_login_button = false;
         if (xml_login == null) {
