@@ -93,6 +93,7 @@ public class Vocabulary implements Serializable {
             {"Till",                                                "Hingga"},
             {"List of transactions",                                "Senarai transaksi"},
             {"List of transactions is empty",                       "Senarai transaksi kosong"},
+        {"Please, wait for Server response",                        "Sila, menunggu jawapan Server" },
 
     };
 

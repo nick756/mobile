@@ -115,7 +115,8 @@ public class MyHttpRequest {
                     implementXmlLogin(xml, serializer);
                 }
             } else {
-                my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
+                goStartPage();
+//                my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
             }
         }
     }
@@ -172,7 +173,8 @@ public class MyHttpRequest {
         } catch(Exception e) {
 
         }
-        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
+        goStartPage();
+//        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
 
@@ -225,7 +227,8 @@ public class MyHttpRequest {
         } catch(Exception e) {
 
         }
-        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
+        goStartPage();
+//        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
 
@@ -281,7 +284,8 @@ public class MyHttpRequest {
         } catch(Exception e) {
 
         }
-        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
+        goStartPage();
+//        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
     private void empty_list(String message) {

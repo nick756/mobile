@@ -140,7 +140,10 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
 
     public void clickLoginButton(View v) {
-        if (block_login_button) return;
+        if (block_login_button) {
+            my_dialog.show(voc.getTranslatedString("Please, wait for Server response"));
+            return;
+        }
         String user = user_name.getText().toString();
         String pswd = password.getText().toString();
 
@@ -164,7 +167,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     public void passExecute(XML_Login xml_login) {
         block_login_button = false;
         if (xml_login == null) {
-            // todo something
+            my_dialog.show(voc.getTranslatedString("Unknown error"));
             return;
         }
 
@@ -189,7 +192,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         Intent      resultIntent;
         CommonClass c_c;
 
-        String error_message;
+        String error_message = "";
         try {
             // error?
             if (code.equals("0")) {
@@ -227,8 +230,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                     error_message = "User Role is not supported for Mobile Interface";
                 else if (code.equals("2"))
                     error_message = "Authentication Failed";// (user name or password is not found)";
-//                else if (code.equals("3"))
-//                    error_message = "Timeout is over";
                 else
                     error_message = "Unknown error";
 
