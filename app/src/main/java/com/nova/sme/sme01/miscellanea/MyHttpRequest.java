@@ -60,7 +60,7 @@ public class MyHttpRequest {
 
             ListTransactions xml_List_transactions;
             URI uri;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=23/07/2015&dateTill=23/07/2015
-            try {//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/06/2015&dateTill=22/07/2015
+            try {//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=25/07/2015&dateTill=25/07/2015
                 URL url = new URL(url_request);//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=25/01/2015&dateTill=25/07/2015
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
