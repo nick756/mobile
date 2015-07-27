@@ -97,8 +97,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
 
     private void logout_request() {
-        new MyHttpRequest(this, base_layout, voc, url_logout, "BaseXML");
-        //new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
+        new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
         return  (new CreateCustomBar(this, base_layout)).getButton();

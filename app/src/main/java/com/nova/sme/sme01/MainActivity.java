@@ -154,13 +154,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             password.setText("");
             user_name.setText("");
 
-            new MyHttpRequest(this, base_layout, voc, login_request, "XML_Login");
+            new MyHttpRequest(null, this, base_layout, voc, login_request, "XML_Login");
         } else { // debugging, temporarily
             this.login_request = this.base_url + "name=andrea&passw=1234";
             block_login_button = true;
             password.setText("");
             user_name.setText("");
-            new MyHttpRequest(this, base_layout, voc, login_request, "XML_Login");
+            new MyHttpRequest(null, this, base_layout, voc, login_request, "XML_Login");
          }
     }
 

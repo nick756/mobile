@@ -54,14 +54,14 @@ public class ConfirmTransaction {
         this.amount   = s_sum;
     }
     void send_request() {
-        new MyHttpRequest(activity, base_layout, voc, http_request, "AddTransaction");
+        new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
     }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.before_transaction);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
+
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -107,7 +107,9 @@ public class ConfirmTransaction {
             }
         });
 
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
+
 
         dialog.getWindow().setAttributes(lp);
  //       resize(lp.width);
@@ -121,7 +123,7 @@ public class ConfirmTransaction {
             prms = cancelButton.getLayoutParams();
             prms.height = height;
         }
-
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
 }

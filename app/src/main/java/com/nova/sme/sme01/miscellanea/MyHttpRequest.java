@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.widget.RelativeLayout;
 
 import com.nova.sme.sme01.CommonClass;
+import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.RegularLoginActivity;
@@ -42,15 +43,17 @@ public class MyHttpRequest {
     private Activity        activity;
     private MyDialog        my_dialog;
     private Vocabulary      voc;
+    private FormResizing   FR;
     private String          className;
 
-    public MyHttpRequest(Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
+    public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
         this.url_request = url_request;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=27/01/2015&dateTill=27/07/2015
         this.base_layout = base_layout;
         this.voc         = voc;
         this.className   = className;
-        this.my_dialog   = new MyDialog(null, voc, base_layout);
+        this.FR          = FR;
+        this.my_dialog   = new MyDialog(FR, voc, base_layout);
 
         new Http_Request().execute();
     }
@@ -142,6 +145,7 @@ public class MyHttpRequest {
 
             }
         }
+ //       MyDialog my_dialog = new MyDialog(null, voc, base_layout);
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
         main_activity.reset_block_login_button();
     }
@@ -161,12 +165,15 @@ public class MyHttpRequest {
     private void implementTransaction(String xml, Serializer serializer) {
         AddTransaction xml_transaction;
         String         code;
+//        MyDialog       my_dialog;
         try {
             xml_transaction = serializer.read(AddTransaction.class, xml);
             code            = xml_transaction.getCode();
             if (code.equals("0")) {
+//                my_dialog = new MyDialog(null, voc, base_layout);
                 my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
             } else if (code.equals("1")) {
+ //               my_dialog = new MyDialog(null, voc, base_layout);
                 my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_success);
             } else  { // Session expired or other error
 /*
@@ -183,7 +190,6 @@ public class MyHttpRequest {
 
         }
         goStartPage();
-//        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
 
@@ -236,7 +242,6 @@ public class MyHttpRequest {
 
         }
         goStartPage();
-//        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
 
@@ -303,11 +308,10 @@ public class MyHttpRequest {
 
         }
         goStartPage();
-//        my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
     }
 
     private void empty_list(String message) {
-        my_dialog = new MyDialog(null, voc, base_layout);
+ //       MyDialog my_dialog = new MyDialog(null, voc, base_layout);
         my_dialog.show(voc.getTranslatedString(message), R.mipmap.ic_zero);
     }
 

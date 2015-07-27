@@ -161,8 +161,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         spinner.setAdapter(adapter);
     }
     void logout_request() {
-//        new Http_Request_Logout(this, this.url_logout, this.FM, this.voc, this.base_layout, false);
-        new MyHttpRequest(this, base_layout, voc, url_logout, "BaseXML");
+        new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
         return  (new CreateCustomBar(this, base_layout)).getButton();

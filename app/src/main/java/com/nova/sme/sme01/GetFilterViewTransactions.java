@@ -57,7 +57,7 @@ public class GetFilterViewTransactions {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.from_till);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
 //        dialog.getWindow().setBackgroundDrawable("base_layout_background");
@@ -94,13 +94,15 @@ public class GetFilterViewTransactions {
                 http_request += "&dateTill=" + till;
 
                 //new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
-                new MyHttpRequest(activity, base_layout, voc, http_request, "ListTransactions");
+                new MyHttpRequest(FR, activity, base_layout, voc, http_request, "ListTransactions");
 
                 dialog.dismiss();
             }
         });
 
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
+
 
         dialog.getWindow().setAttributes(lp);
         resize(lp.width);
@@ -110,6 +112,7 @@ public class GetFilterViewTransactions {
             ViewGroup.LayoutParams prms = okButton.getLayoutParams();
             prms.height = height;
         }
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     private void resize(float width) {              // width of stroke

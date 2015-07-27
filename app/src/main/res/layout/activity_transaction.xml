@@ -29,7 +29,7 @@
         android:layout_below="@+id/transaction_caption"
         android:layout_margin="2dp"
         android:spinnerMode="dropdown"
-        android:background="#D7E5E1" />
+        android:background="@color/main_background_color" />
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
 
         android:layout_below="@+id/operations_list_spinner"
-        android:background="#D7E5E1"
+        android:background="@color/main_background_color"
         android:id="@+id/base_calendar"
         android:layout_margin="2dp"
         android:padding="1dp">
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/transaction_description_id"
         android:layout_margin="2dp"
-        android:background="#D7E5E1"
+        android:background="@color/main_background_color"
         android:padding="1dp"
         android:id="@+id/base_amount_id">
 

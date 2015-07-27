@@ -160,7 +160,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     }
 
     private void logout_request() {
-        new MyHttpRequest(this, base_layout, voc, url_request, "BaseXML");
+        new MyHttpRequest(this.FR, this, base_layout, voc, url_request, "BaseXML");
     }
 
     @Override
@@ -235,7 +235,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             case R.id.synch_oper_list:
                 this.operaions_list = null;
                 fill_operation_list();
-                new MyHttpRequest(this, base_layout, voc, url_request, "ListOperations");
+                new MyHttpRequest(this.FR,  this, base_layout, voc, url_request, "ListOperations");
                 break;
             case R.id.reset_oper_list:
                 // delete all

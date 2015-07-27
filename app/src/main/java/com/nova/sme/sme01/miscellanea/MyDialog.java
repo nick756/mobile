@@ -29,10 +29,15 @@ public class MyDialog {
     }
     public void show(String message) {
         final Dialog dialog = new Dialog(base_layout.getContext());
+
+//        final Dialog dialog = new Dialog(base_layout.getContext(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.login_failed_layout);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));//0x88000000
+
+
+ //       dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         //base_failed_layout
   //      LinearLayout rl = (LinearLayout) dialog.findViewById(R.id.base_failed_layout);
@@ -58,6 +63,8 @@ public class MyDialog {
                 dialog.dismiss();
             }
         });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
         dialog.getWindow().setAttributes(lp);
@@ -70,13 +77,22 @@ public class MyDialog {
                 prms.height                 = height;
             }
         }
-
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         //custom_dialog_icon
     }
     public void show(String message, int id) {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.login_failed_layout);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
+
+        ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+
+        lp.width  = (int)((float)base_layout.getWidth()*0.9f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+
         TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
         text.setText(message);
 
@@ -94,9 +110,22 @@ public class MyDialog {
                 dialog.dismiss();
             }
         });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
-        //custom_dialog_icon
+        dialog.getWindow().setAttributes(lp);
+
+        int height;
+        if (FR != null) {
+            height = FR.getLogButtonHeight();
+            if (height > 0) {
+                ViewGroup.LayoutParams prms = dialogButton.getLayoutParams();
+                prms.height                 = height;
+            }
+        }
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     private void changeIcon(int id) {

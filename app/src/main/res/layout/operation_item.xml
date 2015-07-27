@@ -6,7 +6,7 @@
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
-    android:background="#D7E5E1"
+    android:background="@color/main_background_color"
     android:padding="5dp">
 
      <LinearLayout

@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/base_failed_layout"
-    android:background="@drawable/base_layout_background"
-    android:theme="@style/Theme.Transparent"
-    android:padding="5dp">
+    android:padding="5dp"
+    style="@style/Theme.Transparent"
+    android:background="@drawable/dialog_layout">
+
 
 
         <ImageView
