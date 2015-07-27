@@ -21,21 +21,22 @@
 
         <TextView
             android:id="@+id/dialog_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_toRightOf="@+id/custom_dialog_icon"
             android:textStyle="bold"
             android:text="Error"
             android:textColor="#D1DADA"
-            android:background="#05595A"
+            android:background="@color/button_pressed_color_start"
             android:gravity="center"
-            android:layout_margin="10dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
             android:layout_alignTop="@+id/custom_dialog_icon"
-            android:layout_alignBottom="@+id/custom_dialog_icon" />
+            android:layout_alignBottom="@+id/custom_dialog_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp" />
 
         <Button
             android:id="@+id/dialogButtonOK"
