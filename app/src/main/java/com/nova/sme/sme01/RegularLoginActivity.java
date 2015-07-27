@@ -111,7 +111,7 @@ public class RegularLoginActivity extends AppCompatActivity {
 
         FM                  = new FileManager(this);
         this.operaions_list = (ListOperations) FM.readFromFile("operations_list.bin");
-        my_dialog = new MyDialog(voc, base_layout);
+ //       my_dialog = new MyDialog(this.FR, voc, base_layout);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -133,6 +133,8 @@ public class RegularLoginActivity extends AppCompatActivity {
 
                 fill_operation_list();
                 FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
+
+                my_dialog = new MyDialog(FR, voc, base_layout);
             }
         });
 

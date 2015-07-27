@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         voc.setLanguage(params.getLanguage());
 
-        my_dialog        = new MyDialog(voc, base_layout);
+        my_dialog        = new MyDialog(null, voc, base_layout);
         this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
 

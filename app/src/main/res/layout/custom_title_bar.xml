@@ -11,18 +11,16 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:id="@+id/title_id"
-        android:layout_marginRight="5dp"
         android:background="@android:color/background_dark"
         android:paddingLeft="5dp"
         android:textColor="@android:color/white"
         android:layout_gravity="right"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/logout_button"
         android:textAlignment="center"
         android:textStyle="normal"
         android:typeface="normal"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp" />
 
     <Button
         android:layout_width="wrap_content"

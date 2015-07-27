@@ -89,7 +89,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         this.FM        = new FileManager(this);
         this.FR        = new FormResizing(this, base_layout);
         this.voc       = new Vocabulary();
-        this.my_dialog = new MyDialog(voc, base_layout);
+//        this.my_dialog = new MyDialog(voc, base_layout);
 
         this.operaions_list = (ListOperations) FM.readFromFile(this.operations_list_name);
         this.params         = (Parameters)    FM.readFromFile(this.params_file_name);
@@ -123,6 +123,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 });
 
                 FR.resizeLoginButton(base_layout, logout_button, 0.062f);
+                my_dialog = new MyDialog(FR, voc, base_layout);
                 setSpinner();
 
                 create_calendar();
@@ -276,7 +277,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         edit = (EditText)findViewById(R.id.transaction_description_id);
         String descr = edit.getText().toString().trim();
         if (descr.length() == 0) {
-            my_dialog.show(voc.getTranslatedString("Description can not be empty"));
+            my_dialog.show(voc.getTranslatedString("Description is empty"));
             return;
         }
         s_descr = descr;
@@ -296,7 +297,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         s_amount = sum;
 
         if (Double.parseDouble(sum) == 0) {
-            my_dialog.show(voc.getTranslatedString("Amount can not be empty"));
+            my_dialog.show(voc.getTranslatedString("Amount is empty"));
             return;
         }
 
@@ -304,6 +305,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
         ConfirmTransaction ct = new ConfirmTransaction(this,
                                                        this.voc,
+                                                       this.FR,
                                                        this.base_layout,
                                                        http,
                                                        s_opearion,

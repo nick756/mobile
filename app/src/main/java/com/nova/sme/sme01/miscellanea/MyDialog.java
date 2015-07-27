@@ -2,28 +2,48 @@ package com.nova.sme.sme01.miscellanea;
 
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
 
 public class MyDialog {
-    private Vocabulary voc;
+    private Vocabulary     voc;
     private RelativeLayout base_layout;
+    private FormResizing   FR;
 
-    public MyDialog(Vocabulary voc, RelativeLayout base_layout) {
+    public MyDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout) {
         this.voc         = voc;
         this.base_layout = base_layout;
+        this.FR          = FR;
     }
     public void show(String message) {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.login_failed_layout);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        //base_failed_layout
+  //      LinearLayout rl = (LinearLayout) dialog.findViewById(R.id.base_failed_layout);
+  //      rl.setBackground(new ColorDrawable(0));
+
+        ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+
+        lp.width  = (int)((float)base_layout.getWidth()*0.9f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
         TextView text = (TextView) dialog.findViewById(R.id.dialog_text);
         text.setText(message);
 
@@ -39,6 +59,17 @@ public class MyDialog {
             }
         });
         dialog.show();
+
+        dialog.getWindow().setAttributes(lp);
+
+        int height;
+        if (FR != null) {
+            height = FR.getLogButtonHeight();
+            if (height > 0) {
+                ViewGroup.LayoutParams prms = dialogButton.getLayoutParams();
+                prms.height                 = height;
+            }
+        }
 
         //custom_dialog_icon
     }

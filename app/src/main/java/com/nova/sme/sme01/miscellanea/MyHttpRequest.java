@@ -46,11 +46,11 @@ public class MyHttpRequest {
 
     public MyHttpRequest(Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
-        this.url_request = url_request;
+        this.url_request = url_request;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=27/01/2015&dateTill=27/07/2015
         this.base_layout = base_layout;
         this.voc         = voc;
         this.className   = className;
-        this.my_dialog   = new MyDialog(voc, base_layout);
+        this.my_dialog   = new MyDialog(null, voc, base_layout);
 
         new Http_Request().execute();
     }
@@ -307,7 +307,7 @@ public class MyHttpRequest {
     }
 
     private void empty_list(String message) {
-        my_dialog = new MyDialog(voc, base_layout);
+        my_dialog = new MyDialog(null, voc, base_layout);
         my_dialog.show(voc.getTranslatedString(message), R.mipmap.ic_zero);
     }
 

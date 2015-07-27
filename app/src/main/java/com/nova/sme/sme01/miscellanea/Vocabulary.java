@@ -87,13 +87,14 @@ public class Vocabulary implements Serializable {
             {"Cancel",                                              "Batal"},
             {"Make Transaction",                                    "Membuat Transaksi"},
             {"Operation failed",                                    "Operasi gagal"},
-            {"Description can not be empty",                        "Penerangan tidak boleh kosong"},
-            {"Amount can not be empty",                             "Amaun yang tidak boleh kosong"},
+            {"Description is empty",                                "Penerangan kosong"},
+            {"Amount is empty",                                     "Jumlah kosong"},
             {"From",                                                "Dari"},
             {"Till",                                                "Hingga"},
             {"List of transactions",                                "Senarai transaksi"},
             {"List of transactions is empty",                       "Senarai transaksi kosong"},
-        {"Please, wait for Server response",                        "Sila, menunggu jawapan Server" },
+            {"Please, wait for Server response",                    "Sila, menunggu jawapan Server" },
+            {"Perform",                                             "Melaksanakan"},
 
     };
 

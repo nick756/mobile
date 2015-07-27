@@ -57,7 +57,9 @@ public class GetFilterViewTransactions {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.from_till);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));//#D7E5E1
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
 //        dialog.getWindow().setBackgroundDrawable("base_layout_background");
 
         year_from     = (Spinner)dialog.findViewById(R.id.year_spinner_from);
@@ -71,9 +73,7 @@ public class GetFilterViewTransactions {
         till_calendar = new SimpleCalendar(activity, year_till, month_till, day_till);
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-
         lp.width  = (int)((float)base_layout.getWidth()*0.9f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 

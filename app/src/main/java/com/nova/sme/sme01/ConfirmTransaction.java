@@ -4,8 +4,12 @@ package com.nova.sme.sme01;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,6 +32,7 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
 public class ConfirmTransaction {
     private Activity       activity;
     private Vocabulary     voc;
+    private FormResizing   FR;
     private RelativeLayout base_layout;
     private String         http_request;
 
@@ -36,9 +41,10 @@ public class ConfirmTransaction {
     private String    descr;
     private String    amount;
 
-    public ConfirmTransaction(Activity activity, Vocabulary voc, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum) {
+    public ConfirmTransaction(Activity activity, Vocabulary voc, FormResizing   FR, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum) {
         this.activity     = activity;
         this.voc          = voc;
+        this.FR           = FR;
         this.base_layout  = base_layout;
         this.http_request = http_request;
 
@@ -54,6 +60,14 @@ public class ConfirmTransaction {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.before_transaction);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+        ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.width  = (int)((float)base_layout.getWidth()*0.9f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
 
         TextView text = (TextView) dialog.findViewById(R.id.date_transaction_id);
         text.setText(this.date);
@@ -94,6 +108,20 @@ public class ConfirmTransaction {
         });
 
         dialog.show();
+
+        dialog.getWindow().setAttributes(lp);
+ //       resize(lp.width);
+
+        // set button height
+        int height = FR.getLogButtonHeight();
+        if (height > 0) {
+            ViewGroup.LayoutParams prms = okButton.getLayoutParams();
+            prms.height = height;
+
+            prms = cancelButton.getLayoutParams();
+            prms.height = height;
+        }
+
     }
 
 }
