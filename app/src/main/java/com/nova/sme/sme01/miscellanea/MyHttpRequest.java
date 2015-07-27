@@ -312,7 +312,7 @@ public class MyHttpRequest {
     }
 
     private void goStartPage() {
-        Intent intent = new Intent(activity, MainActivity.class );
+        Intent intent = new Intent(activity, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
         activity.startActivity(intent);
     }

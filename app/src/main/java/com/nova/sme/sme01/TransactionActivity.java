@@ -118,7 +118,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 logout_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        logout_request();
+                    logout_request();
                     }
                 });
 

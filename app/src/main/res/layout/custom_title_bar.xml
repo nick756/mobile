@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SME Cashflow Management System"
+        android:text="@string/app_name"
         android:id="@+id/title_id"
         android:layout_marginRight="5dp"
         android:background="@android:color/background_dark"

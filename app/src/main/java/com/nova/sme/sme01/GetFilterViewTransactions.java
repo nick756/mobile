@@ -3,6 +3,8 @@ package com.nova.sme.sme01;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -55,6 +57,8 @@ public class GetFilterViewTransactions {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.from_till);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));//#D7E5E1
+//        dialog.getWindow().setBackgroundDrawable("base_layout_background");
 
         year_from     = (Spinner)dialog.findViewById(R.id.year_spinner_from);
         month_from    = (Spinner)dialog.findViewById(R.id.month_spinner_from);

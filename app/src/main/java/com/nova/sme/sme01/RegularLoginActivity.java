@@ -40,7 +40,7 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 
-public class RegularLoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegularLoginActivity extends AppCompatActivity {
     private TextView                      user;
     private TextView                      company_name;
     private TextView                      role;
@@ -93,7 +93,7 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
         voc = new Vocabulary();
         voc.setLanguage(c_c.curr_language);
 
-        this.setTitle(voc.change_caption("Regular Login"));
+//        this.setTitle(voc.change_caption("Regular Login"));
         buttons_set = (LinearLayout) findViewById(R.id.reg_buttons_set);
 
         View view;
@@ -122,6 +122,12 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
                 FR.resize();
 
                 logout_button = create_custom_bar();
+                logout_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        logout_request();
+                    }
+                });
 
                 FR.resizeRegularLogins(base_layout, bt_vector, logout_button, 0.062f);// height's button/total_height
 
@@ -145,19 +151,14 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
     }
     private Button create_custom_bar() {
         Button button = (new CreateCustomBar(this, base_layout)).getButton();
-        if (button != null) {
+        if (button != null)
             voc.change_caption(button);
-            button.setOnClickListener(this);
-        }
+
         return button;
     }
 
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        if (id == R.id.logout_button) {
-            new MyHttpRequest(this, base_layout, voc, url_request, "BaseXML");
-        }
+    private void logout_request() {
+        new MyHttpRequest(this, base_layout, voc, url_request, "BaseXML");
     }
 
     @Override
@@ -230,7 +231,6 @@ public class RegularLoginActivity extends AppCompatActivity implements View.OnCl
             }
                 break;
             case R.id.synch_oper_list:
-//                block_button        = true;
                 this.operaions_list = null;
                 fill_operation_list();
                 new MyHttpRequest(this, base_layout, voc, url_request, "ListOperations");
