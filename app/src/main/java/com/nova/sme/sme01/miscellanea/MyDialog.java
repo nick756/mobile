@@ -17,6 +17,15 @@ import android.widget.TextView;
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
 
+/*
+ **************************************************
+ *                                                *
+ *  Simple dialog to show result of something     *
+ *                                                *
+ **************************************************
+ */
+
+
 public class MyDialog {
     private Vocabulary     voc;
     private RelativeLayout base_layout;

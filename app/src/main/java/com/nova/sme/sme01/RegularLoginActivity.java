@@ -21,6 +21,7 @@ import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
+import com.nova.sme.sme01.miscellanea.ThemesDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 
@@ -194,6 +195,9 @@ public class RegularLoginActivity extends AppCompatActivity {
 
         if (id == R.id.action_language) {
             new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
+            return true;
+        } else if (id == R.id.action_themes) {
+            new ThemesDialog(base_layout, voc, FM);
             return true;
         }
         return super.onOptionsItemSelected(item);
