@@ -145,8 +145,11 @@ public class FillWithTransactionsList {
                         text = (TextView) view;
                         text.setText(record.getOperator());
                     }
-                    if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
+                    if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1) {
                         texts.add(text);
+
+
+                    }
 /*
                     if (textsize > 0)
                         if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
@@ -183,7 +186,7 @@ public class FillWithTransactionsList {
         for (int i = 0; i < texts.size();i ++) {
             tv = texts.elementAt(i);
             if (i == 0)
-                textsize = textFit.getSizeWidth(tv, sample, 1.5f, base_layout.getWidth());
+                textsize = textFit.getSizeWidth(tv, sample, 1.2f, base_layout.getWidth());
 
             tv.setTextSize(textsize);
 

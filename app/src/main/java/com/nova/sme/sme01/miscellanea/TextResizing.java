@@ -61,8 +61,10 @@ public class TextResizing {
         if (text.length() == 0)
             return 0;
 
-        tvText.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int width = tvText.getMeasuredWidth();
+        tvText.measure(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+
+//        tvText.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int width = tvText.getMeasuredWidth();//24
 
         int textSize = 200;
 
