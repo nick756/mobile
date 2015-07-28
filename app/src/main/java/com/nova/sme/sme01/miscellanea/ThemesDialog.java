@@ -28,6 +28,7 @@ public class ThemesDialog {
     private Vocabulary     voc;
     private FileManager    FM;
     private List<RadioButton> radioButtons = new ArrayList<RadioButton>();
+    private List<Button> buttons           = new ArrayList<Button>();
 
     public ThemesDialog() {
 
@@ -60,13 +61,12 @@ public class ThemesDialog {
             }
         });
 
-//        RadioGroup   rg = new RadioGroup(dialog.getContext());
-//        List<RadioButton> radioButtons = new ArrayList<RadioButton>();
         LinearLayout ll = (LinearLayout)dialog.findViewById(R.id.themes_base_layout);
         LinearLayout inner;
         View         view;
         String       className, err;
         RadioButton  rb;
+        Button       btn;
 
         if (ll != null) {
             for (int i = 0; i < ll.getChildCount(); i ++) {
@@ -75,7 +75,9 @@ public class ThemesDialog {
                     view      = inner.getChildAt(j);
                     className = view.getClass().getName().toString().toUpperCase();
                     if (className.indexOf("RADIOBUTTON") != -1) {
-                        radioButtons.add((RadioButton)view);
+                        radioButtons.add((RadioButton) view);
+                    } else {
+                        buttons.add((Button)view);
                     }
                 }
             }
@@ -87,17 +89,39 @@ public class ThemesDialog {
                 public void onClick(View v) {
                     RadioButton rbtn;
                     rbtn = (RadioButton) v;
-                    for (int j = 0; j < radioButtons.size(); j ++) {
-                        if (rbtn == radioButtons.get(j)) continue;
-                        radioButtons.get(j).setChecked(false);
-                    }
+                    resetRadiobuttons(rbtn);
                 }
             });
 
+            btn = buttons.get(i);
+            btn.setTag(rb);
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Button      bt;
+                    RadioButton rb;
+
+                    bt = (Button) v;
+                    rb = (RadioButton) v.getTag();
+                    rb.setChecked(true);
+                    resetRadiobuttons(rb);
+                 }
+            });
+
         }
+         dialog.show();
 
-        dialog.show();
 
+    }
+    void resetRadiobuttons(RadioButton rb) {
+        RadioButton current;
+        for (int j = 0; j < radioButtons.size(); j ++) {
+            current = radioButtons.get(j);
+            if (rb == current) continue;
+            if (current.isChecked())
+                current.setChecked(false);
+        }
 
     }
 

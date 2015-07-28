@@ -25,14 +25,13 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="code"
             android:tag="code"
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_code"
-            android:textStyle="bold"
             android:lines="1"
             android:linksClickable="false"
             android:layout_marginLeft="10dp" />
@@ -53,14 +52,13 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="date"
             android:tag="date"
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_date"
-            android:textStyle="bold"
             android:lines="1"
             android:longClickable="false"
             android:layout_marginLeft="10dp" />
@@ -82,14 +80,13 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="type"
             android:tag="type"
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_type"
-            android:textStyle="bold"
             android:lines="1"
             android:longClickable="false"
             android:layout_marginLeft="10dp" />
@@ -111,14 +108,13 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="money"
             android:tag="amount"
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_money"
-            android:textStyle="bold"
             android:lines="1"
             android:longClickable="false"
             android:layout_marginLeft="10dp" />
@@ -139,14 +135,13 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="description"
             android:tag="descr"
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_description"
-            android:textStyle="bold"
             android:lines="1"
             android:longClickable="false"
             android:layout_marginLeft="10dp" />
@@ -167,14 +162,13 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="operator"
             android:tag="operator"
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_operator"
-            android:textStyle="bold"
             android:lines="1"
             android:longClickable="false"
             android:layout_marginLeft="10dp" />

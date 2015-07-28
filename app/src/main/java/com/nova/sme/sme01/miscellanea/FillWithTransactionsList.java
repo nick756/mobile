@@ -14,6 +14,7 @@ import com.nova.sme.sme01.xml_reader_classes.Record;
 import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
 import java.util.List;
+import java.util.Vector;
 
 import static java.sql.DriverManager.println;
 
@@ -30,6 +31,12 @@ public class FillWithTransactionsList {
     private int            id;
     private Vocabulary     voc;
     private RelativeLayout base_layout;
+    private TextResizing   textFit;
+    private String         sample = "Purchase of Office Equipment so";
+    private boolean        first_text = false;
+    private float          textsize   = 0;
+
+    private Vector<TextView> texts = new Vector<TextView>();
 
     public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity     = activity;
@@ -37,6 +44,7 @@ public class FillWithTransactionsList {
         this.id           = id;
         this.voc          = voc;
         this.base_layout  = base_layout;
+        this.textFit      = new TextResizing(activity);
 
         implement();
     }
@@ -90,7 +98,7 @@ public class FillWithTransactionsList {
         TextView       text = null;
         LinearLayout   inner_layout = null;
 
-         for (int i = 0; i < layout.getChildCount(); i ++) {
+        for (int i = 0; i < layout.getChildCount(); i ++) {
             inner_layout = (LinearLayout) layout.getChildAt(i);
             tag          = (String)inner_layout.getTag();
             for (int j = 0; j < inner_layout.getChildCount(); j ++) {
@@ -98,6 +106,17 @@ public class FillWithTransactionsList {
                 tag = (String) view.getTag();
 
                 if (tag != null) {
+/*                    
+                    if (!first_text) {
+                        if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1) {
+                            first_text = true;
+                            text = (TextView) view;
+
+                            textsize = textFit.getSizeWidth(text, sample, 1.0f, base_layout.getWidth());
+                        }
+                    }
+*/
+
                     if (tag.equals("code")) {
                         text = (TextView) view;
                         text.setText(record.getTranCode());
@@ -126,6 +145,13 @@ public class FillWithTransactionsList {
                         text = (TextView) view;
                         text.setText(record.getOperator());
                     }
+                    if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
+                        texts.add(text);
+/*
+                    if (textsize > 0)
+                        if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
+                            text.setTextSize(textsize);
+                            */
                 }
             }
         }
@@ -151,6 +177,18 @@ public class FillWithTransactionsList {
     private void clean_scroll() {
         LinearLayout sv = (LinearLayout) activity.findViewById(id);
         sv.removeAllViews();
+    }
+    public void setFontSize() {
+        TextView tv;
+        for (int i = 0; i < texts.size();i ++) {
+            tv = texts.elementAt(i);
+            if (i == 0)
+                textsize = textFit.getSizeWidth(tv, sample, 1.5f, base_layout.getWidth());
+
+            tv.setTextSize(textsize);
+
+        }
+
     }
 
 

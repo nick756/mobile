@@ -35,6 +35,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
     private String                        operations_list_name = "operations_list.bin";
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
     private ListTransactions xml_List_transactions;
+    private FillWithTransactionsList      fwt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class TransactionsViewActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.tv_date_till_id);
         tv.setText(c_c.dateTill);
 
+        fwt =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
+
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
@@ -84,17 +87,11 @@ public class TransactionsViewActivity extends AppCompatActivity {
                 });
 
                 FR.resizeLoginButton(base_layout, logout_button, 0.062f);
-                fill_transactions_list();
                 voc.TranslateAll(base_layout);
+//                fwt.setFontSize();
             }
         });
     }
-
-    private void fill_transactions_list() {
-        FillWithTransactionsList fwol =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
-        // something else ?
-    }
-
 
     private void logout_request() {
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
