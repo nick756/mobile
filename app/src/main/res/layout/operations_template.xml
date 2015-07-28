@@ -7,8 +7,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/base_layout_background"
-    android:id="@+id/template_operations_id"
-    android:padding="5dp">
+        android:id="@+id/template_operations_id"
+        android:padding="5dp">
 
     <LinearLayout
         android:orientation="horizontal"
