@@ -12,12 +12,14 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
+import com.nova.sme.sme01.miscellanea.ThemesDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
@@ -89,8 +91,16 @@ public class TransactionsViewActivity extends AppCompatActivity {
                 FR.resizeLoginButton(base_layout, logout_button, 0.062f);
                 voc.TranslateAll(base_layout);
 //                fwt.setFontSize();
+
+                 setAttributes();
             }
         });
+    }
+    private void setAttributes() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+        attr.setButtons(base_layout, logout_button);
     }
 
     private void logout_request() {
@@ -114,7 +124,11 @@ public class TransactionsViewActivity extends AppCompatActivity {
         if (id == R.id.action_language) {
             new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
             return true;
+        } else if (id == R.id.action_themes) {
+            new ThemesDialog(base_layout, voc, FM, logout_button);
+            return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -143,6 +157,8 @@ public class TransactionsViewActivity extends AppCompatActivity {
         voc.TranslateAll(base_layout);
         if (logout_button != null)
             voc.change_caption(logout_button);
+
+        setAttributes();
         super.onResume();
     }
     private void getParams() {

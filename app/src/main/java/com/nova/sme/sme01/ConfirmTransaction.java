@@ -15,9 +15,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
+
+import java.util.Vector;
 
 /*
  ********************************
@@ -107,6 +111,13 @@ public class ConfirmTransaction {
             }
         });
 
+        // set theme
+        Vector<Button> btns = new Vector<Button>();
+        btns.add(okButton);btns.add(cancelButton);
+        setDialogButtonsTheme(btns);
+
+
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
@@ -124,6 +135,14 @@ public class ConfirmTransaction {
             prms.height = height;
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
+    private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
+        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        attr.setButtons(base_layout, buttons);
+        return attr;
     }
 
 }

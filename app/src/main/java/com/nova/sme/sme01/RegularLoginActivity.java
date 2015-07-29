@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
@@ -136,10 +137,19 @@ public class RegularLoginActivity extends AppCompatActivity {
                 FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
 
                 my_dialog = new MyDialog(FR, voc, base_layout);
+
+                 setAttributes();
             }
         });
 
     }
+    private void setAttributes() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+        attr.setButtons(base_layout, logout_button);
+    }
+
     private void fill_operation_list() { // if empty - we hide some buttons
         FillWithOperationsList fwol =  new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
         if (!fwol.implement()) {
@@ -197,7 +207,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
-            new ThemesDialog(base_layout, voc, FM);
+            new ThemesDialog(base_layout, voc, FM, logout_button);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -212,6 +222,8 @@ public class RegularLoginActivity extends AppCompatActivity {
         voc.TranslateAll(base_layout);
         if (logout_button != null)
             voc.change_caption(logout_button);
+
+        setAttributes();
         super.onResume();
     }
     private void getParams() {

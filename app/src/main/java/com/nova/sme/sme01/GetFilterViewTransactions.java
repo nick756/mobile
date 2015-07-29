@@ -13,9 +13,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+
+import java.util.Vector;
 
 /*
  **********************************
@@ -100,6 +104,12 @@ public class GetFilterViewTransactions {
             }
         });
 
+        // set theme
+        Vector<Button> btns = new Vector<Button>();
+        btns.add(okButton);
+        setDialogButtonsTheme(btns);
+
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
@@ -148,6 +158,15 @@ public class GetFilterViewTransactions {
 
     private float converDpToPixels(int dp) {
         return dp * activity.getResources().getDisplayMetrics().density;
+    }
+
+    private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
+        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        attr.setButtons(base_layout, buttons);
+        return attr;
     }
 
 }

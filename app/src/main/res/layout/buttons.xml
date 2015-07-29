@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/themes_base_layout">
+    android:id="@+id/themes_base_layout"
+    android:background="@drawable/dialog_layout"
+    android:padding="5dp">
 
 
     <LinearLayout
@@ -26,9 +28,21 @@
             android:id="@+id/radioButton_1"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:singleLine="true"
+            android:singleLine="false"
             android:checked="true"
-            android:clickable="true" />
+            android:clickable="true"
+            android:text="1" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -51,8 +65,20 @@
             android:id="@+id/radioButton_2"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:singleLine="true"
-            android:clickable="true" />
+            android:singleLine="false"
+            android:clickable="true"
+            android:text="2" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -76,7 +102,19 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:singleLine="true"
-            android:clickable="true" />
+            android:clickable="true"
+            android:text="3" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -100,7 +138,19 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:singleLine="true"
-            android:clickable="true" />
+            android:clickable="true"
+            android:text="4" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -123,7 +173,18 @@
             android:id="@+id/radioButton_5"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="5" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -146,7 +207,18 @@
             android:id="@+id/radioButton_6"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="6" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -169,31 +241,42 @@
             android:id="@+id/radioButton_7"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="7" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:max="255"
+            android:progress="@integer/abc_config_activityDefaultDur"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="2dp"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_marginTop="10dp">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Accept"
             android:id="@+id/ok_button"
-         />
+            android:background="@drawable/login_button_selector" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/cancel_button"
-            />
-
+            android:background="@drawable/login_button_selector"
+            android:layout_marginLeft="5dp" />
      </LinearLayout>
-
-
 
 
 

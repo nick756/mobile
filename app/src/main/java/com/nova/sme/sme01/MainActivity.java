@@ -12,11 +12,13 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
+import com.nova.sme.sme01.miscellanea.ThemesDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operator;
@@ -119,8 +121,17 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             pv.Placing();
 
             voc.TranslateAll(base_layout);
+
+            setAttributes();
              }
         });
+    }
+
+    private void setAttributes() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+        attr.setButtons(base_layout);
     }
 
     private void getParams() {
@@ -135,6 +146,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     protected void onResume() {
         getParams();
         voc.TranslateAll(base_layout);
+        setAttributes();
         super.onResume();
     }
 
@@ -294,7 +306,11 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         if (id == R.id.action_language) {
             new Select_Language(base_layout, voc, FM, params, null, params_file_name);
             return true;
+        } else if (id == R.id.action_themes) {
+            new ThemesDialog(base_layout, voc, FM, null);
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
 
+import java.util.Vector;
+
 /*
  **************************************************
  *                                                *
@@ -38,19 +40,9 @@ public class MyDialog {
     }
     public void show(String message) {
         final Dialog dialog = new Dialog(base_layout.getContext());
-
-//        final Dialog dialog = new Dialog(base_layout.getContext(), android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.login_failed_layout);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));//0x88000000
-
-
- //       dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        //base_failed_layout
-  //      LinearLayout rl = (LinearLayout) dialog.findViewById(R.id.base_failed_layout);
-  //      rl.setBackground(new ColorDrawable(0));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -62,6 +54,12 @@ public class MyDialog {
         text.setText(message);
 
         Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+
+        // set theme
+        Vector<Button> btns = new Vector<Button>();
+        btns.add(dialogButton);
+        setDialogButtonsTheme(btns);
+
 
         voc.change_caption(text);
         voc.change_caption(dialogButton);
@@ -107,6 +105,12 @@ public class MyDialog {
 
         Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
 
+        // set theme
+        Vector<Button> btns = new Vector<Button>();
+        btns.add(dialogButton);
+        setDialogButtonsTheme(btns);
+
+
         voc.change_caption(text);
         voc.change_caption(dialogButton);
 
@@ -137,9 +141,13 @@ public class MyDialog {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
-    private void changeIcon(int id) {
- //       ImageView img =
+     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
+        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
 
+        attr.setButtons(base_layout, buttons);
+        return attr;
     }
 
 }
