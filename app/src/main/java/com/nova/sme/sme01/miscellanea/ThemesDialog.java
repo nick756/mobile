@@ -1,6 +1,7 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import com.nova.sme.sme01.R;
 
@@ -27,13 +29,13 @@ import java.util.Vector;
  ********************************
  */
 public class ThemesDialog {
-    private RelativeLayout base_layout;
-    private Vocabulary     voc;
-    private FileManager    FM;
-    private Button         logout_button;
+    private RelativeLayout    base_layout;
+    private Vocabulary        voc;
+    private FileManager       FM;
+    private Button            logout_button;
     private List<RadioButton> radioButtons = new ArrayList<RadioButton>();
-    private List<Button> buttons           = new ArrayList<Button>();
-    private List<ProgressBar> pbars        = new ArrayList<ProgressBar>();
+    private List<Button>      buttons      = new ArrayList<Button>();
+    private List<SeekBar>     sbars        = new ArrayList<SeekBar>();
 
     public ThemesDialog() {
 
@@ -56,7 +58,7 @@ public class ThemesDialog {
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
-        lp.width  = (int)((float)base_layout.getWidth()*0.7f);
+        lp.width  = (int)((float)base_layout.getWidth()*0.95f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         Button OkButton     = (Button) dialog.findViewById(R.id.ok_button);
@@ -80,9 +82,14 @@ public class ThemesDialog {
                     ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
                     if (attr == null)
                         attr = new ApplicationAttributes();
+
                     attr.setSelectedButton(num);
+                    attr.setSelectedButtonColor(getSelectedColor(num));
+                    attr.setButtonColors(sbars);
+
                     FM.writeToFile("attributes.bin", attr);
                     attr.setButtons(base_layout, logout_button);
+
                 }
                 dialog.dismiss();
             }
@@ -101,7 +108,7 @@ public class ThemesDialog {
         String       className, err;
         RadioButton  rb;
         Button       btn;
-
+        SeekBar      sb;
         if (ll != null) {
             for (int i = 0; i < ll.getChildCount(); i ++) {
                 inner = (LinearLayout)ll.getChildAt(i);
@@ -112,8 +119,28 @@ public class ThemesDialog {
                         radioButtons.add((RadioButton) view);
                     } else if (className.indexOf("BUTTON") != -1) {
                         buttons.add((Button)view);
-                    } else if(className.indexOf("PROGRESSBAR") != -1) {
-                        pbars.add((ProgressBar) view);
+                    } else if(className.indexOf("SEEKBAR") != -1) {
+                        sb = (SeekBar) view;
+                        sbars.add(sb);
+
+                        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+                                // TODO Auto-generated method stub
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+                                // TODO Auto-generated method stub
+                            }
+
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                // 0- 255
+                                int color = Color.rgb(progress, progress, progress);
+                                setButtonTextColor(seekBar, color);
+                            }
+                        });
                     }
                 }
             }
@@ -150,11 +177,26 @@ public class ThemesDialog {
         rb = radioButtons.get(attr.getSelectedButton());
         rb.setChecked(true);
         resetRadiobuttons(rb);
+        setSeekBars(attr);
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+
+    }
+    private int getSelectedColor(int num) {
+        Button bt = buttons.get(num);
+        return bt.getCurrentTextColor();
+    }
+    private void setButtonTextColor(SeekBar sb, int color) {
+        for (int i = 0; i < sbars.size(); i ++) {
+            if (sb == sbars.get(i)) {
+                Button bt = buttons.get(i);
+                bt.setTextColor(color);
+                return;
+            }
+        }
 
     }
     private void resetRadiobuttons(RadioButton rb) {
@@ -182,6 +224,27 @@ public class ThemesDialog {
             attr = new ApplicationAttributes();
 
         attr.setButtons(base_layout, buttons);
+
+
         return attr;
+    }
+    private void setSeekBars(ApplicationAttributes attr) {
+        // set seekbar & buttons textcolor
+        Vector<Integer> buttons_text_colors = attr.getButtonColors();
+        int             color;
+        int             red;
+        SeekBar         sb;
+        String          err;
+        for (int i = 0; i < buttons_text_colors.size(); i ++) {
+            try {
+                color = buttons_text_colors.get(i);
+                red   = color&0xff;
+                sb = sbars.get(i);
+                sb.setProgress(red);
+                buttons.get(i).setTextColor(color);
+            } catch(Exception e) {
+                err = e.getMessage().toString();
+            }
+        }
     }
 }

@@ -1,13 +1,16 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Vector;
 
 
@@ -22,8 +25,11 @@ import java.util.Vector;
  */
 
 public class ApplicationAttributes implements Serializable {
-    private int    selected_button = 0;// default
-    private String base_url;
+    private int             selected_button       = 0;// default
+    private int             selected_button_color = Color.rgb(0, 0, 0);// default
+
+    private Vector<Integer> buttons_text_colors = new Vector<Integer>();
+    private String          base_url;
 
     public int    getSelectedButton()              {return selected_button;}
     public void   setSelectedButton(int selected) {selected_button = selected;}
@@ -33,7 +39,22 @@ public class ApplicationAttributes implements Serializable {
 
     public ApplicationAttributes() {
 
+
     }
+
+    public  Vector<Integer> getButtonColors(){return buttons_text_colors;}
+    public void setButtonColors(List<SeekBar> sbs) {
+        buttons_text_colors.clear();
+        SeekBar sb;
+        int     pos;
+        for (int i = 0; i < sbs.size(); i ++) {
+            sb  = sbs.get(i);
+            pos = sb.getProgress();
+            buttons_text_colors.add(Color.rgb(pos, pos, pos));
+        }
+    }
+    public int  getSelectedButtonColor(){return selected_button_color;}
+    public void setSelectedButtonColor(int color) {selected_button_color = color;}
 
     public void setButtons(View base_layout, Vector<Button> buttons) {
         Context ctx = base_layout.getContext();
@@ -77,6 +98,7 @@ public class ApplicationAttributes implements Serializable {
         } else {
             btn.setBackground(ctx.getResources().getDrawable(id));
         }
+        btn.setTextColor(selected_button_color);
     }
     private int getResourceID(Context ctx) {
         String err = "";

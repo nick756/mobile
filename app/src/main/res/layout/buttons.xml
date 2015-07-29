@@ -33,15 +33,14 @@
             android:clickable="true"
             android:text="1" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -57,6 +56,7 @@
             android:text="Button"
             android:id="@+id/button_2"
             android:background="@drawable/button_1_selector"
+
             />
 
         <RadioButton
@@ -69,15 +69,14 @@
             android:clickable="true"
             android:text="2" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -105,15 +104,14 @@
             android:clickable="true"
             android:text="3" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -141,15 +139,15 @@
             android:clickable="true"
             android:text="4" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -175,15 +173,14 @@
             android:layout_marginLeft="15dp"
             android:singleLine="true"
             android:text="5" />
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -209,15 +206,14 @@
             android:layout_marginLeft="15dp"
             android:singleLine="true"
             android:text="6" />
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -244,15 +240,14 @@
             android:singleLine="true"
             android:text="7" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:max="255"
-            android:progress="@integer/abc_config_activityDefaultDur"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginRight="2dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -276,6 +271,7 @@
             android:id="@+id/cancel_button"
             android:background="@drawable/login_button_selector"
             android:layout_marginLeft="5dp" />
+
      </LinearLayout>
 
 
