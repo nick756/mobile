@@ -232,15 +232,13 @@ public class ThemesDialog {
         // set seekbar & buttons textcolor
         Vector<Integer> buttons_text_colors = attr.getButtonColors();
         int             color;
-        int             red;
         SeekBar         sb;
         String          err;
         for (int i = 0; i < buttons_text_colors.size(); i ++) {
             try {
                 color = buttons_text_colors.get(i);
-                red   = color&0xff;
                 sb = sbars.get(i);
-                sb.setProgress(red);
+                sb.setProgress(color&0xff);
                 buttons.get(i).setTextColor(color);
             } catch(Exception e) {
                 err = e.getMessage().toString();
