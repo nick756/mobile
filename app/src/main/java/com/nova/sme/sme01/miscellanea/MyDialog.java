@@ -29,9 +29,9 @@ import java.util.Vector;
 
 
 public class MyDialog {
-    private Vocabulary     voc;
-    private RelativeLayout base_layout;
-    private FormResizing   FR;
+    protected Vocabulary     voc;
+    protected RelativeLayout base_layout;
+    protected FormResizing   FR;
 
     public MyDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout) {
         this.voc         = voc;
@@ -141,7 +141,7 @@ public class MyDialog {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
-     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
+     protected ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes();

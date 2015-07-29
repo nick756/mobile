@@ -29,13 +29,15 @@ public class ApplicationAttributes implements Serializable {
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
     private Vector<Integer> buttons_text_colors = new Vector<Integer>();
-    private String          base_url;
+    private String          base_url            = "http://" + "103.6.239.242:80/sme/mobile/";
 
     public int    getSelectedButton()              {return selected_button;}
     public void   setSelectedButton(int selected) {selected_button = selected;}
 
     public String getBaseUrl()           {return base_url;}
-    public void   setBaseUrl(String url) {base_url = url;}
+    public void   setBaseUrl(String url) {
+        base_url = "http://" + url;
+    }
 
     public ApplicationAttributes() {
 

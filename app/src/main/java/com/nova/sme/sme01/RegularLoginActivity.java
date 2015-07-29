@@ -18,6 +18,7 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
+import com.nova.sme.sme01.miscellanea.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -53,8 +54,12 @@ public class RegularLoginActivity extends AppCompatActivity {
     private Vector<Button>                bt_vector = new <Button>Vector();
     private ListOperations operaions_list;
     private FileManager                   FM;
-    private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
-    private String                        url_request     = "http://103.6.239.242/sme/mobile/getoperations/?";
+
+    private String                        url_logout;//            = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        url_request_operations;//     = "http://103.6.239.242/sme/mobile/getoperations/?";
+    private String                        url_request_transactions;
+    private String                        base_http;
+
     private MyDialog                      my_dialog;
     private String                        sender = "";
     private boolean                       block_button;
@@ -79,8 +84,8 @@ public class RegularLoginActivity extends AppCompatActivity {
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);// do we need this? we can read info from the file actually
         this.params.getFromCommonClass(c_c);
         this.sender     = c_c.sender;
-        url_logout  += "id=" + c_c.id + "&companyID=" + c_c.companyID;
-        url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
+ ////       url_logout  += "id=" + c_c.id + "&companyID=" + c_c.companyID;
+ //       url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
 
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_regular);
         user         = (TextView) findViewById(R.id.reg_user_name_id);
@@ -138,7 +143,7 @@ public class RegularLoginActivity extends AppCompatActivity {
 
                 my_dialog = new MyDialog(FR, voc, base_layout);
 
-                 setAttributes();
+                setAttributes();
             }
         });
 
@@ -148,7 +153,35 @@ public class RegularLoginActivity extends AppCompatActivity {
         if (attr == null)
             attr = new ApplicationAttributes();
         attr.setButtons(base_layout, logout_button);
+/*
+        base_http                 = attr.getBaseUrl();//
+        url_request_operations    = base_http + "getoperations/?";
+        url_request_operations   += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+
+        url_logout                = base_http + "logout/?";
+        url_logout               += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+
+        url_request_transactions  = base_http + "listtransactions/?";
+        url_request_transactions += "id=" + params.getId();
+*/
     }
+
+    private void updateURL() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        base_http                 = attr.getBaseUrl();//
+        url_request_operations    = base_http + "getoperations/?";
+        url_request_operations   += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+
+        url_logout                = base_http + "logout/?";
+        url_logout               += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+
+        url_request_transactions  = base_http + "listtransactions/?";
+        url_request_transactions += "id=" + params.getId();
+    }
+
 
     private void fill_operation_list() { // if empty - we hide some buttons
         FillWithOperationsList fwol =  new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
@@ -171,7 +204,8 @@ public class RegularLoginActivity extends AppCompatActivity {
     }
 
     private void logout_request() {
-        new MyHttpRequest(this.FR, this, base_layout, voc, url_request, "BaseXML");
+        updateURL();
+        new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
 
     @Override
@@ -209,7 +243,11 @@ public class RegularLoginActivity extends AppCompatActivity {
         } else if (id == R.id.action_themes) {
             new ThemesDialog(base_layout, voc, FM, logout_button);
             return true;
+        } else if (id == R.id.action_url_address) {
+            new HttpDialog(FR, voc, base_layout).show();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
     private void  writeParameters() {
@@ -242,16 +280,17 @@ public class RegularLoginActivity extends AppCompatActivity {
                 startActivity(new Intent(base_layout.getContext(), TransactionActivity.class));
                 break;
             case R.id.view_transactions: {
-                //http://103.6.239.242/sme/mobile/listtransactions/?id=3&companyID=1&dateFrom=21/07/2015&dateTill=21/07/2015
-                String http = "http://103.6.239.242/sme/mobile/listtransactions/?id=" + this.params.getId();
+                updateURL();
                 GetFilterViewTransactions get_transactions;
-                get_transactions = new GetFilterViewTransactions(this, this.voc, this.base_layout, this.FR, http);
+                get_transactions = new GetFilterViewTransactions(this, this.voc, this.base_layout, this.FR, url_request_transactions);
             }
                 break;
             case R.id.synch_oper_list:
                 this.operaions_list = null;
                 fill_operation_list();
-                new MyHttpRequest(this.FR,  this, base_layout, voc, url_request, "ListOperations");
+
+                updateURL();
+                new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations");
                 break;
             case R.id.reset_oper_list:
                 // delete all

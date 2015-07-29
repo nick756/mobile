@@ -16,6 +16,7 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
+import com.nova.sme.sme01.miscellanea.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
@@ -35,7 +36,10 @@ public class TransactionsViewActivity extends AppCompatActivity {
     private Parameters                    params;
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
+
     private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        base_http;
+
     private ListTransactions xml_List_transactions;
     private FillWithTransactionsList      fwt;
 
@@ -57,7 +61,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
         this.voc     = new Vocabulary();
 
         getParams();
-        this.url_logout += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+ //       this.url_logout += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
         this.xml_List_transactions = (ListTransactions) FM.readFromFile("transactions_view.bin");
 
@@ -101,9 +105,19 @@ public class TransactionsViewActivity extends AppCompatActivity {
         if (attr == null)
             attr = new ApplicationAttributes();
         attr.setButtons(base_layout, logout_button);
+     }
+    private void updateURL() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        base_http  = attr.getBaseUrl();
+        url_logout = base_http + "logout/?" + "id=" + params.getId() + "&companyID=" + params.getcompanyID();
     }
 
+
     private void logout_request() {
+        updateURL();
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
@@ -127,8 +141,10 @@ public class TransactionsViewActivity extends AppCompatActivity {
         } else if (id == R.id.action_themes) {
             new ThemesDialog(base_layout, voc, FM, logout_button);
             return true;
+        } else if (id == R.id.action_url_address) {
+            new HttpDialog(FR, voc, base_layout).show();
+            return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

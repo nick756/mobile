@@ -18,6 +18,7 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -52,8 +53,10 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
     private FormResizing                  FR;
     private FileManager                   FM;
     private Vocabulary                    voc;
-    private String                        url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
-    private String                        base_url        = "http://103.6.239.242/sme/mobile/addtransaction/?";
+
+    private String                        base_http;
+    private String                        url_logout;//      = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        base_url;//        = "http://103.6.239.242/sme/mobile/addtransaction/?";
     private MyDialog                      my_dialog;
     private Button                        logout_button;
 
@@ -95,7 +98,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
         this.operaions_list = (ListOperations) FM.readFromFile(this.operations_list_name);
         this.params         = (Parameters)    FM.readFromFile(this.params_file_name);
-        this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+ //       this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
         this.voc.setLanguage(this.params.getLanguage());
 
@@ -149,6 +152,16 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             attr = new ApplicationAttributes();
         attr.setButtons(base_layout, logout_button);
     }
+    private void updateURL() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        base_http  = attr.getBaseUrl();//
+        base_url   = base_http + "addtransaction/?" + "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+        url_logout = base_http + "logout/?"         + "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+    }
+
 
     void create_calendar() {
         simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
@@ -173,6 +186,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         spinner.setAdapter(adapter);
     }
     void logout_request() {
+        updateURL();
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
@@ -254,7 +268,11 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         } else if (id == R.id.action_themes) {
             new ThemesDialog(base_layout, voc, FM, logout_button);
             return true;
+        } else if (id == R.id.action_url_address) {
+            new HttpDialog(FR, voc, base_layout).show();
+            return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -272,8 +290,10 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         String    s_amount;
 
         EditText edit;
+
+        updateURL();
         String http = base_url;
-        http += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+ //       http += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
         http += "&date=" + simple_calendar.getDateFormatted();
         http += "&operationCode="; //this.selected_item
 

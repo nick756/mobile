@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -50,13 +51,11 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private Parameters                    params;
     private FileManager                   FM;
     private MyDialog                      my_dialog;
-    private String                        url_logout;
-    private String                        base_url_logout      = "http://103.6.239.242/sme/mobile/logout/?";
+    private String                        base_http;
 
-    private String                        base_url = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
+    private String                        base_url_login;// = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
 
     private String                        login_request;
-    private String                        debug_request = "http://103.6.239.242:80/sme/mobile/login/?name=vlad&passw=1234";
 
     private boolean                       block_login_button   = false;
     private String                        params_file_name     = "parameters.bin";
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         voc.setLanguage(params.getLanguage());
 
         my_dialog        = new MyDialog(null, voc, base_layout);
-        this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
+ //       this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -132,6 +131,17 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         if (attr == null)
             attr = new ApplicationAttributes();
         attr.setButtons(base_layout);
+
+//        base_http      = attr.getBaseUrl();
+//        base_url_login = base_http + "login/?";
+    }
+    private void updateURL() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        base_http      = attr.getBaseUrl();
+        base_url_login = base_http + "login/?";
     }
 
     private void getParams() {
@@ -159,20 +169,26 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         String user = user_name.getText().toString();
         String pswd = password.getText().toString();
 
+        updateURL();
         if (user.length() > 0 && pswd.length() > 0) {
-            this.login_request = this.base_url + "name=" + user + "&passw=" + pswd;
+            this.login_request = this.base_url_login + "name=" + user + "&passw=" + pswd;
 
             block_login_button = true;
             password.setText("");
             user_name.setText("");
+
 
             new MyHttpRequest(null, this, base_layout, voc, login_request, "XML_Login");
         } else { // debugging, temporarily
-            this.login_request = this.base_url + "name=andrea&passw=1234";
+            this.login_request = this.base_url_login + "name=andrea&passw=1234";
             block_login_button = true;
             password.setText("");
             user_name.setText("");
+
             new MyHttpRequest(null, this, base_layout, voc, login_request, "XML_Login");
+            //http//103.6.239.242/sme/mobile//login/?name=andrea&passw=1234
+            //http://103.6.239.242/sme/mobile/login/?name=vlad&passw=1234
+            //http://103.6.239.242/sme/mobile//login/?name=andrea&passw=1234
          }
     }
 
@@ -308,6 +324,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             return true;
         } else if (id == R.id.action_themes) {
             new ThemesDialog(base_layout, voc, FM, null);
+            return true;
+        } else if (id == R.id.action_url_address) {
+            new HttpDialog(FR, voc, base_layout).show();
             return true;
         }
 

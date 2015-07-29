@@ -64,6 +64,10 @@ public class ThemesDialog {
         Button OkButton     = (Button) dialog.findViewById(R.id.ok_button);
         Button CancelButton = (Button) dialog.findViewById(R.id.cancel_button);
 
+        voc.change_caption(OkButton);
+        voc.change_caption(CancelButton);
+
+
         // set theme
         Vector<Button> btns = new Vector<Button>();
         btns.add(OkButton);btns.add(CancelButton);
