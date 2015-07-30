@@ -26,7 +26,7 @@
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textColor="#D1DADA"
-            android:background="#05595A"
+            android:background="@color/text_back_ground"
             android:textStyle="bold" />
 
         <EditText

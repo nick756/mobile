@@ -27,7 +27,7 @@
             android:textStyle="bold"
             android:text="Error"
             android:textColor="#D1DADA"
-            android:background="@color/button_pressed_color_start"
+            android:background="@color/text_back_ground"
             android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"

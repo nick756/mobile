@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="background_dialog_color" type="color">#DADADA</item>
-    <item name="main_background_color"   type="color">#D7E5E1</item>
 
     <item name="button_pressed_color_start"   type="color">#099588</item>
     <item name="button_pressed_color_end"     type="color">#0AA699</item>
     <item name="button_stroked_color"         type="color">#878787</item>
+
+    <item name="text_back_ground"        type="color">#05595A</item>
+    <item name="main_background_color"   type="color">#D7E5E1</item>
+    <item name="background_dialog_color" type="color">#DADADA</item>
 
 </resources>

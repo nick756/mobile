@@ -50,6 +50,8 @@ public class HttpDialog extends MyDialog {
         btns.add(submit);btns.add(cancel);
         attr = setDialogButtonsTheme(btns);
 
+        EditText edit = (EditText) dialog.findViewById(R.id.http_id);
+        edit.setText(attr.getBaseUrl().substring(7));//cutting prefix "http://"
 
         voc.change_caption(submit);
         voc.change_caption(cancel);

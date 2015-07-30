@@ -59,7 +59,7 @@ public class ThemesDialog {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
         lp.width  = (int)((float)base_layout.getWidth()*0.95f);
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;//(int)((float)base_layout.getHeight()*0.5f);// WindowManager.LayoutParams.WRAP_CONTENT;
 
         Button OkButton     = (Button) dialog.findViewById(R.id.ok_button);
         Button CancelButton = (Button) dialog.findViewById(R.id.cancel_button);
@@ -106,7 +106,7 @@ public class ThemesDialog {
         });
 
 
-        LinearLayout ll = (LinearLayout)dialog.findViewById(R.id.themes_base_layout);
+        LinearLayout ll = (LinearLayout)dialog.findViewById(R.id.buttons_base_scroll);//.themes_base_layout);
         LinearLayout inner;
         View         view;
         String       className, err;
