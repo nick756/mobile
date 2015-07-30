@@ -96,6 +96,8 @@ public class Vocabulary implements Serializable {
             {"Please, wait for Server response",                    "Sila, menunggu jawapan Server" },
             {"Perform",                                             "Melaksanakan"},
             {"Accept",                                              "Terima"},
+            {"Buttons Themes",                                      "Butang Tema"},
+            {"Colors Themes",                                       "Warna Tema"},
 
     };
 
