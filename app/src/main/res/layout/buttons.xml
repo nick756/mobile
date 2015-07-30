@@ -55,7 +55,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
             <LinearLayout
@@ -91,7 +91,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
             <LinearLayout
@@ -126,7 +126,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
             <LinearLayout
@@ -162,7 +162,7 @@
                     android:max="255"
                     android:layout_marginLeft="5dp"
 
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
             <LinearLayout
@@ -195,7 +195,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
             <LinearLayout
@@ -228,7 +228,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
             <LinearLayout
@@ -262,7 +262,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
 
@@ -297,7 +297,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="12dp" />
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
 

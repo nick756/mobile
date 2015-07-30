@@ -8,27 +8,25 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.nova.sme.sme01.R;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 /*
- ********************************
- *                              *
- *  Dialog for selecting themes *
- *  (so far buttons only        *
- *                              *
- ********************************
+ *********************************
+ *                               *
+ *  Dialog for selecting colors  *
+ *                               *
+ *********************************
  */
-public class ThemesDialog {
+public class ColorsDialog extends ThemesDialog {
+/*
     protected RelativeLayout    base_layout;
     protected Vocabulary        voc;
     protected FileManager       FM;
@@ -37,32 +35,31 @@ public class ThemesDialog {
     protected List<Button>      buttons      = new ArrayList<Button>();
     protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
 
-    public ThemesDialog() {
+ */
+
+    public ColorsDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
+        super(base_layout, voc, FM, logout_button);
+    }
+
+    public ColorsDialog() {
 
     }
-    public ThemesDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
-        this.base_layout   = base_layout;
-        this.voc           = voc;
-        this.FM            = FM;
-        this.logout_button = logout_button;
 
- //       show();
-    }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.buttons);
+        dialog.setContentView(R.layout.colors_selector);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
-        lp.width  = (int)((float)base_layout.getWidth()*0.95f);
+        lp.width = (int) ((float) base_layout.getWidth() * 0.95f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;//(int)((float)base_layout.getHeight()*0.5f);// WindowManager.LayoutParams.WRAP_CONTENT;
 
-        Button OkButton     = (Button) dialog.findViewById(R.id.ok_button);
-        Button CancelButton = (Button) dialog.findViewById(R.id.cancel_button);
+        Button OkButton = (Button) dialog.findViewById(R.id.submit_colors);
+        Button CancelButton = (Button) dialog.findViewById(R.id.cancel_colors);
 
         voc.change_caption(OkButton);
         voc.change_caption(CancelButton);
@@ -70,13 +67,15 @@ public class ThemesDialog {
 
         // set theme
         Vector<Button> btns = new Vector<Button>();
-        btns.add(OkButton);btns.add(CancelButton);
+        btns.add(OkButton);
+        btns.add(CancelButton);
         ApplicationAttributes attr = setDialogButtonsTheme(btns);
 
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //find selected item
+/*
                 RadioButton rb = selectedItem();
                 int num;
                 if (rb != null) {
@@ -94,7 +93,7 @@ public class ThemesDialog {
                     FM.writeToFile("attributes.bin", attr);
                     attr.setButtons(base_layout, logout_button);
 
-                }
+                }*/
                 dialog.dismiss();
             }
         });
@@ -105,25 +104,67 @@ public class ThemesDialog {
             }
         });
 
+        RadioButton rb;
+/*
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.action_bar_background_id));
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.main_back_ground_id));
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.text_background_id));
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.dialog_background_id));
+*/
+        sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_red));
+        sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_green));
+        sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_blue));
+        for (int i = 0; i < sbars.size(); i ++) {
+            sbars.get(i).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
 
-        LinearLayout ll = (LinearLayout)dialog.findViewById(R.id.buttons_base_scroll);//.themes_base_layout);
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    switch (seekBar.getId()) {
+                        case R.id.seekBar_red:
+
+                            break;
+                        case R.id.seekBar_green:
+
+                            break;
+                        case R.id.seekBar_blue:
+
+                            break;
+                    }
+                }
+            });
+        }
+
+
+
+        //action_bar_background_id
+/*
+        LinearLayout ll = (LinearLayout) dialog.findViewById(R.id.buttons_base_scroll);//.themes_base_layout);
         LinearLayout inner;
-        View         view;
-        String       className, err;
-        RadioButton  rb;
-        Button       btn;
-        SeekBar      sb;
+        View view;
+        String className, err;
+        RadioButton rb;
+        Button btn;
+        SeekBar sb;
         if (ll != null) {
-            for (int i = 0; i < ll.getChildCount(); i ++) {
-                inner = (LinearLayout)ll.getChildAt(i);
-                for (int j = 0; j < inner.getChildCount(); j ++) {
-                    view      = inner.getChildAt(j);
+            for (int i = 0; i < ll.getChildCount(); i++) {
+                inner = (LinearLayout) ll.getChildAt(i);
+                for (int j = 0; j < inner.getChildCount(); j++) {
+                    view = inner.getChildAt(j);
                     className = view.getClass().getName().toString().toUpperCase();
                     if (className.indexOf("RADIOBUTTON") != -1) {
                         radioButtons.add((RadioButton) view);
                     } else if (className.indexOf("BUTTON") != -1) {
-                        buttons.add((Button)view);
-                    } else if(className.indexOf("SEEKBAR") != -1) {
+                        buttons.add((Button) view);
+                    } else if (className.indexOf("SEEKBAR") != -1) {
                         sb = (SeekBar) view;
                         sbars.add(sb);
 
@@ -149,7 +190,7 @@ public class ThemesDialog {
                 }
             }
         }
-        for (int i = 0; i < radioButtons.size(); i ++) {
+        for (int i = 0; i < radioButtons.size(); i++) {
             rb = radioButtons.get(i);
             rb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -166,7 +207,7 @@ public class ThemesDialog {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Button      bt;
+                    Button bt;
                     RadioButton rb;
 
                     bt = (Button) v;
@@ -182,71 +223,27 @@ public class ThemesDialog {
         rb.setChecked(true);
         resetRadiobuttons(rb);
         setSeekBars(attr);
-
+*/
         dialog.show();
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+        // sizes
+        //lp.width
+        float width  = (float)lp.width - converDpToPixels(10);
+        ImageView img = (ImageView) dialog.findViewById(R.id.main_colors);
+        params        = img.getLayoutParams();
+
+        params.width  = (int)(width*0.8f);
+        params.height = params.width;
+
+        RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.base_rb_id);
+        params            = rl.getLayoutParams();
+        params.width      = (int)(width*0.2f);
 
     }
-    private int getSelectedColor(int num) {
-        Button bt = buttons.get(num);
-        return bt.getCurrentTextColor();
+    private float converDpToPixels(int dp) {
+        return dp * base_layout.getResources().getDisplayMetrics().density;
     }
-    private void setButtonTextColor(SeekBar sb, int color) {
-        for (int i = 0; i < sbars.size(); i ++) {
-            if (sb == sbars.get(i)) {
-                Button bt = buttons.get(i);
-                bt.setTextColor(color);
-                return;
-            }
-        }
 
-    }
-    protected void resetRadiobuttons(RadioButton rb) {
-        RadioButton current;
-        for (int j = 0; j < radioButtons.size(); j ++) {
-            current = radioButtons.get(j);
-            if (rb == current) continue;
-            if (current.isChecked())
-                current.setChecked(false);
-        }
-    }
-    protected RadioButton selectedItem() {
-        RadioButton rb;
-        for (int i = 0; i < radioButtons.size(); i ++) {
-            rb = radioButtons.get(i);
-            if (rb.isChecked())
-                return rb;
-        }
-
-        return null;
-    }
-    protected ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
-        ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes();
-
-        attr.setButtons(base_layout, buttons);
-
-
-        return attr;
-    }
-    protected void setSeekBars(ApplicationAttributes attr) {
-        // set seekbar & buttons textcolor
-        Vector<Integer> buttons_text_colors = attr.getButtonColors();
-        int             color;
-        SeekBar         sb;
-        String          err;
-        for (int i = 0; i < buttons_text_colors.size(); i ++) {
-            try {
-                color = buttons_text_colors.get(i);
-                sb = sbars.get(i);
-                sb.setProgress(color&0xff);
-                buttons.get(i).setTextColor(color);
-            } catch(Exception e) {
-                err = e.getMessage().toString();
-            }
-        }
-    }
 }

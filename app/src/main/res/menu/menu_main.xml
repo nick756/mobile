@@ -17,10 +17,16 @@
                 />
 
             <item android:id="@+id/action_themes"
-                android:title="Color's Themes"
+                android:title="Buttons Themes"
                 android:orderInCategory="104"
                 app:showAsAction="never"
                 />
+            <item android:id="@+id/colors_themes"
+                android:title="Colors Themes"
+                android:orderInCategory="104"
+                app:showAsAction="never"
+                />
+
         </menu>
     </item>
 

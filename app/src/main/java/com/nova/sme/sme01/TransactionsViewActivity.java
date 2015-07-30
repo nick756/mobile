@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
@@ -139,12 +140,16 @@ public class TransactionsViewActivity extends AppCompatActivity {
             new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
-            new ThemesDialog(base_layout, voc, FM, logout_button);
+            new ThemesDialog(base_layout, voc, FM, logout_button).show();
             return true;
         } else if (id == R.id.action_url_address) {
             new HttpDialog(FR, voc, base_layout).show();
             return true;
+        } else if (id == R.id.colors_themes) {
+            new ColorsDialog(base_layout, voc, FM, logout_button).show();
+            return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

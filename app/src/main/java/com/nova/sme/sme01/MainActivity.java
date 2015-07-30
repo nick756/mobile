@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyDialog;
@@ -323,10 +324,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             new Select_Language(base_layout, voc, FM, params, null, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
-            new ThemesDialog(base_layout, voc, FM, null);
+            new ThemesDialog(base_layout, voc, FM, null).show();
             return true;
         } else if (id == R.id.action_url_address) {
             new HttpDialog(FR, voc, base_layout).show();
+            return true;
+        } else if (id == R.id.colors_themes) {
+            new ColorsDialog(base_layout, voc, FM, null).show();
             return true;
         }
 

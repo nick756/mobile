@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/dialog_layout">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -13,8 +14,8 @@
         android:weightSum="1">
 
         <ImageView
-            android:layout_width="320dp"
-            android:layout_height="320dp"
+            android:layout_width="330dp"
+            android:layout_height="330dp"
             android:id="@+id/main_colors"
             android:src="@drawable/maincolors"
 
@@ -22,20 +23,25 @@
 
         <RelativeLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/base_rb_id">
 
 
             <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                >
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/action_bar_background_id"
                     android:checked="true"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center|right" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -85,7 +91,8 @@
                 android:layout_toLeftOf="@+id/textView3"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:max="255" />
+                android:max="255"
+                android:indeterminate="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,7 +123,8 @@
                 android:layout_toLeftOf="@+id/textView4"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:max="255" />
+                android:max="255"
+                android:indeterminate="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -148,7 +156,8 @@
                 android:layout_toLeftOf="@+id/textView5"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:max="255" />
+                android:max="255"
+                android:indeterminate="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -178,6 +187,7 @@
             android:layout_height="wrap_content"
             android:text="Submit"
             android:id="@+id/submit_colors"
+            android:background="@drawable/login_button_selector"
             android:layout_margin="5dp" />
 
         <Button
@@ -185,6 +195,7 @@
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/cancel_colors"
+            android:background="@drawable/login_button_selector"
             android:layout_margin="5dp" />
     </LinearLayout>
 
