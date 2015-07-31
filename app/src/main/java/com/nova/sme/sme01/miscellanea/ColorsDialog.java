@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Config;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
 
+import java.lang.reflect.Field;
 import java.util.Vector;
 
 
@@ -37,6 +41,18 @@ import java.util.Vector;
  *********************************
  */
 public class ColorsDialog extends ThemesDialog {
+    private TextView       tv_actionbar_background;
+    private RelativeLayout rl_main_background;
+    private TextView       tv_text_background;
+    private RelativeLayout rl_dialog_background;
+
+    private int            actionbar_background_color;
+    private int            main_background_color;
+    private int            text_background_color;
+    private int            dialog_background_color;
+
+    private Vector<Integer> selected_actual = new Vector<Integer>();
+
 /*
     protected RelativeLayout    base_layout;
     protected Vocabulary        voc;
@@ -88,29 +104,58 @@ public class ColorsDialog extends ThemesDialog {
         btns.add(CancelButton);
         ApplicationAttributes attr = setDialogButtonsTheme(btns);
 
+
+/*
+int value = image.getRGB(x,y);
+R = (byte)(value & 0x000000FF);
+G = (byte)((value & 0x0000FF00) >> 8);
+B = (byte)((value & 0x00FF0000) >> 16);
+A = (byte)((value & 0xFF000000) >> 24);
+ */
+
+/*
+loat r = Color.red(color) / 255f;
+float g = Color.green(color) / 255f;
+float b = Color.blue(color) / 255f;
+
+ColorMatrix cm = new ColorMatrix(new float[] {
+        // Change red channel
+        r, 0, 0, 0, 0,
+        // Change green channel
+        0, g, 0, 0, 0,
+        // Change blue channel
+        0, 0, b, 0, 0,
+        // Keep alpha channel
+        0, 0, 0, 1, 0,
+});
+ColorMatrixColorFilter cf = new ColorMatrixColorFilter(cm);
+myDrawable.setColorFilter(cf);
+////////////////
+
+
+Drawable mDrawable = context.getResources().getDrawable(R.drawable.balloons);
+mDrawable.setColorFilter(new
+PorterDuffColorFilter(0xffff00,PorterDuff.Mode.MULTIPLY));
+
+
+
+
+/*
+    private TextView       tv_actionbar_background;
+    private RelativeLayout rl_main_background;
+    private TextView       tv_text_background;
+    private RelativeLayout rl_dialog_background;
+    cl_actionbar
+    cl_base
+    cl_text
+    cl_dialog
+
+         */
+
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //find selected item
-/*
-                RadioButton rb = selectedItem();
-                int num;
-                if (rb != null) {
-                    num = Integer.parseInt(rb.getText().toString().trim()) - 1;
-
-
-                    ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
-                    if (attr == null)
-                        attr = new ApplicationAttributes();
-
-                    attr.setSelectedButton(num);
-                    attr.setSelectedButtonColor(getSelectedColor(num));
-                    attr.setButtonColors(sbars);
-
-                    FM.writeToFile("attributes.bin", attr);
-                    attr.setButtons(base_layout, logout_button);
-
-                }*/
+                save();
                 dialog.dismiss();
             }
         });
@@ -122,6 +167,40 @@ public class ColorsDialog extends ThemesDialog {
         });
 
         RadioButton rb;
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.action_bar_background_id));
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.main_back_ground_id));
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.text_background_id));
+        radioButtons.add((RadioButton) dialog.findViewById(R.id.dialog_background_id));
+
+        for (int i = 0; i < radioButtons.size(); i ++) {
+            rb = radioButtons.get(i);
+            rb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RadioButton rbtn;
+                    rbtn = (RadioButton) v;
+                    switch (rbtn.getId()) {
+                        case R.id.action_bar_background_id:
+                            switcher(0);
+                            break;
+                        case R.id.main_back_ground_id:
+                            switcher(1);
+                            break;
+                        case R.id.text_background_id:
+                            switcher(2);
+                            break;
+                        case R.id.dialog_background_id:
+                            switcher(3);
+                            break;
+                    }
+                }
+            });
+
+        }
+        //action_bar_background_id
+        //main_back_ground_id
+        //text_background_id
+        //dialog_background_id
 
         sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_red));
         sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_green));
@@ -154,6 +233,34 @@ public class ColorsDialog extends ThemesDialog {
                 }
             });
         }
+        tv_actionbar_background    = (TextView) dialog.findViewById(R.id.cl_actionbar);
+        rl_main_background         = (RelativeLayout) dialog.findViewById(R.id.cl_base);
+        tv_text_background         = (TextView) dialog.findViewById(R.id.cl_text);
+        rl_dialog_background       = (RelativeLayout) dialog.findViewById(R.id.cl_dialog);
+
+        actionbar_background_color = getBackgroundColor(tv_actionbar_background);
+        main_background_color      = getBackgroundColor(rl_main_background);
+        text_background_color      = getBackgroundColor(tv_text_background);
+        dialog_background_color    = getBackgroundColor(rl_dialog_background);
+
+        selected_actual.add(actionbar_background_color);
+        selected_actual.add(main_background_color);
+        selected_actual.add(text_background_color);
+        selected_actual.add(dialog_background_color);
+
+        //
+        int num    = attr.colors.getSelected_color_choise(); //0- 3
+        switcher(num);
+
+        radioButtons.get(num).setChecked(true);
+
+/*
+int value = image.getRGB(x,y);
+R = (byte)(value & 0x000000FF);
+G = (byte)((value & 0x0000FF00) >> 8);
+B = (byte)((value & 0x00FF0000) >> 16);
+A = (byte)((value & 0xFF000000) >> 24);
+ */
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
@@ -174,8 +281,52 @@ public class ColorsDialog extends ThemesDialog {
 
 
     }
+    private void switcher (int num) {
+        sbars.get(0).setProgress(selected_actual.get(num)  & 0x000000FF);
+        sbars.get(1).setProgress((selected_actual.get(num) & 0x0000FF00) >> 8);
+        sbars.get(2).setProgress((selected_actual.get(num) & 0x00FF0000) >> 16);
+    }
     private float converDpToPixels(int dp) {
         return dp * base_layout.getResources().getDisplayMetrics().density;
+    }
+    private int getBackgroundColor(View view) {
+        Drawable drawable = view.getBackground();
+        if (drawable instanceof ColorDrawable) {
+            ColorDrawable colorDrawable = (ColorDrawable) drawable;
+            if (Build.VERSION.SDK_INT >= 11) {
+                return colorDrawable.getColor();
+            }
+            try {
+                Field field = colorDrawable.getClass().getDeclaredField("mState");
+                field.setAccessible(true);
+                Object object = field.get(colorDrawable);
+                field = object.getClass().getDeclaredField("mUseColor");
+                field.setAccessible(true);
+                return field.getInt(object);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    private void save() {
+        ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes();
+
+        attr.colors.setSelected_color_choise(getSelectedRadioButton());
+        FM.writeToFile("attributes.bin", attr);
+    }
+
+    private int getSelectedRadioButton() {
+        for (int i = 0; i < radioButtons.size(); i ++)
+            if (radioButtons.get(i).isChecked())
+                return i;
+
+        return 0;
     }
 
 }

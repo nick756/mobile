@@ -25,6 +25,7 @@ import java.util.Vector;
  */
 
 public class ApplicationAttributes implements Serializable {
+    public  MColors         colors                = new MColors();
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
@@ -118,5 +119,52 @@ public class ApplicationAttributes implements Serializable {
             err = e.getMessage().toString();
         }
         return -1;
+    }
+
+    // COLORS
+    class MColors implements Serializable {
+        // colors
+        private int selected_color_choise = 0;
+        private int actionbar_background_color;
+        private int main_background_color;
+        private int text_background_color;
+        private int dialog_background_color;
+        // colors
+
+        public void setSelected_color_choise(int val) {
+            selected_color_choise = val;
+        }
+        public void setActionbar_background_color(int val) {
+            actionbar_background_color = val;
+        }
+        public void setMain_background_color(int val) {
+            main_background_color = val;
+        }
+        public void setText_background_color(int val) {
+            text_background_color = val;
+        }
+        public void setDialog_background_color(int val) {
+            dialog_background_color = val;
+        }
+        //--------------------------------------------------------//
+        public int getSelected_color_choise() {
+            return selected_color_choise;
+        }
+        public int getActionbar_background_color() {
+            return actionbar_background_color;
+        }
+        public int getMain_background_color() {
+            return main_background_color;
+        }
+        public int getText_background_color() {
+            return text_background_color;
+        }
+        public int getDialog_background_color() {
+            return dialog_background_color;
+        }
+
+        public MColors() {
+
+        }
     }
 }
