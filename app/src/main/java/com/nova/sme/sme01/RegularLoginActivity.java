@@ -20,6 +20,7 @@ import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.HttpDialog;
+import com.nova.sme.sme01.miscellanea.MyColors;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -69,6 +70,8 @@ public class RegularLoginActivity extends AppCompatActivity {
     private String                        operations_list_name = "operations_list.bin";
     private Button                        logout_button;
 
+    private Vector<View>                  views = new Vector<View>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +91,7 @@ public class RegularLoginActivity extends AppCompatActivity {
  ////       url_logout  += "id=" + c_c.id + "&companyID=" + c_c.companyID;
  //       url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
 
-        base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_regular);
+        base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_regular);base_layout.setTag("main_background_color");
         user         = (TextView) findViewById(R.id.reg_user_name_id);
         company_name = (TextView) findViewById(R.id.reg_company_name_id);
         role         = (TextView) findViewById(R.id.reg_role_id);
@@ -149,22 +152,21 @@ public class RegularLoginActivity extends AppCompatActivity {
         });
 
     }
+
+    public Vector<View> getViews() {return  views;}
+
     private void setAttributes() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes();
+
         attr.setButtons(base_layout, logout_button);
-/*
-        base_http                 = attr.getBaseUrl();//
-        url_request_operations    = base_http + "getoperations/?";
-        url_request_operations   += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
 
-        url_logout                = base_http + "logout/?";
-        url_logout               += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+        attr.setButtons(base_layout, logout_button);
+        MyColors colors = attr.getColors();
+        colors.setColors(views);
 
-        url_request_transactions  = base_http + "listtransactions/?";
-        url_request_transactions += "id=" + params.getId();
-*/
+
     }
 
     private void updateURL() {
@@ -197,9 +199,18 @@ public class RegularLoginActivity extends AppCompatActivity {
         }
     }
     private Button create_custom_bar() {
-        Button button = (new CreateCustomBar(this, base_layout)).getButton();
+ //       Button button = (new CreateCustomBar(this, base_layout)).getButton();
+ //       if (button != null)
+ //           voc.change_caption(button);
+        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+
+        Button button = ccb.getButton();
         if (button != null)
             voc.change_caption(button);
+
+        views.add(base_layout);
+        views.add(ccb.getBase());
+        views.add(ccb.getTitle());
 
         return button;
     }
@@ -248,7 +259,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             new HttpDialog(FR, voc, base_layout).show();
             return true;
         } else if (id == R.id.colors_themes) {
-            new ColorsDialog(base_layout, voc, FM, logout_button).show();
+            new ColorsDialog(this, base_layout, voc, FM, logout_button).show();
             return true;
         }
 

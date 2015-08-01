@@ -20,7 +20,7 @@ import com.nova.sme.sme01.miscellanea.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.HttpDialog;
-import com.nova.sme.sme01.miscellanea.MColors;
+import com.nova.sme.sme01.miscellanea.MyColors;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private FileManager                   FM;
     private MyDialog                      my_dialog;
     private String                        base_http;
+//    private String                        url_logout;
 
     private String                        base_url_login;// = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private String                        operations_list_name = "operations_list.bin";
 
     private Vector<View>                  views = new Vector<View>(); // to change background
+    private Button                        logout_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             println(err.getMessage().toString());//android.util.AndroidRuntimeException: You cannot combine custom titles with other title features
         }
 
-        this.setTitle(R.string.app_name);// "@string/app_name");
+ //       this.setTitle(R.string.app_name);// "@string/app_name");
 
         if (first_entry) {// try to put this on "onStart"
             if (Settings.System.getInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1)
@@ -98,8 +100,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
          // to hide keyboard, that appeares without our permiossion as default
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        cap_text    = (TextView)findViewById(R.id.cap_text);
-        base_layout = (android.widget.RelativeLayout) findViewById(R.id.base_layout);
+        cap_text    = (TextView)findViewById(R.id.cap_text);cap_text.setTag("text_background_color");
+        base_layout = (android.widget.RelativeLayout) findViewById(R.id.base_layout);base_layout.setTag("main_background_color");
 
         FR        = new FormResizing(this, base_layout);
         pv        = new PlaceViews(this, base_layout);
@@ -134,26 +136,32 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             voc.TranslateAll(base_layout);
 
 
-            Button button         = create_custom_bar();
-            RelativeLayout layout = (RelativeLayout)button.getTag();
-            layout.removeView(button);
-
-            layout.setTag("actionbar_background_color");
-            base_layout.setTag("main_background_color");
-            cap_text.setTag("text_background_color");
-
-            views.add(layout);
-            views.add(base_layout);     //cap_text
-            views.add(cap_text);
+            logout_button         = create_custom_bar();
+            logout_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
 
             setAttributes();
-             }
+            }
         });
     }
+
+    public Vector<View> getViews() {return  views;}
+
     private Button create_custom_bar() {
-        Button button = (new CreateCustomBar(this, base_layout)).getButton();
+        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+
+        Button button = ccb.getButton();
         if (button != null)
             voc.change_caption(button);
+
+        views.add(base_layout);
+        views.add(cap_text);
+        views.add(ccb.getBase());
+        views.add(ccb.getTitle());
 
         return button;
     }
@@ -163,8 +171,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         if (attr == null)
             attr = new ApplicationAttributes();
 
-        attr.setButtons(base_layout);
-        MColors colors = attr.getColors();
+        attr.setButtons(base_layout, logout_button);
+        MyColors colors = attr.getColors();
         colors.setColors(views);
     }
     private void updateURL() {
@@ -174,6 +182,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         base_http      = attr.getBaseUrl();
         base_url_login = base_http + "login/?";
+
+//        url_logout                = base_http + "logout/?";
+//        url_logout               += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
     }
 
     private void getParams() {
@@ -355,13 +366,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             new Select_Language(base_layout, voc, FM, params, null, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
-            new ThemesDialog(base_layout, voc, FM, null).show();
+            new ThemesDialog(base_layout, voc, FM, logout_button).show();
             return true;
         } else if (id == R.id.action_url_address) {
             new HttpDialog(FR, voc, base_layout).show();
             return true;
         } else if (id == R.id.colors_themes) {
-            new ColorsDialog(base_layout, voc, FM, null).show();
+            new ColorsDialog(this, base_layout, voc, FM, logout_button).show();
             return true;
         }
 

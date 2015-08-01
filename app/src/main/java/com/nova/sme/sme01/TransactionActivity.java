@@ -20,6 +20,7 @@ import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.HttpDialog;
+import com.nova.sme.sme01.miscellanea.MyColors;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -34,6 +35,7 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import static java.sql.DriverManager.println;
 
@@ -77,6 +79,8 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
     CustomAdapter                   adapter;
 
+    private Vector<View> views = new Vector<View>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         setContentView(R.layout.activity_transaction);
 
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.transaction_base_id);
+        base_layout.setTag("main_background_color");
 
         this.FM        = new FileManager(this);
         this.FR        = new FormResizing(this, base_layout);
@@ -120,7 +125,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 FR.resize();
 
                 logout_button = create_custom_bar();
-                voc.change_caption(logout_button);
+//                voc.change_caption(logout_button);
                 logout_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -147,11 +152,18 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             }
         });
     }
+    public Vector<View> getViews() {return  views;}
+
     private void setAttributes() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes();
         attr.setButtons(base_layout, logout_button);
+
+        attr.setButtons(base_layout, logout_button);
+        MyColors colors = attr.getColors();
+        colors.setColors(views);
+
     }
     private void updateURL() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
@@ -191,7 +203,19 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
-        return  (new CreateCustomBar(this, base_layout)).getButton();
+        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+
+        Button button = ccb.getButton();
+        if (button != null)
+            voc.change_caption(button);
+
+        views.add(base_layout);
+        views.add(ccb.getBase());
+        views.add(ccb.getTitle());
+
+        return button;
+
+ //       return  (new CreateCustomBar(this, base_layout)).getButton();
     }
 
     void fillSpinner() {
@@ -273,7 +297,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             new HttpDialog(FR, voc, base_layout).show();
             return true;
         } else if (id == R.id.colors_themes) {
-            new ColorsDialog(base_layout, voc, FM, logout_button).show();
+            new ColorsDialog(this, base_layout, voc, FM, logout_button).show();
             return true;
         }
 

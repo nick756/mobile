@@ -12,7 +12,7 @@ import java.util.Vector;
 /**
  * Created by User on 01.08.2015.
  */
-public class MColors implements Serializable {
+public class MyColors implements Serializable {
     // colors
     private int selected_color_choise = 0;
 
@@ -26,16 +26,20 @@ public class MColors implements Serializable {
         selected_color_choise = val;
     }
     public void setActionbar_background_color(int val) {
-        actionbar_background_color = val;
+        if (val != -1)
+            actionbar_background_color = val;
     }
     public void setMain_background_color(int val) {
-        main_background_color = val;
+        if (val != -1)
+            main_background_color = val;
     }
     public void setText_background_color(int val) {
-        text_background_color = val;
+        if (val != -1)
+            text_background_color = val;
     }
     public void setDialog_background_color(int val) {
-        dialog_background_color = val;
+        if (val != -1)
+            dialog_background_color = val;
     }
     //--------------------------------------------------------//
     public int getSelected_color_choise() {
@@ -108,7 +112,7 @@ public class MColors implements Serializable {
 
 
 
-    public MColors() {
+    public MyColors() {
 
     }
 }

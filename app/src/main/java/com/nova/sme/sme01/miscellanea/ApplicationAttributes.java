@@ -2,16 +2,10 @@ package com.nova.sme.sme01.miscellanea;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
-
-import com.nova.sme.sme01.R;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,7 +23,7 @@ import java.util.Vector;
  */
 
 public class ApplicationAttributes implements Serializable {
-    private MColors         colors                = new MColors();
+    private MyColors colors                = new MyColors();
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
@@ -49,7 +43,7 @@ public class ApplicationAttributes implements Serializable {
 
     }
 
-    public MColors getColors(){return colors;}
+    public MyColors getColors(){return colors;}
 
     public  Vector<Integer> getButtonColors(){return buttons_text_colors;}
     public void setButtonColors(List<SeekBar> sbs) {

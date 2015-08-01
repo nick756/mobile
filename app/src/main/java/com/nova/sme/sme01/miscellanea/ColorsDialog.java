@@ -1,38 +1,26 @@
 package com.nova.sme.sme01.miscellanea;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.PaintDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
-import android.os.Build;
-import android.util.Config;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Vector;
 
@@ -51,12 +39,15 @@ import static java.sql.DriverManager.println;
  *********************************
  */
 public class ColorsDialog extends ThemesDialog {
+    private Activity       activity;
     private Vector<View>   views = new Vector<View>();
     private int            selected = 0;
 
 
-    public ColorsDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
+
+    public ColorsDialog(Activity activity, RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         super(base_layout, voc, FM, logout_button);
+        this.activity = activity;
     }
 
     public ColorsDialog() {
@@ -89,8 +80,8 @@ public class ColorsDialog extends ThemesDialog {
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            save();
-            dialog.dismiss();
+                save();
+                dialog.dismiss();
             }
         });
         CancelButton.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +134,7 @@ public class ColorsDialog extends ThemesDialog {
         views.add(dialog.findViewById(R.id.cl_base));
         views.add(dialog.findViewById(R.id.cl_text));//
         views.add(dialog.findViewById(R.id.cl_dialog));
+        for (int i = 0; i < views.size(); i ++) views.get(i).setTag(-1);
 
         voc.change_caption((TextView) views.get(2));
 
@@ -167,21 +159,26 @@ public class ColorsDialog extends ThemesDialog {
         params            = Bt.getLayoutParams();
         params.height     = (int)(width/15.0f);
 
-        MColors colors = attr.getColors();
+        MyColors colors = attr.getColors();
         changeColor(colors.getActionbar_background_color(), views.get(0));
         changeColor(colors.getMain_background_color(),      views.get(1));
         changeColor(colors.getText_background_color(),      views.get(2));
         changeColor(colors.getDialog_background_color(),    views.get(3));
 
-        selected    = 0;//attr.colors.getSelected_color_choise(); //0- 3
-        new cls(views.get(selected), sbars);
+        selected    = 0;
+//        new cls(views.get(3), sbars);
+//        new cls(views.get(2), sbars);
+//        new cls(views.get(1), sbars);
+        new cls(views.get(0), sbars);
+        //new cls(views.get(selected), sbars);
     }
 
-     private void changeColor() {
+     private void changeColor() {//-16776986
         int      color      = Color.rgb(sbars.get(0).getProgress(), sbars.get(1).getProgress(), sbars.get(2).getProgress());
         View     view       = views.get(selected);
         String   class_name = view.getClass().getName().toUpperCase();
 
+        view.setTag(color);
         if (class_name.indexOf("TEXTVIEW") != -1) {
             TextView text = (TextView) view;
             text.setBackgroundColor(color);
@@ -235,7 +232,7 @@ public class ColorsDialog extends ThemesDialog {
             attr = new ApplicationAttributes();
 
 
-        MColors colors = attr.getColors();
+        MyColors colors = attr.getColors();
         colors.setSelected_color_choise(selected);
 
         colors.setActionbar_background_color((int) views.get(0).getTag());
@@ -244,6 +241,14 @@ public class ColorsDialog extends ThemesDialog {
         colors.setDialog_background_color(   (int) views.get(3).getTag());
 
         FM.writeToFile("attributes.bin", attr);
+
+
+        String className = activity.getClass().getSimpleName().toUpperCase().trim();
+        if (className.equals("MAINACTIVITY")) {
+            MainActivity ma    = (MainActivity) activity;
+            Vector<View> views = ((MainActivity) activity).getViews();
+            colors.setColors(views);
+        }
     }
 
     int width_height(View view) {
@@ -271,7 +276,7 @@ public class ColorsDialog extends ThemesDialog {
                     seek_bars.get(1).setProgress((color & 0x0000FF00) >> 8);  // GREEN   218
                     seek_bars.get(0).setProgress((color & 0x00FF0000) >> 16); // RED     218
 
-                    view.setTag(color);
+//                    view.setTag(color);
                 }
             });
         }

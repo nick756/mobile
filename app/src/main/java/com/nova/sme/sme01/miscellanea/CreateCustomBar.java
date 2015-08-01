@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
 
@@ -22,6 +23,17 @@ import static java.sql.DriverManager.println;
 public class CreateCustomBar {
     private Button button = null;
     public  Button getButton(){ return button;}
+
+    public RelativeLayout getBase() {
+        RelativeLayout rl = (RelativeLayout)layout.findViewById(R.id.custom_layout);
+        rl.setTag("actionbar_background_color");
+        return rl;
+    }
+    public TextView getTitle() {
+        TextView text = (TextView)layout.findViewById(R.id.title_id);
+        text.setTag("actionbar_background_color");
+        return text;
+    }
 
     private RelativeLayout layout;
 
@@ -44,7 +56,8 @@ public class CreateCustomBar {
             button = (Button) activity.findViewById(R.id.logout_button);
             if (button != null) {
                 button.setWidth((int) ((float) width * button_factor));
-                button.setTag(this.layout);
+ //               RelativeLayout rl = (RelativeLayout)layout.findViewById(R.id.custom_layout);
+ //               button.setTag(rl);
             }
 
         } catch(Exception err) {
