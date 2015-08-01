@@ -119,7 +119,8 @@ public class TransactionsViewActivity extends AppCompatActivity {
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
-     }
+    }
+
     private void updateURL() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)

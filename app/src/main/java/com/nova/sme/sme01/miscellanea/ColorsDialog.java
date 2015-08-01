@@ -20,6 +20,9 @@ import android.widget.TextView;
 
 import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.RegularLoginActivity;
+import com.nova.sme.sme01.TransactionActivity;
+import com.nova.sme.sme01.TransactionsViewActivity;
 
 import java.util.List;
 import java.util.Vector;
@@ -244,11 +247,26 @@ public class ColorsDialog extends ThemesDialog {
 
 
         String className = activity.getClass().getSimpleName().toUpperCase().trim();
-        if (className.equals("MAINACTIVITY")) {
-            MainActivity ma    = (MainActivity) activity;
-            Vector<View> views = ((MainActivity) activity).getViews();
+        if (className.equals(new String("MainActivity").toUpperCase())) {
+            MainActivity ma = (MainActivity) activity;
+            Vector<View> views = ma.getViews();
+            colors.setColors(views);
+        } else    if (className.equals(new String("RegularLoginActivity").toUpperCase())) {
+            RegularLoginActivity ma    = (RegularLoginActivity) activity;
+            Vector<View> views = ma.getViews();
+            colors.setColors(views);
+        } else    if (className.equals(new String("TransactionActivity").toUpperCase())) {
+            TransactionActivity ma    = (TransactionActivity) activity;
+            Vector<View> views = ma.getViews();
+            colors.setColors(views);
+        } else    if (className.equals(new String("TransactionsViewActivity").toUpperCase())) {
+            TransactionsViewActivity ma    = (TransactionsViewActivity) activity;
+            Vector<View> views = ma.getViews();
             colors.setColors(views);
         }
+
+
+
     }
 
     int width_height(View view) {
