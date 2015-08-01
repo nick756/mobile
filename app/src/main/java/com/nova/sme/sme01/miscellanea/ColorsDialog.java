@@ -6,9 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.util.Config;
 import android.view.View;
@@ -26,7 +33,10 @@ import android.widget.TextView;
 import com.nova.sme.sme01.R;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Vector;
+
+import static java.sql.DriverManager.println;
 
 
 /*
@@ -41,28 +51,9 @@ import java.util.Vector;
  *********************************
  */
 public class ColorsDialog extends ThemesDialog {
-    private TextView       tv_actionbar_background;
-    private RelativeLayout rl_main_background;
-    private TextView       tv_text_background;
-    private RelativeLayout rl_dialog_background;
+    private Vector<View>   views = new Vector<View>();
+    private int            selected = 0;
 
-    private int            actionbar_background_color;
-    private int            main_background_color;
-    private int            text_background_color;
-    private int            dialog_background_color;
-
-    private Vector<Integer> selected_actual = new Vector<Integer>();
-
-/*
-    protected RelativeLayout    base_layout;
-    protected Vocabulary        voc;
-    protected FileManager       FM;
-    protected Button            logout_button;
-    protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
-    protected List<Button>      buttons      = new ArrayList<Button>();
-    protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
-
- */
 
     public ColorsDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         super(base_layout, voc, FM, logout_button);
@@ -71,12 +62,6 @@ public class ColorsDialog extends ThemesDialog {
     public ColorsDialog() {
 
     }
-    /*
-    cl_actionbar
-    cl_base
-    cl_text
-    cl_dialog
-     */
 
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
@@ -84,73 +69,22 @@ public class ColorsDialog extends ThemesDialog {
         dialog.setContentView(R.layout.color_selector);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
-
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
         lp.width = (int) ((float) base_layout.getWidth() * 0.95f);
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;//(int)((float)base_layout.getHeight()*0.5f);// WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        Button OkButton = (Button) dialog.findViewById(R.id.submit_colors);
+        Button OkButton     = (Button) dialog.findViewById(R.id.submit_colors);
         Button CancelButton = (Button) dialog.findViewById(R.id.cancel_colors);
-
-        voc.change_caption(OkButton);
-        voc.change_caption(CancelButton);
-
+        Button Bt           = (Button) dialog.findViewById(R.id.cl_button);
 
         // set theme
         Vector<Button> btns = new Vector<Button>();
-        btns.add(OkButton);
-        btns.add(CancelButton);
+        btns.add(OkButton);btns.add(CancelButton);btns.add(Bt);
         ApplicationAttributes attr = setDialogButtonsTheme(btns);
 
-
-/*
-int value = image.getRGB(x,y);
-R = (byte)(value & 0x000000FF);
-G = (byte)((value & 0x0000FF00) >> 8);
-B = (byte)((value & 0x00FF0000) >> 16);
-A = (byte)((value & 0xFF000000) >> 24);
- */
-
-/*
-loat r = Color.red(color) / 255f;
-float g = Color.green(color) / 255f;
-float b = Color.blue(color) / 255f;
-
-ColorMatrix cm = new ColorMatrix(new float[] {
-        // Change red channel
-        r, 0, 0, 0, 0,
-        // Change green channel
-        0, g, 0, 0, 0,
-        // Change blue channel
-        0, 0, b, 0, 0,
-        // Keep alpha channel
-        0, 0, 0, 1, 0,
-});
-ColorMatrixColorFilter cf = new ColorMatrixColorFilter(cm);
-myDrawable.setColorFilter(cf);
-////////////////
-
-
-Drawable mDrawable = context.getResources().getDrawable(R.drawable.balloons);
-mDrawable.setColorFilter(new
-PorterDuffColorFilter(0xffff00,PorterDuff.Mode.MULTIPLY));
-
-
-
-
-/*
-    private TextView       tv_actionbar_background;
-    private RelativeLayout rl_main_background;
-    private TextView       tv_text_background;
-    private RelativeLayout rl_dialog_background;
-    cl_actionbar
-    cl_base
-    cl_text
-    cl_dialog
-
-         */
+        voc.change_captions(btns);
 
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,45 +100,26 @@ PorterDuffColorFilter(0xffff00,PorterDuff.Mode.MULTIPLY));
             }
         });
 
-        RadioButton rb;
         radioButtons.add((RadioButton) dialog.findViewById(R.id.action_bar_background_id));
         radioButtons.add((RadioButton) dialog.findViewById(R.id.main_back_ground_id));
         radioButtons.add((RadioButton) dialog.findViewById(R.id.text_background_id));
         radioButtons.add((RadioButton) dialog.findViewById(R.id.dialog_background_id));
 
         for (int i = 0; i < radioButtons.size(); i ++) {
-            rb = radioButtons.get(i);
-            rb.setOnClickListener(new View.OnClickListener() {
+            radioButtons.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RadioButton rbtn;
-                    rbtn = (RadioButton) v;
-                    switch (rbtn.getId()) {
-                        case R.id.action_bar_background_id:
-                            switcher(0);
-                            break;
-                        case R.id.main_back_ground_id:
-                            switcher(1);
-                            break;
-                        case R.id.text_background_id:
-                            switcher(2);
-                            break;
-                        case R.id.dialog_background_id:
-                            switcher(3);
-                            break;
-                    }
+                    String tag = (String) v.getTag();
+                    selected   = Integer.parseInt(tag);
+                    new cls(views.get(selected), sbars);
                 }
             });
 
         }
-        //action_bar_background_id
-        //main_back_ground_id
-        //text_background_id
-        //dialog_background_id
-
         sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_red));
         sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_green));
         sbars.add((SeekBar) dialog.findViewById(R.id.seekBar_blue));
+
         for (int i = 0; i < sbars.size(); i ++) {
             sbars.get(i).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -219,52 +134,24 @@ PorterDuffColorFilter(0xffff00,PorterDuff.Mode.MULTIPLY));
 
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    switch (seekBar.getId()) {
-                        case R.id.seekBar_red:
-
-                            break;
-                        case R.id.seekBar_green:
-
-                            break;
-                        case R.id.seekBar_blue:
-
-                            break;
-                    }
+                    changeColor();
                 }
             });
         }
-        tv_actionbar_background    = (TextView) dialog.findViewById(R.id.cl_actionbar);
-        rl_main_background         = (RelativeLayout) dialog.findViewById(R.id.cl_base);
-        tv_text_background         = (TextView) dialog.findViewById(R.id.cl_text);
-        rl_dialog_background       = (RelativeLayout) dialog.findViewById(R.id.cl_dialog);
 
-        actionbar_background_color = getBackgroundColor(tv_actionbar_background);
-        main_background_color      = getBackgroundColor(rl_main_background);
-        text_background_color      = getBackgroundColor(tv_text_background);
-        dialog_background_color    = getBackgroundColor(rl_dialog_background);
+        views.add(dialog.findViewById(R.id.cl_actionbar));
+        views.add(dialog.findViewById(R.id.cl_base));
+        views.add(dialog.findViewById(R.id.cl_text));//
+        views.add(dialog.findViewById(R.id.cl_dialog));
 
-        selected_actual.add(actionbar_background_color);
-        selected_actual.add(main_background_color);
-        selected_actual.add(text_background_color);
-        selected_actual.add(dialog_background_color);
+        voc.change_caption((TextView) views.get(2));
 
-        //
-        int num    = attr.colors.getSelected_color_choise(); //0- 3
-        switcher(num);
-
-        radioButtons.get(num).setChecked(true);
-
-/*
-int value = image.getRGB(x,y);
-R = (byte)(value & 0x000000FF);
-G = (byte)((value & 0x0000FF00) >> 8);
-B = (byte)((value & 0x00FF0000) >> 16);
-A = (byte)((value & 0xFF000000) >> 24);
- */
+        radioButtons.get(selected).setChecked(true);
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
 
         // sizes
         //lp.width
@@ -272,44 +159,84 @@ A = (byte)((value & 0xFF000000) >> 24);
         RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.cl_base);
         params            = rl.getLayoutParams();
 
-        params.width  = (int)(width*0.8f);
- //       params.height = params.width;
+        params.width      = (int)(width*0.8f);
 
-        rl           = (RelativeLayout) dialog.findViewById(R.id.base_rb_id);
-        params       = rl.getLayoutParams();
-        params.width = (int)(width*0.2f);
+/*
+            RelativeLayout l = (RelativeLayout) views.get(3);
+            ViewGroup.LayoutParams prms            = l.getLayoutParams();
+            int h = prms.height;
+            params.height     = (int)(width*0.8f);//h*3;
+            prms.height       = params.height/2;
+*/
+        rl                = (RelativeLayout) dialog.findViewById(R.id.base_rb_id);
+        params            = rl.getLayoutParams();
+        params.width      = (int)(width*0.2f);
 
+        params            = Bt.getLayoutParams();
+        params.height     = (int)(width/15.0f);
 
+        selected    = attr.colors.getSelected_color_choise(); //0- 3
+        new cls(views.get(selected), sbars);
+//        radioButtons.get(selected).setChecked(true);
+//        new cls(views.get(selected), sbars);
     }
-    private void switcher (int num) {
-        sbars.get(0).setProgress(selected_actual.get(num)  & 0x000000FF);
-        sbars.get(1).setProgress((selected_actual.get(num) & 0x0000FF00) >> 8);
-        sbars.get(2).setProgress((selected_actual.get(num) & 0x00FF0000) >> 16);
+
+    private int getColor() {
+        return  Color.rgb(sbars.get(0).getProgress(), sbars.get(1).getProgress(), sbars.get(2).getProgress());
     }
+    private void changeColor() {
+        int      color      = Color.rgb(sbars.get(0).getProgress(), sbars.get(1).getProgress(), sbars.get(2).getProgress());
+        View     view       = views.get(selected);
+        String   class_name = view.getClass().getName().toUpperCase();
+
+        if (class_name.indexOf("TEXTVIEW") != -1) {
+            TextView text = (TextView) view;
+            text.setBackgroundColor(color);
+        } else if (class_name.indexOf("LINERALAYOUT") != -1) {
+            if (view.getId() == R.id.cl_dialog) {
+                GradientDrawable shape;
+
+                shape = new GradientDrawable();
+                shape.setColor(color);
+                shape.setCornerRadius(6);
+                shape.setStroke(2, Color.BLACK);
+                view.setBackgroundDrawable(shape);
+            } else {
+                LinearLayout ll = (LinearLayout) view;
+                ll.setBackgroundColor(color);
+            }
+        } else if (class_name.indexOf("RELATIVELAYOUT") != -1) {
+            if (view.getId() == R.id.cl_dialog) {
+                GradientDrawable shape;
+
+                shape = new GradientDrawable();
+                shape.setColor(color);
+                shape.setCornerRadius(6);
+                shape.setStroke(2, Color.BLACK);
+                view.setBackgroundDrawable(shape);
+            } else {
+                RelativeLayout rl = (RelativeLayout) view;
+                rl.setBackgroundColor(color);
+            }
+        } else {
+            /*
+            if (view.getId() == R.id.cl_dialog) {
+                GradientDrawable shape;
+
+                shape = new GradientDrawable();
+                shape.setColor(color);
+                shape.setCornerRadius(6);
+                shape.setStroke(1, Color.BLACK);
+                view.setBackgroundDrawable(shape);
+            } else {
+                Drawable drawable = view.getBackground();
+                drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_OVER));
+            }*/
+        }
+    }
+
     private float converDpToPixels(int dp) {
         return dp * base_layout.getResources().getDisplayMetrics().density;
-    }
-    private int getBackgroundColor(View view) {
-        Drawable drawable = view.getBackground();
-        if (drawable instanceof ColorDrawable) {
-            ColorDrawable colorDrawable = (ColorDrawable) drawable;
-            if (Build.VERSION.SDK_INT >= 11) {
-                return colorDrawable.getColor();
-            }
-            try {
-                Field field = colorDrawable.getClass().getDeclaredField("mState");
-                field.setAccessible(true);
-                Object object = field.get(colorDrawable);
-                field = object.getClass().getDeclaredField("mUseColor");
-                field.setAccessible(true);
-                return field.getInt(object);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        return 0;
     }
 
     private void save() {
@@ -317,16 +244,57 @@ A = (byte)((value & 0xFF000000) >> 24);
         if (attr == null)
             attr = new ApplicationAttributes();
 
-        attr.colors.setSelected_color_choise(getSelectedRadioButton());
+        attr.colors.setSelected_color_choise(selected);
         FM.writeToFile("attributes.bin", attr);
     }
 
-    private int getSelectedRadioButton() {
-        for (int i = 0; i < radioButtons.size(); i ++)
-            if (radioButtons.get(i).isChecked())
-                return i;
+    int width_height(View view) {
+        int specWidth = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(specWidth, specWidth);
+        int questionWidth = view.getMeasuredWidth();
+        int questionHeight = view.getMeasuredHeight();
 
-        return 0;
+        return questionWidth*questionHeight;
+    }
+
+    public class cls {
+        private View          view;
+        private List<SeekBar> seek_bars;
+
+        public cls(View v, List<SeekBar> sbars) {
+            this.view      =  v;
+            this.seek_bars = sbars;
+
+            view.post(new Runnable() {
+                public void run() {
+                    int color = getBackgroundColor(view);
+                    seek_bars.get(2).setProgress(color & 0x000000FF);        // BLUE    218
+                    seek_bars.get(1).setProgress((color & 0x0000FF00) >> 8);  // GREEN   218
+                    seek_bars.get(0).setProgress((color & 0x00FF0000) >> 16); // RED     218
+                }
+            });
+        }
+        private int getBackgroundColor(View view) {
+            try {
+                Drawable drawable;
+
+                drawable   = view.getBackground();
+                int width  = view.getWidth();
+                int height = view.getHeight();
+
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                Canvas canvas = new Canvas(bitmap);
+                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                drawable.draw(canvas);
+
+                int pixel = bitmap.getPixel(width / 2, height / 2);
+
+                return pixel;
+            } catch(Exception e) {//java.lang.ClassCastException: android.graphics.drawable.ColorDrawable cannot be cast to android.graphics.drawable.PaintDrawable
+                println(e.getMessage().toString());
+            }
+            return 0;
+        }
     }
 
 }

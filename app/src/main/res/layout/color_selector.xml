@@ -10,15 +10,19 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
         android:weightSum="1"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="false"
+        android:showDividers="middle">
 
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/cl_base"
-            android:background="#D7E5E1">
+            android:background="@drawable/base_layout_background"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -29,28 +33,24 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textColor="@android:color/white"
-                android:background="@android:color/black"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:background="@android:color/black" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:background="#DADADA"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:background="@drawable/dialog_layout"
                 android:padding="5dp"
                 android:layout_below="@+id/cl_actionbar"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
-                android:id="@+id/cl_dialog">
+                android:id="@+id/cl_dialog"
+                android:gravity="center|center_vertical|center_horizontal"
+                >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView"
-                    android:src="@mipmap/ic_success" />
+                    android:src="@mipmap/ic_success"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,8 +61,6 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_toRightOf="@+id/imageView"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
                     android:layout_alignTop="@+id/imageView"
                     android:layout_alignBottom="@+id/imageView"
                     android:textStyle="bold"
@@ -78,7 +76,7 @@
                     android:layout_below="@+id/cl_text"
                     android:layout_alignRight="@+id/cl_text"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/login_button_selector" />
 
             </RelativeLayout>
@@ -104,12 +102,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/action_bar_background_id"
                     android:checked="true"
+                    android:tag="0"
                     android:layout_gravity="center" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/main_back_ground_id"
+                    android:tag="1"
                     android:layout_gravity="center_horizontal"
                     />
 
@@ -117,12 +117,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/text_background_id"
+                    android:tag="2"
                     android:layout_gravity="center_horizontal" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/dialog_background_id"
+                    android:tag="3"
                     android:layout_gravity="center_horizontal" />
 
 
@@ -137,7 +139,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:orientation="horizontal"
