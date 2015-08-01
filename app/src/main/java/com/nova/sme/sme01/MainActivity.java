@@ -10,12 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.ColorsDialog;
+import com.nova.sme.sme01.miscellanea.CreateCustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.HttpDialog;
+import com.nova.sme.sme01.miscellanea.MColors;
 import com.nova.sme.sme01.miscellanea.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
@@ -25,6 +30,8 @@ import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operator;
 import com.nova.sme.sme01.xml_reader_classes.XML_Login;
+
+import java.util.Vector;
 
 import static java.sql.DriverManager.println;
 
@@ -57,10 +64,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private String                        base_url_login;// = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
 
     private String                        login_request;
+    private TextView                      cap_text;
 
     private boolean                       block_login_button   = false;
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
+
+    private Vector<View>                  views = new Vector<View>(); // to change background
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
          // to hide keyboard, that appeares without our permiossion as default
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        cap_text    = (TextView)findViewById(R.id.cap_text);
         base_layout = (android.widget.RelativeLayout) findViewById(R.id.base_layout);
 
         FR        = new FormResizing(this, base_layout);
@@ -122,19 +133,39 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
             voc.TranslateAll(base_layout);
 
+
+            Button button         = create_custom_bar();
+            RelativeLayout layout = (RelativeLayout)button.getTag();
+            layout.removeView(button);
+
+            layout.setTag("actionbar_background_color");
+            base_layout.setTag("main_background_color");
+            cap_text.setTag("text_background_color");
+
+            views.add(layout);
+            views.add(base_layout);     //cap_text
+            views.add(cap_text);
+
             setAttributes();
              }
         });
+    }
+    private Button create_custom_bar() {
+        Button button = (new CreateCustomBar(this, base_layout)).getButton();
+        if (button != null)
+            voc.change_caption(button);
+
+        return button;
     }
 
     private void setAttributes() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes();
-        attr.setButtons(base_layout);
 
-//        base_http      = attr.getBaseUrl();
-//        base_url_login = base_http + "login/?";
+        attr.setButtons(base_layout);
+        MColors colors = attr.getColors();
+        colors.setColors(views);
     }
     private void updateURL() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");

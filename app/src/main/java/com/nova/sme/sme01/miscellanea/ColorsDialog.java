@@ -89,8 +89,8 @@ public class ColorsDialog extends ThemesDialog {
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
-                dialog.dismiss();
+            save();
+            dialog.dismiss();
             }
         });
         CancelButton.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +109,9 @@ public class ColorsDialog extends ThemesDialog {
             radioButtons.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String tag = (String) v.getTag();
-                    selected   = Integer.parseInt(tag);
-                    new cls(views.get(selected), sbars);
+                String tag = (String) v.getTag();
+                selected   = Integer.parseInt(tag);
+                new cls(views.get(selected), sbars);
                 }
             });
 
@@ -167,12 +167,13 @@ public class ColorsDialog extends ThemesDialog {
         params            = Bt.getLayoutParams();
         params.height     = (int)(width/15.0f);
 
-        changeColor(attr.colors.getActionbar_background_color(), views.get(0));
-        changeColor(attr.colors.getMain_background_color(), views.get(0));
-        changeColor(attr.colors.getText_background_color(), views.get(0));
-        changeColor(attr.colors.getDialog_background_color(), views.get(0));
+        MColors colors = attr.getColors();
+        changeColor(colors.getActionbar_background_color(), views.get(0));
+        changeColor(colors.getMain_background_color(),      views.get(1));
+        changeColor(colors.getText_background_color(),      views.get(2));
+        changeColor(colors.getDialog_background_color(),    views.get(3));
 
-        selected    = attr.colors.getSelected_color_choise(); //0- 3
+        selected    = 0;//attr.colors.getSelected_color_choise(); //0- 3
         new cls(views.get(selected), sbars);
     }
 
@@ -191,6 +192,7 @@ public class ColorsDialog extends ThemesDialog {
         } else {
         }
     }
+
     private void changeColor(int color, View view) {
         if (color == -1)
             return;
@@ -207,7 +209,6 @@ public class ColorsDialog extends ThemesDialog {
         } else {
         }
     }
-
 
     private void setLayoutColor(int color, View view) {
         if (view.getId() == R.id.cl_dialog) {
@@ -233,12 +234,14 @@ public class ColorsDialog extends ThemesDialog {
         if (attr == null)
             attr = new ApplicationAttributes();
 
-        attr.colors.setSelected_color_choise(selected);
 
-        attr.colors.setActionbar_background_color((int) views.get(0).getTag());
-        attr.colors.setMain_background_color(     (int) views.get(1).getTag());
-        attr.colors.setText_background_color(     (int) views.get(2).getTag());
-        attr.colors.setDialog_background_color((int) views.get(3).getTag());
+        MColors colors = attr.getColors();
+        colors.setSelected_color_choise(selected);
+
+        colors.setActionbar_background_color((int) views.get(0).getTag());
+        colors.setMain_background_color(     (int) views.get(1).getTag());
+        colors.setText_background_color(     (int) views.get(2).getTag());
+        colors.setDialog_background_color(   (int) views.get(3).getTag());
 
         FM.writeToFile("attributes.bin", attr);
     }

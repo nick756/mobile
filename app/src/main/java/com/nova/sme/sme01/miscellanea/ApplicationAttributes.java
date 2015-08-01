@@ -2,12 +2,16 @@ package com.nova.sme.sme01.miscellanea;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
+
+import com.nova.sme.sme01.R;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,7 +29,7 @@ import java.util.Vector;
  */
 
 public class ApplicationAttributes implements Serializable {
-    public  MColors         colors                = new MColors();
+    private MColors         colors                = new MColors();
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
@@ -44,6 +48,8 @@ public class ApplicationAttributes implements Serializable {
 
 
     }
+
+    public MColors getColors(){return colors;}
 
     public  Vector<Integer> getButtonColors(){return buttons_text_colors;}
     public void setButtonColors(List<SeekBar> sbs) {
@@ -119,53 +125,5 @@ public class ApplicationAttributes implements Serializable {
             err = e.getMessage().toString();
         }
         return -1;
-    }
-
-    // COLORS
-    class MColors implements Serializable {
-        // colors
-        private int selected_color_choise = 0;
-
-        private int actionbar_background_color = -1;
-        private int main_background_color      = -1;
-        private int text_background_color      = -1;
-        private int dialog_background_color    = -1;
-        // colors
-
-        public void setSelected_color_choise(int val) {
-            selected_color_choise = val;
-        }
-        public void setActionbar_background_color(int val) {
-            actionbar_background_color = val;
-        }
-        public void setMain_background_color(int val) {
-            main_background_color = val;
-        }
-        public void setText_background_color(int val) {
-            text_background_color = val;
-        }
-        public void setDialog_background_color(int val) {
-            dialog_background_color = val;
-        }
-        //--------------------------------------------------------//
-        public int getSelected_color_choise() {
-            return selected_color_choise;
-        }
-        public int getActionbar_background_color() {
-            return actionbar_background_color;
-        }
-        public int getMain_background_color() {
-            return main_background_color;
-        }
-        public int getText_background_color() {
-            return text_background_color;
-        }
-        public int getDialog_background_color() {
-            return dialog_background_color;
-        }
-
-        public MColors() {
-
-        }
     }
 }

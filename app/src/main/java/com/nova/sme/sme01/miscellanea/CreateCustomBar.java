@@ -21,13 +21,15 @@ import static java.sql.DriverManager.println;
  */
 public class CreateCustomBar {
     private Button button = null;
-    public Button getButton(){ return button;}
+    public  Button getButton(){ return button;}
+
+    private RelativeLayout layout;
 
     public CreateCustomBar(AppCompatActivity activity, RelativeLayout base_layout) {
 
         try {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);
-            RelativeLayout layout     = (RelativeLayout) inflater.inflate(R.layout.custom_title_bar, null);
+            layout                  = (RelativeLayout) inflater.inflate(R.layout.custom_title_bar, null);
             layout.setPadding(0, 10, 0, 10);
 
             ActionBar actionBar = activity.getSupportActionBar();
@@ -42,7 +44,7 @@ public class CreateCustomBar {
             button = (Button) activity.findViewById(R.id.logout_button);
             if (button != null) {
                 button.setWidth((int) ((float) width * button_factor));
-//                button.setOnClickListener(activity.getBaseContext());
+                button.setTag(this.layout);
             }
 
         } catch(Exception err) {
