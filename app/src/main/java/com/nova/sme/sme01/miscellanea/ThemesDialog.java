@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 
 import com.nova.sme.sme01.R;
@@ -57,9 +58,9 @@ public class ThemesDialog {
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-
+//themes_base_layout
         lp.width  = (int)((float)base_layout.getWidth()*0.95f);
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;//(int)((float)base_layout.getHeight()*0.5f);// WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height =  WindowManager.LayoutParams.WRAP_CONTENT;
 
         Button OkButton     = (Button) dialog.findViewById(R.id.ok_button);
         Button CancelButton = (Button) dialog.findViewById(R.id.cancel_button);
@@ -193,6 +194,9 @@ public class ThemesDialog {
         ll = (LinearLayout) dialog.findViewById(R.id.themes_base_layout);ll.setTag("dialog_background_color");
         colors.setColor(ll);
 
+        ScrollView sv = (ScrollView) dialog.findViewById(R.id.tv_spinner_id);
+        ViewGroup.LayoutParams prms = sv.getLayoutParams();
+        prms.height = (int)((float)lp.width*1.2f);
 
     }
     private int getSelectedColor(int num) {

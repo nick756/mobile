@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/themes_base_layout"
     android:background="@drawable/dialog_layout"
     android:padding="5dp">
 
-    <ScrollView android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+    <ScrollView android:layout_height="250dp"
+        android:layout_width="match_parent"
         android:layout_below="@+id/buttons_scroll"
         android:layout_marginTop="5dp"
         android:id="@+id/tv_spinner_id">
@@ -26,8 +26,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -55,15 +54,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -91,15 +89,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -126,15 +123,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -162,15 +158,14 @@
                     android:max="255"
                     android:layout_marginLeft="5dp"
 
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -195,15 +190,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -228,15 +222,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -262,7 +255,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
 
@@ -270,8 +263,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:weightSum="1">
+                android:padding="2dp">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -297,10 +289,79 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:max="255"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="2dp" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    android:id="@+id/button_9"
+                    android:background="@drawable/button_8_selector"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton_9"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:singleLine="true"
+                    android:text="9" />
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:max="255"
+                    android:layout_marginRight="2dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    android:id="@+id/button_10"
+                    android:background="@drawable/button_9_selector"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton_10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:singleLine="true"
+                    android:text="10" />
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:max="255"
+                    android:layout_marginRight="2dp"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -312,21 +373,21 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="2dp"
-        android:weightSum="1"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:id="@+id/ok_cancel_base">
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:text="Accept"
             android:id="@+id/ok_button"
             android:background="@drawable/login_button_selector" />
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Cancel"
             android:id="@+id/cancel_button"
             android:background="@drawable/login_button_selector"

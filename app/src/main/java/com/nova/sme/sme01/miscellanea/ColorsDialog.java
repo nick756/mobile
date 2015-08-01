@@ -268,9 +268,6 @@ public class ColorsDialog extends ThemesDialog {
             colors.setColors(views);
             ma.UpdateCustomBar();
         }
-
-
-
     }
 
     int width_height(View view) {
