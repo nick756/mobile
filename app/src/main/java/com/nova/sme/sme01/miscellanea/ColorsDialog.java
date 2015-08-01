@@ -160,14 +160,6 @@ public class ColorsDialog extends ThemesDialog {
         params            = rl.getLayoutParams();
 
         params.width      = (int)(width*0.8f);
-
-/*
-            RelativeLayout l = (RelativeLayout) views.get(3);
-            ViewGroup.LayoutParams prms            = l.getLayoutParams();
-            int h = prms.height;
-            params.height     = (int)(width*0.8f);//h*3;
-            prms.height       = params.height/2;
-*/
         rl                = (RelativeLayout) dialog.findViewById(R.id.base_rb_id);
         params            = rl.getLayoutParams();
         params.width      = (int)(width*0.2f);
@@ -175,16 +167,16 @@ public class ColorsDialog extends ThemesDialog {
         params            = Bt.getLayoutParams();
         params.height     = (int)(width/15.0f);
 
+        changeColor(attr.colors.getActionbar_background_color(), views.get(0));
+        changeColor(attr.colors.getMain_background_color(), views.get(0));
+        changeColor(attr.colors.getText_background_color(), views.get(0));
+        changeColor(attr.colors.getDialog_background_color(), views.get(0));
+
         selected    = attr.colors.getSelected_color_choise(); //0- 3
         new cls(views.get(selected), sbars);
-//        radioButtons.get(selected).setChecked(true);
-//        new cls(views.get(selected), sbars);
     }
 
-    private int getColor() {
-        return  Color.rgb(sbars.get(0).getProgress(), sbars.get(1).getProgress(), sbars.get(2).getProgress());
-    }
-    private void changeColor() {
+     private void changeColor() {
         int      color      = Color.rgb(sbars.get(0).getProgress(), sbars.get(1).getProgress(), sbars.get(2).getProgress());
         View     view       = views.get(selected);
         String   class_name = view.getClass().getName().toUpperCase();
@@ -193,45 +185,42 @@ public class ColorsDialog extends ThemesDialog {
             TextView text = (TextView) view;
             text.setBackgroundColor(color);
         } else if (class_name.indexOf("LINERALAYOUT") != -1) {
-            if (view.getId() == R.id.cl_dialog) {
-                GradientDrawable shape;
-
-                shape = new GradientDrawable();
-                shape.setColor(color);
-                shape.setCornerRadius(6);
-                shape.setStroke(2, Color.BLACK);
-                view.setBackgroundDrawable(shape);
-            } else {
-                LinearLayout ll = (LinearLayout) view;
-                ll.setBackgroundColor(color);
-            }
+            setLayoutColor(color, view);
         } else if (class_name.indexOf("RELATIVELAYOUT") != -1) {
-            if (view.getId() == R.id.cl_dialog) {
-                GradientDrawable shape;
-
-                shape = new GradientDrawable();
-                shape.setColor(color);
-                shape.setCornerRadius(6);
-                shape.setStroke(2, Color.BLACK);
-                view.setBackgroundDrawable(shape);
-            } else {
-                RelativeLayout rl = (RelativeLayout) view;
-                rl.setBackgroundColor(color);
-            }
+            setLayoutColor(color, view);
         } else {
-            /*
-            if (view.getId() == R.id.cl_dialog) {
-                GradientDrawable shape;
+        }
+    }
+    private void changeColor(int color, View view) {
+        if (color == -1)
+            return;
 
-                shape = new GradientDrawable();
-                shape.setColor(color);
-                shape.setCornerRadius(6);
-                shape.setStroke(1, Color.BLACK);
-                view.setBackgroundDrawable(shape);
-            } else {
-                Drawable drawable = view.getBackground();
-                drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_OVER));
-            }*/
+         String   class_name = view.getClass().getName().toUpperCase();
+
+        if (class_name.indexOf("TEXTVIEW") != -1) {
+            TextView text = (TextView) view;
+            text.setBackgroundColor(color);
+        } else if (class_name.indexOf("LINERALAYOUT") != -1) {
+            setLayoutColor(color, view);
+        } else if (class_name.indexOf("RELATIVELAYOUT") != -1) {
+            setLayoutColor(color, view);
+        } else {
+        }
+    }
+
+
+    private void setLayoutColor(int color, View view) {
+        if (view.getId() == R.id.cl_dialog) {
+            GradientDrawable shape;
+
+            shape = new GradientDrawable();
+            shape.setColor(color);
+            shape.setCornerRadius(6);
+            shape.setStroke(2, Color.BLACK);
+            view.setBackgroundDrawable(shape);
+        } else {
+            RelativeLayout rl = (RelativeLayout) view;
+            rl.setBackgroundColor(color);
         }
     }
 
@@ -245,13 +234,20 @@ public class ColorsDialog extends ThemesDialog {
             attr = new ApplicationAttributes();
 
         attr.colors.setSelected_color_choise(selected);
+
+        attr.colors.setActionbar_background_color((int) views.get(0).getTag());
+        attr.colors.setMain_background_color(     (int) views.get(1).getTag());
+        attr.colors.setText_background_color(     (int) views.get(2).getTag());
+        attr.colors.setDialog_background_color((int) views.get(3).getTag());
+
         FM.writeToFile("attributes.bin", attr);
     }
 
     int width_height(View view) {
         int specWidth = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(specWidth, specWidth);
-        int questionWidth = view.getMeasuredWidth();
+
+        int questionWidth  = view.getMeasuredWidth();
         int questionHeight = view.getMeasuredHeight();
 
         return questionWidth*questionHeight;
@@ -271,6 +267,8 @@ public class ColorsDialog extends ThemesDialog {
                     seek_bars.get(2).setProgress(color & 0x000000FF);        // BLUE    218
                     seek_bars.get(1).setProgress((color & 0x0000FF00) >> 8);  // GREEN   218
                     seek_bars.get(0).setProgress((color & 0x00FF0000) >> 16); // RED     218
+
+                    view.setTag(color);
                 }
             });
         }

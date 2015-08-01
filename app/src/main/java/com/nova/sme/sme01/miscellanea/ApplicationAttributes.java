@@ -125,10 +125,11 @@ public class ApplicationAttributes implements Serializable {
     class MColors implements Serializable {
         // colors
         private int selected_color_choise = 0;
-        private int actionbar_background_color;
-        private int main_background_color;
-        private int text_background_color;
-        private int dialog_background_color;
+
+        private int actionbar_background_color = -1;
+        private int main_background_color      = -1;
+        private int text_background_color      = -1;
+        private int dialog_background_color    = -1;
         // colors
 
         public void setSelected_color_choise(int val) {
