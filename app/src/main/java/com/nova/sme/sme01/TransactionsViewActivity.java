@@ -48,6 +48,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
     private FillWithTransactionsList      fwt;
 
     private Vector<View> views = new Vector<View>();
+    private CreateCustomBar               ccb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,13 @@ public class TransactionsViewActivity extends AppCompatActivity {
             }
         });
     }
+    public CreateCustomBar getCustomBar(){return ccb;}
+
+    public void UpdateCustomBar(){
+        if (ccb != null)
+            ccb.setBackgound();
+    }
+
 
     public Vector<View> getViews() {return  views;}
 
@@ -119,6 +127,9 @@ public class TransactionsViewActivity extends AppCompatActivity {
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
+
+        if (ccb != null)
+            ccb.setBackgound();
     }
 
     private void updateURL() {
@@ -130,13 +141,12 @@ public class TransactionsViewActivity extends AppCompatActivity {
         url_logout = base_http + "logout/?" + "id=" + params.getId() + "&companyID=" + params.getcompanyID();
     }
 
-
     private void logout_request() {
         updateURL();
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
-        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CreateCustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)

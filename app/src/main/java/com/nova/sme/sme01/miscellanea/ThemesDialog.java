@@ -188,6 +188,12 @@ public class ThemesDialog {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 
+        MyColors colors = attr.getColors();
+
+        ll = (LinearLayout) dialog.findViewById(R.id.themes_base_layout);ll.setTag("dialog_background_color");
+        colors.setColor(ll);
+
+
     }
     private int getSelectedColor(int num) {
         Button bt = buttons.get(num);

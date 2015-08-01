@@ -251,18 +251,22 @@ public class ColorsDialog extends ThemesDialog {
             MainActivity ma = (MainActivity) activity;
             Vector<View> views = ma.getViews();
             colors.setColors(views);
+            ma.UpdateCustomBar();
         } else    if (className.equals(new String("RegularLoginActivity").toUpperCase())) {
             RegularLoginActivity ma    = (RegularLoginActivity) activity;
             Vector<View> views = ma.getViews();
             colors.setColors(views);
+            ma.UpdateCustomBar();
         } else    if (className.equals(new String("TransactionActivity").toUpperCase())) {
             TransactionActivity ma    = (TransactionActivity) activity;
             Vector<View> views = ma.getViews();
             colors.setColors(views);
+            ma.UpdateCustomBar();
         } else    if (className.equals(new String("TransactionsViewActivity").toUpperCase())) {
             TransactionsViewActivity ma    = (TransactionsViewActivity) activity;
             Vector<View> views = ma.getViews();
             colors.setColors(views);
+            ma.UpdateCustomBar();
         }
 
 

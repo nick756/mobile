@@ -71,6 +71,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private Button                        logout_button;
 
     private Vector<View>                  views = new Vector<View>();
+    private CreateCustomBar               ccb;
 
 
     @Override
@@ -153,6 +154,11 @@ public class RegularLoginActivity extends AppCompatActivity {
 
     }
 
+    public void UpdateCustomBar(){
+        if (ccb != null)
+            ccb.setBackgound();
+    }
+
     public Vector<View> getViews() {return  views;}
 
     private void setAttributes() {
@@ -166,7 +172,8 @@ public class RegularLoginActivity extends AppCompatActivity {
         MyColors colors = attr.getColors();
         colors.setColors(views);
 
-
+        if (ccb != null)
+            ccb.setBackgound();
     }
 
     private void updateURL() {
@@ -202,7 +209,7 @@ public class RegularLoginActivity extends AppCompatActivity {
  //       Button button = (new CreateCustomBar(this, base_layout)).getButton();
  //       if (button != null)
  //           voc.change_caption(button);
-        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CreateCustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)

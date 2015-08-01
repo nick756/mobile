@@ -9,11 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
+
+import java.util.Vector;
 
 /*
  ***************************************
@@ -84,6 +87,24 @@ public class Select_Language {
 
         dialog.show();
 
+        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        if (attr == null) return;
+
+        Vector<View> views = new Vector<View>();
+        TextView txt = (TextView)dialog.findViewById(R.id.select_language);txt.setTag("text_background_color");
+
+        LinearLayout ll = (LinearLayout) dialog.findViewById(R.id.linearLayout); ll.setTag("dialog_background_color");
+
+        LinearLayout l_l = (LinearLayout) dialog.findViewById(R.id.sel_lang_b);l_l.setTag("dialog_background_color");
+
+        views.add(txt);
+        views.add(ll);
+        views.add(l_l);
+
+        attr.getColors().setColors(views);
+
+        Vector<Button> btns = new Vector<Button>();btns.add(dialogButton);
+        attr.setButtons(base_layout, btns);
     }
 
     private void  writeParameters() {

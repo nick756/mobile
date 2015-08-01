@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private FileManager                   FM;
     private MyDialog                      my_dialog;
     private String                        base_http;
+    private CreateCustomBar               ccb;
 //    private String                        url_logout;
 
     private String                        base_url_login;// = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
@@ -148,11 +149,15 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             }
         });
     }
+    public void UpdateCustomBar(){
+        if (ccb != null)
+            ccb.setBackgound();
+    }
 
     public Vector<View> getViews() {return  views;}
 
     private Button create_custom_bar() {
-        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CreateCustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)
@@ -174,6 +179,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
+
+        if (ccb != null)
+            ccb.setBackgound();
     }
     private void updateURL() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");

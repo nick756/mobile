@@ -81,6 +81,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
     private Vector<View> views = new Vector<View>();
 
+    private CreateCustomBar               ccb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +154,11 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         });
     }
     public Vector<View> getViews() {return  views;}
+    public void UpdateCustomBar(){
+        if (ccb != null)
+            ccb.setBackgound();
+    }
+
 
     private void setAttributes() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
@@ -163,6 +169,9 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
+
+        if (ccb != null)
+            ccb.setBackgound();
 
     }
     private void updateURL() {
@@ -203,7 +212,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
-        CreateCustomBar ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CreateCustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)
