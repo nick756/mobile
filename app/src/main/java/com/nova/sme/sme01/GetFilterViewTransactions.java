@@ -62,6 +62,8 @@ public class GetFilterViewTransactions {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.from_till);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
+
+
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
 //        dialog.getWindow().setBackgroundDrawable("base_layout_background");
@@ -123,6 +125,16 @@ public class GetFilterViewTransactions {
             prms.height = height;
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        if (attr == null) return;
+
+        RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
+        rl.setTag("dialog_background_color");
+
+        attr.getColors().setColor(rl);
+
+        //from_till_base_layout
     }
 
     private void resize(float width) {              // width of stroke

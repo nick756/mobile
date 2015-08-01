@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.MyColors;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
@@ -45,6 +46,7 @@ public class ConfirmTransaction {
     private String    descr;
     private String    amount;
 
+
     public ConfirmTransaction(Activity activity, Vocabulary voc, FormResizing   FR, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum) {
         this.activity     = activity;
         this.voc          = voc;
@@ -65,7 +67,6 @@ public class ConfirmTransaction {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.before_transaction);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
-
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -135,6 +136,36 @@ public class ConfirmTransaction {
             prms.height = height;
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
+
+
+        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        if (attr == null) return;
+
+        Vector<View> views = new Vector<View>();
+
+        RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.base_layout_before_transaction_id);
+        rl.setTag("dialog_background_color");
+        views.add(rl);
+
+        TextView tv1 = (TextView) dialog.findViewById(R.id.date_transaction_id);tv1.setTag("dialog_background_color");
+        TextView tv2 = (TextView) dialog.findViewById(R.id.amount_transaction_id);tv2.setTag("dialog_background_color");
+        TextView tv3 = (TextView) dialog.findViewById(R.id.before_description);tv3.setTag("dialog_background_color");
+        RelativeLayout rll = (RelativeLayout) dialog.findViewById(R.id.relativeLayout);rll.setTag("dialog_background_color");
+
+        views.add(tv1);
+        views.add(tv2);
+        views.add(tv3);
+        views.add(rll);
+
+        //date_transaction_id
+        //amount_transaction_id
+        //before_description
+        //relativeLayout
+
+        attr.getColors().setColors(views);
+
     }
     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");

@@ -342,7 +342,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         edit = (EditText)findViewById(R.id.transaction_description_id);
         String descr = edit.getText().toString().trim();
         if (descr.length() == 0) {
-            my_dialog.show(voc.getTranslatedString("Description is empty"));
+            my_dialog.show(voc.getTranslatedString("Description is empty"), R.mipmap.ic_zero);
             return;
         }
         s_descr = descr;
@@ -362,7 +362,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         s_amount = sum;
 
         if (Double.parseDouble(sum) == 0) {
-            my_dialog.show(voc.getTranslatedString("Amount is empty"));
+            my_dialog.show(voc.getTranslatedString("Amount is empty"), R.mipmap.ic_zero);
             return;
         }
 

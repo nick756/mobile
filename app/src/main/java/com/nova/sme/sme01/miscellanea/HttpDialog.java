@@ -35,6 +35,12 @@ public class HttpDialog extends MyDialog {
         dialog.setContentView(R.layout.base_http);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
+        ///
+        dialog_layout = (RelativeLayout) dialog.findViewById(R.id.http_base);dialog_layout.setTag("dialog_background_color");
+        views.add(dialog_layout);
+        ///
+
+
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
@@ -93,6 +99,7 @@ public class HttpDialog extends MyDialog {
             }
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        SetColors();
     }
 
 }

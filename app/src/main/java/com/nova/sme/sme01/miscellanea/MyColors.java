@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.R;
+
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -20,6 +22,7 @@ public class MyColors implements Serializable {
     private int main_background_color      = -1;
     private int text_background_color      = -1;
     private int dialog_background_color    = -1;
+    private int exception_id               = R.id.relativeLayout;
     // colors
 
     public void setSelected_color_choise(int val) {
@@ -56,6 +59,21 @@ public class MyColors implements Serializable {
     }
     public int getDialog_background_color() {
         return dialog_background_color;
+    }
+
+    public void setColor(View view) {
+        String tag   = (String) view.getTag();
+        int    color = - 1;
+        if (tag.equals("actionbar_background_color"))
+            color = actionbar_background_color;
+        else if (tag.equals("main_background_color"))
+            color = main_background_color;
+        else if (tag.equals("text_background_color"))
+            color = text_background_color;
+        else if (tag.equals("dialog_background_color"))
+            color = dialog_background_color;
+
+        setViewColor(view, color);
     }
 
     public void setColors(Vector<View> views) {
@@ -96,7 +114,7 @@ public class MyColors implements Serializable {
         }
     }
     private void setLayoutColor(int color, View view) {
-        if (color == dialog_background_color) {
+        if (color == dialog_background_color && view.getId() != exception_id) {
             GradientDrawable shape;
 
             shape = new GradientDrawable();

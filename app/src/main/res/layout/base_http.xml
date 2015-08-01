@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@drawable/dialog_layout">
+    android:background="@drawable/dialog_layout"
+    android:id="@+id/http_base">
 
     <LinearLayout
         android:orientation="horizontal"
