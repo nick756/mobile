@@ -4,7 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PathEffect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
 
@@ -214,6 +220,7 @@ public class ThemesDialog {
         ScrollView sv = (ScrollView) dialog.findViewById(R.id.tv_spinner_id);
         ViewGroup.LayoutParams prms = sv.getLayoutParams();
         prms.height = (int)((float)lp.width*1.2f);
+
 /*
         Context ctx = base_layout.getContext();
         Resources res = ctx.getResources();

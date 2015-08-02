@@ -5,9 +5,15 @@ import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PathEffect;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -47,14 +53,36 @@ public class ColorsDialog extends ThemesDialog {
     private Vector<View>   views = new Vector<View>();
     private int            selected = 0;
 
+    //Animation
+    private Handler            handler   = new Handler();
+    private Vector<PathEffect> pe_vector = new Vector<PathEffect>();
+    private Paint              paint;
+    private Canvas             canvas;
+    private Path               path;
+    private int                phase;
+    private Rect               rect;
+    //Animation
+
     protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
     protected List<Button>      buttons      = new ArrayList<Button>();
     protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
 
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            animate();
+            handler.postDelayed(this, 1000);
+        }
+    };
 
     public ColorsDialog(Activity activity, RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         super(base_layout, voc, FM, logout_button);
         this.activity = activity;
+
+        for (int i = 0; i < 10; i ++)   ////array is ON and OFF distances in px (4px line then 2px space)
+            pe_vector.add(new DashPathEffect(new float[] {4, 2, 4, 2}, i));
+
+        //PathDashPathEffect(Path shape, float advance, float phase, PathDashPathEffect.Style style)
     }
 
     public ColorsDialog() {
@@ -164,7 +192,7 @@ public class ColorsDialog extends ThemesDialog {
         params.width      = (int)(width*0.2f);
 
         params            = Bt.getLayoutParams();
-        params.height     = (int)(width/15.0f);
+        params.height     = (int)(width/8.0f);
 
         MyColors colors = attr.getColors();
         changeColor(colors.getActionbar_background_color(), views.get(0));
@@ -173,11 +201,22 @@ public class ColorsDialog extends ThemesDialog {
         changeColor(colors.getDialog_background_color(),    views.get(3));
 
         selected    = 0;
-//        new cls(views.get(3), sbars);
-//        new cls(views.get(2), sbars);
-//        new cls(views.get(1), sbars);
         new cls(views.get(0), sbars);
-        //new cls(views.get(selected), sbars);
+
+        TextView tv   = (TextView) dialog.findViewById(R.id.cl_actionbar);
+//        new start_animation(tv);
+
+
+    }
+    private void animate() {
+ //       paint.setPathEffect(pe_vector.get(phase));
+ //       canvas.drawPath(path, paint);
+
+        canvas.drawRect(rect, paint);
+
+        phase ++;
+        if (phase >=  pe_vector.size())
+            phase = 0;
     }
 
      private void changeColor() {//-16776986
@@ -284,6 +323,38 @@ public class ColorsDialog extends ThemesDialog {
         return questionWidth*questionHeight;
     }
 
+    public class start_animation {
+        private TextView      textview;
+
+        start_animation(TextView tv) {
+            this.textview = tv;
+
+            tv.post(new Runnable() {
+                public void run() {
+                    int left   = textview.getLeft();
+                    int top    = textview.getTop();
+                    int right  = textview.getRight();
+                    int bottom = textview.getBottom();
+                    path       = new Path();
+                    canvas     = new Canvas();
+                    paint      = new Paint();
+                    paint.setColor(Color.BLACK);
+                    paint.setStrokeWidth(5);
+                    paint.setStyle(Paint.Style.STROKE);
+
+                    path.addRect(left, top, right, bottom, Path.Direction.CW);
+
+                    rect = new Rect(left, top, right, bottom);
+
+                    phase = 0;
+                    handler.postDelayed(runnable, 1000);
+
+                }
+            });
+
+        }
+    }
+
     public class cls {
         private View          view;
         private List<SeekBar> seek_bars;
@@ -295,11 +366,9 @@ public class ColorsDialog extends ThemesDialog {
             view.post(new Runnable() {
                 public void run() {
                     int color = getBackgroundColor(view);
-                    seek_bars.get(2).setProgress(color & 0x000000FF);        // BLUE    218
+                    seek_bars.get(2).setProgress( color & 0x000000FF);        // BLUE    218
                     seek_bars.get(1).setProgress((color & 0x0000FF00) >> 8);  // GREEN   218
                     seek_bars.get(0).setProgress((color & 0x00FF0000) >> 16); // RED     218
-
-//                    view.setTag(color);
                 }
             });
         }
