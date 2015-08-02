@@ -5,10 +5,11 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SeekBar;
+
+
+import com.nova.sme.sme01.R;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Vector;
 
 
@@ -23,6 +24,7 @@ import java.util.Vector;
  */
 
 public class ApplicationAttributes implements Serializable {
+//    private Button  button;
     private MyColors colors                = new MyColors();
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
@@ -38,6 +40,19 @@ public class ApplicationAttributes implements Serializable {
         base_url = "http://" + url;
     }
 
+    private int arr[] = {   R.drawable.login_button_selector,//2130837596
+                            R.drawable.button_1_selector,//2130837566
+                            R.drawable.button_8_selector,//2130837587
+                            R.drawable.button_9_selector,//2130837590
+                            R.drawable.button_2_selector, //2130837569
+                            R.drawable.button_3_selector,
+                            R.drawable.button_4_selector,
+                            R.drawable.button_5_selector,
+                            R.drawable.button_6_selector,
+                            R.drawable.button_7_selector,
+    };
+
+
     public ApplicationAttributes() {
 
 
@@ -46,16 +61,19 @@ public class ApplicationAttributes implements Serializable {
     public MyColors getColors(){return colors;}
 
     public  Vector<Integer> getButtonColors(){return buttons_text_colors;}
-    public void setButtonColors(List<SeekBar> sbs) {
+
+
+    public void setButtonColors(Vector<ViewsGroup> views_group) {
         buttons_text_colors.clear();
-        SeekBar sb;
+        ViewsGroup vg;
         int     pos;
-        for (int i = 0; i < sbs.size(); i ++) {
-            sb  = sbs.get(i);
-            pos = sb.getProgress();
+        for (int i = 0; i < views_group.size(); i ++) {
+            vg  = views_group.get(i);
+            pos = vg.sb.getProgress();
             buttons_text_colors.add(Color.rgb(pos, pos, pos));
         }
     }
+
     public int  getSelectedButtonColor(){return selected_button_color;}
     public void setSelectedButtonColor(int color) {selected_button_color = color;}
 
@@ -95,7 +113,7 @@ public class ApplicationAttributes implements Serializable {
         }
     }
     private void set_button(Button btn, Context ctx, int id) {
-        int     sdk = android.os.Build.VERSION.SDK_INT;
+         int     sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             btn.setBackgroundDrawable(ctx.getResources().getDrawable(id) );
         } else {
@@ -104,6 +122,13 @@ public class ApplicationAttributes implements Serializable {
         btn.setTextColor(selected_button_color);
     }
     private int getResourceID(Context ctx) {
+        return arr[selected_button];
+//        String resName = "@drawable/login_button_selector";
+//        return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
+
+
+    //    return resourcesIds.get(selected_button);
+        /*
         String err = "";
 
         String resName;
@@ -118,6 +143,6 @@ public class ApplicationAttributes implements Serializable {
         } catch (Exception e) {
             err = e.getMessage().toString();
         }
-        return -1;
+        return -1;*/
     }
 }

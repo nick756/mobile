@@ -24,6 +24,7 @@ import com.nova.sme.sme01.RegularLoginActivity;
 import com.nova.sme.sme01.TransactionActivity;
 import com.nova.sme.sme01.TransactionsViewActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -46,6 +47,9 @@ public class ColorsDialog extends ThemesDialog {
     private Vector<View>   views = new Vector<View>();
     private int            selected = 0;
 
+    protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
+    protected List<Button>      buttons      = new ArrayList<Button>();
+    protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
 
 
     public ColorsDialog(Activity activity, RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {

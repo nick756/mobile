@@ -1,8 +1,12 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,9 +21,18 @@ import android.widget.SeekBar;
 
 import com.nova.sme.sme01.R;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+
+import static java.sql.DriverManager.println;
 
 /*
  ********************************
@@ -34,9 +47,8 @@ public class ThemesDialog {
     protected Vocabulary        voc;
     protected FileManager       FM;
     protected Button            logout_button;
-    protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
-    protected List<Button>      buttons      = new ArrayList<Button>();
-    protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
+
+    private   Vector<ViewsGroup>     groups = new Vector<ViewsGroup>();
 
     public ThemesDialog() {
 
@@ -46,8 +58,6 @@ public class ThemesDialog {
         this.voc           = voc;
         this.FM            = FM;
         this.logout_button = logout_button;
-
- //       show();
     }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
@@ -58,7 +68,7 @@ public class ThemesDialog {
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//themes_base_layout
+
         lp.width  = (int)((float)base_layout.getWidth()*0.95f);
         lp.height =  WindowManager.LayoutParams.WRAP_CONTENT;
 
@@ -78,19 +88,15 @@ public class ThemesDialog {
             @Override
             public void onClick(View v) {
                 //find selected item
-                RadioButton rb = selectedItem();
-                int num;
-                if (rb != null) {
-                    num = Integer.parseInt(rb.getText().toString().trim()) - 1;
-
-
+                ViewsGroup vg = selectedGroup();
+                if (vg != null) {
                     ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
                     if (attr == null)
                         attr = new ApplicationAttributes();
 
-                    attr.setSelectedButton(num);
-                    attr.setSelectedButtonColor(getSelectedColor(num));
-                    attr.setButtonColors(sbars);
+                    attr.setSelectedButton(vg.index);
+                    attr.setSelectedButtonColor(vg.btn.getCurrentTextColor());
+                    attr.setButtonColors(groups);
 
                     FM.writeToFile("attributes.bin", attr);
                     attr.setButtons(base_layout, logout_button);
@@ -114,19 +120,22 @@ public class ThemesDialog {
         RadioButton  rb;
         Button       btn;
         SeekBar      sb;
+        String       packageName = base_layout.getContext().getPackageName();
         if (ll != null) {
+            ViewsGroup group;
             for (int i = 0; i < ll.getChildCount(); i ++) {
                 inner = (LinearLayout)ll.getChildAt(i);
+                group = new ViewsGroup();
                 for (int j = 0; j < inner.getChildCount(); j ++) {
                     view      = inner.getChildAt(j);
                     className = view.getClass().getName().toString().toUpperCase();
                     if (className.indexOf("RADIOBUTTON") != -1) {
-                        radioButtons.add((RadioButton) view);
+                        group.rbtn = (RadioButton) view;
                     } else if (className.indexOf("BUTTON") != -1) {
-                        buttons.add((Button)view);
+                        group.btn = (Button) view;
                     } else if(className.indexOf("SEEKBAR") != -1) {
                         sb = (SeekBar) view;
-                        sbars.add(sb);
+                        group.sb = (SeekBar)(view);
 
                         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @Override
@@ -143,16 +152,26 @@ public class ThemesDialog {
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                                 // 0- 255
                                 int color = Color.rgb(progress, progress, progress);
-                                setButtonTextColor(seekBar, color);
+                                ((Button) seekBar.getTag()).setTextColor(color);
+
                             }
                         });
                     }
                 }
+                //
+                group.index = groups.size();
+                group.btn.setTag(group.rbtn);
+                group.sb.setTag(group.btn);
+
+ //               assignResourceId(packageName, base_layout.getContext(), group);
+
+                groups.add(group);
             }
         }
-        for (int i = 0; i < radioButtons.size(); i ++) {
-            rb = radioButtons.get(i);
-            rb.setOnClickListener(new View.OnClickListener() {
+        ViewsGroup vg;
+        for (int i = 0; i < groups.size(); i ++) {
+            vg = groups.get(i);
+            vg.rbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     RadioButton rbtn;
@@ -161,13 +180,11 @@ public class ThemesDialog {
                 }
             });
 
-            btn = buttons.get(i);
-            btn.setTag(rb);
 
-            btn.setOnClickListener(new View.OnClickListener() {
+            vg.btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Button      bt;
+                    Button bt;
                     RadioButton rb;
 
                     bt = (Button) v;
@@ -179,15 +196,15 @@ public class ThemesDialog {
 
         }
 
-        rb = radioButtons.get(attr.getSelectedButton());
-        rb.setChecked(true);
-        resetRadiobuttons(rb);
+        int num = attr.getSelectedButton();
+        for (int i = 0; i < groups.size(); i ++)
+            groups.get(i).rbtn.setChecked(i == num);
+
         setSeekBars(attr);
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
 
         MyColors colors = attr.getColors();
 
@@ -197,39 +214,92 @@ public class ThemesDialog {
         ScrollView sv = (ScrollView) dialog.findViewById(R.id.tv_spinner_id);
         ViewGroup.LayoutParams prms = sv.getLayoutParams();
         prms.height = (int)((float)lp.width*1.2f);
+/*
+        Context ctx = base_layout.getContext();
+        Resources res = ctx.getResources();
+        int cnt;
+        XmlResourceParser xpp = res.getXml(R.layout.buttons);
+        String str = "", resourxeD = "", attr_name = "";
+        int id = 0, idd  = R.drawable.login_button_selector;//2130837596
+        try {
+            xpp.next();
+            int eventType = xpp.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_DOCUMENT) {
+                    str = xpp.getName();
+                } else if (eventType == XmlPullParser.START_TAG) {
+                    str = xpp.getName();
+                    cnt = xpp.getAttributeCount();
 
-    }
-    private int getSelectedColor(int num) {
-        Button bt = buttons.get(num);
-        return bt.getCurrentTextColor();
-    }
-    private void setButtonTextColor(SeekBar sb, int color) {
-        for (int i = 0; i < sbars.size(); i ++) {
-            if (sb == sbars.get(i)) {
-                Button bt = buttons.get(i);
-                bt.setTextColor(color);
-                return;
+                    for (int j = 0; j < cnt; j ++) {
+                        attr_name = xpp.getAttributeName(j) ;
+                        xpp.
+                        if (attr_name.equals("background")) {
+                            resourxeD = xpp.getAttributeValue(j);
+                            id   = xpp.getAttributeResourceValue(j, 0);
+                        }
+
+
+                    }
+ //                   if (str.equals("Button")) {
+ //                       resourxeD = xpp.getAttributeValue(null, "background");
+ //                   }
+                } else if (eventType == XmlPullParser.END_TAG) {
+                    if (str.equals("Button")) {
+                        resourxeD = xpp.getAttributeValue(null, "background");
+                    }
+
+                    str = xpp.getName();
+                } else if (eventType == XmlPullParser.TEXT) {
+                    str = xpp.getName();
+                }
+
+                eventType = xpp.next();
+                if (str != null)
+                    if (str.equals(";k;k;"))
+                        break;
             }
+        } catch(org.xmlpull.v1.XmlPullParserException e) {
+
+        } catch (java.io.IOException e) {
+
         }
+*/
+//        stringBuffer.append("\n--- End XML ---");
+//        return stringBuffer.toString();
 
     }
+
     protected void resetRadiobuttons(RadioButton rb) {
-        RadioButton current;
-        for (int j = 0; j < radioButtons.size(); j ++) {
-            current = radioButtons.get(j);
-            if (rb == current) continue;
-            if (current.isChecked())
-                current.setChecked(false);
+        ViewsGroup vg;
+        for (int j = 0; j < groups.size(); j ++) {
+            vg = groups.get(j);
+
+            if (rb == vg.rbtn)
+                continue;
+            if (vg.rbtn.isChecked())
+                vg.rbtn.setChecked(false);
         }
     }
-    protected RadioButton selectedItem() {
-        RadioButton rb;
-        for (int i = 0; i < radioButtons.size(); i ++) {
-            rb = radioButtons.get(i);
-            if (rb.isChecked())
-                return rb;
+
+    protected ViewsGroup selectedGroup() {
+        ViewsGroup vg;
+        for (int i = 0; i < groups.size(); i ++) {
+            vg = groups.get(i);
+            if (vg.rbtn.isChecked())
+                return vg;
         }
 
+        return null;
+    }
+
+    protected RadioButton selectedItem() {
+        ViewsGroup vg;
+        for (int i = 0; i < groups.size(); i ++) {
+            vg = groups.get(i);
+            if (vg.rbtn.isChecked())
+                return vg.rbtn;
+        }
         return null;
     }
     protected ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
@@ -248,15 +318,19 @@ public class ThemesDialog {
         int             color;
         SeekBar         sb;
         String          err;
+        ViewsGroup      vg;
+
         for (int i = 0; i < buttons_text_colors.size(); i ++) {
             try {
                 color = buttons_text_colors.get(i);
-                sb = sbars.get(i);
-                sb.setProgress(color&0xff);
-                buttons.get(i).setTextColor(color);
+                vg    = groups.get(i);
+                vg.sb.setProgress(color & 0xff);
+                vg.btn.setTextColor(color);
             } catch(Exception e) {
                 err = e.getMessage().toString();
             }
         }
     }
+
+
 }
