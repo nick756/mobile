@@ -38,15 +38,15 @@ import static java.sql.DriverManager.println;
 
 
 /*
- *********************************
- *                               *
- *  Dialog for selecting colors  *
- *  1. Action bar color          *
- *  2. Main background           *
- *  3. Text background           *
- *  4. Dialog background         *
- *                               *
- *********************************
+ ***********************************
+ *                                 *
+ *   Dialog for selecting colors   *
+ *   1. Action bar                 *
+ *   2. Main background            *
+ *   3. Text background            *
+ *   4. Dialog background          *
+ *                                 *
+ ***********************************
  */
 public class ColorsDialog extends ThemesDialog {
     private Activity       activity;
@@ -61,6 +61,13 @@ public class ColorsDialog extends ThemesDialog {
     private Path               path;
     private int                phase;
     private Rect               rect;
+
+    private MyTextView         action_bar;    //cl_actionbar
+    private MyTextView         text_dialog;   //cl_actionbar
+    private MyRelativeLayout   custom_dialog; //cl_dialog
+    private MyRelativeLayout   base_custom;   //cl_base
+
+ //   private MyLayout           myLayout;
     //Animation
 
     protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
@@ -89,17 +96,28 @@ public class ColorsDialog extends ThemesDialog {
 
     }
 
+    private void init(Dialog dialog) {
+        action_bar    = (MyTextView) dialog.findViewById(R.id.action_bar);
+        text_dialog   = (MyTextView) dialog.findViewById(R.id.cl_text);
+        custom_dialog = (MyRelativeLayout) dialog.findViewById(R.id.cl_dialog);
+        base_custom   = (MyRelativeLayout) dialog.findViewById(R.id.cl_base);
+    }
+
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.color_selector);
+        dialog.setContentView(R.layout.color_selector_n);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
+
+        init(dialog);
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
         lp.width = (int) ((float) base_layout.getWidth() * 0.95f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+//        myLayout = (MyLayout)dialog.findViewById(R.id.draw_base_layout);
 
         Button OkButton     = (Button) dialog.findViewById(R.id.submit_colors);
         Button CancelButton = (Button) dialog.findViewById(R.id.cancel_colors);
@@ -119,6 +137,7 @@ public class ColorsDialog extends ThemesDialog {
                 dialog.dismiss();
             }
         });
+
         CancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,9 +198,6 @@ public class ColorsDialog extends ThemesDialog {
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
-        // sizes
-        //lp.width
         float width       = (float)lp.width - converDpToPixels(10);
         RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.cl_base);
         params            = rl.getLayoutParams();
@@ -205,8 +221,6 @@ public class ColorsDialog extends ThemesDialog {
 
         TextView tv   = (TextView) dialog.findViewById(R.id.cl_actionbar);
 //        new start_animation(tv);
-
-
     }
     private void animate() {
  //       paint.setPathEffect(pe_vector.get(phase));
@@ -331,6 +345,9 @@ public class ColorsDialog extends ThemesDialog {
 
             tv.post(new Runnable() {
                 public void run() {
+//                    myLayout.getView(textview);
+//                    myLayout.invalidate();
+                    /*
                     int left   = textview.getLeft();
                     int top    = textview.getTop();
                     int right  = textview.getRight();
@@ -348,7 +365,7 @@ public class ColorsDialog extends ThemesDialog {
 
                     phase = 0;
                     handler.postDelayed(runnable, 1000);
-
+*/
                 }
             });
 

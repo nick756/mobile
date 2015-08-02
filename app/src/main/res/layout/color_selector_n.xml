@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.nova.sme.sme01.miscellanea.MyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
     android:weightSum="1"
     android:background="@drawable/color_dialog_background"
-    android:id="@+id/draw_base_layout"
-    android:focusableInTouchMode="false">
+    >
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:focusableInTouchMode="false"
         android:showDividers="middle">
 
-        <RelativeLayout
+         <com.nova.sme.sme01.miscellanea.MyRelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/cl_base"
@@ -24,9 +24,11 @@
             android:paddingTop="25dp"
             android:paddingBottom="25dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+             android:focusableInTouchMode="true">
 
-            <TextView
+
+            <com.nova.sme.sme01.miscellanea.MyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SME Cashflow"
@@ -37,7 +39,7 @@
                 android:textColor="@android:color/white"
                 android:background="@android:color/black" />
 
-            <RelativeLayout
+             <com.nova.sme.sme01.miscellanea.MyRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/dialog_layout"
@@ -54,7 +56,7 @@
                     android:src="@mipmap/ic_success"
                     android:layout_marginRight="5dp" />
 
-                <TextView
+                <com.nova.sme.sme01.miscellanea.MyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Success"
@@ -81,8 +83,8 @@
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/login_button_selector" />
 
-            </RelativeLayout>
-        </RelativeLayout>
+            </com.nova.sme.sme01.miscellanea.MyRelativeLayout>
+        </com.nova.sme.sme01.miscellanea.MyRelativeLayout>
 
         <RelativeLayout
             android:orientation="vertical"
@@ -267,4 +269,4 @@
             android:layout_margin="5dp" />
     </LinearLayout>
 
-</com.nova.sme.sme01.miscellanea.MyLayout>
+</LinearLayout>
