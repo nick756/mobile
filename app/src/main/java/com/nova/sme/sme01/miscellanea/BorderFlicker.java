@@ -30,13 +30,13 @@ public class BorderFlicker {
 
 
 //    private int   offset = 10;
-    private int   radius = 4;
+    private int   radius = 2;
 //    private Paint mPaint;
 
     private Path                     shapePath;
     private PathDashPathEffect       pathDashPathEffect;
     private int                      phase    = 0;
-    private float                    advance  = 30.0f;
+    private float                    advance  = 20.0f;
     private PathDashPathEffect.Style style    = PathDashPathEffect.Style.ROTATE;
 
 
