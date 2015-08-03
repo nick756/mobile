@@ -8,28 +8,32 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-
+//
 public class MyTextView extends TextView {
     private boolean       flag    = false;
-    private BorderFlicker flicker = new BorderFlicker();
+    private BorderFlicker flicker;// = new BorderFlicker();
 
     public MyTextView(Context context) {
         super(context);
         if (!isInEditMode()) {
 
         }
-
+        init();
     }
     public MyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (!isInEditMode()) {
 
         }
+        init();
     }
 
     public MyTextView(Context context, AttributeSet attrs, int defStyle) {
-
        this(context, attrs);
+    }
+
+    private void init() {
+        flicker = new BorderFlicker(this.getResources().getDisplayMetrics().density);
     }
 
 

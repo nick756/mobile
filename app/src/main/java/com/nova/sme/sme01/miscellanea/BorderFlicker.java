@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
 import android.graphics.PathEffect;
 import android.graphics.Rect;
+import android.graphics.SumPathEffect;
 
 import java.util.Vector;
 
@@ -30,28 +31,25 @@ public class BorderFlicker {
 
 
 //    private int   offset = 10;
-    private int   radius = 2;
-//    private Paint mPaint;
+    private int    radius;//4;
+    private float  density;
 
     private Path                     shapePath;
-    private PathDashPathEffect       pathDashPathEffect;
+//    private PathDashPathEffect       pathDashPathEffect;
     private int                      phase    = 0;
     private float                    advance  = 20.0f;
     private PathDashPathEffect.Style style    = PathDashPathEffect.Style.ROTATE;
 
+    public BorderFlicker(float density) {
+        this.density = density;
 
-    public BorderFlicker() {
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(12);
 
-        shapePath = new Path();
-        shapePath.addCircle(radius, radius, radius, Path.Direction.CCW);
     }
 
     public void setDash(boolean dash){this.dash = dash;}
-
     public void draw (Canvas canvas, int width, int height) {
         if (dash) {
             draw_dash(canvas, width, height);
@@ -74,6 +72,7 @@ public class BorderFlicker {
         canvas.drawLine(width, 0, width, height, paint);
         canvas.drawLine(width, height, 0, height, paint);
         canvas.drawLine(0, height, 0, 0, paint);
+
     }
 
     public void setColor(int red, int green, int blue) {
@@ -82,16 +81,37 @@ public class BorderFlicker {
 
     public void draw_dash (Canvas canvas, int width, int height) {
         if (path == null) {
+            radius = (int)(2.0f*density);
+
             path = new Path();
             path.addRect(0, 0, width, height, Path.Direction.CW);
+
+            shapePath = new Path();
+            shapePath.addCircle(radius, radius, radius, Path.Direction.CW);
+
         }
 
+        drawRectangle(canvas, Color.BLACK, width, height, radius*2);
 
-        pathDashPathEffect = new PathDashPathEffect(shapePath, advance, ++phase, style);
-
-        paint.setPathEffect(pathDashPathEffect);
+        paint.setColor(Color.WHITE);
+        paint.setPathEffect(new PathDashPathEffect(shapePath, advance, ++phase, style));
         canvas.drawPath(path, paint);
+
     }
+    private void drawRectangle(Canvas canvas, int color, int width, int height, int strokeWidth) {
+        paint.setColor(color);
+        paint.setStrokeWidth(strokeWidth);
+        canvas.drawLine(0, 0, width, 0, paint);
+        canvas.drawLine(width, 0, width, height, paint);
+        canvas.drawLine(width, height, 0, height, paint);
+        canvas.drawLine(0, height, 0, 0, paint);
+
+    }
+
+//    private float converDpToPixels(int dp) {
+//        return dp * activity.getResources().getDisplayMetrics().density;
+ //   }
+
 
 
 

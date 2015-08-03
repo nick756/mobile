@@ -11,16 +11,16 @@ import android.widget.RelativeLayout;
 
 public class MyRelativeLayout extends RelativeLayout {
     private boolean       flag    = false;
-    private BorderFlicker flicker = new BorderFlicker();
+    private BorderFlicker flicker;// = new BorderFlicker();
 
 
     public MyRelativeLayout(Context context) {
         super(context);
 
-
         if (!isInEditMode()) {
 
         }
+        init();
     }
 
     public MyRelativeLayout(Context context, AttributeSet attrs) {
@@ -29,10 +29,14 @@ public class MyRelativeLayout extends RelativeLayout {
         if (!isInEditMode()) {
 
         }
+        init();
     }
 
     public MyRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
+    }
+    private void init() {
+        flicker = new BorderFlicker(this.getResources().getDisplayMetrics().density);
     }
 
     public void startAnimation(){flag = true;}
