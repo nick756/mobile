@@ -37,6 +37,8 @@ public class MyRelativeLayout extends RelativeLayout {
 
     public void startAnimation(){flag = true;}
     public void stopAnimation() {flag = false;}
+    public void setDash(boolean dash) {flicker.setDash(dash);}
+    public void setColor(int red, int green, int blue) {flicker.setColor(red, green, blue);}
 
 
     @Override

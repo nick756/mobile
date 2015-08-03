@@ -79,6 +79,13 @@ public class ColorsDialog extends ThemesDialog {
         base_custom   = (MyRelativeLayout) dialog.findViewById(R.id.cl_base);
     }
 
+    private void setDash(boolean dash) {
+        action_bar.setDash(dash);
+        text_dialog.setDash(dash);
+        custom_dialog.setDash(dash);
+        base_custom.setDash(dash);
+    }
+
     private void stopAllFlickers() {
         action_bar.stopAnimation();
         text_dialog.stopAnimation();
@@ -234,6 +241,14 @@ public class ColorsDialog extends ThemesDialog {
 
         selected    = 0;
         new cls(views.get(0), sbars);
+
+        setDash(true);
+        action_bar.setColor(255, 255, 255);
+        text_dialog.setColor(255, 255, 255);
+        custom_dialog.setColor(255, 255, 255);
+        base_custom.setColor(255, 255, 255);
+
+
         action_bar.startAnimation();
     }
 
