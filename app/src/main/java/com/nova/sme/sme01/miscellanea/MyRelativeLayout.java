@@ -10,31 +10,24 @@ import android.widget.RelativeLayout;
 
 
 public class MyRelativeLayout extends RelativeLayout {
-    private Paint paint = new Paint();
-    private Rect  rect  = new Rect();
+    private boolean       flag    = false;
+    private BorderFlicker flicker = new BorderFlicker();
+
 
     public MyRelativeLayout(Context context) {
         super(context);
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.STROKE);
 
         if (!isInEditMode()) {
 
         }
-
     }
 
     public MyRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.STROKE);
-
         if (!isInEditMode()) {
-            //          createTypeface(context, attrs); //whatever added functionality you are trying to add to Widget, call that inside this condition.
+
         }
     }
 
@@ -42,12 +35,19 @@ public class MyRelativeLayout extends RelativeLayout {
         this(context, attrs);
     }
 
+    public void startAnimation(){flag = true;}
+    public void stopAnimation() {flag = false;}
+
 
     @Override
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
 
+        if (flag) {
+            flicker.draw(canvas, this.getWidth(), this.getHeight());
+            invalidate();
+        }
     }
 
 }

@@ -10,18 +10,14 @@ import android.widget.TextView;
 
 
 public class MyTextView extends TextView {
-    private boolean flag  = false;
-    private Paint   paint = new Paint();
-    private Rect    rect  = new Rect();
+    private boolean       flag    = false;
+    private BorderFlicker flicker = new BorderFlicker();
 
     public MyTextView(Context context) {
         super(context);
         if (!isInEditMode()) {
 
         }
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.STROKE);
 
     }
     public MyTextView(Context context, AttributeSet attrs) {
@@ -32,8 +28,10 @@ public class MyTextView extends TextView {
     }
 
     public MyTextView(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
+
+       this(context, attrs);
     }
+
 
     public void startAnimation(){flag = true;}
     public void stopAnimation() {flag = false;}
@@ -44,11 +42,8 @@ public class MyTextView extends TextView {
         super.onDraw(canvas);
 
         if (flag) {
-            int height = this.getHeight();
-            int width  = this.getWidth();
-
-            canvas.drawRect((float)0,  (float)0,  (float)width,  (float) height, paint);
- //           invalidate();
+            flicker.draw(canvas, this.getWidth(), this.getHeight());
+            invalidate();
         }
 
     }

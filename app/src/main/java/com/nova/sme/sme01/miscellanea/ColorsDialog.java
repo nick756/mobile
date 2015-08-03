@@ -53,43 +53,19 @@ public class ColorsDialog extends ThemesDialog {
     private Vector<View>   views = new Vector<View>();
     private int            selected = 0;
 
-    //Animation
-    private Handler            handler   = new Handler();
-    private Vector<PathEffect> pe_vector = new Vector<PathEffect>();
-    private Paint              paint;
-    private Canvas             canvas;
-    private Path               path;
-    private int                phase;
-    private Rect               rect;
 
-    private MyTextView         action_bar;    //cl_actionbar
-    private MyTextView         text_dialog;   //cl_actionbar
-    private MyRelativeLayout   custom_dialog; //cl_dialog
-    private MyRelativeLayout   base_custom;   //cl_base
-
- //   private MyLayout           myLayout;
-    //Animation
+    private MyTextView         action_bar;
+    private MyTextView         text_dialog;
+    private MyRelativeLayout   custom_dialog;
+    private MyRelativeLayout   base_custom;
 
     protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
     protected List<Button>      buttons      = new ArrayList<Button>();
     protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
 
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            animate();
-            handler.postDelayed(this, 1000);
-        }
-    };
-
     public ColorsDialog(Activity activity, RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         super(base_layout, voc, FM, logout_button);
         this.activity = activity;
-
-        for (int i = 0; i < 10; i ++)   ////array is ON and OFF distances in px (4px line then 2px space)
-            pe_vector.add(new DashPathEffect(new float[] {4, 2, 4, 2}, i));
-
-        //PathDashPathEffect(Path shape, float advance, float phase, PathDashPathEffect.Style style)
     }
 
     public ColorsDialog() {
@@ -97,10 +73,26 @@ public class ColorsDialog extends ThemesDialog {
     }
 
     private void init(Dialog dialog) {
-        action_bar    = (MyTextView) dialog.findViewById(R.id.action_bar);
-        text_dialog   = (MyTextView) dialog.findViewById(R.id.cl_text);
+        action_bar    = (MyTextView)       dialog.findViewById(R.id.cl_actionbar);
+        text_dialog   = (MyTextView)       dialog.findViewById(R.id.cl_text);
         custom_dialog = (MyRelativeLayout) dialog.findViewById(R.id.cl_dialog);
         base_custom   = (MyRelativeLayout) dialog.findViewById(R.id.cl_base);
+    }
+
+    private void stopAllFlickers() {
+        action_bar.stopAnimation();
+        text_dialog.stopAnimation();
+        custom_dialog.stopAnimation();
+        base_custom.stopAnimation();
+    }
+    private void restartFlicker(int num) {
+        stopAllFlickers();
+        switch (num) {
+            case 0:action_bar.startAnimation();break;
+            case 1:base_custom.startAnimation();break;
+            case 2:text_dialog.startAnimation();break;
+            case 3:custom_dialog.startAnimation();break;
+        }
     }
 
     public void show() {
@@ -117,15 +109,15 @@ public class ColorsDialog extends ThemesDialog {
         lp.width = (int) ((float) base_layout.getWidth() * 0.95f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-//        myLayout = (MyLayout)dialog.findViewById(R.id.draw_base_layout);
-
         Button OkButton     = (Button) dialog.findViewById(R.id.submit_colors);
         Button CancelButton = (Button) dialog.findViewById(R.id.cancel_colors);
         Button Bt           = (Button) dialog.findViewById(R.id.cl_button);
+        Button reset_btn    = (Button) dialog.findViewById(R.id.reset_colors_button);
+        //reset_colors_button
 
         // set theme
         Vector<Button> btns = new Vector<Button>();
-        btns.add(OkButton);btns.add(CancelButton);btns.add(Bt);
+        btns.add(OkButton);btns.add(CancelButton);btns.add(Bt);btns.add(reset_btn);
         ApplicationAttributes attr = setDialogButtonsTheme(btns);
 
         voc.change_captions(btns);
@@ -133,10 +125,32 @@ public class ColorsDialog extends ThemesDialog {
         OkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
-                dialog.dismiss();
+            save();
+            dialog.dismiss();
             }
         });
+
+        reset_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//Color.parseColor("#636161")
+                stopAllFlickers();
+                changeColor(Color.BLACK,           views.get(0));
+//                changeColor(Color.parseColor("#D7E5E1"),  views.get(1)); // crash
+//                changeColor(Color.parseColor("#05595A"),  views.get(2));
+//                changeColor(Color.parseColor("#DADADA*"), views.get(3));
+
+                changeColor(Color.rgb(0xD7, 0xE5, 0xE1)/*0xD7E5E1*/,    views.get(1));
+                changeColor(Color.rgb(0x05, 0x59, 0x5A)/*0x05595A*/,    views.get(2));
+                changeColor(Color.rgb(0xDA, 0xDA, 0xDA)/*0xDADADA*/,    views.get(3));
+
+                selected    = 0;
+                radioButtons.get(0).setChecked(true);
+
+                new cls(views.get(0), sbars);
+                action_bar.startAnimation();
+            }
+        });
+
 
         CancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +171,8 @@ public class ColorsDialog extends ThemesDialog {
                 String tag = (String) v.getTag();
                 selected   = Integer.parseInt(tag);
                 new cls(views.get(selected), sbars);
+
+                restartFlicker(selected);
                 }
             });
 
@@ -218,19 +234,7 @@ public class ColorsDialog extends ThemesDialog {
 
         selected    = 0;
         new cls(views.get(0), sbars);
-
-        TextView tv   = (TextView) dialog.findViewById(R.id.cl_actionbar);
-//        new start_animation(tv);
-    }
-    private void animate() {
- //       paint.setPathEffect(pe_vector.get(phase));
- //       canvas.drawPath(path, paint);
-
-        canvas.drawRect(rect, paint);
-
-        phase ++;
-        if (phase >=  pe_vector.size())
-            phase = 0;
+        action_bar.startAnimation();
     }
 
      private void changeColor() {//-16776986
@@ -256,6 +260,7 @@ public class ColorsDialog extends ThemesDialog {
 
          String   class_name = view.getClass().getName().toUpperCase();
 
+        view.setTag(color); // CHECK IT !!!!
         if (class_name.indexOf("TEXTVIEW") != -1) {
             TextView text = (TextView) view;
             text.setBackgroundColor(color);
@@ -338,37 +343,12 @@ public class ColorsDialog extends ThemesDialog {
     }
 
     public class start_animation {
-        private TextView      textview;
-
         start_animation(TextView tv) {
-            this.textview = tv;
-
-            tv.post(new Runnable() {
-                public void run() {
-//                    myLayout.getView(textview);
-//                    myLayout.invalidate();
-                    /*
-                    int left   = textview.getLeft();
-                    int top    = textview.getTop();
-                    int right  = textview.getRight();
-                    int bottom = textview.getBottom();
-                    path       = new Path();
-                    canvas     = new Canvas();
-                    paint      = new Paint();
-                    paint.setColor(Color.BLACK);
-                    paint.setStrokeWidth(5);
-                    paint.setStyle(Paint.Style.STROKE);
-
-                    path.addRect(left, top, right, bottom, Path.Direction.CW);
-
-                    rect = new Rect(left, top, right, bottom);
-
-                    phase = 0;
-                    handler.postDelayed(runnable, 1000);
-*/
-                }
-            });
-
+          tv.post(new Runnable() {
+              public void run() {
+                action_bar.startAnimation();
+              }
+          });
         }
     }
 
