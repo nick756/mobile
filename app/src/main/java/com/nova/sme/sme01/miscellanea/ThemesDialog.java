@@ -104,8 +104,9 @@ public class ThemesDialog {
                     attr.setSelectedButtonColor(vg.btn.getCurrentTextColor());
                     attr.setButtonColors(groups);
 
-                    FM.writeToFile("attributes.bin", attr);
+//                    FM.writeToFile("attributes.bin", attr);
                     attr.setButtons(base_layout, logout_button);
+                    FM.writeToFile("attributes.bin", attr);
 
                 }
                 dialog.dismiss();
@@ -222,12 +223,14 @@ public class ThemesDialog {
         prms.height = (int)((float)lp.width*1.2f);
 
 /*
+        Vector<Integer> background_ids = new Vector<Integer>();
+
         Context ctx = base_layout.getContext();
         Resources res = ctx.getResources();
         int cnt;
         XmlResourceParser xpp = res.getXml(R.layout.buttons);
         String str = "", resourxeD = "", attr_name = "";
-        int id = 0, idd  = R.drawable.login_button_selector;//2130837596
+        int background_id = 0, idd  = R.drawable.login_button_selector;//2130837596
         try {
             xpp.next();
             int eventType = xpp.getEventType();
@@ -236,21 +239,18 @@ public class ThemesDialog {
                     str = xpp.getName();
                 } else if (eventType == XmlPullParser.START_TAG) {
                     str = xpp.getName();
-                    cnt = xpp.getAttributeCount();
+                     if (str.equals("Button")) {
+                        cnt = xpp.getAttributeCount();
+                        for (int j = 0; j < cnt; j ++) {
+                            attr_name = xpp.getAttributeName(j) ;
 
-                    for (int j = 0; j < cnt; j ++) {
-                        attr_name = xpp.getAttributeName(j) ;
-                        xpp.
-                        if (attr_name.equals("background")) {
-                            resourxeD = xpp.getAttributeValue(j);
-                            id   = xpp.getAttributeResourceValue(j, 0);
+                            if (attr_name.equals("background")) {
+                                resourxeD       = xpp.getAttributeValue(j);
+                                background_id   = xpp.getAttributeResourceValue(j, 0);
+                                background_ids.add(background_id);
+                            }
                         }
-
-
                     }
- //                   if (str.equals("Button")) {
- //                       resourxeD = xpp.getAttributeValue(null, "background");
- //                   }
                 } else if (eventType == XmlPullParser.END_TAG) {
                     if (str.equals("Button")) {
                         resourxeD = xpp.getAttributeValue(null, "background");
@@ -271,10 +271,7 @@ public class ThemesDialog {
         } catch (java.io.IOException e) {
 
         }
-*/
-//        stringBuffer.append("\n--- End XML ---");
-//        return stringBuffer.toString();
-
+        */
     }
 
     protected void resetRadiobuttons(RadioButton rb) {

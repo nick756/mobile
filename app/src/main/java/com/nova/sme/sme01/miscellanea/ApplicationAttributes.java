@@ -1,6 +1,8 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,8 @@ import android.widget.Button;
 
 
 import com.nova.sme.sme01.R;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -29,7 +33,9 @@ public class ApplicationAttributes implements Serializable {
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
-    private Vector<Integer> buttons_text_colors = new Vector<Integer>();
+    private Vector<Integer> buttons_text_colors   = new Vector<Integer>();
+    private Vector<Integer> button_background_ids = new Vector<Integer>();
+
     private String          base_url            = "http://" + "103.6.239.242:80/sme/mobile/";
 
     public int    getSelectedButton()              {return selected_button;}
@@ -39,7 +45,7 @@ public class ApplicationAttributes implements Serializable {
     public void   setBaseUrl(String url) {
         base_url = "http://" + url;
     }
-
+/*
     private int arr[] = {   R.drawable.login_button_selector,//2130837596
                             R.drawable.button_1_selector,//2130837566
                             R.drawable.button_8_selector,//2130837587
@@ -51,11 +57,49 @@ public class ApplicationAttributes implements Serializable {
                             R.drawable.button_6_selector,
                             R.drawable.button_7_selector,
     };
+*/
+
 
 
     public ApplicationAttributes() {
 
 
+    }
+    public ApplicationAttributes(Context ctx) {
+
+
+    }
+
+    private void fillButtonsBackgroundIds(Context ctx) {
+        Resources res = ctx.getResources();
+        int cnt;
+        XmlResourceParser xpp = res.getLayout(R.layout.buttons);// .getXml(R.layout.buttons);
+        String str = "", attr_name = "";
+        int background_id = 0;
+        try {
+            xpp.next();
+            int eventType = xpp.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                 if (eventType == XmlPullParser.START_TAG) {
+                    str = xpp.getName();
+                    if (str.equals("Button")) {
+                        cnt = xpp.getAttributeCount();
+                        for (int j = 0; j < cnt; j ++) {
+                            attr_name = xpp.getAttributeName(j) ;
+                            if (attr_name.equals("background")) {
+                                background_id = xpp.getAttributeResourceValue(j, 0);
+                                button_background_ids.add(background_id);
+                            }
+                        }
+                    }
+                }
+                eventType = xpp.next();
+            }
+        } catch(org.xmlpull.v1.XmlPullParserException e) {
+
+        } catch (java.io.IOException e) {
+
+        }
     }
 
     public MyColors getColors(){return colors;}
@@ -79,6 +123,7 @@ public class ApplicationAttributes implements Serializable {
 
     public void setButtons(View base_layout, Vector<Button> buttons) {
         Context ctx = base_layout.getContext();
+
         int     id  = getResourceID(ctx);
 
         for (int i = 0; i < buttons.size(); i ++)
@@ -115,14 +160,18 @@ public class ApplicationAttributes implements Serializable {
     private void set_button(Button btn, Context ctx, int id) {
          int     sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            btn.setBackgroundDrawable(ctx.getResources().getDrawable(id) );
+            btn.setBackgroundDrawable(ctx.getResources().getDrawable(id));
         } else {
             btn.setBackground(ctx.getResources().getDrawable(id));
         }
         btn.setTextColor(selected_button_color);
     }
     private int getResourceID(Context ctx) {
-        return arr[selected_button];
+        if (button_background_ids.size() == 0)
+            fillButtonsBackgroundIds(ctx);
+        return button_background_ids.get(selected_button);
+
+//        return arr[selected_button];
 //        String resName = "@drawable/login_button_selector";
 //        return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
 

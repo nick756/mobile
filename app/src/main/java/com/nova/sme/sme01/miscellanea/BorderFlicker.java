@@ -29,13 +29,11 @@ public class BorderFlicker {
     private Path    path   = null;
     private boolean dash   = false;
 
-
-//    private int   offset = 10;
     private int    radius;//4;
     private float  density;
 
+    private Path                     rectPath;
     private Path                     shapePath;
-//    private PathDashPathEffect       pathDashPathEffect;
     private int                      phase    = 0;
     private float                    advance  = 20.0f;
     private PathDashPathEffect.Style style    = PathDashPathEffect.Style.ROTATE;
@@ -88,7 +86,15 @@ public class BorderFlicker {
 
             shapePath = new Path();
             shapePath.addCircle(radius, radius, radius, Path.Direction.CW);
-
+/*
+            rectPath = new Path();
+            rectPath.moveTo(0,0);
+            rectPath.lineTo(width, 0);
+            rectPath.lineTo(width, height);
+            rectPath.lineTo(0, height);
+            rectPath.close();
+            rectPath.close();
+*/
         }
 
         drawRectangle(canvas, Color.BLACK, width, height, radius*2);
@@ -101,18 +107,12 @@ public class BorderFlicker {
     private void drawRectangle(Canvas canvas, int color, int width, int height, int strokeWidth) {
         paint.setColor(color);
         paint.setStrokeWidth(strokeWidth);
+ //       canvas.drawPath(rectPath, paint);
+
         canvas.drawLine(0, 0, width, 0, paint);
         canvas.drawLine(width, 0, width, height, paint);
         canvas.drawLine(width, height, 0, height, paint);
         canvas.drawLine(0, height, 0, 0, paint);
 
     }
-
-//    private float converDpToPixels(int dp) {
-//        return dp * activity.getResources().getDisplayMetrics().density;
- //   }
-
-
-
-
 }
