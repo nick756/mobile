@@ -222,56 +222,6 @@ public class ThemesDialog {
         ViewGroup.LayoutParams prms = sv.getLayoutParams();
         prms.height = (int)((float)lp.width*1.2f);
 
-/*
-        Vector<Integer> background_ids = new Vector<Integer>();
-
-        Context ctx = base_layout.getContext();
-        Resources res = ctx.getResources();
-        int cnt;
-        XmlResourceParser xpp = res.getXml(R.layout.buttons);
-        String str = "", resourxeD = "", attr_name = "";
-        int background_id = 0, idd  = R.drawable.login_button_selector;//2130837596
-        try {
-            xpp.next();
-            int eventType = xpp.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_DOCUMENT) {
-                    str = xpp.getName();
-                } else if (eventType == XmlPullParser.START_TAG) {
-                    str = xpp.getName();
-                     if (str.equals("Button")) {
-                        cnt = xpp.getAttributeCount();
-                        for (int j = 0; j < cnt; j ++) {
-                            attr_name = xpp.getAttributeName(j) ;
-
-                            if (attr_name.equals("background")) {
-                                resourxeD       = xpp.getAttributeValue(j);
-                                background_id   = xpp.getAttributeResourceValue(j, 0);
-                                background_ids.add(background_id);
-                            }
-                        }
-                    }
-                } else if (eventType == XmlPullParser.END_TAG) {
-                    if (str.equals("Button")) {
-                        resourxeD = xpp.getAttributeValue(null, "background");
-                    }
-
-                    str = xpp.getName();
-                } else if (eventType == XmlPullParser.TEXT) {
-                    str = xpp.getName();
-                }
-
-                eventType = xpp.next();
-                if (str != null)
-                    if (str.equals(";k;k;"))
-                        break;
-            }
-        } catch(org.xmlpull.v1.XmlPullParserException e) {
-
-        } catch (java.io.IOException e) {
-
-        }
-        */
     }
 
     protected void resetRadiobuttons(RadioButton rb) {
