@@ -29,14 +29,14 @@ import java.util.Vector;
 
 public class ApplicationAttributes implements Serializable {
 //    private Button  button;
-    private MyColors colors                = new MyColors();
+    private MyColors        colors                = new MyColors();
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
     private Vector<Integer> buttons_text_colors   = new Vector<Integer>();
     private Vector<Integer> button_background_ids = new Vector<Integer>();
 
-    private String          base_url            = "http://" + "103.6.239.242:80/sme/mobile/";
+    private String          base_url              = "http://" + "103.6.239.242:80/sme/mobile/";
 
     public int    getSelectedButton()              {return selected_button;}
     public void   setSelectedButton(int selected) {selected_button = selected;}
