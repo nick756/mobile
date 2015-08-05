@@ -61,14 +61,11 @@ public class TextResizing {
         if (text.length() == 0)
             return 0;
 
-        tvText.measure(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        int width = tvText.getWidth();
 
-//        tvText.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int width = tvText.getMeasuredWidth();//24
+        width -= (int)converDpToPixels(tvText.getPaddingLeft() + tvText.getPaddingRight());
 
         int textSize = 200;
-
-
         while (getWidthLineText(text, textSize, width) > maxWidth)
             textSize--;
 
@@ -91,4 +88,8 @@ public class TextResizing {
         float new_text_size    = textSize / (additionalFactor*scaleFactor);
         tvText.setTextSize(new_text_size);
     }
+    private float converDpToPixels(int dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
+    }
+
 }

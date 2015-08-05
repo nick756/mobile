@@ -14,19 +14,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nova.sme.sme01.miscellanea.About;
+import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
-import com.nova.sme.sme01.miscellanea.ColorsDialog;
+import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
+import com.nova.sme.sme01.miscellanea.Dialogs.GetFilterViewTransactions;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
-import com.nova.sme.sme01.miscellanea.HttpDialog;
+import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyColors;
-import com.nova.sme.sme01.miscellanea.MyDialog;
+import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
-import com.nova.sme.sme01.miscellanea.ThemesDialog;
+import com.nova.sme.sme01.miscellanea.Dialogs.ThemesDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 
@@ -165,7 +166,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private void setAttributes() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(this);
 
         attr.setButtons(base_layout, logout_button);
 
@@ -180,7 +181,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private void updateURL() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(this);
 
         base_http                 = attr.getBaseUrl();//
         url_request_operations    = base_http + "getoperations/?";
@@ -270,7 +271,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             new ColorsDialog(this, base_layout, voc, FM, logout_button).show();
             return true;
         } else if (id == R.id.action_about) {
-            new About(FR, voc, base_layout, logout_button).show();
+            new AboutDialog(FR, voc, base_layout, logout_button).show();
             return true;
         }
 

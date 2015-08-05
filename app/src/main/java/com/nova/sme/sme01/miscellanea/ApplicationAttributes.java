@@ -45,29 +45,9 @@ public class ApplicationAttributes implements Serializable {
     public void   setBaseUrl(String url) {
         base_url = "http://" + url;
     }
-/*
-    private int arr[] = {   R.drawable.login_button_selector,//2130837596
-                            R.drawable.button_1_selector,//2130837566
-                            R.drawable.button_8_selector,//2130837587
-                            R.drawable.button_9_selector,//2130837590
-                            R.drawable.button_2_selector, //2130837569
-                            R.drawable.button_3_selector,
-                            R.drawable.button_4_selector,
-                            R.drawable.button_5_selector,
-                            R.drawable.button_6_selector,
-                            R.drawable.button_7_selector,
-    };
-*/
 
-
-
-    public ApplicationAttributes() {
-
-
-    }
     public ApplicationAttributes(Context ctx) {
-        if (button_background_ids.size() == 0)
-            fillButtonsBackgroundIds(ctx);
+        fillButtonsBackgroundIds(ctx);
     }
 
     private void fillButtonsBackgroundIds(Context ctx) {
@@ -124,21 +104,21 @@ public class ApplicationAttributes implements Serializable {
     public void setButtons(View base_layout, Vector<Button> buttons) {
         Context ctx = base_layout.getContext();
 
-        int     id  = getResourceID(ctx);
+        int     id  = button_background_ids.get(selected_button);
 
         for (int i = 0; i < buttons.size(); i ++)
             set_button(buttons.elementAt(i), ctx, id);
     }
     public void setButtons(View base_layout) {
         Context ctx = base_layout.getContext();
-        int     id  = getResourceID(ctx);
+        int id = button_background_ids.get(selected_button);
         if (id != -1)
             set_Buttons(ctx, base_layout, id);
     }
 
     public void setButtons(View base_layout, Button logout) {
         Context ctx = base_layout.getContext();
-        int     id  = getResourceID(ctx);
+        int id = button_background_ids.get(selected_button);
         if (id != -1) {
             set_Buttons(ctx, base_layout, id);
 
@@ -166,32 +146,14 @@ public class ApplicationAttributes implements Serializable {
         }
         btn.setTextColor(selected_button_color);
     }
+    /*
     private int getResourceID(Context ctx) {
-        if (button_background_ids.size() == 0)
-            fillButtonsBackgroundIds(ctx);
-        return button_background_ids.get(selected_button);
-
-//        return arr[selected_button];
-//        String resName = "@drawable/login_button_selector";
-//        return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
-
-
-    //    return resourcesIds.get(selected_button);
-        /*
-        String err = "";
-
-        String resName;
-        if (selected_button > 0)
-            resName = "@drawable/button_" + selected_button + "_selector";
-        else
-            resName = "@drawable/login_button_selector";
-
-
         try {
             return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
         } catch (Exception e) {
             err = e.getMessage().toString();
         }
-        return -1;*/
+        return -1;
     }
+    */
 }

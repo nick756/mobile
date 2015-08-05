@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
@@ -9,10 +9,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import java.util.Vector;
 

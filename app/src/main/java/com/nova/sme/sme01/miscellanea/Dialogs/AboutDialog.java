@@ -1,34 +1,51 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
+import com.nova.sme.sme01.miscellanea.TextResizing;
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
+import java.util.List;
 import java.util.Vector;
 
+import static java.sql.DriverManager.println;
+
 /*
- *****************
- *               *
- *  About Dialog *
- *               *
- *****************
+ ******************
+ *                *
+ *  About Dialog  *
+ *                *
+ ******************
  */
 
-public class About extends MyDialog{
+public class AboutDialog extends MyDialog {
     private ApplicationAttributes attr;
+    private TextResizing          textFit;
+    private String                sample = "SIFAR refers to Simplified Financial";
+    private TextView              aboutText;
 
-    public About(FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout) {
+    public AboutDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout) {
         super(FR, voc, base_layout);
+
+        this.textFit   = new TextResizing(base_layout.getContext());
     }
 
     public void show() {
@@ -61,15 +78,16 @@ public class About extends MyDialog{
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+
+        ViewGroup.LayoutParams prms;
         ScrollView sv = (ScrollView) dialog.findViewById(R.id.about_scroll);
-        ViewGroup.LayoutParams prms = sv.getLayoutParams();
-//        prms.height = (int)((float)lp.width*1.2f);
+        prms = sv.getLayoutParams();
+        prms.height = (int)((float)lp.width*1.2f);
 
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {dialog.dismiss();}
         });
-
 
 
         int height;
@@ -82,5 +100,24 @@ public class About extends MyDialog{
         }
         SetColors();
 
+        aboutText = (TextView) dialog.findViewById(R.id.about_text);
+        new FitText(aboutText);
     }
+
+    public class FitText {
+        private TextView tv;
+
+        public FitText(TextView tv) {
+            this.tv      =  tv;
+
+            tv.post(new Runnable() {
+                public void run() {
+                    float textsize = textFit.getSizeWidth(aboutText, sample, 1.2f, base_layout.getWidth());
+                    aboutText.setTextSize(textsize);
+                }
+            });
+        }
+
+    }
+
 }

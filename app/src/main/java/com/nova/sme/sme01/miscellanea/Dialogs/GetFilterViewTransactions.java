@@ -1,4 +1,4 @@
-package com.nova.sme.sme01;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 
 import android.app.Activity;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.nova.sme.sme01.FormResizing;
+import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
@@ -43,7 +45,7 @@ public class GetFilterViewTransactions {
     private Spinner        day_till;
     private SimpleCalendar from_calendar;
     private SimpleCalendar till_calendar;
-    private FormResizing   FR;
+    private FormResizing FR;
 
 
 
@@ -175,7 +177,7 @@ public class GetFilterViewTransactions {
     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(base_layout.getContext());
 
         attr.setButtons(base_layout, buttons);
         return attr;

@@ -11,6 +11,7 @@ import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.RegularLoginActivity;
 import com.nova.sme.sme01.TransactionsViewActivity;
+import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 import com.nova.sme.sme01.xml_reader_classes.Record;
@@ -28,8 +29,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
-import static java.sql.DriverManager.println;
-
 /*
  *******************************
  *                             *
@@ -41,7 +40,7 @@ public class MyHttpRequest {
     private String          url_request;
     private RelativeLayout  base_layout;
     private Activity        activity;
-    private MyDialog        my_dialog;
+    private MyDialog my_dialog;
     private Vocabulary      voc;
     private FormResizing   FR;
     private String          className;

@@ -31,20 +31,21 @@ public class BorderFlicker {
 
     private int    radius;//4;
     private float  density;
+    private float  scaleDensity;
 
     private Path                     rectPath;
     private Path                     shapePath;
     private int                      phase    = 0;
-    private float                    advance  = 20.0f;
+    private float                    advance  = 10.0f;
     private PathDashPathEffect.Style style    = PathDashPathEffect.Style.ROTATE;
 
-    public BorderFlicker(float density) {
-        this.density = density;
+    public BorderFlicker(float density, float  scaleDensity) {
+        this.density      = density;
+        this.scaleDensity = scaleDensity;
 
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
-
     }
 
     public void setDash(boolean dash){this.dash = dash;}
@@ -79,7 +80,7 @@ public class BorderFlicker {
 
     public void draw_dash (Canvas canvas, int width, int height) {
         if (path == null) {
-            radius = (int)(2.0f*density);
+            radius = 2;//(int)(2.0f*density);
 
             path = new Path();
             path.addRect(0, 0, width, height, Path.Direction.CW);
@@ -115,4 +116,17 @@ public class BorderFlicker {
         canvas.drawLine(0, height, 0, 0, paint);
 
     }
+/*
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        switch(metrics.densityDpi){
+             case DisplayMetrics.DENSITY_LOW:
+                        break;
+             case DisplayMetrics.DENSITY_MEDIUM:
+                         break;
+             case DisplayMetrics.DENSITY_HIGH:
+                         break;
+}
+
+     */
 }

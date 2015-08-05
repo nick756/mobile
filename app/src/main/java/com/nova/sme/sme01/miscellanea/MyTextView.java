@@ -33,7 +33,7 @@ public class MyTextView extends TextView {
     }
 
     private void init() {
-        flicker = new BorderFlicker(this.getResources().getDisplayMetrics().density);
+        flicker = new BorderFlicker(this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
     }
 
 

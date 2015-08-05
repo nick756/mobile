@@ -1,19 +1,13 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathEffect;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -29,6 +23,13 @@ import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.RegularLoginActivity;
 import com.nova.sme.sme01.TransactionActivity;
 import com.nova.sme.sme01.TransactionsViewActivity;
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.Dialogs.ThemesDialog;
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.MyColors;
+import com.nova.sme.sme01.miscellanea.MyRelativeLayout;
+import com.nova.sme.sme01.miscellanea.MyTextView;
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +55,9 @@ public class ColorsDialog extends ThemesDialog {
     private int            selected = 0;
 
 
-    private MyTextView         action_bar;
+    private MyTextView action_bar;
     private MyTextView         text_dialog;
-    private MyRelativeLayout   custom_dialog;
+    private MyRelativeLayout custom_dialog;
     private MyRelativeLayout   base_custom;
 
     protected List<RadioButton> radioButtons = new ArrayList<RadioButton>();
@@ -309,7 +310,7 @@ public class ColorsDialog extends ThemesDialog {
     private void save() {
         ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(base_layout.getContext());
 
 
         MyColors colors = attr.getColors();

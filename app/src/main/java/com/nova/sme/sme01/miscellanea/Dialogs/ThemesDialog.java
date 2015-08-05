@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -26,6 +26,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.MyColors;
+import com.nova.sme.sme01.miscellanea.ViewsGroup;
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -50,8 +55,8 @@ import static java.sql.DriverManager.println;
  */
 public class ThemesDialog {
     protected RelativeLayout    base_layout;
-    protected Vocabulary        voc;
-    protected FileManager       FM;
+    protected Vocabulary voc;
+    protected FileManager FM;
     protected Button            logout_button;
 
     private   Vector<ViewsGroup>     groups = new Vector<ViewsGroup>();
@@ -98,7 +103,7 @@ public class ThemesDialog {
                 if (vg != null) {
                     ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
                     if (attr == null)
-                        attr = new ApplicationAttributes();
+                        attr = new ApplicationAttributes(base_layout.getContext());
 
                     attr.setSelectedButton(vg.index);
                     attr.setSelectedButtonColor(vg.btn.getCurrentTextColor());
@@ -259,7 +264,7 @@ public class ThemesDialog {
     protected ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(base_layout.getContext());
 
         attr.setButtons(base_layout, buttons);
 

@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 
 import android.app.Dialog;
@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.MyColors;
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import java.util.Vector;
 
@@ -29,7 +33,7 @@ import java.util.Vector;
 
 
 public class MyDialog {
-    protected Vocabulary     voc;
+    protected Vocabulary voc;
     protected RelativeLayout base_layout;
     protected FormResizing   FR;
 
@@ -166,7 +170,7 @@ public class MyDialog {
      protected ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(base_layout.getContext());
 
 
         attr.setButtons(base_layout, buttons);

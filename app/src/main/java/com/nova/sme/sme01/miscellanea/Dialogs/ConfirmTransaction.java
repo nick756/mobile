@@ -1,4 +1,4 @@
-package com.nova.sme.sme01;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 
 
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.FormResizing;
+import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyColors;
@@ -37,7 +39,7 @@ import java.util.Vector;
 public class ConfirmTransaction {
     private Activity       activity;
     private Vocabulary     voc;
-    private FormResizing   FR;
+    private FormResizing FR;
     private RelativeLayout base_layout;
     private String         http_request;
 
@@ -170,7 +172,7 @@ public class ConfirmTransaction {
     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null)
-            attr = new ApplicationAttributes();
+            attr = new ApplicationAttributes(base_layout.getContext());
 
         attr.setButtons(base_layout, buttons);
         return attr;

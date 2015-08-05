@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:background="@drawable/dialog_layout"
-    android:id="@+id/about_base">
+    android:id="@+id/about_base"
+    android:paddingBottom="10dp">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -20,7 +21,13 @@
                  android:text="SIFAR refers to Simplified Financial and Recordkeeping system. It is one of the modules in the BinaPavo Data Intelligence suite of software and system.  SIFAR is developed based on years of applied research by our data and social scientists in the field of entrepreneurship, innovation, family business, financial management and strategy. The R&amp;D was driven to find solutions for the pain faced by SMEs and lending agencies.  Our scientists found that SMEs in general, lack financial management skills and accounting knowledge to manage their business finance. They also lack assistance when problems arise. Existing accounting software are too technical for them.  Lending agencies on the other hand, lack monitoring tools to assess SMEs&apos; performance.   In today’s world, even micro enterprises and small businesses are using smart phones for business purpose. SIFAR’s mobile application allows users to enter data with their Android smart phones wherever they are, 24/7. In addition, SIFAR does not only capture data and information but is designed to enable data analytics with monitoring system and diagnostic tools for monitoring and identifying SMEs&apos; progress and problems periodically and automatically.   The interface display daily cash flow transactions but in the background the transactions are captured and integrated into an accounting system with automated business analytics tools to assess the SMEs with flagging ability when problems are detected.  "
                  android:id="@+id/about_text"
                  android:singleLine="false"
-                 android:padding="5dp" />
+                 android:padding="5dp"
+                 android:paddingLeft="5dp"
+                 android:paddingRight="5dp"
+                 android:paddingTop="10dp"
+                 android:paddingBottom="10dp"
+                 android:nestedScrollingEnabled="false"
+                 android:textColor="@android:color/black" />
          </RelativeLayout>
     </ScrollView>
 
