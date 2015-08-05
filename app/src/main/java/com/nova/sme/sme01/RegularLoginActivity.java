@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.About;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CreateCustomBar;
@@ -268,7 +269,11 @@ public class RegularLoginActivity extends AppCompatActivity {
         } else if (id == R.id.colors_themes) {
             new ColorsDialog(this, base_layout, voc, FM, logout_button).show();
             return true;
+        } else if (id == R.id.action_about) {
+            new About(FR, voc, base_layout, logout_button).show();
+            return true;
         }
+
 
 
         return super.onOptionsItemSelected(item);

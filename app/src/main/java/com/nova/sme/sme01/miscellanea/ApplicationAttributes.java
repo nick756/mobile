@@ -66,8 +66,8 @@ public class ApplicationAttributes implements Serializable {
 
     }
     public ApplicationAttributes(Context ctx) {
-
-
+        if (button_background_ids.size() == 0)
+            fillButtonsBackgroundIds(ctx);
     }
 
     private void fillButtonsBackgroundIds(Context ctx) {
