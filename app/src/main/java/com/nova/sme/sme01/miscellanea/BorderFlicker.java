@@ -33,11 +33,11 @@ public class BorderFlicker {
     private float  density;
     private float  scaleDensity;
 
-    private Path                     rectPath;
     private Path                     shapePath;
     private int                      phase    = 0;
     private float                    advance  = 10.0f;
     private PathDashPathEffect.Style style    = PathDashPathEffect.Style.ROTATE;
+    private Rect                     rect;
 
     public BorderFlicker(float density, float  scaleDensity) {
         this.density      = density;
@@ -71,7 +71,6 @@ public class BorderFlicker {
         canvas.drawLine(width, 0, width, height, paint);
         canvas.drawLine(width, height, 0, height, paint);
         canvas.drawLine(0, height, 0, 0, paint);
-
     }
 
     public void setColor(int red, int green, int blue) {
@@ -87,15 +86,8 @@ public class BorderFlicker {
 
             shapePath = new Path();
             shapePath.addCircle(radius, radius, radius, Path.Direction.CW);
-/*
-            rectPath = new Path();
-            rectPath.moveTo(0,0);
-            rectPath.lineTo(width, 0);
-            rectPath.lineTo(width, height);
-            rectPath.lineTo(0, height);
-            rectPath.close();
-            rectPath.close();
-*/
+
+            rect = new Rect(0, 0, width, height);
         }
 
         drawRectangle(canvas, Color.BLACK, width, height, radius*2);
@@ -108,13 +100,8 @@ public class BorderFlicker {
     private void drawRectangle(Canvas canvas, int color, int width, int height, int strokeWidth) {
         paint.setColor(color);
         paint.setStrokeWidth(strokeWidth);
- //       canvas.drawPath(rectPath, paint);
-
-        canvas.drawLine(0, 0, width, 0, paint);
-        canvas.drawLine(width, 0, width, height, paint);
-        canvas.drawLine(width, height, 0, height, paint);
-        canvas.drawLine(0, height, 0, 0, paint);
-
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(rect, paint);
     }
 /*
         DisplayMetrics metrics = new DisplayMetrics();

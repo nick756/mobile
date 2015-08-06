@@ -26,7 +26,7 @@
             android:layout_toRightOf="@+id/custom_dialog_icon"
             android:textStyle="bold"
             android:text="Error"
-            android:textColor="#D1DADA"
+            android:textColor="@android:color/white"
             android:background="@color/text_back_ground"
             android:gravity="center"
             android:paddingLeft="2dp"
