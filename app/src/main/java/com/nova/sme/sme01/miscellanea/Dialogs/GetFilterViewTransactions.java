@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -16,11 +17,17 @@ import android.widget.Spinner;
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
+import com.nova.sme.sme01.miscellanea.SpinnerModel;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+import com.nova.sme.sme01.xml_reader_classes.ListOperations;
+import com.nova.sme.sme01.xml_reader_classes.Operation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /*
@@ -45,7 +52,9 @@ public class GetFilterViewTransactions {
     private Spinner        day_till;
     private SimpleCalendar from_calendar;
     private SimpleCalendar till_calendar;
-    private FormResizing FR;
+    private FormResizing   FR;
+
+    private int            selected_item = 0;
 
 
 
@@ -95,16 +104,16 @@ public class GetFilterViewTransactions {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String from = from_calendar.getDateFormatted();
-                String till = till_calendar.getDateFormatted();
+            String from = from_calendar.getDateFormatted();
+            String till = till_calendar.getDateFormatted();
 
-                http_request += "&dateFrom=" + from;
-                http_request += "&dateTill=" + till;
+            http_request += "&dateFrom=" + from;
+            http_request += "&dateTill=" + till;
 
-                //new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
-                new MyHttpRequest(FR, activity, base_layout, voc, http_request, "ListTransactions");
+            //new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "ListTransactions");
 
-                dialog.dismiss();
+            dialog.dismiss();
             }
         });
 
@@ -136,8 +145,55 @@ public class GetFilterViewTransactions {
 
         attr.getColors().setColor(rl);
 
+        initOperationList(dialog);
+
         //from_till_base_layout
     }
+
+    private void initOperationList(Dialog dialog) {
+        ArrayList<SpinnerModel> spinner_array = fillSpinner();
+
+        Spinner spinner = (Spinner) dialog.findViewById(R.id.oper_list_spinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
+                selected_item = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
+        CustomAdapter adapter = new CustomAdapter(activity, base_layout, R.layout.operation_item, spinner_array, 0.062f);
+        spinner.setAdapter(adapter);
+    }
+    private  ArrayList<SpinnerModel> fillSpinner() {
+        ArrayList<SpinnerModel> spinner_array = new ArrayList<SpinnerModel>();
+
+        FileManager    FM               = new FileManager(activity);
+        ListOperations listOpeartions   = (ListOperations) FM.readFromFile("operations_list.bin");
+        List<Operation> operations_list = listOpeartions.getOperationsList();
+
+        Operation       operation;
+        for (int i = 0; i < operations_list.size(); i ++) {
+            operation = operations_list.get(i);
+            final SpinnerModel spinnner_model = new SpinnerModel();
+            spinnner_model.setOperationName(operation.getName());
+
+
+            if (operation.getInbound().equals("true"))
+                spinnner_model.setimageId(R.mipmap.ic_in_bound);
+            else
+                spinnner_model.setimageId(R.mipmap.ic_out_bound);
+
+            spinner_array.add(spinnner_model);
+        }
+        return spinner_array;
+    }
+
 
     private void resize(float width) {              // width of stroke
         width -= converDpToPixels(6*2 + 5*2 + 5*2 + 6*2 + 2*2);// width of stroke

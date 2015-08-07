@@ -6,6 +6,20 @@
     android:padding="5dp"
     android:id="@+id/from_till_base_layout">
 
+
+    <Spinner
+        android:id="@+id/oper_list_spinner"
+        android:drawSelectorOnTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/base_layout_background"
+        android:spinnerMode="dropdown"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +29,8 @@
         android:padding="5dp"
         android:id="@+id/from_id"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/oper_list_spinner" />
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -67,7 +82,7 @@
         android:padding="5dp"
         android:id="@+id/tillid"
         android:layout_below="@+id/from_calendar"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="5dp" />
 

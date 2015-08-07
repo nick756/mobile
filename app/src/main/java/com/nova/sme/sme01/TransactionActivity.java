@@ -55,7 +55,7 @@ public class TransactionActivity extends AppCompatActivity  {
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
-    private ListOperations operaions_list;
+    private ListOperations                operaions_list;
     private FormResizing                  FR;
     private FileManager                   FM;
     private Vocabulary                    voc;

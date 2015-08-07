@@ -124,8 +124,8 @@ public class ConfirmTransaction {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                send_request();
-                dialog.dismiss();
+            send_request();
+            dialog.dismiss();
             }
         });
 
