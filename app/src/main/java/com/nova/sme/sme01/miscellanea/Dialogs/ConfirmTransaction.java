@@ -83,16 +83,18 @@ public class ConfirmTransaction {
 
         //----------------
         text = (TextView) dialog.findViewById(R.id.amount_transaction_id);
+        boolean err = false;
         try {
-            float val = Float.parseFloat(this.amount);
+            float  val   = Float.parseFloat(this.amount);
             String money = NumberFormat.getNumberInstance(Locale.US).format(val);
             if (money.indexOf(".") == -1)
                 money += ".00";
             text.setText(money);
         } catch(Exception e) {
-
+            err = true;
         }
-//        text.setText(this.amount);
+        if (err)
+            text.setText(this.amount);
         //----------------
 
         text = (TextView) dialog.findViewById(R.id.before_description);//before_operation_name

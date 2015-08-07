@@ -102,8 +102,7 @@ public class FillWithTransactionsList {
         LinearLayout   inner_layout = null;
 
 //        DecimalFormat formatter = new DecimalFormat("#,###,###,###.##");
-        float val;
-        String err = "";
+        float  val;
         String money;
         for (int i = 0; i < layout.getChildCount(); i ++) {
             inner_layout = (LinearLayout) layout.getChildAt(i);
@@ -145,6 +144,7 @@ public class FillWithTransactionsList {
                     } else if (tag.equals("amount")) {
                         text = (TextView) view;
 //                        text.setText(record.getAmount());//NumberFormat.getNumberInstance(Locale.US).format(record.getAmount())
+                        boolean err = false;
                         try {
                             val   = Float.parseFloat(record.getAmount());
                             money = NumberFormat.getNumberInstance(Locale.US).format(val);
@@ -152,8 +152,10 @@ public class FillWithTransactionsList {
                                 money += ".00";
                             text.setText(money);
                         } catch(Exception e) {
-                            err = e.getMessage().toString();
+                            err = true;
                         }
+                        if (err)
+                            text.setText(record.getAmount());
                     } else if (tag.equals("descr")) {
                         text = (TextView) view;
                         text.setText(record.getDescr());
