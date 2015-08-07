@@ -7,17 +7,26 @@
     android:id="@+id/from_till_base_layout">
 
 
-    <Spinner
-        android:id="@+id/oper_list_spinner"
-        android:drawSelectorOnTop="true"
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select/Unselect All"
+        android:id="@+id/seletcAllCB"
+        android:checked="true" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/from_till_scrollview"
+        android:layout_below="@+id/seletcAllCB">
 
-        android:background="@drawable/base_layout_background"
-        android:spinnerMode="dropdown"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp" />
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/from_till_layout">
+        </LinearLayout>
+
+    </ScrollView>
 
 
     <TextView
@@ -30,7 +39,7 @@
         android:id="@+id/from_id"
         android:layout_marginLeft="2dp"
         android:layout_marginTop="12dp"
-        android:layout_below="@+id/oper_list_spinner" />
+        android:layout_below="@+id/from_till_scrollview" />
 
     <RelativeLayout
         android:orientation="horizontal"

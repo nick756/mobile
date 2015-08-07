@@ -3,8 +3,8 @@ package com.nova.sme.sme01.miscellanea;
 
 public class SpinnerModel {
 
-    private  String operationName;
-    private  int    imageId; // checked or unchecked
+    protected  String operationName;
+    protected  int    imageId; // checked or unchecked
 
     public void setOperationName(String operationName) {
         this.operationName = operationName;

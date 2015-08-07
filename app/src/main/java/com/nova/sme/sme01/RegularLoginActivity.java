@@ -325,6 +325,9 @@ public class RegularLoginActivity extends AppCompatActivity {
                 // delete all
                 FM.deleteFile(this.params_file_name);
                 FM.deleteFile(this.operations_list_name);
+
+                FM.deleteFile("wideOperations.bin");
+
                 finish();
                 break;
         }

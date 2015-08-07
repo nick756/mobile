@@ -112,8 +112,8 @@ public class AboutDialog extends MyDialog {
 
             tv.post(new Runnable() {
                 public void run() {
-                    float textsize = textFit.getSizeWidth(aboutText, sample, 1.2f, base_layout.getWidth());
-                    aboutText.setTextSize(textsize);
+                float textsize = textFit.getSizeWidth(aboutText, sample, 1.2f, base_layout.getWidth());
+                aboutText.setTextSize(textsize);
                 }
             });
         }

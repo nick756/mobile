@@ -3,32 +3,35 @@ package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
-import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
+import com.nova.sme.sme01.miscellanea.SelectableOperationList;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
-import com.nova.sme.sme01.miscellanea.SpinnerModel;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
-import com.nova.sme.sme01.xml_reader_classes.ListOperations;
-import com.nova.sme.sme01.xml_reader_classes.Operation;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+import static java.sql.DriverManager.println;
 
 /*
  **********************************
@@ -53,8 +56,13 @@ public class GetFilterViewTransactions {
     private SimpleCalendar from_calendar;
     private SimpleCalendar till_calendar;
     private FormResizing   FR;
+    private int            dialog_width;
+    private RelativeLayout dialog_layout;
+    private ScrollView     sv;
 
     private int            selected_item = 0;
+
+    private SelectableOperationList sol;//(Dialog dialog, Vocabulary voc, RelativeLayout base_layout, FormResizing FR)
 
 
 
@@ -74,11 +82,6 @@ public class GetFilterViewTransactions {
         dialog.setContentView(R.layout.from_till);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
-
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-
-//        dialog.getWindow().setBackgroundDrawable("base_layout_background");
-
         year_from     = (Spinner)dialog.findViewById(R.id.year_spinner_from);
         month_from    = (Spinner)dialog.findViewById(R.id.month_spinner_from);
         day_from      = (Spinner)dialog.findViewById(R.id.day_spinner_from);
@@ -92,10 +95,12 @@ public class GetFilterViewTransactions {
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.width  = (int)((float)base_layout.getWidth()*0.9f);
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;//(int) (((float) lp.width)*1.2f);//WindowManager.LayoutParams.WRAP_CONTENT;
+
+        dialog_width = lp.width;
 
         // make translation
-        //from_till_base_layout
+        // from_till_base_layout
         RelativeLayout layout = (RelativeLayout)dialog.findViewById(R.id.from_till_base_layout);
         voc.TranslateAll(layout);
 
@@ -110,22 +115,27 @@ public class GetFilterViewTransactions {
             http_request += "&dateFrom=" + from;
             http_request += "&dateTill=" + till;
 
-            //new HttpRequestViewTransactions(activity, base_layout, voc, http_request, from, till);
             new MyHttpRequest(FR, activity, base_layout, voc, http_request, "ListTransactions");
-
+            sol.save();
             dialog.dismiss();
             }
         });
 
+        CheckBox cb = (CheckBox) dialog.findViewById(R.id.seletcAllCB);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sol.setAllCheckBoxes(isChecked);
+            }
+        });
         // set theme
         Vector<Button> btns = new Vector<Button>();
         btns.add(okButton);
         setDialogButtonsTheme(btns);
 
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
-
 
         dialog.getWindow().setAttributes(lp);
         resize(lp.width);
@@ -133,70 +143,25 @@ public class GetFilterViewTransactions {
         int height = FR.getLogButtonHeight();
         if (height > 0) {
             ViewGroup.LayoutParams prms = okButton.getLayoutParams();
-            prms.height = height;
+            prms.height                 = height;
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null) return;
 
-        RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
-        rl.setTag("dialog_background_color");
+        this.dialog_layout = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
+        this.dialog_layout.setTag("dialog_background_color");
 
-        attr.getColors().setColor(rl);
+        attr.getColors().setColor(this.dialog_layout);
+        sol = new SelectableOperationList(dialog, voc, base_layout, FR);
 
-        initOperationList(dialog);
-
-        //from_till_base_layout
+        sv = (ScrollView) dialog.findViewById(R.id.from_till_scrollview);
+        new refresh(this.dialog_layout);
     }
-
-    private void initOperationList(Dialog dialog) {
-        ArrayList<SpinnerModel> spinner_array = fillSpinner();
-
-        Spinner spinner = (Spinner) dialog.findViewById(R.id.oper_list_spinner);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
-                selected_item = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
-
-        CustomAdapter adapter = new CustomAdapter(activity, base_layout, R.layout.operation_item, spinner_array, 0.062f);
-        spinner.setAdapter(adapter);
-    }
-    private  ArrayList<SpinnerModel> fillSpinner() {
-        ArrayList<SpinnerModel> spinner_array = new ArrayList<SpinnerModel>();
-
-        FileManager    FM               = new FileManager(activity);
-        ListOperations listOpeartions   = (ListOperations) FM.readFromFile("operations_list.bin");
-        List<Operation> operations_list = listOpeartions.getOperationsList();
-
-        Operation       operation;
-        for (int i = 0; i < operations_list.size(); i ++) {
-            operation = operations_list.get(i);
-            final SpinnerModel spinnner_model = new SpinnerModel();
-            spinnner_model.setOperationName(operation.getName());
-
-
-            if (operation.getInbound().equals("true"))
-                spinnner_model.setimageId(R.mipmap.ic_in_bound);
-            else
-                spinnner_model.setimageId(R.mipmap.ic_out_bound);
-
-            spinner_array.add(spinnner_model);
-        }
-        return spinner_array;
-    }
-
 
     private void resize(float width) {              // width of stroke
-        width -= converDpToPixels(6*2 + 5*2 + 5*2 + 6*2 + 2*2);// width of stroke
+        width -= convertDpToPixels(6 * 2 + 5 * 2 + 5 * 2 + 6 * 2 + 2 * 2);// width of stroke
  //       width -= FR.get_width_margin()*2.0f;
 
         float  y = 4.0f;
@@ -226,7 +191,7 @@ public class GetFilterViewTransactions {
 
     }
 
-    private float converDpToPixels(int dp) {
+    private float convertDpToPixels(int dp) {
         return dp * activity.getResources().getDisplayMetrics().density;
     }
 
@@ -238,5 +203,21 @@ public class GetFilterViewTransactions {
         attr.setButtons(base_layout, buttons);
         return attr;
     }
+
+    public class refresh {
+        private RelativeLayout layout;
+
+        public refresh(RelativeLayout layout) {
+            this.layout = layout;
+
+            layout.post(new Runnable() {
+                public void run() {
+                    ViewGroup.LayoutParams params = sv.getLayoutParams();
+                    params.height = (int)((float)dialog_width*0.8f);
+                }
+            });
+        }
+    }
+
 
 }

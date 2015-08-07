@@ -99,6 +99,7 @@ public class Vocabulary implements Serializable {
             {"Buttons Themes",                                      "Butang Tema"},
             {"Colors Themes",                                       "Warna Tema"},
             {"Reset",                                               "Set semula"},
+            {"Select/Unselect All",                                 "Pilih / Nyahpilih Semua"},
 
 
     };
