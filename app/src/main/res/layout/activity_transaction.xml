@@ -26,11 +26,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
 
-        android:focusableInTouchMode="true"
+        android:focusableInTouchMode="false"
         android:layout_below="@+id/transaction_caption"
         android:layout_margin="2dp"
-        android:spinnerMode="dropdown"
-        android:background="@color/main_background_color" />
+        android:background="@drawable/base_layout_background"
+        android:spinnerMode="dropdown" />
 
     <RelativeLayout
         android:orientation="horizontal"

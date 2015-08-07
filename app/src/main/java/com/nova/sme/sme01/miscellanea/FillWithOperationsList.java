@@ -2,6 +2,8 @@ package com.nova.sme.sme01.miscellanea;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,11 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.CommonClass;
+import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.RegularLoginActivity;
+import com.nova.sme.sme01.TransactionActivity;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 import java.util.List;
+import java.util.Vector;
 
 import static java.sql.DriverManager.println;
 
@@ -26,11 +33,12 @@ import static java.sql.DriverManager.println;
  **************************************************
  */
 public class FillWithOperationsList {
-    private Activity      activity;
+    private Activity       activity;
     private ListOperations operations;
-    private int           id;
-    private Vocabulary    voc;
+    private int            id;
+    private Vocabulary     voc;
     private RelativeLayout base_layout;
+    private Vector<item>   items = new Vector<item>();
 
     public FillWithOperationsList(Activity activity, ListOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity = activity;
@@ -81,37 +89,68 @@ public class FillWithOperationsList {
     }
 
     private void setValues(LinearLayout layout, Operation operation) {
-        View view;
-        LinearLayout inner_layout;
-        View         to_remove = null;
-        String       tag;
-        TextView text;
-        ImageView img;
+        View           view;
+        RelativeLayout inner_layout;
+        String         tag;
+        TextView       text;
+        ImageView      img;
 
-        to_remove = null;
-        for (int i = 0; i < layout.getChildCount(); i ++) {
-            inner_layout = (LinearLayout) layout.getChildAt(i);
-            for (int j = 0; j < inner_layout.getChildCount(); j ++) {
-                view      = inner_layout.getChildAt(j);
-                tag       = (String) view.getTag();
+        String err = "", operationName = "";
+        try {
+            for (int i = 0; i < layout.getChildCount(); i++) {
+                inner_layout = (RelativeLayout) layout.getChildAt(i);
+                for (int j = 0; j < inner_layout.getChildCount(); j++) {
+                    view = inner_layout.getChildAt(j);
+                    tag = (String) view.getTag();
 
-                if (tag != null) {
-                     if (tag.equals("name")) {
-                        text = (TextView) view;
-                        text.setText(operation.getName());
-                    } else if (tag.equals("in_out_bound")) {
-                        img = (ImageView) view;
-                        if (operation.getInbound().equals("true")) {
-                            img.setImageResource(R.mipmap.ic_in_bound);
-                        } else {
-                            img.setImageResource(R.mipmap.ic_out_bound);
+                    if (tag != null) {
+                        if (tag.equals("name")) {
+                            operationName = operation.getName();
+                            text          = (TextView) view;
+                            text.setText(operationName);
+                        } else if (tag.equals("in_out_bound")) {
+                            img = (ImageView) view;
+                            if (operation.getInbound().equals("true")) {
+                                img.setImageResource(R.mipmap.ic_in_bound);
+                            } else {
+                                img.setImageResource(R.mipmap.ic_out_bound);
+                            }
+                        } else if (tag.equals("type")) {
+                            text = (TextView) view;
+                            text.setText(operation.getType());
+                        } else if (tag.equals("transaction_button")) {
+                            img = (ImageView) view;
+
+                            items.add(new item(operationName, img));
                         }
-                     } else if (tag.equals("type")) {
-                        text = (TextView) view;
-                        text.setText(operation.getType());
                     }
                 }
             }
+        } catch(Exception e) {
+            err = e.getMessage().toString();
+        }
+    }
+
+    public class item {
+        private String operationName;
+
+        public item(String operationName, ImageView img) {
+            this.operationName = operationName;
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callTransactionActivity();
+                }
+            });
+        }
+
+        private void callTransactionActivity() {
+            CommonClass c_c   = new CommonClass();
+            c_c.operationName = this.operationName;
+
+            Intent resultIntent = new Intent(base_layout.getContext(), TransactionActivity.class);
+            resultIntent.putExtra(MainActivity.MAIN_INFO, c_c);
+            activity.startActivity(resultIntent);
         }
     }
 }

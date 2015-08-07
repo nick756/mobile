@@ -6,11 +6,14 @@ import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -136,16 +139,31 @@ public class FormResizing {
         float  new_height   = total_height * factor;
 
         LinearLayout           base = (LinearLayout) activity.getWindow().findViewById(id);
-        LinearLayout           element, sub_element;
+        LinearLayout           element;
+        RelativeLayout         sub_element, inner;
+        ImageView              ib;
+        View                   view;
         ViewGroup.LayoutParams params;
+        String                 className;
 
         if (base != null) {
             for (int i = 0; i <  base.getChildCount(); i ++) {
                 element       = (LinearLayout) base.getChildAt(i);
                 for (int j = 0; j < element.getChildCount(); j ++) {
-                    sub_element   = (LinearLayout)element.getChildAt(j);
+                    sub_element   = (RelativeLayout)element.getChildAt(j);
                     params        = sub_element.getLayoutParams();
                     params.height = (int) new_height;
+
+                    for (int k = 0; k < sub_element.getChildCount(); k ++) {
+                        view = sub_element.getChildAt(k);
+                        className = view.getClass().getSimpleName().toUpperCase().trim();
+                        if (className.indexOf(new String("ImageButton").toUpperCase()) != -1) {
+                            ib            = (ImageView) view;
+                            params        = ib.getLayoutParams();
+                            params.height = (int) new_height;
+                            params.width  = (int) new_height;
+                         }
+                    }
                 }
             }
         }

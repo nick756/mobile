@@ -14,9 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.CommonClass;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.TransactionActivity;
 import java.util.ArrayList;
+
+import static java.sql.DriverManager.println;
 
 
 public class CustomAdapter extends ArrayAdapter<String> {
@@ -40,7 +43,6 @@ public class CustomAdapter extends ArrayAdapter<String> {
         int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
         float  total_height = (float)(base_layout.getHeight() - viewTop);
         this.new_height     = total_height * factor;
-
     }
 
     @Override
@@ -54,6 +56,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
     }
 
     public View getCustomView(int position, View convertView, ViewGroup parent) {
+        String error = "";
         View row      = this.inflater.inflate(R.layout.operation_item, parent, false);
         spinner_model = (SpinnerModel) data.get(position);
 
@@ -68,8 +71,9 @@ public class CustomAdapter extends ArrayAdapter<String> {
             ViewGroup.LayoutParams params = layout.getLayoutParams();
 
             params.height = (int)this.new_height;
-        } catch(Exception err) {
-
+        } catch(Exception e) {
+            error = e.getMessage().toString();
+            println(error);
         }
 
 

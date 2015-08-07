@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -49,7 +50,7 @@ import static java.sql.DriverManager.println;
  ***************************************
  */
 
-public class TransactionActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
+public class TransactionActivity extends AppCompatActivity  {
     private RelativeLayout                base_layout;
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
@@ -106,7 +107,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 //        this.my_dialog = new MyDialog(voc, base_layout);
 
         this.operaions_list = (ListOperations) FM.readFromFile(this.operations_list_name);
-        this.params         = (Parameters)    FM.readFromFile(this.params_file_name);
+        this.params         = (Parameters)     FM.readFromFile(this.params_file_name);
  //       this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
         this.voc.setLanguage(this.params.getLanguage());
@@ -127,17 +128,18 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                 base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 FR.resize();
 
+
                 logout_button = create_custom_bar();
-//                voc.change_caption(logout_button);
                 logout_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    logout_request();
+                        logout_request();
                     }
                 });
 
                 FR.resizeLoginButton(base_layout, logout_button, 0.062f);
                 my_dialog = new MyDialog(FR, voc, base_layout);
+
                 setSpinner();
 
                 create_calendar();
@@ -149,9 +151,7 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
                         (Button) findViewById(R.id.submit_transaction_button), 0.062f);
 
                 voc.TranslateAll(base_layout);
-
-                 setAttributes();
-
+                setAttributes();
             }
         });
     }
@@ -191,9 +191,45 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
         simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
     }
 
+    int fillSpinner(String name) {
+        int retVal = -1;
+        if (this.operaions_list == null)
+            return -1;
+
+        List<Operation> operations_list = this.operaions_list.getOperationsList();
+
+        if (operations_list == null)
+            return -1;
+
+        Operation       operation;
+        for (int i = 0; i < operations_list.size(); i ++) {
+            operation = operations_list.get(i);
+            final SpinnerModel spinnner_model = new SpinnerModel();
+            spinnner_model.setOperationName(operation.getName());
+
+            if (name.equals(operation.getName()))
+                retVal = i;
+
+            if (operation.getInbound().equals("true"))
+                spinnner_model.setimageId(R.mipmap.ic_in_bound);
+            else
+                spinnner_model.setimageId(R.mipmap.ic_out_bound);
+
+            spinner_array.add(spinnner_model);
+        }
+        return retVal;
+    }
+
     void setSpinner() {
+        int selected = -1;
         spinner = (Spinner) findViewById(R.id.operations_list_spinner);
-        fillSpinner();
+        CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
+
+        if (c_c != null)
+            selected = fillSpinner(c_c.operationName);
+        else
+            selected = fillSpinner("");
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
@@ -208,6 +244,9 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
 
         adapter = new CustomAdapter(this, base_layout, R.layout.operation_item, spinner_array, 0.062f);
         spinner.setAdapter(adapter);
+
+        if (selected != -1)
+            spinner.setSelection(selected);
     }
     void logout_request() {
         updateURL();
@@ -229,29 +268,6 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
  //       return  (new CreateCustomBar(this, base_layout)).getButton();
     }
 
-    void fillSpinner() {
-        if (this.operaions_list == null)
-            return;
-
-        List<Operation> operations_list = this.operaions_list.getOperationsList();
-
-        if (operations_list == null)
-            return;
-
-        Operation       operation;
-        for (int i = 0; i < operations_list.size(); i ++) {
-            operation = operations_list.get(i);
-            final SpinnerModel spinnner_model = new SpinnerModel();
-            spinnner_model.setOperationName(operation.getName());
-
-            if (operation.getInbound().equals("true"))
-                spinnner_model.setimageId(R.mipmap.ic_in_bound);
-            else
-                spinnner_model.setimageId(R.mipmap.ic_out_bound);
-
-            spinner_array.add(spinnner_model);
-        }
-    }
     @Override
     protected void onResume() {
         getParams();
@@ -314,9 +330,6 @@ public class TransactionActivity extends AppCompatActivity /*implements View.OnC
             new AboutDialog(FR, voc, base_layout, logout_button).show();
             return true;
         }
-
-
-
 
         return super.onOptionsItemSelected(item);
     }
