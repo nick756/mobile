@@ -24,6 +24,8 @@ import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Vector;
 
 /*
@@ -79,8 +81,19 @@ public class ConfirmTransaction {
         TextView text = (TextView) dialog.findViewById(R.id.date_transaction_id);
         text.setText(this.date);
 
+        //----------------
         text = (TextView) dialog.findViewById(R.id.amount_transaction_id);
-        text.setText(this.amount);
+        try {
+            float val = Float.parseFloat(this.amount);
+            String money = NumberFormat.getNumberInstance(Locale.US).format(val);
+            if (money.indexOf(".") == -1)
+                money += ".00";
+            text.setText(money);
+        } catch(Exception e) {
+
+        }
+//        text.setText(this.amount);
+        //----------------
 
         text = (TextView) dialog.findViewById(R.id.before_description);//before_operation_name
         text.setText(this.descr);

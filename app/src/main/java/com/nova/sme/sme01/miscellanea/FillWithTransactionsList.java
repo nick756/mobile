@@ -13,7 +13,10 @@ import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.xml_reader_classes.Record;
 import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -98,6 +101,10 @@ public class FillWithTransactionsList {
         TextView       text = null;
         LinearLayout   inner_layout = null;
 
+//        DecimalFormat formatter = new DecimalFormat("#,###,###,###.##");
+        float val;
+        String err = "";
+        String money;
         for (int i = 0; i < layout.getChildCount(); i ++) {
             inner_layout = (LinearLayout) layout.getChildAt(i);
             tag          = (String)inner_layout.getTag();
@@ -137,7 +144,16 @@ public class FillWithTransactionsList {
                         text.setText(type);
                     } else if (tag.equals("amount")) {
                         text = (TextView) view;
-                        text.setText(record.getAmount());
+//                        text.setText(record.getAmount());//NumberFormat.getNumberInstance(Locale.US).format(record.getAmount())
+                        try {
+                            val   = Float.parseFloat(record.getAmount());
+                            money = NumberFormat.getNumberInstance(Locale.US).format(val);
+                            if (money.indexOf(".") == -1)
+                                money += ".00";
+                            text.setText(money);
+                        } catch(Exception e) {
+                            err = e.getMessage().toString();
+                        }
                     } else if (tag.equals("descr")) {
                         text = (TextView) view;
                         text.setText(record.getDescr());
