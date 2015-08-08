@@ -61,6 +61,7 @@ public class GetFilterViewTransactions {
     private ScrollView     sv;
 
     private int            selected_item = 0;
+    private MyDialog       my_dialog;// = new MyDialog(FR, voc, base_layout);
 
     private SelectableOperationList sol;//(Dialog dialog, Vocabulary voc, RelativeLayout base_layout, FormResizing FR)
 
@@ -72,6 +73,7 @@ public class GetFilterViewTransactions {
         this.base_layout  = base_layout;
         this.FR           = FR;
         this.http_request = http_request;
+        this.my_dialog    = new MyDialog(FR, voc, base_layout);
 
         show();
     }
@@ -109,6 +111,12 @@ public class GetFilterViewTransactions {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            if (sol.isEmpty()) {
+                my_dialog.show(voc.getTranslatedString("Selected list is empty"), R.mipmap.ic_zero);
+                return;
+            }
+
+
             String from = from_calendar.getDateFormatted();
             String till = till_calendar.getDateFormatted();
 

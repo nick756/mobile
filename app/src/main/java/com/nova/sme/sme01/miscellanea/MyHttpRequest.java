@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.Vector;
 
 /*
  *******************************
@@ -42,8 +43,9 @@ public class MyHttpRequest {
     private Activity        activity;
     private MyDialog my_dialog;
     private Vocabulary      voc;
-    private FormResizing   FR;
+    private FormResizing    FR;
     private String          className;
+    private FileManager     FM;
 
     public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
@@ -54,6 +56,7 @@ public class MyHttpRequest {
         this.FR          = FR;
         this.my_dialog   = new MyDialog(FR, voc, base_layout);
 
+        FM = new FileManager(activity);
         new Http_Request().execute();
     }
 
@@ -255,18 +258,8 @@ public class MyHttpRequest {
 //<result code='0' id='4'><originator>194.219.45.10</originator><resDescription>Successful Operation</resDescription><dateStart>25/07/2015</dateStart><dateStop>25/07/2015</dateStop><recordCount>3</recordCount><records><record><tranCode>24</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>622.33</amount><descr>'test 7'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>25</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>222.55</amount><descr>'test 8'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>26</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>554.22</amount><descr>'test 12'</descr><operator>Andreano Choppolo</operator></record></records></result>
     private void implementViewTransactions(String xml, Serializer serializer) {
         String       code;
+        boolean      empty = true;
         ListTransactions xml_List_transactions;
-/*
-        String error = "", debug = "<result code='0' id='4'><originator>194.219.45.10</originator><res_Description>Successful Operation</res_Description><dateStart>25/07/2015</dateStart><dateStop>25/07/2015</dateStop><recordCount>3</recordCount><records><record><tranCode>24</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>622.33</amount><descr>'test 7'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>25</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>222.55</amount><descr>'test 8'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>26</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>554.22</amount><descr>'test 12'</descr><operator>Andreano Choppolo</operator></record></records></result>";
-        try {
-            DOMParser dp = new DOMParser(debug);
-        } catch(RestClientException e) {
-            error = e.toString();
-        } catch(Exception e) {
-            error = e.toString();
-        }
-        println(error);
-*/
         try {
             xml_List_transactions = serializer.read(ListTransactions.class, xml);
             code             = xml_List_transactions.getCode();
@@ -280,6 +273,34 @@ public class MyHttpRequest {
                     empty_list("List of transactions is empty");
                     return;
                 }
+                // add stuff
+
+                Vector<WideOperation> asked_operations = (Vector<WideOperation>) FM.readFromFile("wideOperations.bin");
+                if (asked_operations != null) {
+                    Record record;
+                    String operationType;
+                    for (int j = 0; j < list.size(); j ++) {
+                        record = list.get(j);
+                        operationType = record.getType();
+                        if (operationType.indexOf("IN:") == 0)
+                            operationType = operationType.substring(3).trim();
+                        else if (operationType.indexOf("OUT:") == 0)
+                            operationType = operationType.substring(4).trim();
+
+                        if (inList(operationType, asked_operations)) {
+                            empty = false;
+                            break;
+                        }
+                    }
+
+                    if (empty) {
+                        empty_list("List of transactions is empty");
+                        return;
+                    }
+                }
+
+
+
                 FileManager FM = new FileManager(activity);
                 FM.writeToFile("transactions_view.bin", xml_List_transactions);
 
@@ -318,6 +339,18 @@ public class MyHttpRequest {
         Intent intent = new Intent(activity, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
         activity.startActivity(intent);
+    }
+
+    private boolean inList(String operationType, Vector<WideOperation> asked_operations) {
+        WideOperation wo;
+        String        name;
+        for (int j = 0; j < asked_operations.size(); j ++) {
+            wo   = asked_operations.get(j);//Purchase of Office Equipment
+            name = wo.name.trim();
+            if (name.equals(operationType))//Purchase of Office Equipment
+                return wo.checked;
+         }
+        return false;
     }
 
 

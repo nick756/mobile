@@ -42,7 +42,6 @@ public class SelectableOperationList {
     private Vector<WideOperation> operations;// = new Vector<WideOperation>();
 
     public SelectableOperationList(Dialog dialog, Vocabulary voc, RelativeLayout base_layout, FormResizing FR) {
-//        this.operations  = new Vector<WideOperation>();
         this.voc         = voc;
         this.base_layout = base_layout;
         this.context     = base_layout.getContext();
@@ -60,8 +59,6 @@ public class SelectableOperationList {
             layout.addView(ll);
             setValues(ll, operations.get(i));
         }
-
-
     }
     public void setAllCheckBoxes(boolean checked) {
         LinearLayout layout   = (LinearLayout)dialog.findViewById(R.id.from_till_layout);//from_till_layout
@@ -86,6 +83,14 @@ public class SelectableOperationList {
 
     public void save() {
         FM.writeToFile("wideOperations.bin", operations);
+    }
+
+    public boolean isEmpty() {
+        for (int i = 0; i < operations.size(); i ++)
+            if (operations.get(i).checked)
+                return false;
+
+        return true;
     }
 
     private void setValues(LinearLayout layout, WideOperation wo) {
@@ -131,12 +136,10 @@ public class SelectableOperationList {
                     }
                 }
             }
-
         } catch(Exception e) {
 
 
         }
-
     }
 
     public Vector<WideOperation> getOperations() {return operations;}
@@ -159,8 +162,8 @@ public class SelectableOperationList {
             for (int j = 0; j < operations_list.size(); j ++) {
                 operation = operations_list.get(j);
 
-                wo = new WideOperation();
-                wo.name = operation.getName();
+                wo      = new WideOperation();
+                wo.name = operation.getName().trim();
                 if (operation.getInbound().equals("true"))
                     wo.in_out = "IN";
                 else

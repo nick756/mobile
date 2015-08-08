@@ -39,7 +39,8 @@ public class FillWithTransactionsList {
     private boolean        first_text = false;
     private float          textsize   = 0;
 
-    private Vector<TextView> texts = new Vector<TextView>();
+    private Vector<TextView>      texts = new Vector<TextView>();
+    private Vector<WideOperation> asked_operations;
 
     public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity     = activity;
@@ -49,7 +50,30 @@ public class FillWithTransactionsList {
         this.base_layout  = base_layout;
         this.textFit      = new TextResizing(activity);
 
+
+        FileManager FM   = new FileManager(activity);
+        asked_operations = (Vector<WideOperation>) FM.readFromFile("wideOperations.bin");
+
+
         implement();
+    }
+
+    private boolean let(String operationName) {
+        if (asked_operations == null)
+            return true;
+
+        if (operationName.indexOf("IN:") == 0) {
+            operationName = operationName.substring(3).trim();
+        } else if (operationName.indexOf("OUT:") == 0) {
+            operationName = operationName.substring(4).trim();
+        }//Additional Capital
+         // Additional Capital
+
+        for (int j = 0; j < asked_operations.size(); j ++)
+            if (asked_operations.get(j).name.equals(operationName))
+                return asked_operations.get(j).checked;
+
+        return false;
     }
 
     private boolean implement() {
@@ -77,6 +101,9 @@ public class FillWithTransactionsList {
 
             ViewGroup.MarginLayoutParams params;
             for (int i = 0; i < list.size(); i++) {
+                if (!let(list.get(i).getType()))
+                    continue;
+
                 LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.tarnsaction_view_item_n, null);
 
                 sv.addView(ll);
@@ -101,7 +128,6 @@ public class FillWithTransactionsList {
         TextView       text = null;
         LinearLayout   inner_layout = null;
 
-//        DecimalFormat formatter = new DecimalFormat("#,###,###,###.##");
         float  val;
         String money;
         for (int i = 0; i < layout.getChildCount(); i ++) {
@@ -112,17 +138,6 @@ public class FillWithTransactionsList {
                 tag = (String) view.getTag();
 
                 if (tag != null) {
-/*                    
-                    if (!first_text) {
-                        if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1) {
-                            first_text = true;
-                            text = (TextView) view;
-
-                            textsize = textFit.getSizeWidth(text, sample, 1.0f, base_layout.getWidth());
-                        }
-                    }
-*/
-
                     if (tag.equals("code")) {
                         text = (TextView) view;
                         text.setText(record.getTranCode());
