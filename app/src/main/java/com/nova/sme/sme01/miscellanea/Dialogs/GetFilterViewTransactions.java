@@ -156,12 +156,14 @@ public class GetFilterViewTransactions {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
-        if (attr == null) return;
+        if (attr == null)
+            attr = new ApplicationAttributes(base_layout.getContext());
+//        if (attr == null) return;
 
         this.dialog_layout = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
         this.dialog_layout.setTag("dialog_background_color");
-
         attr.getColors().setColor(this.dialog_layout);
+
         sol = new SelectableOperationList(dialog, voc, base_layout, FR);
 
         sv = (ScrollView) dialog.findViewById(R.id.from_till_scrollview);
