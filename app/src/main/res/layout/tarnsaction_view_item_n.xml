@@ -33,8 +33,7 @@
             android:gravity="center_vertical"
             android:id="@+id/tr_code"
             android:lines="1"
-            android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
 
@@ -60,8 +59,7 @@
             android:gravity="center_vertical"
             android:id="@+id/tr_date"
             android:lines="1"
-            android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,8 +86,7 @@
             android:gravity="center_vertical"
             android:id="@+id/tr_type"
             android:lines="1"
-            android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
 
@@ -116,8 +113,7 @@
             android:gravity="center_vertical"
             android:id="@+id/tr_money"
             android:lines="1"
-            android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
 
@@ -144,7 +140,7 @@
             android:id="@+id/tr_description"
             android:lines="1"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            android:longClickable="false" />
     </LinearLayout>
 
 
@@ -170,8 +166,7 @@
             android:gravity="center_vertical"
             android:id="@+id/tr_operator"
             android:lines="1"
-            android:layout_marginLeft="10dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
 </LinearLayout>

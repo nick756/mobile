@@ -83,6 +83,9 @@ public class TransactionsViewActivity extends AppCompatActivity {
         tv.setText(c_c.dateTill);
 
         fwt =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
+        int real_number = fwt.getActualTransactions();
+        TextView t_v = (TextView)findViewById(R.id.trans_count);
+        t_v.setText("(" + Integer.toString(real_number) + ")");
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -97,7 +100,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
                 logout_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    logout_request();
+                        logout_request();
                     }
                 });
 
@@ -106,6 +109,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
 //                fwt.setFontSize();
 
                  setAttributes();
+
             }
         });
     }

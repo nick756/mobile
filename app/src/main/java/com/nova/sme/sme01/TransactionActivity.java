@@ -394,6 +394,12 @@ public class TransactionActivity extends AppCompatActivity  {
             return;
         }
 
+        // check date
+        if (!simple_calendar.validateDate()) {
+            my_dialog.show(voc.getTranslatedString("Date is wrong"), R.mipmap.ic_transaction_date);
+            return;
+        }
+
         http += "&operationAmount=" + sum;
 
         ConfirmTransaction ct = new ConfirmTransaction(this,

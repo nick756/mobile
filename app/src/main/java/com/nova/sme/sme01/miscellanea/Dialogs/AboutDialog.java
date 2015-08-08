@@ -108,7 +108,7 @@ public class AboutDialog extends MyDialog {
         private TextView tv;
 
         public FitText(TextView tv) {
-            this.tv      =  tv;
+            this.tv =  tv;
 
             tv.post(new Runnable() {
                 public void run() {

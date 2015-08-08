@@ -120,6 +120,16 @@ public class SimpleCalendar {
 
     }
 
+    private int getSelectedYear() {
+        return Integer.parseInt(selectedYear);
+    }
+    private int getSelectedMonth() {
+        return month_curr_position;
+    }
+    private int getSelectedDay() {
+        return day_curr_position + 1;
+    }
+
     public String getDateFormatted() {//dd/mm/yyyy
         String date = null;
 
@@ -229,6 +239,16 @@ public class SimpleCalendar {
             Calendar.DECEMBER,
     };
 
+    public boolean validateDate() {
+        today             td                = new today();
+        GregorianCalendar calendar_now      = new GregorianCalendar(td.year, td.month, td.day);
+        GregorianCalendar calendar_selected = new GregorianCalendar(getSelectedYear(), getSelectedMonth(), getSelectedDay());
+
+        int diff = calendar_now.compareTo(calendar_selected);
+
+        return (diff >= 0);
+    }
+
     public int get_days_in_month(int year, int month) {// february only problem
         GregorianCalendar calendar = new GregorianCalendar(year, Month[month], 1);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -252,12 +272,12 @@ public class SimpleCalendar {
         public int year;
 
         today() {
-            Time today = new Time(Time.getCurrentTimezone());
-            today.setToNow();
+            Time now = new Time(Time.getCurrentTimezone());
+            now.setToNow();
 
-            this.day   = today.monthDay;
-            this.month = today.month;
-            this.year  = today.year;
+            this.day   = now.monthDay;
+            this.month = now.month;
+            this.year  = now.year;
         }
     }
 

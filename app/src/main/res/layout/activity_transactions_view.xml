@@ -21,6 +21,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Number"
+        android:id="@+id/trans_count"
+        android:padding="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+
+        android:layout_toRightOf="@+id/tv_caption_id"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="From"
         android:id="@+id/tv_caption_from_id"
         android:layout_below="@+id/tv_caption_id"
@@ -87,6 +101,7 @@
         </LinearLayout>
 
     </ScrollView>
+
 
 
 </RelativeLayout>

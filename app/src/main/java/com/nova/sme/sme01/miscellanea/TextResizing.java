@@ -58,7 +58,7 @@ public class TextResizing {
     }
     public float getSizeWidth(TextView tvText, String text, float additionalFactor, int maxWidth)
     {
-        if (text.length() == 0)
+        if (text.length() == 0 || maxWidth == 0)
             return 0;
 
         int width = tvText.getWidth();
@@ -70,7 +70,8 @@ public class TextResizing {
             textSize--;
 
         float scaleFactor      =  context.getResources().getDisplayMetrics().scaledDensity;
-        float new_text_size    = textSize / (additionalFactor*scaleFactor);
+        float new_text_size    = (float) textSize / (additionalFactor*scaleFactor);
+
         return new_text_size;
     }
 

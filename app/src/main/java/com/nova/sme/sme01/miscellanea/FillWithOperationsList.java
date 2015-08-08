@@ -19,6 +19,8 @@ import com.nova.sme.sme01.TransactionActivity;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
@@ -67,6 +69,8 @@ public class FillWithOperationsList {
                 return false;
             }
 
+            Collections.sort(list, new CustomComparator());
+
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);//reg_op_list_scrollView
             LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
             sv.removeAllViews();
@@ -82,9 +86,14 @@ public class FillWithOperationsList {
         }
         return false;
     }
-
+    public class CustomComparator implements Comparator<Operation> {
+        @Override
+        public int compare(Operation o1, Operation o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    }
     private void clean_scroll() {
-        LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
+        LinearLayout   sv = (LinearLayout) activity.findViewById(id);
         sv.removeAllViews();
     }
 
@@ -105,7 +114,7 @@ public class FillWithOperationsList {
 
                     if (tag != null) {
                         if (tag.equals("name")) {
-                            operationName = operation.getName();
+                            operationName = operation.getName().trim();
                             text          = (TextView) view;
                             text.setText(operationName);
                         } else if (tag.equals("in_out_bound")) {
@@ -117,7 +126,7 @@ public class FillWithOperationsList {
                             }
                         } else if (tag.equals("type")) {
                             text = (TextView) view;
-                            text.setText(operation.getType());
+                            text.setText(operation.getType().trim());
                         } else if (tag.equals("transaction_button")) {
                             img = (ImageView) view;
 

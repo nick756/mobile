@@ -173,10 +173,10 @@ public class MyHttpRequest {
             code            = xml_transaction.getCode();
             if (code.equals("0")) {
 //                my_dialog = new MyDialog(null, voc, base_layout);
-                my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success);
+                my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success, "RegularActivity");
             } else if (code.equals("1")) {
  //               my_dialog = new MyDialog(null, voc, base_layout);
-                my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_success);
+                my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_failture);
             } else  { // Session expired or other error
 /*
             Николай писал:
@@ -273,8 +273,8 @@ public class MyHttpRequest {
                     empty_list("List of transactions is empty");
                     return;
                 }
-                // add stuff
 
+                // additional  stuff
                 Vector<WideOperation> asked_operations = (Vector<WideOperation>) FM.readFromFile("wideOperations.bin");
                 if (asked_operations != null) {
                     Record record;

@@ -5,6 +5,7 @@ package com.nova.sme.sme01.miscellanea;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -99,7 +100,8 @@ public class Vocabulary implements Serializable {
             {"Buttons Themes",                                      "Butang Tema"},
             {"Colors Themes",                                       "Warna Tema"},
             {"Reset",                                               "Set semula"},
-            {"Select/Unselect All",                                 "Pilih / Nyahpilih Semua"},
+            {"Select/Unselect All",                                 "Pilih/Nyahpilih Semua"},
+            {"Date is wrong",                                       "Tarikh yang salah"},
 
 
     };
@@ -185,9 +187,19 @@ public class Vocabulary implements Serializable {
         } else if(class_name.indexOf("EditText") != -1) {
             change_caption((EditText) view);
             return true;
+        } else if(class_name.indexOf("CheckBox") != -1) {
+            change_caption((CheckBox) view);
+            return true;
         }
         return false;
     }
+    public void change_caption(CheckBox cb) {
+        if (getLanguage().equals("MY"))
+            cb.setText(getMalay(cb.getText().toString()));
+        else
+            cb.setText(getEnglish(cb.getText().toString()));
+    }
+
     public void change_caption(TextView view) {
         if (getLanguage().equals("MY"))
             view.setText(getMalay(view.getText().toString()));

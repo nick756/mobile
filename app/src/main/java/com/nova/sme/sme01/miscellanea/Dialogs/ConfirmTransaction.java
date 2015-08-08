@@ -24,6 +24,7 @@ import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Vector;
@@ -82,13 +83,12 @@ public class ConfirmTransaction {
         text.setText(this.date);
 
         //----------------
-        text = (TextView) dialog.findViewById(R.id.amount_transaction_id);
-        boolean err = false;
+        text             = (TextView) dialog.findViewById(R.id.amount_transaction_id);
+        boolean      err = false;
+        DecimalFormat df = new DecimalFormat("###,###,###.00");
         try {
-            float  val   = Float.parseFloat(this.amount);
-            String money = NumberFormat.getNumberInstance(Locale.US).format(val);
-            if (money.indexOf(".") == -1)
-                money += ".00";
+            double  val   = Double.parseDouble(this.amount);
+            String money  = df.format(val);
             text.setText(money);
         } catch(Exception e) {
             err = true;
@@ -158,7 +158,9 @@ public class ConfirmTransaction {
 
 
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
-        if (attr == null) return;
+//        if (attr == null) return;
+        if (attr == null)
+            attr = new ApplicationAttributes(activity);
 
         Vector<View> views = new Vector<View>();
 

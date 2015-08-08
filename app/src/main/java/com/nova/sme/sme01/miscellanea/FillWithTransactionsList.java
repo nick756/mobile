@@ -35,12 +35,15 @@ public class FillWithTransactionsList {
     private Vocabulary     voc;
     private RelativeLayout base_layout;
     private TextResizing   textFit;
-    private String         sample = "Purchase of Office Equipment so";
+    private String         sample = "Maintenance of Office and Equipment";//Purchase of Plants and Machineries";//Purchase of Plants and Machineries";
+                                   //Maintenance of Office and Equipment";
     private boolean        first_text = false;
     private float          textsize   = 0;
 
     private Vector<TextView>      texts = new Vector<TextView>();
     private Vector<WideOperation> asked_operations;
+
+    private int            transactionsNumber = 0;
 
     public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity     = activity;
@@ -62,12 +65,10 @@ public class FillWithTransactionsList {
         if (asked_operations == null)
             return true;
 
-        if (operationName.indexOf("IN:") == 0) {
+        if (operationName.indexOf("IN:") == 0)
             operationName = operationName.substring(3).trim();
-        } else if (operationName.indexOf("OUT:") == 0) {
+        else if (operationName.indexOf("OUT:") == 0)
             operationName = operationName.substring(4).trim();
-        }//Additional Capital
-         // Additional Capital
 
         for (int j = 0; j < asked_operations.size(); j ++)
             if (asked_operations.get(j).name.equals(operationName))
@@ -100,9 +101,12 @@ public class FillWithTransactionsList {
             sv.removeAllViews();
 
             ViewGroup.MarginLayoutParams params;
+            transactionsNumber = 0;
             for (int i = 0; i < list.size(); i++) {
                 if (!let(list.get(i).getType()))
                     continue;
+
+                transactionsNumber ++;
 
                 LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.tarnsaction_view_item_n, null);
 
@@ -112,12 +116,15 @@ public class FillWithTransactionsList {
                 params.topMargin    = 5;
                 params.bottomMargin = 5;
             }
+            new FitTextSize(base_layout);
+            //setFontSize();
             return true;
         } catch (Exception err) {//java.lang.ClassCastException: android.widget.LinearLayout cannot be cast to android.widget.RelativeLayout
             println(err.getMessage().toString());
         }
         return false;
     }
+    public int getActualTransactions(){return transactionsNumber;}
     public float pxToDp(float px) {
         return px / activity.getResources().getDisplayMetrics().density;
     }
@@ -128,7 +135,9 @@ public class FillWithTransactionsList {
         TextView       text = null;
         LinearLayout   inner_layout = null;
 
-        float  val;
+        DecimalFormat df = new DecimalFormat("###,###,###.00");
+
+        double  val;
         String money;
         for (int i = 0; i < layout.getChildCount(); i ++) {
             inner_layout = (LinearLayout) layout.getChildAt(i);
@@ -161,10 +170,8 @@ public class FillWithTransactionsList {
 //                        text.setText(record.getAmount());//NumberFormat.getNumberInstance(Locale.US).format(record.getAmount())
                         boolean err = false;
                         try {
-                            val   = Float.parseFloat(record.getAmount());
-                            money = NumberFormat.getNumberInstance(Locale.US).format(val);
-                            if (money.indexOf(".") == -1)
-                                money += ".00";
+                            val   = Double.parseDouble(record.getAmount());
+                            money = df.format(val);//NumberFormat.getNumberInstance(Locale.US).format(val);
                             text.setText(money);
                         } catch(Exception e) {
                             err = true;
@@ -178,16 +185,8 @@ public class FillWithTransactionsList {
                         text = (TextView) view;
                         text.setText(record.getOperator());
                     }
-                    if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1) {
+                    if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
                         texts.add(text);
-
-
-                    }
-/*
-                    if (textsize > 0)
-                        if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
-                            text.setTextSize(textsize);
-                            */
                 }
             }
         }
@@ -219,10 +218,24 @@ public class FillWithTransactionsList {
         for (int i = 0; i < texts.size();i ++) {
             tv = texts.elementAt(i);
             if (i == 0)
-                textsize = textFit.getSizeWidth(tv, sample, 1.2f, base_layout.getWidth());
+                textsize = textFit.getSizeWidth(tv, this.sample, 1.4f, this.base_layout.getWidth());
 
-            tv.setTextSize(textsize);
+            if (textsize > 0)
+                tv.setTextSize(textsize);
+        }
 
+    }
+    public class FitTextSize {
+        private RelativeLayout rl;
+
+        public FitTextSize(RelativeLayout rl) {
+            this.rl =  rl;
+
+            rl.post(new Runnable() {
+                public void run() {
+                    setFontSize();
+                }
+            });
         }
 
     }

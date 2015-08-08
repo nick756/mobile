@@ -65,7 +65,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private String                        base_http;
 
     private MyDialog                      my_dialog;
-    private String                        sender = "";
+//    private String                        sender = "";
     private boolean                       block_button;
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
@@ -88,11 +88,14 @@ public class RegularLoginActivity extends AppCompatActivity {
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.regular_login);
 
+        FM = new FileManager(this);
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);// do we need this? we can read info from the file actually
-        this.params.getFromCommonClass(c_c);
-        this.sender     = c_c.sender;
- ////       url_logout  += "id=" + c_c.id + "&companyID=" + c_c.companyID;
- //       url_request += "id=" + c_c.id + "&companyID=" + c_c.companyID;
+        if (c_c != null) {
+            this.params.getFromCommonClass(c_c);
+        } else {
+            this.params = (Parameters)FM.readFromFile(params_file_name);
+            c_c         = new CommonClass(this.params);
+        }
 
         base_layout  = (android.widget.RelativeLayout) findViewById(R.id.base_layout_regular);base_layout.setTag("main_background_color");
         user         = (TextView) findViewById(R.id.reg_user_name_id);
@@ -123,7 +126,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             }
         }
 
-        FM                  = new FileManager(this);
+//        FM                  = new FileManager(this);
         this.operaions_list = (ListOperations) FM.readFromFile("operations_list.bin");
  //       my_dialog = new MyDialog(this.FR, voc, base_layout);
 

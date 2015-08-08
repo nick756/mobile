@@ -35,7 +35,6 @@
             android:layout_gravity="center|right"
             android:layout_margin="5dp"
             android:id="@+id/name_operation"
-            android:textStyle="bold"
             android:clickable="false"
             android:layout_toRightOf="@+id/in_out_bound"
             android:layout_centerVertical="true" />

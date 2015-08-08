@@ -33,9 +33,8 @@
             android:tag="name"
             android:layout_centerVertical="true"
             android:id="@+id/name_opeartion"
-            android:textStyle="bold"
             android:lines="1"
-            />
+            android:autoText="false" />
 
 
     </RelativeLayout>
@@ -65,11 +64,11 @@
 
             android:text="type"
             android:id="@+id/type_operation"
-            android:textStyle="bold"
             android:lines="1"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_op"
-        />
+            android:clickable="false"
+            android:editable="false" />
 
         <ImageView
             android:layout_width="wrap_content"
