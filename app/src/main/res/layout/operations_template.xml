@@ -35,7 +35,9 @@
             android:id="@+id/name_opeartion"
             android:lines="1"
             android:autoText="false"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:layout_alignTop="@+id/img_in_out"
+            android:layout_alignBottom="@+id/img_in_out" />
 
 
     </RelativeLayout>
@@ -72,7 +74,9 @@
             android:editable="false"
             android:layout_toLeftOf="@+id/imgTransaction"
             android:linksClickable="false"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:layout_alignBottom="@+id/img_op"
+            android:layout_alignTop="@+id/img_op" />
 
         <ImageView
             android:layout_width="wrap_content"

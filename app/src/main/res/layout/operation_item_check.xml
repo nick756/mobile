@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_in_bound"
-            android:layout_margin="5dp"
             android:id="@+id/in_out_bound"
             android:tag="image"
             android:clickable="false" />
@@ -41,19 +40,19 @@
             android:layout_toLeftOf="@+id/isChecked"
             android:lines="2"
             android:longClickable="false"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:layout_alignTop="@+id/in_out_bound"
+            android:layout_alignBottom="@+id/in_out_bound" />
 
         <CheckBox
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/isChecked"
             android:tag="check"
-            android:layout_alignBottom="@+id/in_out_bound"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:singleLine="false"
-            android:layout_margin="5dp"
-            android:gravity="center|center_vertical"
+            android:gravity="center_vertical"
             android:layout_centerVertical="true"
             android:checked="true"
             android:clickable="true"
