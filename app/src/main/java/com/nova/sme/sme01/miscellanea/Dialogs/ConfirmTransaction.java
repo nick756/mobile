@@ -171,17 +171,15 @@ public class ConfirmTransaction {
         TextView tv1 = (TextView) dialog.findViewById(R.id.date_transaction_id);tv1.setTag("dialog_background_color");
         TextView tv2 = (TextView) dialog.findViewById(R.id.amount_transaction_id);tv2.setTag("dialog_background_color");
         TextView tv3 = (TextView) dialog.findViewById(R.id.before_description);tv3.setTag("dialog_background_color");
-        RelativeLayout rll = (RelativeLayout) dialog.findViewById(R.id.relativeLayout);rll.setTag("dialog_background_color");
+        RelativeLayout rll  = (RelativeLayout) dialog.findViewById(R.id.relativeLayout);rll.setTag("dialog_background_color");//base_layout_before_transaction_id
+        RelativeLayout brll = (RelativeLayout) dialog.findViewById(R.id.base_layout_before_transaction_id);brll.setTag("dialog_background_color");//base_layout_before_transaction_id
+
 
         views.add(tv1);
         views.add(tv2);
         views.add(tv3);
         views.add(rll);
-
-        //date_transaction_id
-        //amount_transaction_id
-        //before_description
-        //relativeLayout
+        views.add(brll);
 
         attr.getColors().setColors(views);
 

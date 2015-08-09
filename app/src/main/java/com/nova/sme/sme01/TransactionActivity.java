@@ -235,7 +235,7 @@ public class TransactionActivity extends AppCompatActivity  {
         fillSpinner();
 
         spinner = (Spinner) findViewById(R.id.operations_list_spinner);
-        adapter = new CustomAdapter(this, base_layout, R.layout.operation_item, spinner_array, 0.062f);
+        adapter = new CustomAdapter(this, base_layout, R.layout.operation_item_n, spinner_array, 0.062f);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -432,12 +432,6 @@ public class TransactionActivity extends AppCompatActivity  {
                                                        s_amount);
         ct.show();
     }
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-    }
-*/
 
     private String getCents(String val) {
         return val.substring(val.length() - 2);

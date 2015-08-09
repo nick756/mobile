@@ -33,11 +33,10 @@
             android:tag="name"
             android:layout_centerVertical="true"
             android:id="@+id/name_opeartion"
-            android:lines="1"
+            android:lines="2"
             android:autoText="false"
             android:gravity="center_vertical"
-            android:layout_alignTop="@+id/img_in_out"
-            android:layout_alignBottom="@+id/img_in_out" />
+            android:longClickable="true" />
 
 
     </RelativeLayout>
@@ -67,16 +66,14 @@
 
             android:text="type"
             android:id="@+id/type_operation"
-            android:lines="1"
+            android:lines="2"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_op"
             android:clickable="false"
             android:editable="false"
             android:layout_toLeftOf="@+id/imgTransaction"
             android:linksClickable="false"
-            android:gravity="center_vertical"
-            android:layout_alignBottom="@+id/img_op"
-            android:layout_alignTop="@+id/img_op" />
+            android:gravity="center_vertical" />
 
         <ImageView
             android:layout_width="wrap_content"

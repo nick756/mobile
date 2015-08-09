@@ -61,10 +61,11 @@ public class TextResizing {
         if (text.length() == 0 || maxWidth == 0)
             return 0;
 
-        tvText.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int width = tvText.getMeasuredWidth();
-
- //       int width = tvText.getWidth();
+        int width = tvText.getWidth();
+        if (width == 0) {
+            tvText.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            width = tvText.getMeasuredWidth();
+        }
 
         width -= (int)converDpToPixels(tvText.getPaddingLeft() + tvText.getPaddingRight());
 

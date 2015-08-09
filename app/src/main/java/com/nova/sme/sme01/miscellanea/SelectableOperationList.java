@@ -42,7 +42,7 @@ public class SelectableOperationList {
     private Dialog           dialog;
 
 
-    private String           maxLimit = "Purchase of Plants and Machineries";
+    private String           maxLimit = "Maintenance of Office and Equipment";//"Purchase of Plants and Machineries";
     private String           maxType  = "Telephone, Fax and Internet";
 
 
@@ -72,7 +72,7 @@ public class SelectableOperationList {
             setValues(ll, operations.get(i));
         }
         setFontSize();
-//        new FitTextSize(base_layout);
+ //       new FitTextSize(base_layout);
     }
     public void setAllCheckBoxes(boolean checked) {
         LinearLayout layout   = (LinearLayout)dialog.findViewById(R.id.from_till_layout);//from_till_layout
@@ -115,6 +115,9 @@ public class SelectableOperationList {
             ImageView      img;
             TextView       text;
             CheckBox       cb;
+            int            len;
+            int            max_len  = maxLimit.length();
+            int            curr_max;
 
             for (int j = 0; j < layout.getChildCount(); j ++) {
                 view = layout.getChildAt(j);
@@ -133,7 +136,10 @@ public class SelectableOperationList {
                         } else if (tag.equals("text")) {
                             text = (TextView) view;
                             text.setText(wo.name);
-                            if ((wo.name.length() > maxType.length()) && (wo.name.length() <= maxType.length()))
+
+                            len      = wo.name.length();
+                            curr_max = maxType.length();
+                            if ((len > curr_max) && (len <= max_len))
                                 maxType = wo.name;
                             texts.add(text);
                         } else if (tag.equals("check")) {
@@ -219,4 +225,18 @@ public class SelectableOperationList {
                 tv.setTextSize(textsize);
         }
     }
+    public class FitTextSize {
+        private RelativeLayout rl;
+
+        public FitTextSize(RelativeLayout rl) {
+            this.rl =  rl;
+
+            rl.post(new Runnable() {
+                public void run() {
+                    setFontSize();
+                }
+            });
+        }
+    }
+
 }

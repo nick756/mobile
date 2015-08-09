@@ -36,7 +36,7 @@ public class MyRelativeLayout extends RelativeLayout {
         this(context, attrs);
     }
     private void init() {
-        flicker = new BorderFlicker(this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
+        flicker = new BorderFlicker(this.getContext(), this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
     }
 
     public void startAnimation(){flag = true;}

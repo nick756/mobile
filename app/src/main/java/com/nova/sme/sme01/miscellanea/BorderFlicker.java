@@ -1,5 +1,6 @@
 package com.nova.sme.sme01.miscellanea;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -29,6 +30,8 @@ public class BorderFlicker {
     private Path    path   = null;
     private boolean dash   = false;
 
+    private WindowMetrics WM;
+
     private int    radius;//4;
     private float  density;
     private float  scaleDensity;
@@ -38,14 +41,20 @@ public class BorderFlicker {
     private float                    advance  = 10.0f;
     private PathDashPathEffect.Style style    = PathDashPathEffect.Style.ROTATE;
     private Rect                     rect;
+    private double                   sz = 0;
 
-    public BorderFlicker(float density, float  scaleDensity) {
+    public BorderFlicker(Context context, float density, float  scaleDensity) {
         this.density      = density;
         this.scaleDensity = scaleDensity;
 
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
+
+        FileManager FM = new FileManager(context);
+        WM = (WindowMetrics) FM.readFromFile("windowMetrics.bin");
+        if (WM != null)
+            sz = Math.sqrt((double)WM.heightPixels*(double)WM.widthPixels);
     }
 
     public void setDash(boolean dash){this.dash = dash;}
@@ -80,6 +89,8 @@ public class BorderFlicker {
     public void draw_dash (Canvas canvas, int width, int height) {
         if (path == null) {
             radius = 2;//(int)(2.0f*density);
+            if (sz > 0)
+                radius = (int)(sz/300.0);
 
             path = new Path();
             path.addRect(0, 0, width, height, Path.Direction.CW);

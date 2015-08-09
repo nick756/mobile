@@ -14,11 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nova.sme.sme01.CommonClass;
+
 import com.nova.sme.sme01.R;
-import com.nova.sme.sme01.TransactionActivity;
 import java.util.ArrayList;
-import java.util.Vector;
+
 
 import static java.sql.DriverManager.println;
 
@@ -68,11 +67,12 @@ public class CustomAdapter extends ArrayAdapter<String> {
         }
 
         try {
-            LinearLayout ll;
+            LinearLayout   ll;
+            RelativeLayout rl;
             View v   = this.getView(0, null, null);
             ll       = (LinearLayout) v;
-            ll       = (LinearLayout) ll.getChildAt(0);
-            standard = (TextView) ll.getChildAt(1);
+            rl       = (RelativeLayout) ll.getChildAt(0);
+            standard = (TextView) rl.getChildAt(1);
         } catch(Exception e) {
 
         }
@@ -86,15 +86,16 @@ public class CustomAdapter extends ArrayAdapter<String> {
          if (convertView != null) {
             if (counter < spinner_array.size()) {
                 String       className = "";
-                LinearLayout ll;
+                LinearLayout   ll;
+                RelativeLayout rl;
                 View         view;
                 TextView     tv;
                 try {
                     className = convertView.getClass().getSimpleName();
                     if (className.indexOf("LinearLayout") != -1) {
                         ll = (LinearLayout) convertView;
-                        ll = (LinearLayout) ll.getChildAt(0);
-                        for (int j = 0; j < ll.getChildCount(); j++) {
+                        rl = (RelativeLayout) ll.getChildAt(0);
+                        for (int j = 0; j < rl.getChildCount(); j++) {
                             view = ll.getChildAt(j);
                             className = view.getClass().getSimpleName();
                             if (className.indexOf("TextView") != -1) {
@@ -120,8 +121,8 @@ public class CustomAdapter extends ArrayAdapter<String> {
     }
 
     public View getCustomView(int position, View convertView, ViewGroup parent) {
-        String error = "";
-        View row      = this.inflater.inflate(R.layout.operation_item, parent, false);
+        String error  = "";
+        View row      = this.inflater.inflate(R.layout.operation_item_n, parent, false);
         spinner_model = (SpinnerModel) data.get(position);
 
         TextView name        = (TextView) row.findViewById(R.id.name_opeartion);
@@ -131,7 +132,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
         is_checked.setImageResource(spinner_model.getImageId());
 
         try {
-            LinearLayout           layout = (LinearLayout) name.getParent();
+            RelativeLayout     layout = (RelativeLayout) name.getParent();
             ViewGroup.LayoutParams params = layout.getLayoutParams();
 
             params.height = (int)this.new_height;

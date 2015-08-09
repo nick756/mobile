@@ -27,6 +27,7 @@ import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Select_Language;
 import com.nova.sme.sme01.miscellanea.Dialogs.ThemesDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+import com.nova.sme.sme01.miscellanea.WindowMetrics;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operator;
 import com.nova.sme.sme01.xml_reader_classes.XML_Login;
@@ -123,6 +124,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         my_dialog        = new MyDialog(null, voc, base_layout);
  //       this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
+        WindowMetrics wm = new WindowMetrics();wm.init(this);
+        FM.writeToFile("windowMetrics.bin", wm);
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -139,13 +142,14 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
             logout_button         = create_custom_bar();
             logout_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
 
             setAttributes();
+
             }
         });
     }

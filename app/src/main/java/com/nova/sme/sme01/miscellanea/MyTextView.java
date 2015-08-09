@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 //
 public class MyTextView extends TextView {
     private boolean       flag    = false;
     private BorderFlicker flicker;// = new BorderFlicker();
+
 
     public MyTextView(Context context) {
         super(context);
@@ -33,7 +35,7 @@ public class MyTextView extends TextView {
     }
 
     private void init() {
-        flicker = new BorderFlicker(this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
+        flicker = new BorderFlicker(this.getContext(), this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
     }
 
 

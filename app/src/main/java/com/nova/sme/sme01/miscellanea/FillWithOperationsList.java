@@ -43,7 +43,7 @@ public class FillWithOperationsList {
     private Vector<item>   items = new Vector<item>();
 
 
-    private String         maxLimit = "Purchase of Plants and Machineries";
+    private String         maxLimit = "Maintenance of Office and Equipment";
     private String         maxName  = "Telephone, Fax and Internet";
     private String         maxType  = "Telephone, Fax and Internet";
 
@@ -90,8 +90,8 @@ public class FillWithOperationsList {
                 sv.addView(ll);
                 setValues(ll, list.get(i));
             }
-            setFontSize();
-//            new FitTextSize(base_layout);
+//            setFontSize();
+            new FitTextSize(base_layout);
             return true;
         } catch (Exception err) {
             println(err.getMessage().toString());
@@ -185,7 +185,7 @@ public class FillWithOperationsList {
             activity.startActivity(resultIntent);
         }
     }
-/*
+
     public class FitTextSize {
         private RelativeLayout rl;
 
@@ -199,7 +199,7 @@ public class FillWithOperationsList {
             });
         }
     }
-*/
+
     public void setFontSize() {
         TextView tv;
         float    ts_name, ts_type, text_size;
