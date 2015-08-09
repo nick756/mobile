@@ -30,14 +30,14 @@
          <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="name"
+            android:text="text"
             android:tag="name"
             android:layout_gravity="center|right"
             android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:id="@+id/name_opeartion"
-            android:textStyle="bold"
-             android:clickable="false" />
+             android:clickable="false"
+             android:lines="2" />
     </LinearLayout>
 
 

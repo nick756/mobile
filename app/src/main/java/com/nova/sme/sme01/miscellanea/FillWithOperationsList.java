@@ -42,14 +42,13 @@ public class FillWithOperationsList {
     private RelativeLayout base_layout;
     private Vector<item>   items = new Vector<item>();
 
- //   private String         operationType = "Maintenance of Office and Equipment";//Purchase of Plants and Machineries";//Purchase of Plants and Machineries";
- //   private String         operationDescr ="Long Term Liabilities";
 
-    private String         maxName = "";//Maintenance of Office and Equipment
-    private String         maxType = "";//Long Term Liabilities
+    private String         maxLimit = "Purchase of Plants and Machineries";
+    private String         maxName  = "Telephone, Fax and Internet";
+    private String         maxType  = "Telephone, Fax and Internet";
 
-    private Vector<TextView> names = new Vector<TextView>();
-    private Vector<TextView> types = new Vector<TextView>();
+    private Vector<TextView> names  = new Vector<TextView>();
+    private Vector<TextView> types  = new Vector<TextView>();
     private TextResizing     textFit;
 
     public FillWithOperationsList(Activity activity, ListOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
@@ -91,14 +90,15 @@ public class FillWithOperationsList {
                 sv.addView(ll);
                 setValues(ll, list.get(i));
             }
-            new FitTextSize(base_layout);
+            setFontSize();
+//            new FitTextSize(base_layout);
             return true;
         } catch (Exception err) {
             println(err.getMessage().toString());
         }
         return false;
     }
-    public class CustomComparator implements Comparator<Operation> {
+    private class CustomComparator implements Comparator<Operation> {
         @Override
         public int compare(Operation o1, Operation o2) {
             return o1.getName().compareTo(o2.getName());
@@ -116,6 +116,8 @@ public class FillWithOperationsList {
         TextView       text;
         ImageView      img;
 
+        int            maxLength = maxLimit.length(), length;
+
         String err = "", operationName = "";
         try {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -130,7 +132,8 @@ public class FillWithOperationsList {
                             text          = (TextView) view;
                             text.setText(operationName);
 
-                            if (text.getText().toString().length() > maxName.length())
+                            length = text.getText().toString().length();
+                            if (length > maxName.length() && length <= maxLength )
                                 maxName = text.getText().toString();
                             names.add(text);
                         } else if (tag.equals("in_out_bound")) {
@@ -144,7 +147,8 @@ public class FillWithOperationsList {
                             text = (TextView) view;
                             text.setText(operation.getType().trim());
 
-                            if (text.getText().toString().length() > maxType.length())
+                            length = text.getText().toString().length();
+                            if (length > maxType.length() && length <= maxLength)
                                 maxType = text.getText().toString();
                             types.add(text);
                         } else if (tag.equals("transaction_button")) {
@@ -181,7 +185,7 @@ public class FillWithOperationsList {
             activity.startActivity(resultIntent);
         }
     }
-
+/*
     public class FitTextSize {
         private RelativeLayout rl;
 
@@ -195,10 +199,11 @@ public class FillWithOperationsList {
             });
         }
     }
-
+*/
     public void setFontSize() {
         TextView tv;
         float    ts_name, ts_type, text_size;
+
 
         if (names.size() == 0)
             return;

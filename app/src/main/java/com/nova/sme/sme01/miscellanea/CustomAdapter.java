@@ -31,13 +31,13 @@ public class CustomAdapter extends ArrayAdapter<String> {
     private LayoutInflater   inflater;
     private SpinnerModel     spinner_model = null;
 
- //   private Vector<TextView> texts = new Vector<TextView>();
-    private String           maxName = "";
-    private float            fontSize;
+    private String                  maxName  = "Telephone, Fax and Internet";
+    private String                  maxLimit = "Purchase of Plants and Machineries";
     private ArrayList<SpinnerModel> spinner_array;
     private TextResizing            textFit;
     private float                   textsize = 0;
     private TextView                standard = null;
+    private int                     counter  = 0;
 
     public CustomAdapter(Activity activity, RelativeLayout base_layout, int textViewResourceId, ArrayList objects, float factor)
     {
@@ -55,17 +55,21 @@ public class CustomAdapter extends ArrayAdapter<String> {
         this.new_height     = total_height * factor;
 
 
-        spinner_array = (ArrayList<SpinnerModel>) objects;
         SpinnerModel spinnner_model;
+        spinner_array  = (ArrayList<SpinnerModel>) objects;
+        int max_length = maxLimit.length();
+        int length;
+
         for (int j = 0; j < spinner_array.size(); j ++) {
             spinnner_model = spinner_array.get(j);
-            if (spinnner_model.getOperationName().length() > maxName.length())
+            length         = spinnner_model.getOperationName().length();
+            if (length > maxName.length() && length <= max_length)
                 maxName = spinnner_model.getOperationName();
         }
 
         try {
-            View v = this.getView(0, null, null);
             LinearLayout ll;
+            View v   = this.getView(0, null, null);
             ll       = (LinearLayout) v;
             ll       = (LinearLayout) ll.getChildAt(0);
             standard = (TextView) ll.getChildAt(1);
@@ -73,34 +77,38 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
         }
         if (standard != null)
-            new FitTextSize(base_layout);
+            findFontSize();//new FitTextSize(base_layout);
 
      }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        String       className = "", str = "";
-        LinearLayout ll;
-        View         view;
-        TextView     tv;
-        int          width;
-        if (convertView != null) {
-            className = convertView.getClass().getSimpleName();
-            if (className.indexOf("LinearLayout") != -1) {
-                ll = (LinearLayout) convertView;
-                ll = (LinearLayout)ll.getChildAt(0);
-                for (int j = 0; j < ll.getChildCount(); j ++) {
-                    view = ll.getChildAt(j);
-                    className = view.getClass().getSimpleName();
-                    if (className.indexOf("TextView") != -1) {
-                        tv = (TextView) view;
-                        if (textsize > 0) {
-//                            width = tv.getWidth();
-//                            tv.setTextSize(textsize);
+         if (convertView != null) {
+            if (counter < spinner_array.size()) {
+                String       className = "";
+                LinearLayout ll;
+                View         view;
+                TextView     tv;
+                try {
+                    className = convertView.getClass().getSimpleName();
+                    if (className.indexOf("LinearLayout") != -1) {
+                        ll = (LinearLayout) convertView;
+                        ll = (LinearLayout) ll.getChildAt(0);
+                        for (int j = 0; j < ll.getChildCount(); j++) {
+                            view = ll.getChildAt(j);
+                            className = view.getClass().getSimpleName();
+                            if (className.indexOf("TextView") != -1) {
+                                tv = (TextView) view;
+                                if (textsize > 0) {
+                                    tv.setTextSize(textsize);
+                                    counter++;
+                                }
+                            }
                         }
                     }
-                }
+                } catch(Exception e) {
 
+                }
             }
         }
         return getCustomView(position, convertView, parent);
@@ -137,22 +145,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
 
     public void findFontSize() {
-        textsize = textFit.getSizeWidth(standard, this.maxName, 1.4f, this.base_layout.getWidth());
-        standard.setTextSize(textsize);
+        this.textsize = textFit.getSizeWidth(standard, this.maxName, 1.4f, this.base_layout.getWidth());
+        this.standard.setTextSize(textsize);
     }
-
-    public class FitTextSize {
-        private RelativeLayout tv;
-
-        public FitTextSize(RelativeLayout tv) {
-            this.tv =  tv;
-
-            tv.post(new Runnable() {
-                public void run() {
-                    findFontSize();
-                }
-            });
-        }
-    }
-
 }

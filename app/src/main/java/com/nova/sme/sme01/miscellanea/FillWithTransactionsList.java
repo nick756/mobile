@@ -35,8 +35,11 @@ public class FillWithTransactionsList {
     private Vocabulary     voc;
     private RelativeLayout base_layout;
     private TextResizing   textFit;
-    private String         sample = "";//"Maintenance of Office and Equipment";
-    private boolean        first_text = false;
+
+    private String         maxLimit = "Purchase of Plants and Machineries";
+    private String         maxName  = "Telephone, Fax and Internet";
+
+
     private float          textsize   = 0;
 
     private Vector<TextView>      texts = new Vector<TextView>();
@@ -115,10 +118,9 @@ public class FillWithTransactionsList {
                 params.topMargin    = 5;
                 params.bottomMargin = 5;
             }
-            new FitTextSize(base_layout);
-            //setFontSize();
+            setFontSize();
             return true;
-        } catch (Exception err) {//java.lang.ClassCastException: android.widget.LinearLayout cannot be cast to android.widget.RelativeLayout
+        } catch (Exception err) {
             println(err.getMessage().toString());
         }
         return false;
@@ -165,15 +167,14 @@ public class FillWithTransactionsList {
                         }
                         text.setText(type);
 
-                        if (type.length() > sample.length())
-                            sample = type;
+                        if (type.length() > maxName.length() && type.length() <= maxLimit.length())
+                            maxName = type;
                     } else if (tag.equals("amount")) {
                         text = (TextView) view;
-//                        text.setText(record.getAmount());//NumberFormat.getNumberInstance(Locale.US).format(record.getAmount())
                         boolean err = false;
                         try {
                             val   = Double.parseDouble(record.getAmount());
-                            money = df.format(val);//NumberFormat.getNumberInstance(Locale.US).format(val);
+                            money = df.format(val);
                             text.setText(money);
                         } catch(Exception e) {
                             err = true;
@@ -221,27 +222,12 @@ public class FillWithTransactionsList {
         for (int i = 0; i < texts.size();i ++) {
             tv = texts.elementAt(i);
             if (i == 0)
-                textsize = textFit.getSizeWidth(tv, this.sample, 1.5f, this.base_layout.getWidth());
+                textsize = textFit.getSizeWidth(tv, this.maxName, 1.5f, this.base_layout.getWidth());
 
             if (textsize > 0)
                 tv.setTextSize(textsize);
         }
 
     }
-
-    public class FitTextSize {
-        private RelativeLayout rl;
-
-        public FitTextSize(RelativeLayout rl) {
-            this.rl =  rl;
-
-            rl.post(new Runnable() {
-                public void run() {
-                    setFontSize();
-                }
-            });
-        }
-    }
-
 
 }

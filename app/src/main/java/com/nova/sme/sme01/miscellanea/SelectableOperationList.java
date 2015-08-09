@@ -19,6 +19,8 @@ import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import com.nova.sme.sme01.R;
@@ -38,7 +40,13 @@ public class SelectableOperationList {
     private FileManager      FM;
     private Context          context;
     private Dialog           dialog;
-    private String           maxType = "";
+
+
+    private String           maxLimit = "Purchase of Plants and Machineries";
+    private String           maxType  = "Telephone, Fax and Internet";
+
+
+
     private TextResizing     textFit;
     private Vector<TextView> texts = new Vector<TextView>();
 
@@ -63,8 +71,8 @@ public class SelectableOperationList {
             layout.addView(ll);
             setValues(ll, operations.get(i));
         }
-
-        new FitTextSize(base_layout);
+        setFontSize();
+//        new FitTextSize(base_layout);
     }
     public void setAllCheckBoxes(boolean checked) {
         LinearLayout layout   = (LinearLayout)dialog.findViewById(R.id.from_till_layout);//from_till_layout
@@ -125,7 +133,7 @@ public class SelectableOperationList {
                         } else if (tag.equals("text")) {
                             text = (TextView) view;
                             text.setText(wo.name);
-                            if (wo.name.length() > maxType.length())
+                            if ((wo.name.length() > maxType.length()) && (wo.name.length() <= maxType.length()))
                                 maxType = wo.name;
                             texts.add(text);
                         } else if (tag.equals("check")) {
@@ -181,11 +189,20 @@ public class SelectableOperationList {
                 wo.checked = true;
                 operations.add(wo);
             }
+            Collections.sort(operations, new CustomComparator());
             FM.writeToFile("wideOperations.bin", operations);
         } else {
-
+            Collections.sort(operations, new CustomComparator());
         }
     }
+
+    private class CustomComparator implements Comparator<WideOperation> {
+        @Override
+        public int compare(WideOperation o1, WideOperation o2) {
+            return o1.name.compareTo(o2.name);
+        }
+    }
+
 
     public void setFontSize() {
         TextView tv;
@@ -202,19 +219,4 @@ public class SelectableOperationList {
                 tv.setTextSize(textsize);
         }
     }
-
-    public class FitTextSize {
-        private RelativeLayout rl;
-
-        public FitTextSize(RelativeLayout rl) {
-            this.rl =  rl;
-
-            rl.post(new Runnable() {
-                public void run() {
-                    setFontSize();
-                }
-            });
-        }
-    }
-
 }

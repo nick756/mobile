@@ -37,6 +37,8 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
@@ -55,7 +57,8 @@ public class TransactionActivity extends AppCompatActivity  {
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
     private String                        operations_list_name = "operations_list.bin";
-    private ListOperations                operaions_list;
+    private ListOperations                operationList;//operaions_list;
+    private List<Operation>               operations_list;
     private FormResizing                  FR;
     private FileManager                   FM;
     private Vocabulary                    voc;
@@ -106,7 +109,11 @@ public class TransactionActivity extends AppCompatActivity  {
         this.voc       = new Vocabulary();
 //        this.my_dialog = new MyDialog(voc, base_layout);
 
-        this.operaions_list = (ListOperations) FM.readFromFile(this.operations_list_name);
+        this.operationList   = (ListOperations) FM.readFromFile(this.operations_list_name);
+        this.operations_list = this.operationList.getOperationsList();
+        Collections.sort(this.operations_list, new CustomComparator());
+
+
         this.params         = (Parameters)     FM.readFromFile(this.params_file_name);
  //       this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
@@ -191,24 +198,21 @@ public class TransactionActivity extends AppCompatActivity  {
         simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
     }
 
-    int fillSpinner(String name) {
-        int retVal = -1;
-        if (this.operaions_list == null)
-            return -1;
+    void fillSpinner() {
+        if (this.operationList == null)
+            return;
 
-        List<Operation> operations_list = this.operaions_list.getOperationsList();
+ //       List<Operation> operations_list = this.operationList.getOperationsList();
 
-        if (operations_list == null)
-            return -1;
+        if (this.operations_list == null)
+            return;
 
         Operation       operation;
-        for (int i = 0; i < operations_list.size(); i ++) {
-            operation = operations_list.get(i);
+        for (int i = 0; i < this.operations_list.size(); i ++) {
+            operation = this.operations_list.get(i);
             final SpinnerModel spinnner_model = new SpinnerModel();
             spinnner_model.setOperationName(operation.getName());
 
-            if (name.equals(operation.getName()))
-                retVal = i;
 
             if (operation.getInbound().equals("true"))
                 spinnner_model.setimageId(R.mipmap.ic_in_bound);
@@ -217,18 +221,22 @@ public class TransactionActivity extends AppCompatActivity  {
 
             spinner_array.add(spinnner_model);
         }
-        return retVal;
+ //       Collections.sort(spinner_array, new CustomComparator());
+    }
+
+    private class CustomComparator implements Comparator<Operation> {
+        @Override
+        public int compare(Operation o1, Operation o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
     }
 
     void setSpinner() {
-        int selected = -1;
-        spinner = (Spinner) findViewById(R.id.operations_list_spinner);
-        CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
+        fillSpinner();
 
-        if (c_c != null)
-            selected = fillSpinner(c_c.operationName);
-        else
-            selected = fillSpinner("");
+        spinner = (Spinner) findViewById(R.id.operations_list_spinner);
+        adapter = new CustomAdapter(this, base_layout, R.layout.operation_item, spinner_array, 0.062f);
+        spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -242,12 +250,25 @@ public class TransactionActivity extends AppCompatActivity  {
             }
         });
 
-        adapter = new CustomAdapter(this, base_layout, R.layout.operation_item, spinner_array, 0.062f);
-        spinner.setAdapter(adapter);
+        CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);
+        int selected  = -1;
+        if (c_c != null)
+            selected = getIndex(c_c.operationName);
 
-        if (selected != -1)
+        if (selected != -1) {
             spinner.setSelection(selected);
+            selected_item = selected;
+        }
     }
+
+    private int getIndex(String name) {
+        for (int j = 0; j < spinner_array.size(); j ++)
+            if (spinner_array.get(j).getOperationName().trim().equals(name.trim()))
+                return j;
+
+        return -1;
+    }
+
     void logout_request() {
         updateURL();
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
@@ -356,9 +377,7 @@ public class TransactionActivity extends AppCompatActivity  {
 
         s_date = simple_calendar.getDateFormatted();
         //------------//
-        Operation       operation;
-        List<Operation> operations_list = this.operaions_list.getOperationsList();
-        operation                       = operations_list.get(this.selected_item);
+        Operation operation = this.operations_list.get(this.selected_item);
 
         http += operation.getCode();
 
