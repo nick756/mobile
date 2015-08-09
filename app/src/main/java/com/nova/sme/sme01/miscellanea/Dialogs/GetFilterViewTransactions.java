@@ -60,6 +60,7 @@ public class GetFilterViewTransactions {
     private RelativeLayout dialog_layout;
     private ScrollView     sv;
 
+
     private int            selected_item = 0;
     private MyDialog       my_dialog;// = new MyDialog(FR, voc, base_layout);
 

@@ -35,8 +35,7 @@ public class FillWithTransactionsList {
     private Vocabulary     voc;
     private RelativeLayout base_layout;
     private TextResizing   textFit;
-    private String         sample = "Maintenance of Office and Equipment";//Purchase of Plants and Machineries";//Purchase of Plants and Machineries";
-                                   //Maintenance of Office and Equipment";
+    private String         sample = "";//"Maintenance of Office and Equipment";
     private boolean        first_text = false;
     private float          textsize   = 0;
 
@@ -165,6 +164,9 @@ public class FillWithTransactionsList {
                             type = type.substring(4);
                         }
                         text.setText(type);
+
+                        if (type.length() > sample.length())
+                            sample = type;
                     } else if (tag.equals("amount")) {
                         text = (TextView) view;
 //                        text.setText(record.getAmount());//NumberFormat.getNumberInstance(Locale.US).format(record.getAmount())
@@ -213,6 +215,7 @@ public class FillWithTransactionsList {
         LinearLayout sv = (LinearLayout) activity.findViewById(id);
         sv.removeAllViews();
     }
+
     public void setFontSize() {
         TextView tv;
         for (int i = 0; i < texts.size();i ++) {
@@ -225,6 +228,7 @@ public class FillWithTransactionsList {
         }
 
     }
+
     public class FitTextSize {
         private RelativeLayout rl;
 
@@ -237,7 +241,6 @@ public class FillWithTransactionsList {
                 }
             });
         }
-
     }
 
 

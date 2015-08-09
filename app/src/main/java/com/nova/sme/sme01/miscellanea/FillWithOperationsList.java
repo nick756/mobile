@@ -42,12 +42,23 @@ public class FillWithOperationsList {
     private RelativeLayout base_layout;
     private Vector<item>   items = new Vector<item>();
 
+ //   private String         operationType = "Maintenance of Office and Equipment";//Purchase of Plants and Machineries";//Purchase of Plants and Machineries";
+ //   private String         operationDescr ="Long Term Liabilities";
+
+    private String         maxName = "";//Maintenance of Office and Equipment
+    private String         maxType = "";//Long Term Liabilities
+
+    private Vector<TextView> names = new Vector<TextView>();
+    private Vector<TextView> types = new Vector<TextView>();
+    private TextResizing     textFit;
+
     public FillWithOperationsList(Activity activity, ListOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity = activity;
         this.operations = operations;
         this.id = id;
         this.voc = voc;
         this.base_layout = base_layout;
+        this.textFit     = new TextResizing(activity);
     }
 
     public boolean implement() {
@@ -80,6 +91,7 @@ public class FillWithOperationsList {
                 sv.addView(ll);
                 setValues(ll, list.get(i));
             }
+            new FitTextSize(base_layout);
             return true;
         } catch (Exception err) {
             println(err.getMessage().toString());
@@ -110,13 +122,17 @@ public class FillWithOperationsList {
                 inner_layout = (RelativeLayout) layout.getChildAt(i);
                 for (int j = 0; j < inner_layout.getChildCount(); j++) {
                     view = inner_layout.getChildAt(j);
-                    tag = (String) view.getTag();
+                    tag  = (String) view.getTag();
 
                     if (tag != null) {
-                        if (tag.equals("name")) {
+                        if (tag.equals("name")) {//name
                             operationName = operation.getName().trim();
                             text          = (TextView) view;
                             text.setText(operationName);
+
+                            if (text.getText().toString().length() > maxName.length())
+                                maxName = text.getText().toString();
+                            names.add(text);
                         } else if (tag.equals("in_out_bound")) {
                             img = (ImageView) view;
                             if (operation.getInbound().equals("true")) {
@@ -124,12 +140,15 @@ public class FillWithOperationsList {
                             } else {
                                 img.setImageResource(R.mipmap.ic_out_bound);
                             }
-                        } else if (tag.equals("type")) {
+                        } else if (tag.equals("type")) {//type
                             text = (TextView) view;
                             text.setText(operation.getType().trim());
+
+                            if (text.getText().toString().length() > maxType.length())
+                                maxType = text.getText().toString();
+                            types.add(text);
                         } else if (tag.equals("transaction_button")) {
                             img = (ImageView) view;
-
                             items.add(new item(operationName, img));
                         }
                     }
@@ -162,4 +181,40 @@ public class FillWithOperationsList {
             activity.startActivity(resultIntent);
         }
     }
+
+    public class FitTextSize {
+        private RelativeLayout rl;
+
+        public FitTextSize(RelativeLayout rl) {
+            this.rl =  rl;
+
+            rl.post(new Runnable() {
+                public void run() {
+                    setFontSize();
+                }
+            });
+        }
+    }
+
+    public void setFontSize() {
+        TextView tv;
+        float    ts_name, ts_type, text_size;
+
+        if (names.size() == 0)
+            return;
+
+        tv      = names.get(0);
+        ts_name = textFit.getSizeWidth(tv, this.maxName, 1.4f, this.base_layout.getWidth());
+
+        tv      = types.get(0);
+        ts_type = textFit.getSizeWidth(tv, this.maxType, 1.4f, this.base_layout.getWidth());
+
+        text_size = Math.min(ts_name, ts_type);
+
+        for (int i = 0; i < names.size(); i ++) {
+            names.get(i).setTextSize(text_size);
+            types.get(i).setTextSize(text_size);
+        }
+    }
+
 }

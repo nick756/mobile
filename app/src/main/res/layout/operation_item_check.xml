@@ -28,7 +28,7 @@
             android:clickable="false" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="name"
             android:tag="text"
@@ -37,7 +37,10 @@
             android:id="@+id/name_operation"
             android:clickable="false"
             android:layout_toRightOf="@+id/in_out_bound"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/isChecked"
+            android:lines="2"
+            android:longClickable="false" />
 
         <CheckBox
             android:layout_width="wrap_content"

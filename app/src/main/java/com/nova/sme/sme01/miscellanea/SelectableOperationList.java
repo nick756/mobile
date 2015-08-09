@@ -32,12 +32,15 @@ import com.nova.sme.sme01.R;
  ******************************
  */
 public class SelectableOperationList {
-    private Vocabulary     voc;
-    private RelativeLayout base_layout;
-    private FormResizing   FR;
-    private FileManager    FM;
-    private Context        context;
-    private Dialog         dialog;
+    private Vocabulary       voc;
+    private RelativeLayout   base_layout;
+    private FormResizing     FR;
+    private FileManager      FM;
+    private Context          context;
+    private Dialog           dialog;
+    private String           maxType = "";
+    private TextResizing     textFit;
+    private Vector<TextView> texts = new Vector<TextView>();
 
     private Vector<WideOperation> operations;// = new Vector<WideOperation>();
 
@@ -48,6 +51,7 @@ public class SelectableOperationList {
         this.FR          = FR;
         this.FM          = new FileManager(this.context);
         this.dialog      = dialog;
+        this.textFit     = new TextResizing(base_layout.getContext());
 
         fillOperations();
 
@@ -59,6 +63,8 @@ public class SelectableOperationList {
             layout.addView(ll);
             setValues(ll, operations.get(i));
         }
+
+        new FitTextSize(base_layout);
     }
     public void setAllCheckBoxes(boolean checked) {
         LinearLayout layout   = (LinearLayout)dialog.findViewById(R.id.from_till_layout);//from_till_layout
@@ -119,6 +125,9 @@ public class SelectableOperationList {
                         } else if (tag.equals("text")) {
                             text = (TextView) view;
                             text.setText(wo.name);
+                            if (wo.name.length() > maxType.length())
+                                maxType = wo.name;
+                            texts.add(text);
                         } else if (tag.equals("check")) {
                             cb = (CheckBox) view;
                             cb.setChecked(wo.checked);
@@ -127,9 +136,9 @@ public class SelectableOperationList {
                             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                    CheckBox cb      = (CheckBox) buttonView;
-                                    WideOperation wo = (WideOperation)cb.getTag();
-                                    wo.checked       = isChecked;
+                                CheckBox cb      = (CheckBox) buttonView;
+                                WideOperation wo = (WideOperation)cb.getTag();
+                                wo.checked       = isChecked;
                                 }
                             });
                         }
@@ -176,8 +185,36 @@ public class SelectableOperationList {
         } else {
 
         }
-
     }
 
+    public void setFontSize() {
+        TextView tv;
+        float    textsize = 0;
+
+        if (texts.size() == 0) return;
+
+        for (int i = 0; i < texts.size();i ++) {
+            tv = texts.elementAt(i);
+            if (i == 0)
+                textsize = textFit.getSizeWidth(tv, this.maxType, 1.4f, this.base_layout.getWidth());
+
+            if (textsize > 0)
+                tv.setTextSize(textsize);
+        }
+    }
+
+    public class FitTextSize {
+        private RelativeLayout rl;
+
+        public FitTextSize(RelativeLayout rl) {
+            this.rl =  rl;
+
+            rl.post(new Runnable() {
+                public void run() {
+                    setFontSize();
+                }
+            });
+        }
+    }
 
 }

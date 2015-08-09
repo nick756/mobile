@@ -26,7 +26,7 @@
             android:id="@+id/img_in_out" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_in_out"
             android:text="name"
@@ -59,7 +59,7 @@
 
         <TextView
             android:tag="type"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:text="type"
@@ -68,7 +68,9 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_op"
             android:clickable="false"
-            android:editable="false" />
+            android:editable="false"
+            android:layout_toLeftOf="@+id/imgTransaction"
+            android:linksClickable="false" />
 
         <ImageView
             android:layout_width="wrap_content"
