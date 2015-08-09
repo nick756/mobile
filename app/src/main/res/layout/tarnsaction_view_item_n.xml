@@ -85,7 +85,7 @@
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_type"
-            android:lines="2"
+            android:lines="1"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
 
@@ -138,7 +138,7 @@
             android:layout_gravity="center|right"
             android:gravity="center_vertical"
             android:id="@+id/tr_description"
-            android:lines="2"
+            android:lines="1"
             android:layout_marginLeft="10dp"
             android:longClickable="false" />
     </LinearLayout>

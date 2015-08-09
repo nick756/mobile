@@ -221,7 +221,7 @@ public class FillWithTransactionsList {
         for (int i = 0; i < texts.size();i ++) {
             tv = texts.elementAt(i);
             if (i == 0)
-                textsize = textFit.getSizeWidth(tv, this.sample, 1.4f, this.base_layout.getWidth());
+                textsize = textFit.getSizeWidth(tv, this.sample, 1.5f, this.base_layout.getWidth());
 
             if (textsize > 0)
                 tv.setTextSize(textsize);

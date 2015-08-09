@@ -34,7 +34,8 @@
             android:layout_centerVertical="true"
             android:id="@+id/name_opeartion"
             android:lines="1"
-            android:autoText="false" />
+            android:autoText="false"
+            android:gravity="center_vertical" />
 
 
     </RelativeLayout>
@@ -70,7 +71,8 @@
             android:clickable="false"
             android:editable="false"
             android:layout_toLeftOf="@+id/imgTransaction"
-            android:linksClickable="false" />
+            android:linksClickable="false"
+            android:gravity="center_vertical" />
 
         <ImageView
             android:layout_width="wrap_content"
