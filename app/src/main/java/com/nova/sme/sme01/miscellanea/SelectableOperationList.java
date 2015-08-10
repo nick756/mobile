@@ -1,26 +1,21 @@
 package com.nova.sme.sme01.miscellanea;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import com.nova.sme.sme01.R;
@@ -50,7 +45,7 @@ public class SelectableOperationList {
     private TextResizing     textFit;
     private Vector<TextView> texts = new Vector<TextView>();
 
-    private Vector<WideOperation> operations;// = new Vector<WideOperation>();
+    private Vector<ShortedOperation> operations;// = new Vector<WideOperation>();
 
     public SelectableOperationList(Dialog dialog, Vocabulary voc, RelativeLayout base_layout, FormResizing FR) {
         this.voc         = voc;
@@ -86,7 +81,7 @@ public class SelectableOperationList {
             cb = (CheckBox) view;
             cb.setChecked(checked);
 
-            WideOperation wo = (WideOperation)cb.getTag();
+            ShortedOperation wo = (ShortedOperation)cb.getTag();
             wo.checked       = checked;
         } else  if ((view instanceof ViewGroup)) {
             ViewGroup vg = (ViewGroup) view;
@@ -107,7 +102,7 @@ public class SelectableOperationList {
         return true;
     }
 
-    private void setValues(LinearLayout layout, WideOperation wo) {
+    private void setValues(LinearLayout layout, ShortedOperation wo) {
         try {
             View           view;
             String         tag;
@@ -151,7 +146,7 @@ public class SelectableOperationList {
                                 @Override
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                 CheckBox cb      = (CheckBox) buttonView;
-                                WideOperation wo = (WideOperation)cb.getTag();
+                                ShortedOperation wo = (ShortedOperation)cb.getTag();
                                 wo.checked       = isChecked;
                                 }
                             });
@@ -165,13 +160,13 @@ public class SelectableOperationList {
         }
     }
 
-    public Vector<WideOperation> getOperations() {return operations;}
+    public Vector<ShortedOperation> getOperations() {return operations;}
 
     private void fillOperations() {
-        WideOperation wo;
-        this.operations = (Vector<WideOperation>)FM.readFromFile("wideOperations.bin");
+        ShortedOperation wo;
+        this.operations = (Vector<ShortedOperation>)FM.readFromFile("wideOperations.bin");
         if (operations == null) {
-            this.operations  = new Vector<WideOperation>();
+            this.operations  = new Vector<ShortedOperation>();
             ListOperations listOpeartions   = (ListOperations) FM.readFromFile("operations_list.bin");
             if (listOpeartions == null)
                 return;
@@ -185,7 +180,7 @@ public class SelectableOperationList {
             for (int j = 0; j < operations_list.size(); j ++) {
                 operation = operations_list.get(j);
 
-                wo      = new WideOperation();
+                wo      = new ShortedOperation();
                 wo.name = operation.getName().trim();
                 if (operation.getInbound().equals("true"))
                     wo.in_out = "IN";

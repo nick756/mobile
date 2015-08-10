@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 public class MyRelativeLayout extends RelativeLayout {
     private boolean       flag    = false;
-    private BorderFlicker flicker;// = new BorderFlicker();
+    private BorderFlicker flicker;
 
 
     public MyRelativeLayout(Context context) {
@@ -36,7 +36,7 @@ public class MyRelativeLayout extends RelativeLayout {
         this(context, attrs);
     }
     private void init() {
-        flicker = new BorderFlicker(this.getContext(), this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
+        flicker = new BorderFlicker(this.getContext());
     }
 
     public void startAnimation(){flag = true;}
@@ -46,8 +46,7 @@ public class MyRelativeLayout extends RelativeLayout {
 
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         if (flag) {

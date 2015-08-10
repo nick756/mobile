@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
-import com.nova.sme.sme01.miscellanea.CreateCustomBar;
+import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.Dialogs.GetFilterViewTransactions;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
@@ -73,7 +73,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private Button                        logout_button;
 
     private Vector<View>                  views = new Vector<View>();
-    private CreateCustomBar               ccb;
+    private CustomBar ccb;
 
 
     @Override
@@ -214,7 +214,7 @@ public class RegularLoginActivity extends AppCompatActivity {
  //       Button button = (new CreateCustomBar(this, base_layout)).getButton();
  //       if (button != null)
  //           voc.change_caption(button);
-        ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -18,7 +17,7 @@ import android.widget.Spinner;
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
-import com.nova.sme.sme01.miscellanea.CreateCustomBar;
+import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.CustomAdapter;
 import com.nova.sme.sme01.miscellanea.Dialogs.ConfirmTransaction;
 import com.nova.sme.sme01.miscellanea.FileManager;
@@ -37,8 +36,6 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
@@ -87,7 +84,7 @@ public class TransactionActivity extends AppCompatActivity  {
 
     private Vector<View> views = new Vector<View>();
 
-    private CreateCustomBar               ccb;
+    private CustomBar ccb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,7 +261,7 @@ public class TransactionActivity extends AppCompatActivity  {
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
-        ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)

@@ -2,17 +2,13 @@ package com.nova.sme.sme01.miscellanea;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 //
 public class MyTextView extends TextView {
     private boolean       flag    = false;
-    private BorderFlicker flicker;// = new BorderFlicker();
+    private BorderFlicker flicker;
 
 
     public MyTextView(Context context) {
@@ -35,9 +31,8 @@ public class MyTextView extends TextView {
     }
 
     private void init() {
-        flicker = new BorderFlicker(this.getContext(), this.getResources().getDisplayMetrics().density, this.getResources().getDisplayMetrics().scaledDensity);
+        flicker = new BorderFlicker(this.getContext());
     }
-
 
     public void startAnimation(){flag = true;}
     public void stopAnimation() {flag = false;}
@@ -53,7 +48,6 @@ public class MyTextView extends TextView {
             flicker.draw(canvas, this.getWidth(), this.getHeight());
             invalidate();
         }
-
     }
 
     @Override

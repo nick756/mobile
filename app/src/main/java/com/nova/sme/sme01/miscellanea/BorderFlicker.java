@@ -43,18 +43,18 @@ public class BorderFlicker {
     private Rect                     rect;
     private double                   sz = 0;
 
-    public BorderFlicker(Context context, float density, float  scaleDensity) {
-        this.density      = density;
-        this.scaleDensity = scaleDensity;
-
+    public BorderFlicker(Context context) {
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
 
         FileManager FM = new FileManager(context);
         WM = (WindowMetrics) FM.readFromFile("windowMetrics.bin");
-        if (WM != null)
-            sz = Math.sqrt((double)WM.heightPixels*(double)WM.widthPixels);
+        if (WM != null) {
+            sz                = Math.sqrt((double) WM.heightPixels * (double) WM.widthPixels);
+            this.density      = WM.density;
+            this.scaleDensity = WM.scaledDensity;
+        }
     }
 
     public void setDash(boolean dash){this.dash = dash;}

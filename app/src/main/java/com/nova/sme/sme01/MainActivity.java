@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
-import com.nova.sme.sme01.miscellanea.CreateCustomBar;
+import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyColors;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private FileManager                   FM;
     private MyDialog                      my_dialog;
     private String                        base_http;
-    private CreateCustomBar               ccb;
+    private CustomBar ccb;
 //    private String                        url_logout;
 
     private String                        base_url_login;// = "http://103.6.239.242:80/sme/mobile/login/?";//name=vlad&passw=1234";
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     public Vector<View> getViews() {return  views;}
 
     private Button create_custom_bar() {
-        ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)

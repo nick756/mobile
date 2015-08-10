@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
-import com.nova.sme.sme01.miscellanea.CreateCustomBar;
+import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
@@ -49,7 +49,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
     private FillWithTransactionsList      fwt;
 
     private Vector<View> views = new Vector<View>();
-    private CreateCustomBar               ccb;
+    private CustomBar ccb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
             }
         });
     }
-    public CreateCustomBar getCustomBar(){return ccb;}
+    public CustomBar getCustomBar(){return ccb;}
 
     public void UpdateCustomBar(){
         if (ccb != null)
@@ -151,7 +151,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
         new MyHttpRequest(this.FR, this, base_layout, voc, url_logout, "BaseXML");
     }
     private Button create_custom_bar() {
-        ccb = new CreateCustomBar(this, base_layout);
+        ccb = new CustomBar(this, base_layout);
 
         Button button = ccb.getButton();
         if (button != null)

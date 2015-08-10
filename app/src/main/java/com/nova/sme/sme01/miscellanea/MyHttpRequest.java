@@ -275,7 +275,7 @@ public class MyHttpRequest {
                 }
 
                 // additional  stuff
-                Vector<WideOperation> asked_operations = (Vector<WideOperation>) FM.readFromFile("wideOperations.bin");
+                Vector<ShortedOperation> asked_operations = (Vector<ShortedOperation>) FM.readFromFile("wideOperations.bin");
                 if (asked_operations != null) {
                     Record record;
                     String operationType;
@@ -341,8 +341,8 @@ public class MyHttpRequest {
         activity.startActivity(intent);
     }
 
-    private boolean inList(String operationType, Vector<WideOperation> asked_operations) {
-        WideOperation wo;
+    private boolean inList(String operationType, Vector<ShortedOperation> asked_operations) {
+        ShortedOperation wo;
         String        name;
         for (int j = 0; j < asked_operations.size(); j ++) {
             wo   = asked_operations.get(j);//Purchase of Office Equipment

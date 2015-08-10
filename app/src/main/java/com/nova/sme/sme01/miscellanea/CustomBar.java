@@ -15,13 +15,14 @@ import com.nova.sme.sme01.R;
 import static java.sql.DriverManager.println;
 
 /*
- **************************************
- *                                    *
- *  Set Logout button on action bar   *
- *                                    *
- **************************************
+ ********************************
+ *                              *
+ *  Create own action bar with  *
+ *  Logout button               *
+ *                              *
+ ********************************
  */
-public class CreateCustomBar {
+public class CustomBar {
     private RelativeLayout base_layout;
     private ActionBar actionBar;
     private Button button = null;
@@ -51,7 +52,7 @@ public class CreateCustomBar {
 
 
 
-    public CreateCustomBar(AppCompatActivity activity, RelativeLayout base_layout) {
+    public CustomBar(AppCompatActivity activity, RelativeLayout base_layout) {
 
         try {
             this.base_layout = base_layout;
@@ -73,13 +74,6 @@ public class CreateCustomBar {
             if (button != null)
                 button.setWidth((int) ((float) width * button_factor));
 
-/*
-            ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
-            if (attr == null) return;
-
-            int color = attr.getColors().getActionbar_background_color();
-
-            actionBar.setBackgroundDrawable(new ColorDrawable(color));*/
             setBackgound();
         } catch(Exception err) {
             println(err.getMessage().toString());

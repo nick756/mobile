@@ -14,9 +14,7 @@ import com.nova.sme.sme01.xml_reader_classes.Record;
 import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -43,7 +41,7 @@ public class FillWithTransactionsList {
     private float          textsize   = 0;
 
     private Vector<TextView>      texts = new Vector<TextView>();
-    private Vector<WideOperation> asked_operations;
+    private Vector<ShortedOperation> asked_operations;
 
     private int            transactionsNumber = 0;
 
@@ -57,7 +55,7 @@ public class FillWithTransactionsList {
 
 
         FileManager FM   = new FileManager(activity);
-        asked_operations = (Vector<WideOperation>) FM.readFromFile("wideOperations.bin");
+        asked_operations = (Vector<ShortedOperation>) FM.readFromFile("wideOperations.bin");
 
 
         implement();

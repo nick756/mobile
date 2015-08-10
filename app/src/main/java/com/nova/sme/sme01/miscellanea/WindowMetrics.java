@@ -17,11 +17,15 @@ import java.io.Serializable;
  ***************************
  */
 public class WindowMetrics implements Serializable {
-//    private Activity activity;
     public int       widthPixels;
     public int       heightPixels;
+    public float     density;
+    public float     scaledDensity;
 
     public void init(Activity activity) {
+        this.density       = activity.getResources().getDisplayMetrics().density;
+        this.scaledDensity = activity.getResources().getDisplayMetrics().scaledDensity;
+
         WindowManager  w       = activity.getWindowManager();
         Display        d       = w.getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -38,17 +42,16 @@ public class WindowMetrics implements Serializable {
 
             }
         // includes window decorations (statusbar bar/menu bar)
-        if(Build.VERSION.SDK_INT>=17)
-
-            try{
+        if(Build.VERSION.SDK_INT >= 17) {
+            try {
                 Point realSize = new Point();
                 Display.class.getMethod("getRealSize", Point.class).invoke(d, realSize);
                 widthPixels  = realSize.x;
                 heightPixels = realSize.y;
-            } catch( Exception ignored ) {
+            } catch (Exception ignored) {
 
             }
-
+        }
     }
 
     public WindowMetrics() {
