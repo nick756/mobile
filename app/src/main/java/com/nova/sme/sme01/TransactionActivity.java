@@ -111,8 +111,6 @@ public class TransactionActivity extends AppCompatActivity  {
 
         this.operationList   = (ListOperations) FM.readFromFile(this.operations_list_name);
         this.operations_list = this.operationList.getOperationsList();
-        Collections.sort(this.operations_list, new CustomComparator());
-
 
         this.params         = (Parameters)     FM.readFromFile(this.params_file_name);
  //       this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
@@ -220,14 +218,6 @@ public class TransactionActivity extends AppCompatActivity  {
                 spinnner_model.setimageId(R.mipmap.ic_out_bound);
 
             spinner_array.add(spinnner_model);
-        }
- //       Collections.sort(spinner_array, new CustomComparator());
-    }
-
-    private class CustomComparator implements Comparator<Operation> {
-        @Override
-        public int compare(Operation o1, Operation o2) {
-            return o1.getName().compareTo(o2.getName());
         }
     }
 

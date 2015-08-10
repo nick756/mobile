@@ -79,8 +79,6 @@ public class FillWithOperationsList {
                 return false;
             }
 
-            Collections.sort(list, new CustomComparator());
-
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);//reg_op_list_scrollView
             LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
             sv.removeAllViews();
@@ -98,12 +96,7 @@ public class FillWithOperationsList {
         }
         return false;
     }
-    private class CustomComparator implements Comparator<Operation> {
-        @Override
-        public int compare(Operation o1, Operation o2) {
-            return o1.getName().compareTo(o2.getName());
-        }
-    }
+
     private void clean_scroll() {
         LinearLayout   sv = (LinearLayout) activity.findViewById(id);
         sv.removeAllViews();

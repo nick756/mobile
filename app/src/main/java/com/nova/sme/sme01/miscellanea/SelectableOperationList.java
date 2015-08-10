@@ -195,20 +195,12 @@ public class SelectableOperationList {
                 wo.checked = true;
                 operations.add(wo);
             }
-            Collections.sort(operations, new CustomComparator());
+
             FM.writeToFile("wideOperations.bin", operations);
         } else {
-            Collections.sort(operations, new CustomComparator());
+
         }
     }
-
-    private class CustomComparator implements Comparator<WideOperation> {
-        @Override
-        public int compare(WideOperation o1, WideOperation o2) {
-            return o1.name.compareTo(o2.name);
-        }
-    }
-
 
     public void setFontSize() {
         TextView tv;

@@ -44,6 +44,11 @@ public class ListOperations implements Serializable {
     public  List<Operation> getOperationsList() {return profile.getOperationsList(); }
 
     public ListOperations(){}
+
+    public void sort(){
+        if (profile != null)
+            profile.sort();
+    }
 /*
     public boolean equals(GetOperations obj) {
 

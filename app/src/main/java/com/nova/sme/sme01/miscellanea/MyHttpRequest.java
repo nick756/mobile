@@ -226,7 +226,7 @@ public class MyHttpRequest {
                     empty_list("Operations List is empty");
                     return;
                 }
-
+                xml_operations_list.sort();
                 RegularLoginActivity rla = (RegularLoginActivity) activity;
                 rla.passFunction(xml_operations_list);
                 return;
