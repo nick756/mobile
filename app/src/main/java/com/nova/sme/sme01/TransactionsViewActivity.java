@@ -22,7 +22,7 @@ import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyColors;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
-import com.nova.sme.sme01.miscellanea.Select_Language;
+import com.nova.sme.sme01.miscellanea.Dialogs.Select_Language;
 import com.nova.sme.sme01.miscellanea.Dialogs.ThemesDialog;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListTransactions;

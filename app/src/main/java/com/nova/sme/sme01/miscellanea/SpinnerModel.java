@@ -7,7 +7,7 @@ public class SpinnerModel {
     protected  int    imageId; // checked or unchecked
 
     public void setOperationName(String operationName) {
-        this.operationName = operationName;
+        this.operationName = operationName;// + operationName;
     }
     public String getOperationName() {
         return this.operationName;

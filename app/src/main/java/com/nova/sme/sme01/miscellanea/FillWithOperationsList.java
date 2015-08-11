@@ -2,10 +2,14 @@ package com.nova.sme.sme01.miscellanea;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -51,6 +55,12 @@ public class FillWithOperationsList {
     private Vector<TextView> types  = new Vector<TextView>();
     private TextResizing     textFit;
 
+    private TextView t_v;
+
+    private LinearLayout sv;
+    private float        h1 = 0;
+    private float        h2 = 0;
+
     public FillWithOperationsList(Activity activity, ListOperations operations, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity = activity;
         this.operations = operations;
@@ -79,8 +89,8 @@ public class FillWithOperationsList {
                 return false;
             }
 
-            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);//reg_op_list_scrollView
-            LinearLayout   sv       = (LinearLayout) activity.findViewById(id);
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);
+            /*LinearLayout*/   sv   = (LinearLayout) activity.findViewById(id);
             sv.removeAllViews();
 
             for (int i = 0; i < list.size(); i++) {
@@ -88,8 +98,45 @@ public class FillWithOperationsList {
                 sv.addView(ll);
                 setValues(ll, list.get(i));
             }
+
 //            setFontSize();
             new FitTextSize(base_layout);
+
+/*
+            ViewTreeObserver vto = sv.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @SuppressWarnings("deprecation")
+                @Override
+                public void onGlobalLayout() {
+                    set_TextView(sv);
+
+                    ViewGroup.LayoutParams params;
+                    float factor = h2/h1, height;
+                    TextView tv;
+                    RelativeLayout rl;// = (RelativeLayout) t_v.getParent();
+                    if (h1 > 0 && h2 > 0) {
+                        for (int j = 0; j < names.size();j ++) {
+                            tv = names.get(j);
+                            if (tv.getLineCount() == 2) {
+
+                                rl = (RelativeLayout) tv.getParent();
+                                params = rl.getLayoutParams();
+                                params.height = (int)(((float)params.height)*factor);
+
+                            }
+                            tv = types.get(j);
+                            if (tv.getLineCount() == 2) {
+                                height = (float)tv.getHeight();
+                                height *= factor;
+                                tv.setHeight((int)height);
+                            }
+                        }
+
+                    }
+
+                }
+            });
+*/
             return true;
         } catch (Exception err) {
             println(err.getMessage().toString());
@@ -98,7 +145,7 @@ public class FillWithOperationsList {
     }
 
     private void clean_scroll() {
-        LinearLayout   sv = (LinearLayout) activity.findViewById(id);
+        LinearLayout sv = (LinearLayout) activity.findViewById(id);
         sv.removeAllViews();
     }
 
@@ -129,6 +176,8 @@ public class FillWithOperationsList {
                             if (length > maxName.length() && length <= maxLength )
                                 maxName = text.getText().toString();
                             names.add(text);
+ //                           if (operationName.equals("Maintenance of Office and Equipment"))
+ //                              new FitSize(text);
                         } else if (tag.equals("in_out_bound")) {
                             img = (ImageView) view;
                             if (operation.getInbound().equals("true")) {
@@ -214,5 +263,64 @@ public class FillWithOperationsList {
             types.get(i).setTextSize(text_size);
         }
     }
+
+    public class FitSize {
+        private TextView tv;
+
+        public FitSize(TextView tv) {
+            this.tv =  tv;
+            t_v = tv;
+
+            tv.post(new Runnable() {
+                public void run() {
+                    int n, height;
+                    String str = t_v.getText().toString();
+                    if (str.equals("Maintenance of Office and Equipment"))
+                        println("");
+                    n = t_v.getLineCount();
+                    height = t_v.getHeight();//89 57
+                    if (n == 77)
+                        println("");
+
+                    RelativeLayout rl = (RelativeLayout) t_v.getParent();
+
+                    ViewGroup.LayoutParams params = rl.getLayoutParams();
+                    params.height = (int)((float)height*(89.0f/57.0f));
+/*
+                    LinearLayout ll = (LinearLayout) rl.getParent();
+                    params = ll.getLayoutParams();
+                    params.height += height;
+*/
+
+
+                    //rl.setHeight((int)((float)height*1.2f));
+                    if (height == 99)
+                        println("");
+                    //
+                    //        setFontSize();
+                }
+            });
+        }
+    }
+    private void set_TextView(View view) {
+        String className = view.getClass().getSimpleName();
+        int    cnt;
+        int    height;
+        TextView tv;
+        if (className.indexOf("TextView") != -1) {
+            tv     = (TextView) view;
+            height = tv.getHeight();
+            cnt    = tv.getLineCount();
+            if (cnt == 1)
+                h1 = (float) height;
+            else
+                h2 = (float) height;
+        } else  if ((view instanceof ViewGroup)) {
+            ViewGroup vg = (ViewGroup) view;
+            for (int i = 0; i < vg.getChildCount(); i++)
+                set_TextView(vg.getChildAt(i));
+        }
+    }
+
 
 }

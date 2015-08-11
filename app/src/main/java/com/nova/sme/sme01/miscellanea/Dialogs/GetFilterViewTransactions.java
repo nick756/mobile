@@ -130,6 +130,17 @@ public class GetFilterViewTransactions {
             }
         });
 
+        Button cancelButton = (Button) dialog.findViewById(R.id.cancel_view);
+        voc.change_caption(cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+
         CheckBox cb = (CheckBox) dialog.findViewById(R.id.seletcAllCB);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -140,7 +151,7 @@ public class GetFilterViewTransactions {
         });
         // set theme
         Vector<Button> btns = new Vector<Button>();
-        btns.add(okButton);
+        btns.add(okButton);btns.add(cancelButton);
         setDialogButtonsTheme(btns);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -153,6 +164,9 @@ public class GetFilterViewTransactions {
         if (height > 0) {
             ViewGroup.LayoutParams prms = okButton.getLayoutParams();
             prms.height                 = height;
+
+            prms        = cancelButton.getLayoutParams();
+            prms.height = height;
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 

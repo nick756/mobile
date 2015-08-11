@@ -24,8 +24,9 @@ import static java.sql.DriverManager.println;
  */
 public class CustomBar {
     private RelativeLayout base_layout;
-    private ActionBar actionBar;
-    private Button button = null;
+    private ActionBar      actionBar;
+    private Button         button = null;
+
     public  Button getButton(){ return button;}
 
     private RelativeLayout layout;

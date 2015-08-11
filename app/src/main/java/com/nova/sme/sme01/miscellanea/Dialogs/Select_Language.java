@@ -1,4 +1,4 @@
-package com.nova.sme.sme01.miscellanea;
+package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Dialog;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.R;
+import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.Parameters;
+import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import java.util.Vector;
 
@@ -28,9 +32,9 @@ import java.util.Vector;
 public class Select_Language {
 
     private RelativeLayout base_layout;
-    private Vocabulary     voc;
-    private FileManager    FM;
-    private Parameters     params;
+    private Vocabulary voc;
+    private FileManager FM;
+    private Parameters params;
     private Button         logout_button;
     private String         params_file_name;
 
