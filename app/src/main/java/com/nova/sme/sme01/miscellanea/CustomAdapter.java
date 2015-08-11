@@ -69,43 +69,11 @@ public class CustomAdapter extends ArrayAdapter<String> {
         }
 
 
-        TextProcessor TP = new TextProcessor();
-        View view;
-        String className;
-        TextView tv;
-        LinearLayout ll;
-        RelativeLayout rl;
-        int height, width;
-        String str;
-        int lines;
-        float textSize;
-        for (int j = 0; j < objects.size(); j ++) {
-            ll   = (LinearLayout) this.getCustomView(j, null, null);
-            rl   = (RelativeLayout) ll.getChildAt(0);
-            tv   = (TextView) rl.getChildAt(1);
-
-/*
-            str    = tv.getText().toString().trim();
-            tv.setText(str + str);
-
-
-            height = getHeight(tv);
-            width  = getWidth(tv);
-
-            if (str.equals("Maintenance of Office and Equipment") || str.equals("Purchase of Plants and Machineries"))
-                println("");
-
-            textSize = tv.getTextSize();
-
-//            tv.setTextSize(textSize);
-            lines = TP.getLines(tv, width, str, textSize);
-            if (lines == 809890)
-                return;*/
-        }
+         float textSize;
 
         try {
-//            LinearLayout   ll;
-//            RelativeLayout rl;
+            LinearLayout   ll;
+            RelativeLayout rl;
             View v   = this.getView(0, null, null);
             ll       = (LinearLayout) v;
             rl       = (RelativeLayout) ll.getChildAt(0);
