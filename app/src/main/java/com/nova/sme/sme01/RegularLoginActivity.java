@@ -72,8 +72,9 @@ public class RegularLoginActivity extends AppCompatActivity {
     private String                        operations_list_name = "operations_list.bin";
     private Button                        logout_button;
 
-    private Vector<View>                  views = new Vector<View>();
-    private CustomBar ccb;
+    private Vector<View>                  views = new Vector<View>();//
+    private CustomBar                     ccb;
+    private FillWithOperationsList        fwol = null;
 
 
     @Override
@@ -129,6 +130,29 @@ public class RegularLoginActivity extends AppCompatActivity {
 //        FM                  = new FileManager(this);
         this.operaions_list = (ListOperations) FM.readFromFile("operations_list.bin");
  //       my_dialog = new MyDialog(this.FR, voc, base_layout);
+/*
+        reg_user_name_id
+        reg_company_name_id
+        reg_role_id
+
+        template_operations_id LinearLayout
+         */
+        views.add(findViewById(R.id.reg_user_name_id));
+        views.add(findViewById(R.id.reg_company_name_id));
+        views.add(findViewById(R.id.reg_role_id));
+
+        views.add(findViewById(R.id.reg_op_list_scrollView));
+        views.add(findViewById(R.id.base_layout_regular));
+        views.add(findViewById(R.id.reg_buttons_set));
+        views.add(findViewById(R.id.reg_op_list_scrollView));
+
+//        views.add((LinearLayout) findViewById(R.id.template_operations_id));
+        //reg_op_list_scrollView Linear
+        //base_layout_regular  Relative
+        //reg_buttons_set linear
+
+        for (int j = 0; j < views.size(); j ++)
+            views.get(j).setTag("main_background_color");
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -149,7 +173,7 @@ public class RegularLoginActivity extends AppCompatActivity {
                 FR.resizeRegularLogins(base_layout, bt_vector, logout_button, 0.062f);// height's button/total_height
 
                 fill_operation_list();
-                FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
+ //               FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
 
                 my_dialog = new MyDialog(FR, voc, base_layout);
 
@@ -164,7 +188,15 @@ public class RegularLoginActivity extends AppCompatActivity {
             ccb.setBackgound();
     }
 
-    public Vector<View> getViews() {return  views;}
+    public Vector<View> getViews() {
+        if (fwol == null)
+            return  views;
+
+        Vector<View> new_vector = new Vector<View>();
+        new_vector.addAll(views);
+        new_vector.addAll(fwol.getBases());
+        return new_vector;
+    }
 
     private void setAttributes() {
         ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
@@ -176,6 +208,9 @@ public class RegularLoginActivity extends AppCompatActivity {
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
+
+        if (fwol != null)
+            colors.setColors(fwol.getBases());
 
         if (ccb != null)
             ccb.setBackgound();
@@ -199,7 +234,7 @@ public class RegularLoginActivity extends AppCompatActivity {
 
 
     private void fill_operation_list() { // if empty - we hide some buttons
-        FillWithOperationsList fwol =  new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
+        fwol =  new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
         if (!fwol.implement()) {
             // hide some buttons
             Button button;
@@ -208,7 +243,16 @@ public class RegularLoginActivity extends AppCompatActivity {
                 if (button.getId() != R.id.synch_oper_list)
                     button.setVisibility(View.GONE);
             }
+        } else {
+            ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+            if (attr != null) {
+                MyColors colors = attr.getColors();
+
+                if (fwol != null)
+                    colors.setColors(fwol.getBases());
+            }
         }
+        FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f); // TO SEE CLOSELY !
     }
     private Button create_custom_bar() {
  //       Button button = (new CreateCustomBar(this, base_layout)).getButton();
@@ -268,7 +312,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             new ThemesDialog(base_layout, voc, FM, logout_button).show();
             return true;
         } else if (id == R.id.action_url_address) {
-            new HttpDialog(FR, voc, base_layout).show();
+            new HttpDialog(FR, voc, base_layout, logout_button).show();
             return true;
         } else if (id == R.id.colors_themes) {
             new ColorsDialog(this, base_layout, voc, FM, logout_button).show();

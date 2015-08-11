@@ -6,9 +6,7 @@
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
-    android:background="@color/main_background_color"
-    android:padding="5dp"
-    >
+    android:background="@color/main_background_color">
 
 
     <RelativeLayout
@@ -25,11 +23,11 @@
             android:src="@mipmap/ic_in_bound"
             android:id="@+id/in_out_bound"
             android:tag="image"
-        />
+            android:layout_centerVertical="true" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="name"
             android:tag="text"
             android:layout_gravity="center|right"
@@ -42,10 +40,8 @@
             android:lines="2"
             android:longClickable="false"
             android:gravity="center_vertical"
-            android:layout_alignTop="@+id/in_out_bound"
-            android:layout_alignBottom="@+id/in_out_bound"
 
-            />
+            android:paddingLeft="5dp" />
 
         <CheckBox
             android:layout_width="wrap_content"

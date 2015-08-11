@@ -20,7 +20,7 @@
         android:id="@+id/from_till_scrollview"
         android:layout_below="@+id/seletcAllCB"
 
-        >
+        android:layout_marginTop="2dp">
 
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,11 +37,12 @@
         android:text="From"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        android:padding="5dp"
         android:id="@+id/from_id"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/from_till_scrollview" />
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/from_till_scrollview"
+        android:paddingLeft="5dp"
+        android:paddingBottom="2dp" />
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -90,12 +91,13 @@
         android:text="Till"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        android:padding="5dp"
         android:id="@+id/tillid"
         android:layout_below="@+id/from_calendar"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp" />
 
 
     <RelativeLayout

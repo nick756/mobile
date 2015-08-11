@@ -237,8 +237,8 @@ public class GetFilterViewTransactions {
 
             layout.post(new Runnable() {
                 public void run() {
-                    ViewGroup.LayoutParams params = sv.getLayoutParams();
-                    params.height = (int)((float)dialog_width*0.8f);
+               ViewGroup.LayoutParams params = sv.getLayoutParams();
+               params.height = (int)((float)dialog_width*0.9f);
                 }
             });
         }

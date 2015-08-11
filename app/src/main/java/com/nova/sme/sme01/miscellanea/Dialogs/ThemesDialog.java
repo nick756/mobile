@@ -55,8 +55,8 @@ import static java.sql.DriverManager.println;
  */
 public class ThemesDialog {
     protected RelativeLayout    base_layout;
-    protected Vocabulary voc;
-    protected FileManager FM;
+    protected Vocabulary        voc;
+    protected FileManager       FM;
     protected Button            logout_button;
 
     private   Vector<ViewsGroup>     groups = new Vector<ViewsGroup>();
@@ -64,6 +64,15 @@ public class ThemesDialog {
     public ThemesDialog() {
 
     }
+    protected void setButtonHeight(Button button) {
+        if (logout_button == null) return;
+        ViewGroup.LayoutParams params = logout_button.getLayoutParams();
+        int height                    = params.height;
+
+        params = button.getLayoutParams();
+        params.height = height;
+    }
+
     public ThemesDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         this.base_layout   = base_layout;
         this.voc           = voc;
@@ -227,6 +236,9 @@ public class ThemesDialog {
         ViewGroup.LayoutParams prms = sv.getLayoutParams();
         prms.height = (int)((float)lp.width*1.2f);
 
+
+        setButtonHeight(OkButton);
+        setButtonHeight(CancelButton);
     }
 
     protected void resetRadiobuttons(RadioButton rb) {

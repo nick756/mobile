@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -38,6 +39,7 @@ public class Select_Language {
     private Button         logout_button;
     private String         params_file_name;
 
+
     public Select_Language(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Parameters params, Button  logout_button, String params_file_name) {
         this.base_layout      = base_layout;
         this.voc              = voc;
@@ -51,6 +53,16 @@ public class Select_Language {
     public Select_Language() {
 
     }
+
+    private void setButtonHeight(Button button) {
+        if (logout_button == null) return;
+        ViewGroup.LayoutParams params = logout_button.getLayoutParams();
+        int height                    = params.height;
+
+        params = button.getLayoutParams();
+        params.height = height;
+    }
+
 
     private void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
@@ -109,6 +121,8 @@ public class Select_Language {
 
         Vector<Button> btns = new Vector<Button>();btns.add(dialogButton);
         attr.setButtons(base_layout, btns);
+
+        setButtonHeight(dialogButton);
     }
 
     private void  writeParameters() {

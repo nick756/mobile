@@ -184,7 +184,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
             new ThemesDialog(base_layout, voc, FM, logout_button).show();
             return true;
         } else if (id == R.id.action_url_address) {
-            new HttpDialog(FR, voc, base_layout).show();
+            new HttpDialog(FR, voc, base_layout, logout_button).show();
             return true;
         } else if (id == R.id.colors_themes) {
             new ColorsDialog(this, base_layout, voc, FM, logout_button).show();

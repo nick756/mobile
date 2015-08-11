@@ -64,6 +64,7 @@ public class ColorsDialog extends ThemesDialog {
     protected List<Button>      buttons      = new ArrayList<Button>();
     protected List<SeekBar>     sbars        = new ArrayList<SeekBar>();
 
+
     public ColorsDialog(Activity activity, RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         super(base_layout, voc, FM, logout_button);
         this.activity = activity;
@@ -249,8 +250,12 @@ public class ColorsDialog extends ThemesDialog {
         custom_dialog.setColor(255, 255, 255);
         base_custom.setColor(255, 255, 255);
 
-
         action_bar.startAnimation();
+
+        setButtonHeight(OkButton);
+        setButtonHeight(CancelButton);//reset_btn
+        setButtonHeight(reset_btn);
+
     }
 
      private void changeColor() {//-16776986

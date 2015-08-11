@@ -41,12 +41,23 @@ public class AboutDialog extends MyDialog {
     private TextResizing          textFit;
     private String                sample = "SIFAR refers to Simplified Financial";
     private TextView              aboutText;
+    private Button                logout_button;
 
-    public AboutDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout) {
+    public AboutDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout_button) {
         super(FR, voc, base_layout);
 
-        this.textFit   = new TextResizing(base_layout.getContext());
+        this.textFit       = new TextResizing(base_layout.getContext());
+        this.logout_button = logout_button;
     }
+    private void setButtonHeight(Button button) {
+        if (logout_button == null) return;
+        ViewGroup.LayoutParams params = logout_button.getLayoutParams();
+        int height                    = params.height;
+
+        params = button.getLayoutParams();
+        params.height = height;
+    }
+
 
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
@@ -102,6 +113,8 @@ public class AboutDialog extends MyDialog {
 
         aboutText = (TextView) dialog.findViewById(R.id.about_text);
         new FitText(aboutText);
+
+        setButtonHeight(about);
     }
 
     public class FitText {

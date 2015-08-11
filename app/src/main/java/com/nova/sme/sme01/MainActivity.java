@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -171,6 +172,15 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         views.add(cap_text);
         views.add(ccb.getBase());
         views.add(ccb.getTitle());
+
+        int                    height;
+        ViewGroup.LayoutParams params;
+
+        params = pv.getLoginButton().getLayoutParams();
+        height = params.height;
+
+        params        = button.getLayoutParams();
+        params.height = height;
 
         return button;
     }
@@ -375,13 +385,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         int id = item.getItemId();
 
         if (id == R.id.action_language) {
-            new Select_Language(base_layout, voc, FM, params, null, params_file_name);
+            new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
             new ThemesDialog(base_layout, voc, FM, logout_button).show();
             return true;
         } else if (id == R.id.action_url_address) {
-            new HttpDialog(FR, voc, base_layout).show();
+            new HttpDialog(FR, voc, base_layout, logout_button).show();
             return true;
         } else if (id == R.id.colors_themes) {
             new ColorsDialog(this, base_layout, voc, FM, logout_button).show();

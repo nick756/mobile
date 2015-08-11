@@ -28,10 +28,23 @@ import java.util.Vector;
  */
 public class HttpDialog extends MyDialog {
     private ApplicationAttributes attr;
+    private Button                logout_button;
 
-    public HttpDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout) {
+    public HttpDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout_button) {
         super(FR, voc, base_layout);
+
+        this.logout_button = logout_button;
     }
+
+    private void setButtonHeight(Button button) {
+        if (logout_button == null) return;
+        ViewGroup.LayoutParams params = logout_button.getLayoutParams();
+        int height                    = params.height;
+
+        params = button.getLayoutParams();
+        params.height = height;
+    }
+
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -103,6 +116,9 @@ public class HttpDialog extends MyDialog {
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         SetColors();
+
+        setButtonHeight(submit);
+        setButtonHeight(cancel);
     }
 
 }

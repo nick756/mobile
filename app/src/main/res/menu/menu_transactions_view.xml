@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.nova.sme.sme01.TransactionsViewActivity">
 
-    <item android:id="@+id/action_language"
-        android:title="Select Language"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
     <item android:title="Settings" android:orderInCategory="101">
         <menu>
+            <item android:id="@+id/action_language"
+                android:title="Select Language"
+                android:orderInCategory="100"
+                app:showAsAction="never"
+                />
+
             <item android:id="@+id/action_url_address"
                 android:title="Url Address"
                 android:orderInCategory="103"
@@ -29,10 +30,16 @@
         </menu>
     </item>
 
+    <item android:id="@+id/action_helpt"
+        android:title="Help"
+        android:orderInCategory="102"
+        app:showAsAction="never"
+        />
+
     <item android:id="@+id/action_about"
         android:title="About"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
+        android:orderInCategory="103"
+        app:showAsAction="never"
+        />
 
 </menu>

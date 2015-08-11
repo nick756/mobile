@@ -151,19 +151,20 @@ public class FormResizing {
                 element       = (LinearLayout) base.getChildAt(i);
                 for (int j = 0; j < element.getChildCount(); j ++) {
                     sub_element   = (RelativeLayout)element.getChildAt(j);
-                    params        = sub_element.getLayoutParams();
-                    params.height = (int) new_height;
+//                    params        = sub_element.getLayoutParams();
+//                    params.height = (int) new_height;
 
                     for (int k = 0; k < sub_element.getChildCount(); k ++) {
                         view = sub_element.getChildAt(k);
                         className = view.getClass().getSimpleName().toUpperCase().trim();
-                        if (className.indexOf(new String("ImageButton").toUpperCase()) != -1) {
+                        if (className.indexOf(new String("Image").toUpperCase()) != -1) {
                             ib            = (ImageView) view;
                             params        = ib.getLayoutParams();
                             params.height = (int) new_height;
                             params.width  = (int) new_height;
-                         }
+                        }
                     }
+
                 }
             }
         }

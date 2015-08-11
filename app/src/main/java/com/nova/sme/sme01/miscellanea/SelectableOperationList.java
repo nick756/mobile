@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -45,6 +46,8 @@ public class SelectableOperationList {
     private TextResizing     textFit;
     private Vector<TextView> texts = new Vector<TextView>();
 
+    private RelativeLayout fromtill_layout;
+
     private Vector<ShortedOperation> operations;// = new Vector<WideOperation>();
 
     public SelectableOperationList(Dialog dialog, Vocabulary voc, RelativeLayout base_layout, FormResizing FR) {
@@ -58,7 +61,7 @@ public class SelectableOperationList {
 
         fillOperations();
 
-        LinearLayout layout     = (LinearLayout)dialog.findViewById(R.id.from_till_layout);
+        LinearLayout layout             = (LinearLayout)dialog.findViewById(R.id.from_till_layout);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < operations.size(); i++) {
@@ -66,7 +69,19 @@ public class SelectableOperationList {
             layout.addView(ll);
             setValues(ll, operations.get(i));
         }
-        setFontSize();
+
+        fromtill_layout = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
+
+        ViewTreeObserver vto = fromtill_layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                 tuneIconsSizes(fromtill_layout, 0.6f);
+            }
+        });
+
+//        setFontSize();
  //       new FitTextSize(base_layout);
     }
     public void setAllCheckBoxes(boolean checked) {
@@ -145,9 +160,9 @@ public class SelectableOperationList {
                             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                CheckBox cb      = (CheckBox) buttonView;
-                                ShortedOperation wo = (ShortedOperation)cb.getTag();
-                                wo.checked       = isChecked;
+                                    CheckBox        cb  = (CheckBox) buttonView;
+                                    ShortedOperation wo = (ShortedOperation)cb.getTag();
+                                    wo.checked          = isChecked;
                                 }
                             });
                         }
@@ -223,6 +238,31 @@ public class SelectableOperationList {
                     setFontSize();
                 }
             });
+        }
+    }
+
+
+    private void tuneIconsSizes(View view, float factor) {
+        String                 className = view.getClass().getSimpleName();
+        ViewGroup.LayoutParams params;
+        ImageView              img;
+        CheckBox               cb;
+        float                  height, new_height;
+
+        if (className.indexOf("ImageView") != -1) {
+            img = (ImageView) view;
+
+            img.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            height        = (float) img.getMeasuredHeight();
+            new_height    = height * factor;
+            params        = img.getLayoutParams();
+            params.height = (int) new_height;
+            params.width  = (int) new_height;
+        } else  if ((view instanceof ViewGroup)) {
+            ViewGroup vg = (ViewGroup) view;
+            for (int i = 0; i < vg.getChildCount(); i++)
+                tuneIconsSizes(vg.getChildAt(i), factor);
         }
     }
 
