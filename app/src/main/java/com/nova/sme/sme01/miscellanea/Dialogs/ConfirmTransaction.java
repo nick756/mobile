@@ -138,37 +138,17 @@ public class ConfirmTransaction {
         btns.add(okButton);btns.add(cancelButton);
         setDialogButtonsTheme(btns);
 
-
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
 
         dialog.getWindow().setAttributes(lp);
- //       resize(lp.width);
 
-        // set button height
         setButtonsSize();
-/*
-        int height = FR.getLogButtonHeight();
-        if (height > 0) {
-            ViewGroup.LayoutParams prms = okButton.getLayoutParams();
-            prms.height                 = height;
-            prms.width                  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
 
-
-            prms        = cancelButton.getLayoutParams();
-            prms.height = height;
-            prms.width  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
-        }
-*/
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
-
-
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
-//        if (attr == null) return;
         if (attr == null)
             attr = new ApplicationAttributes(activity);
 
@@ -178,12 +158,11 @@ public class ConfirmTransaction {
         rl.setTag("dialog_background_color");
         views.add(rl);
 
-        TextView tv1 = (TextView) dialog.findViewById(R.id.date_transaction_id);tv1.setTag("dialog_background_color");
-        TextView tv2 = (TextView) dialog.findViewById(R.id.amount_transaction_id);tv2.setTag("dialog_background_color");
-        TextView tv3 = (TextView) dialog.findViewById(R.id.before_description);tv3.setTag("dialog_background_color");
-        RelativeLayout rll  = (RelativeLayout) dialog.findViewById(R.id.relativeLayout);rll.setTag("dialog_background_color");//base_layout_before_transaction_id
-        RelativeLayout brll = (RelativeLayout) dialog.findViewById(R.id.base_layout_before_transaction_id);brll.setTag("dialog_background_color");//base_layout_before_transaction_id
-
+        TextView tv1        = (TextView)       dialog.findViewById(R.id.date_transaction_id);               tv1.setTag("dialog_background_color");
+        TextView tv2        = (TextView)       dialog.findViewById(R.id.amount_transaction_id);             tv2.setTag("dialog_background_color");
+        TextView tv3        = (TextView)       dialog.findViewById(R.id.before_description);                tv3.setTag("dialog_background_color");
+        RelativeLayout rll  = (RelativeLayout) dialog.findViewById(R.id.relativeLayout);                    rll.setTag("dialog_background_color");
+        RelativeLayout brll = (RelativeLayout) dialog.findViewById(R.id.base_layout_before_transaction_id); brll.setTag("dialog_background_color");
 
         views.add(tv1);
         views.add(tv2);
@@ -193,17 +172,6 @@ public class ConfirmTransaction {
 
         attr.getColors().setColors(views);
 
-        //base_layout_before_transaction_id
-/*
-        ViewTreeObserver vto = brll.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onGlobalLayout() {
-                setButtonsSize();
-            }
-        });
-*/
     }
     private void setButtonsSize() {
         int height = FR.getLogButtonHeight();
@@ -212,12 +180,9 @@ public class ConfirmTransaction {
             prms.height                 = height;
             prms.width                  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
 
-
             prms        = cancelButton.getLayoutParams();
             prms.height = height;
             prms.width  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
-
- //           okButton.setPadding(5, 0, 8, 0);
         }
     }
 
@@ -229,32 +194,5 @@ public class ConfirmTransaction {
         attr.setButtons(base_layout, buttons);
         return attr;
     }
-
-
-/*
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ok_transaction"
-        android:text="Perform"
-        android:layout_below="@+id/before_description"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/login_button_selector"
-    />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/cancel_button_trans_id"
-        android:layout_toRightOf="@+id/ok_transaction"
-        android:layout_marginLeft="15dp"
-        android:layout_below="@+id/before_description"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/login_button_selector"
-    />
-
- */
 
 }
