@@ -92,15 +92,16 @@ public class MyColors implements Serializable {
             view  = views.get(i);
             tag   = (String) view.getTag();
             color = - 1;
-            if (tag.equals("actionbar_background_color"))
-                color = actionbar_background_color;
-            else if (tag.equals("main_background_color"))
-                color = main_background_color;
-            else if (tag.equals("text_background_color"))
-                color = text_background_color;
-            else if (tag.equals("dialog_background_color"))
-                color = dialog_background_color;
-
+            if (tag != null) {
+                if (tag.equals("actionbar_background_color"))
+                    color = actionbar_background_color;
+                else if (tag.equals("main_background_color"))
+                    color = main_background_color;
+                else if (tag.equals("text_background_color"))
+                    color = text_background_color;
+                else if (tag.equals("dialog_background_color"))
+                    color = dialog_background_color;
+            }
             setViewColor(view, color);
 
         }

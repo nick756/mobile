@@ -205,7 +205,7 @@ public class RegularLoginActivity extends AppCompatActivity {
 
         attr.setButtons(base_layout, logout_button);
 
-        attr.setButtons(base_layout, logout_button);
+//        attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
 
@@ -320,9 +320,10 @@ public class RegularLoginActivity extends AppCompatActivity {
         } else if (id == R.id.action_about) {
             new AboutDialog(FR, voc, base_layout, logout_button).show();
             return true;
+        } else if (id == R.id.action_help) {
+            startActivity(new Intent(this, HelpActivity.class));
+            return true;
         }
-
-
 
         return super.onOptionsItemSelected(item);
     }

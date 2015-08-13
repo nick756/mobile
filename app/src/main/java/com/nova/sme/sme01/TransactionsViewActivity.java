@@ -1,5 +1,6 @@
 package com.nova.sme.sme01;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -192,8 +193,10 @@ public class TransactionsViewActivity extends AppCompatActivity {
         } else if (id == R.id.action_about) {
             new AboutDialog(FR, voc, base_layout, logout_button).show();
             return true;
+        } else if (id == R.id.action_help) {
+            startActivity(new Intent(this, HelpActivity.class));
+            return true;
         }
-
 
 
         return super.onOptionsItemSelected(item);

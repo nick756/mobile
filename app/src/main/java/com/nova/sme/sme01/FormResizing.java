@@ -107,10 +107,12 @@ public class FormResizing {
 
         Button button;
         ViewGroup.LayoutParams params;
-        for (int i = 0; i < bt_vector.size(); i ++) {
-            button = bt_vector.elementAt(i);
-            params = button.getLayoutParams();
-            params.height = (int) new_button_height;
+        if (bt_vector != null) {
+            for (int i = 0; i < bt_vector.size(); i++) {
+                button = bt_vector.elementAt(i);
+                params = button.getLayoutParams();
+                params.height = (int) new_button_height;
+            }
         }
         if (logout_button != null) {
             params = logout_button.getLayoutParams();

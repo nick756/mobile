@@ -31,7 +31,7 @@
         </menu>
     </item>
 
-    <item android:id="@+id/action_helpt"
+    <item android:id="@+id/action_help"
         android:title="Help"
         android:orderInCategory="102"
         app:showAsAction="never"
