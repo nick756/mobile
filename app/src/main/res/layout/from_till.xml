@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:text="Select/Unselect All"
         android:id="@+id/seletcAllCB"
-        android:checked="true" />
+        android:checked="true"
+        android:textColor="@android:color/black" />
 
     <ScrollView
         android:layout_width="match_parent"

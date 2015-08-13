@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:id="@+id/base_layout_before_transaction_id"
     android:layout_gravity="center_vertical|center_horizontal"
     android:background="@drawable/dialog_layout"
@@ -88,33 +88,30 @@
             android:layout_marginLeft="14dp"
             android:textColor="@android:color/black" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Perform"
-            android:id="@+id/ok_transaction"
-            android:layout_below="@+id/before_description"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/login_button_selector"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="5dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ok_transaction"
+        android:text="Perform"
+        android:layout_below="@+id/before_description"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/login_button_selector"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginBottom="5dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/cancel_button_trans_id"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/login_button_selector"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_toRightOf="@+id/ok_transaction"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@+id/before_description"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-     />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancel_button_trans_id"
+        android:layout_toRightOf="@+id/ok_transaction"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/before_description"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/login_button_selector"
+        android:layout_marginBottom="5dp" />
 
 
 </RelativeLayout>

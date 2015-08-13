@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -50,6 +51,9 @@ public class ConfirmTransaction {
     private String    date;
     private String    descr;
     private String    amount;
+
+    private Button    okButton;
+    private Button    cancelButton;
 
 
     public ConfirmTransaction(Activity activity, Vocabulary voc, FormResizing   FR, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum) {
@@ -110,7 +114,7 @@ public class ConfirmTransaction {
             img.setImageResource(R.mipmap.ic_out_bound);
 
 
-        Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button_trans_id);
+        cancelButton = (Button) dialog.findViewById(R.id.cancel_button_trans_id);
         voc.change_caption(cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +123,7 @@ public class ConfirmTransaction {
             }
         });
 
-        Button okButton = (Button) dialog.findViewById(R.id.ok_transaction);
+        okButton = (Button) dialog.findViewById(R.id.ok_transaction);
         voc.change_caption(okButton);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,14 +148,20 @@ public class ConfirmTransaction {
  //       resize(lp.width);
 
         // set button height
+        setButtonsSize();
+/*
         int height = FR.getLogButtonHeight();
         if (height > 0) {
             ViewGroup.LayoutParams prms = okButton.getLayoutParams();
-            prms.height = height;
+            prms.height                 = height;
+            prms.width                  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
 
-            prms = cancelButton.getLayoutParams();
+
+            prms        = cancelButton.getLayoutParams();
             prms.height = height;
+            prms.width  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
         }
+*/
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 
@@ -183,7 +193,34 @@ public class ConfirmTransaction {
 
         attr.getColors().setColors(views);
 
+        //base_layout_before_transaction_id
+/*
+        ViewTreeObserver vto = brll.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                setButtonsSize();
+            }
+        });
+*/
     }
+    private void setButtonsSize() {
+        int height = FR.getLogButtonHeight();
+        if (height > 0) {
+            ViewGroup.LayoutParams prms = okButton.getLayoutParams();
+            prms.height                 = height;
+            prms.width                  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
+
+
+            prms        = cancelButton.getLayoutParams();
+            prms.height = height;
+            prms.width  = ViewGroup.LayoutParams.WRAP_CONTENT;//###
+
+ //           okButton.setPadding(5, 0, 8, 0);
+        }
+    }
+
     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null)
@@ -192,5 +229,32 @@ public class ConfirmTransaction {
         attr.setButtons(base_layout, buttons);
         return attr;
     }
+
+
+/*
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ok_transaction"
+        android:text="Perform"
+        android:layout_below="@+id/before_description"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/login_button_selector"
+    />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancel_button_trans_id"
+        android:layout_toRightOf="@+id/ok_transaction"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/before_description"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/login_button_selector"
+    />
+
+ */
 
 }
