@@ -85,38 +85,43 @@ public class HelpActivity extends AppCompatActivity {
         });
     }
 
-    private float converDpToPixels(int dp) {
+    private float convertDpToPixels(int dp) {
         return dp * getResources().getDisplayMetrics().density;
+    }
+    public float convertPxToDp(float px) {
+        return px / getResources().getDisplayMetrics().density;
     }
 
     private void tuneSizes() {
-        float factor = 455.0f/747.0f; // width/height
-        ViewGroup.LayoutParams params_base, params;
+        float factor = 455.0f/747.0f; // width/height 0.609
+        ViewGroup.LayoutParams params;
 
-/*
-        float width = base_layout.getWidth();
-        float height;
-        if (width == 0) {
-            base_layout.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            width = (float)base_layout.getMeasuredWidth();
+        int real_width  = FR.getRealWidth(); //1056
+
+
+        float  w = convertDpToPixels(160);//240 -> 0.22
+        float  h = convertDpToPixels(260);//390
+
+        float imgWidth  = real_width*0.4f;
+        float imgHeight = imgWidth/factor;
+
+        Vector<ImageView> images = new Vector<ImageView>();
+        images.add((ImageView) findViewById(R.id.help_1));
+        images.add((ImageView) findViewById(R.id.help_2));
+        images.add((ImageView) findViewById(R.id.help_3));
+
+        setImgSize(images, (int)imgWidth, (int)imgHeight);
+    }
+
+    private void setImgSize(Vector<ImageView> imgs, int imgWidth, int imgHeight) {
+        ViewGroup.LayoutParams params;
+        ImageView              img;
+        for (int i = 0; i < imgs.size(); i ++) {
+            img           = imgs.get(i);
+            params        = img.getLayoutParams();
+            params.width  = imgWidth;
+            params.height = imgHeight;
         }
-*/
-        ImageView img = (ImageView) findViewById(R.id.help_1);
-        params        = img.getLayoutParams();
-
-        params.width  = (int)converDpToPixels(160);//(width*0.4f);
-        params.height = (int)converDpToPixels(260);//(int)height;
-
-        img     = (ImageView) findViewById(R.id.help_2);
-        params  = img.getLayoutParams();
-        params.width  = (int)converDpToPixels(160);//(width*0.4f);
-        params.height = (int)converDpToPixels(260);//(int)height;
-
-        img     = (ImageView) findViewById(R.id.help_3);
-        params  = img.getLayoutParams();
-        params.width  = (int)converDpToPixels(160);//(width*0.4f);
-        params.height = (int)converDpToPixels(260);//(int)height;
-
     }
 
     private void setAttributes() {
