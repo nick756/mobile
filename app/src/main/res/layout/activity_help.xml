@@ -115,6 +115,48 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Operations List"
+                android:id="@+id/textView7"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+            />
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_4"
+                android:layout_marginTop="12dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_4"
+                    android:src="@drawable/help4"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text= "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  If a User needs to manage more than one company using android device, two login names must be used (In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization to be performed by  pressing button RESET OPERATIONS  LIST."
+                    android:id="@+id/help_text_4"
+                    android:layout_toRightOf="@+id/help_4"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -93,31 +93,28 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void tuneSizes() {
-        float factor = 455.0f/747.0f; // width/height 0.609
-        ViewGroup.LayoutParams params;
-
-        int real_width  = FR.getRealWidth(); //1056
-
-
-        float  w = convertDpToPixels(160);//240 -> 0.22
-        float  h = convertDpToPixels(260);//390
-
+        float factor    = 455.0f/747.0f;
+        int real_width  = FR.getRealWidth();
         float imgWidth  = real_width*0.4f;
         float imgHeight = imgWidth/factor;
 
-        Vector<ImageView> images = new Vector<ImageView>();
-        images.add((ImageView) findViewById(R.id.help_1));
-        images.add((ImageView) findViewById(R.id.help_2));
-        images.add((ImageView) findViewById(R.id.help_3));
+        Vector<Integer> imageIds = new Vector<Integer>();
+        imageIds.add(R.id.help_1);
+        imageIds.add(R.id.help_2);
+        imageIds.add(R.id.help_3);
+        imageIds.add(R.id.help_4);
 
-        setImgSize(images, (int)imgWidth, (int)imgHeight);
+        setImgSize(imageIds, (int)imgWidth, (int)imgHeight);
     }
 
-    private void setImgSize(Vector<ImageView> imgs, int imgWidth, int imgHeight) {
+    private void setImgSize(Vector<Integer> imageIds, int imgWidth, int imgHeight) {
         ViewGroup.LayoutParams params;
         ImageView              img;
-        for (int i = 0; i < imgs.size(); i ++) {
-            img           = imgs.get(i);
+        int                    id;
+
+        for (int i = 0; i < imageIds.size(); i ++) {
+            id            = imageIds.get(i);
+            img           = (ImageView) findViewById(id);
             params        = img.getLayoutParams();
             params.width  = imgWidth;
             params.height = imgHeight;
@@ -130,7 +127,6 @@ public class HelpActivity extends AppCompatActivity {
             attr = new ApplicationAttributes(this);
 
         attr.setButtons(base_layout, logout_button);
-
 
         MyColors colors = attr.getColors();
         colors.setColors(views);
