@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -97,7 +98,9 @@ public class AboutDialog extends MyDialog {
 
         about.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {dialog.dismiss();}
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
         });
 
 
@@ -113,6 +116,25 @@ public class AboutDialog extends MyDialog {
 
         aboutText = (TextView) dialog.findViewById(R.id.about_text);
         new FitText(aboutText);
+
+        String html = "";
+        html = "";
+        html += "<html>";
+        html += "<body style='margin:0 auto; width:100%; text-align:center'>";
+
+        html += "SIFAR refers to <b>Simplified Financial and Recordkeeping</b> system. It is one of the modules in the BinaPavo Data Intelligence suite of software and system.";
+        html += "SIFAR is developed based on years of applied research by our data and social scientists in the field of entrepreneurship, innovation, family business, financial management and strategy. The R&D was driven to find solutions for the pain faced by SMEs and lending agencies.";
+        html += "Our scientists found that SMEs in general, lack financial management skills and accounting knowledge to manage their business finance. They also lack assistance when problems arise. Existing accounting software are too technical for them.  Lending agencies on the other hand, lack monitoring tools to assess SMEs' performance.";
+        html += "In today’s world, even micro enterprises and small businesses are using smart phones for business purpose. SIFAR’s mobile application allows users to enter data with their Android smart phones wherever they are, 24/7. In addition, SIFAR does not only capture data and information but is designed to enable data analytics with monitoring system and diagnostic tools for monitoring and identifying SMEs' progress and problems periodically and automatically.";
+        html += "The interface display daily cash flow transactions but in the background the transactions are captured and integrated into an accounting system with automated business analytics tools to assess the SMEs with flagging ability when problems are detected.";
+
+        html += "</div>";
+        html += "</body>";
+        html += "</html>";
+
+        TextView tv = (TextView) dialog.findViewById(R.id.about_text);
+        tv.setText(Html.fromHtml(html));
+
 
         setButtonHeight(about);
     }

@@ -2,17 +2,21 @@ package com.nova.sme.sme01;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.CustomBar;
@@ -22,6 +26,8 @@ import com.nova.sme.sme01.miscellanea.MyColors;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+
+import org.w3c.dom.Text;
 
 import java.util.Vector;
 
@@ -38,7 +44,8 @@ public class HelpActivity extends AppCompatActivity {
     private String         url_logout;
     private Parameters     params               = new Parameters();
     private String         params_file_name     = "parameters.bin";
-
+    private String         html_start           = "";
+    private String         html_end             = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,15 @@ public class HelpActivity extends AppCompatActivity {
         this.FM          = new FileManager(this);
         this.voc         = new Vocabulary();
         this.params      = (Parameters)FM.readFromFile(params_file_name);
+
+        html_start += "<html>";
+        html_start += "<body style='margin:0 auto; width:100%; text-align:center'>";
+        html_start += "<div style='text-align:left; font-size:100%; line-height:200%'>";
+
+        html_end += "</div>";
+        html_end += "</body>";
+        html_end += "</html>";
+
 
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -81,6 +97,10 @@ public class HelpActivity extends AppCompatActivity {
                 setAttributes();
 
                 tuneSizes();
+
+//                fillViews(base_layout);
+//                setAttributes();
+
             }
         });
     }
@@ -93,18 +113,114 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void tuneSizes() {
-        float factor    = 455.0f/747.0f;
-        int real_width  = FR.getRealWidth();
-        float imgWidth  = real_width*0.4f;
-        float imgHeight = imgWidth/factor;
+        float factor     = 455.0f/747.0f;
+        int   real_width = FR.getRealWidth();
+        float imgWidth   = real_width*0.4f;
+        float imgHeight  = imgWidth/factor;
 
         Vector<Integer> imageIds = new Vector<Integer>();
         imageIds.add(R.id.help_1);
         imageIds.add(R.id.help_2);
         imageIds.add(R.id.help_3);
         imageIds.add(R.id.help_4);
+        imageIds.add(R.id.help_5);
 
-        setImgSize(imageIds, (int)imgWidth, (int)imgHeight);
+        setImgSize(imageIds, (int) imgWidth, (int) imgHeight);
+
+        htmls();
+
+        String html = html_start;
+
+        html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
+        html += " The Type of the Operation is placed on the right side of either icon <img src='data_import.png'/>";
+        html += "<br>";
+        html += "or <img src='data_export.png'/>";
+        html += "<br>";
+        html += " The description of the operation is placed on the right side of icon <img src='gold.png'/>";
+
+        html += html_end;
+
+
+        ImageGetter imageGetter = new ImageGetter();
+
+        TextView tv = (TextView)findViewById(R.id.help_text_4);
+        tv.setText(Html.fromHtml(html, imageGetter, null));
+
+
+        html = html_start;
+        html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
+        html += "next form make necessary selection and ";
+        html += "<br>";
+        html += "press image button <img src='action_button.png'/>";
+        html += "<br><br>";
+        html += "with preselected type of operation (in image it is 'Advance from Directors').";
+
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_5);
+        tv.setText(Html.fromHtml(html, imageGetter, null));
+    }
+
+    private void htmls() {
+        TextView tv;
+        String   html;
+
+        // I
+        html  = html_start;
+        html += "First time login assumes pre-registration of User  and Business on the server side before any operations on the mobile application.";
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_1);
+        tv.setText(Html.fromHtml(html));
+        // I
+
+        // II
+        html  = html_start;
+        html += "Successful first time login on an android device  is followed by screen with a single option:";
+        html += "'Synchronize Operations List'";
+        html += "<br>";
+        html += "This option entails transfer of list of allowed operations to mobile client.";
+
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_2);
+        tv.setText(Html.fromHtml(html));
+        // II
+
+        // III
+        html  = html_start;
+        html += "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  ";
+        html += "If a User needs to manage more than one company using android device, two login names must be used ";
+        html += "(In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization ";
+        html += "to be performed by  pressing button RESET OPERATIONS  LIST.";
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_3);
+        tv.setText(Html.fromHtml(html));
+        // III
+
+    }
+
+    private class ImageGetter implements Html.ImageGetter {
+
+        public Drawable getDrawable(String source) {
+            int id = 0;
+            if (source.equals("data_import.png")) {
+                id = R.mipmap.ic_in_bound;
+            } else if (source.equals("data_export.png")) {
+                id = R.mipmap.ic_out_bound;
+            } else if (source.equals("gold.png")) {
+                id = R.mipmap.ic_financial_type;
+            } else if (source.equals("action_button.png")) {
+                id = R.mipmap.ic_transaction_button;
+            } else {
+                return null;
+            }
+
+            Drawable d = getResources().getDrawable(id);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            return d;
+        }
     }
 
     private void setImgSize(Vector<Integer> imageIds, int imgWidth, int imgHeight) {
@@ -168,9 +284,12 @@ public class HelpActivity extends AppCompatActivity {
     private void fillViews(View view) {
         String className = view.getClass().getSimpleName();
 
-        if (className.indexOf("RelativeLayout") != -1 || className.indexOf("LinearLayout") != -1) {
+        if (className.indexOf("RelativeLayout") != -1 || className.indexOf("LinearLayout") != -1 || className.indexOf("TextView") != -1) {
             view.setTag("main_background_color");
             views.add(view);
+        }
+
+        if ((view instanceof ViewGroup)) {
             ViewGroup vg = (ViewGroup) view;
             for (int i = 0; i < vg.getChildCount(); i++)
                 fillViews(vg.getChildAt(i));

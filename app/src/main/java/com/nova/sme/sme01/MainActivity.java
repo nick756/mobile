@@ -182,6 +182,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         params        = button.getLayoutParams();
         params.height = height;
 
+        FR.setLogButtonHeight(height);
+
         return button;
     }
 

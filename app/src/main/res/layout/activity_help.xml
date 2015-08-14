@@ -55,7 +55,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="First time login assumes pre-registration of User  and Business on the server side before any operations on the mobile application. "
                     android:id="@+id/help_text_1"
                     android:layout_toRightOf="@+id/help_1"
                     android:paddingLeft="8dp"
@@ -81,7 +80,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Successful first time login on an android device  is followed by screen with a single option: “Synchronize Operations List”  This option entails transfer of list of allowed operations to mobile client. "
                     android:id="@+id/help_text_2"
                     android:layout_toRightOf="@+id/help_2"
                     android:paddingLeft="8dp"
@@ -107,7 +105,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text= "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  If a User needs to manage more than one company using android device, two login names must be used (In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization to be performed by  pressing button RESET OPERATIONS  LIST."
                     android:id="@+id/help_text_3"
                     android:layout_toRightOf="@+id/help_3"
                     android:paddingLeft="8dp"
@@ -125,8 +122,8 @@
                 android:gravity="center_horizontal"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="30dp"
             />
 
             <RelativeLayout
@@ -134,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/p_4"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="6dp">
 
                 <ImageView
                     android:layout_width="160dp"
@@ -147,7 +144,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text= "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  If a User needs to manage more than one company using android device, two login names must be used (In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization to be performed by  pressing button RESET OPERATIONS  LIST."
                     android:id="@+id/help_text_4"
                     android:layout_toRightOf="@+id/help_4"
                     android:paddingLeft="8dp"
@@ -155,6 +151,47 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Perform Transactions"
+                android:id="@+id/textView8"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="30dp"
+                />
+
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_5"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_5"
+                    android:src="@drawable/help5"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_5"
+                    android:layout_toRightOf="@+id/help_5"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
 
 
         </LinearLayout>

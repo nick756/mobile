@@ -138,7 +138,8 @@ public class FormResizing {
             log_button_height = params.height;
         }
     }
-    public int getLogButtonHeight(){return log_button_height;}
+    public int  getLogButtonHeight(){return log_button_height;}
+    public void setLogButtonHeight(int height){log_button_height = height;}
 
     void resizeOperationListTemplate(int id, float factor) {
         int    viewTop      = activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
