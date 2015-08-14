@@ -56,7 +56,11 @@ public class HelpActivity extends AppCompatActivity {
             println(err.getMessage().toString());
         }
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_help);
+        try {
+            setContentView(R.layout.activity_help);
+        } catch(Exception e) {//Binary XML file line #228: Error inflating class <unknown>
+            println(e.getMessage().toString());
+        }
 
 
         this.base_layout = (RelativeLayout) findViewById(R.id.base_help);
@@ -97,10 +101,6 @@ public class HelpActivity extends AppCompatActivity {
                 setAttributes();
 
                 tuneSizes();
-
-//                fillViews(base_layout);
-//                setAttributes();
-
             }
         });
     }
@@ -124,41 +124,11 @@ public class HelpActivity extends AppCompatActivity {
         imageIds.add(R.id.help_3);
         imageIds.add(R.id.help_4);
         imageIds.add(R.id.help_5);
-
+        imageIds.add(R.id.help_6);
+        imageIds.add(R.id.help_7);
         setImgSize(imageIds, (int) imgWidth, (int) imgHeight);
 
         htmls();
-
-        String html = html_start;
-
-        html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
-        html += " The Type of the Operation is placed on the right side of either icon <img src='data_import.png'/>";
-        html += "<br>";
-        html += "or <img src='data_export.png'/>";
-        html += "<br>";
-        html += " The description of the operation is placed on the right side of icon <img src='gold.png'/>";
-
-        html += html_end;
-
-
-        ImageGetter imageGetter = new ImageGetter();
-
-        TextView tv = (TextView)findViewById(R.id.help_text_4);
-        tv.setText(Html.fromHtml(html, imageGetter, null));
-
-
-        html = html_start;
-        html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
-        html += "next form make necessary selection and ";
-        html += "<br>";
-        html += "press image button <img src='action_button.png'/>";
-        html += "<br><br>";
-        html += "with preselected type of operation (in image it is 'Advance from Directors').";
-
-        html += html_end;
-
-        tv = (TextView)findViewById(R.id.help_text_5);
-        tv.setText(Html.fromHtml(html, imageGetter, null));
     }
 
     private void htmls() {
@@ -198,6 +168,65 @@ public class HelpActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.help_text_3);
         tv.setText(Html.fromHtml(html));
         // III
+
+
+        // IV
+        html = html_start;
+
+        html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
+        html += " The Type of the Operation is placed on the right side of either icon <img src='data_import.png'/>";
+        html += "<br>";
+        html += "or <img src='data_export.png'/>";
+        html += "<br>";
+        html += " The description of the operation is placed on the right side of icon <img src='gold.png'/>";
+
+        html += html_end;
+
+
+        ImageGetter imageGetter = new ImageGetter();
+
+        tv = (TextView)findViewById(R.id.help_text_4);
+        tv.setText(Html.fromHtml(html, imageGetter, null));
+        // IV
+
+
+        // V
+        html = html_start;
+        html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
+        html += "next form make necessary selection and ";
+        html += "<br>";
+        html += "press image button <img src='action_button.png'/>";
+        html += "<br><br>";
+        html += "with preselected type of operation (in image it is 'Advance from Directors').";
+
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_5);
+        tv.setText(Html.fromHtml(html, imageGetter, null));
+        // V
+
+
+        // VI
+        html = html_start;
+        html += "To obtain the full list of available Operations touch the area  showed by arrow. Then using scrolling to make  a choice.";
+        html += "<br>";
+        html += "<br>";
+        html += "The application makes control of the filled data.";
+        html += "So the transaction is being considered if the Description & Amount field is not empty. The Date can not be more then current.";
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_6);
+        tv.setText(Html.fromHtml(html));
+        // VI
+
+        // VII
+        html = html_start;
+        html += "Before sending a request to cash flow procedure the dialog box asks confirmation.";
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_7);
+        tv.setText(Html.fromHtml(html));
+        // VII
 
     }
 
@@ -257,7 +286,6 @@ public class HelpActivity extends AppCompatActivity {
         Button button = ccb.getButton();
         if (button != null)
             voc.change_caption(button);
-
 
         views.add(ccb.getBase());
         views.add(ccb.getTitle());

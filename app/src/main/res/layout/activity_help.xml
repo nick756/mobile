@@ -193,6 +193,57 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_6"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_6"
+                    android:src="@drawable/help6"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_6"
+                    android:layout_toRightOf="@+id/help_6"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_7"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_7"
+                    android:src="@drawable/help7"
+                    android:layout_centerVertical="true"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_7"
+                    android:layout_toRightOf="@+id/help_7"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true"
+                />
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>
