@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/help_scroll"
-        android:layout_centerVertical="true"
+        android:layout_centerVertical="false"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true" >
 
@@ -49,7 +49,7 @@
                     android:id="@+id/help_1"
                     android:src="@drawable/help1"
                     android:focusableInTouchMode="false"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:layout_toRightOf="@+id/help_1"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -74,7 +74,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_2"
                     android:src="@drawable/help2"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -84,7 +84,7 @@
                     android:layout_toRightOf="@+id/help_2"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -99,7 +99,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_3"
                     android:src="@drawable/help3"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -109,7 +109,7 @@
                     android:layout_toRightOf="@+id/help_3"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <TextView
@@ -138,7 +138,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_4"
                     android:src="@drawable/help4"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -148,7 +148,7 @@
                     android:layout_toRightOf="@+id/help_4"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
 
@@ -180,7 +180,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_5"
                     android:src="@drawable/help5"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -190,7 +190,7 @@
                     android:layout_toRightOf="@+id/help_5"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -205,7 +205,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_6"
                     android:src="@drawable/help6"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -215,7 +215,7 @@
                     android:layout_toRightOf="@+id/help_6"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -230,7 +230,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_7"
                     android:src="@drawable/help7"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -240,7 +240,7 @@
                     android:layout_toRightOf="@+id/help_7"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -255,7 +255,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_8"
                     android:src="@drawable/help8"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -265,7 +265,7 @@
                     android:layout_toRightOf="@+id/help_8"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <TextView
@@ -294,7 +294,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_9"
                     android:src="@drawable/help9"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -304,7 +304,7 @@
                     android:layout_toRightOf="@+id/help_9"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -319,7 +319,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_10"
                     android:src="@drawable/help10"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -329,7 +329,7 @@
                     android:layout_toRightOf="@+id/help_10"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -344,7 +344,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_11"
                     android:src="@drawable/help11"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -354,7 +354,7 @@
                     android:layout_toRightOf="@+id/help_11"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -369,7 +369,7 @@
                     android:layout_height="260dp"
                     android:id="@+id/help_12"
                     android:src="@drawable/help12"
-                    android:layout_centerVertical="true"
+                    android:layout_centerVertical="false"
                     />
 
                 <TextView
@@ -379,7 +379,7 @@
                     android:layout_toRightOf="@+id/help_12"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="false" />
             </RelativeLayout>
 
         </LinearLayout>

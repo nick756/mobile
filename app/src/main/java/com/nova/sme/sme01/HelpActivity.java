@@ -2,6 +2,7 @@ package com.nova.sme.sme01;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.nova.sme.sme01.miscellanea.Vocabulary;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -113,26 +115,31 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void tuneSizes() {
-        float factor     = 455.0f/747.0f;
+        float factor     = 374.0f/630.0f;//455.0f/747.0f;
         int   real_width = FR.getRealWidth();
         float imgWidth   = real_width*0.4f;
         float imgHeight  = imgWidth/factor;
 
-        Vector<Integer> imageIds = new Vector<Integer>();
-        imageIds.add(R.id.help_1);
-        imageIds.add(R.id.help_2);
-        imageIds.add(R.id.help_3);
-        imageIds.add(R.id.help_4);
-        imageIds.add(R.id.help_5);
-        imageIds.add(R.id.help_6);
-        imageIds.add(R.id.help_7);
-        imageIds.add(R.id.help_8);
-        imageIds.add(R.id.help_9);
-        imageIds.add(R.id.help_10);
-        imageIds.add(R.id.help_11);
-        imageIds.add(R.id.help_12);
-        setImgSize(imageIds, (int) imgWidth, (int) imgHeight);
+        //"@drawable/help1"
+//        Vector<Integer> imageIds     = new Vector<Integer>();//return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
 
+        int [] ids = {
+                        R.id.help_1,
+                        R.id.help_2,
+                        R.id.help_3,
+                        R.id.help_4,
+                        R.id.help_5,
+                        R.id.help_6,
+                        R.id.help_7,
+                        R.id.help_8,
+                        R.id.help_9,
+                        R.id.help_10,
+                        R.id.help_11,
+                        R.id.help_12,
+
+                    };
+
+        setImgSize(ids, (int) imgWidth, (int) imgHeight);
         htmls();
     }
 
@@ -179,11 +186,15 @@ public class HelpActivity extends AppCompatActivity {
         html = html_start;
 
         html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
-        html += " The Type of the Operation is placed on the right side of either icon <img src='data_import.png'/>";
+        html += " The Type of the Operation is placed on the right side of either";
+        html += "<br>";
+        html += "icon <img src='data_import.png'/>";
         html += "<br>";
         html += "or <img src='data_export.png'/>";
         html += "<br>";
-        html += " The description of the operation is placed on the right side of icon <img src='gold.png'/>";
+        html += " The description of the operation is placed on the right side of";
+        html += "<br>";
+        html += "icon <img src='gold.png'/>";
 
         html += html_end;
 
@@ -342,13 +353,13 @@ public class HelpActivity extends AppCompatActivity {
         }
     }
 
-    private void setImgSize(Vector<Integer> imageIds, int imgWidth, int imgHeight) {
+    private void setImgSize(int [] ids, int imgWidth, int imgHeight) {
         ViewGroup.LayoutParams params;
         ImageView              img;
         int                    id;
 
-        for (int i = 0; i < imageIds.size(); i ++) {
-            id            = imageIds.get(i);
+        for (int i = 0; i < ids.length; i ++) {
+            id            = ids[i];
             img           = (ImageView) findViewById(id);
             params        = img.getLayoutParams();
             params.width  = imgWidth;
