@@ -126,6 +126,11 @@ public class HelpActivity extends AppCompatActivity {
         imageIds.add(R.id.help_5);
         imageIds.add(R.id.help_6);
         imageIds.add(R.id.help_7);
+        imageIds.add(R.id.help_8);
+        imageIds.add(R.id.help_9);
+        imageIds.add(R.id.help_10);
+        imageIds.add(R.id.help_11);
+        imageIds.add(R.id.help_12);
         setImgSize(imageIds, (int) imgWidth, (int) imgHeight);
 
         htmls();
@@ -227,6 +232,91 @@ public class HelpActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.help_text_7);
         tv.setText(Html.fromHtml(html));
         // VII
+
+        // VIII
+        html = html_start;
+        html += "If everything goes well, you get the positive feedback message, otherwise negative one informs the transaction failed.";
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_8);
+        tv.setText(Html.fromHtml(html));
+        // VIII
+
+        // IX
+        html = html_start;
+        html += "To view transactions go to the main page and press button VIEW TRANSACTIONS";
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_9);
+        tv.setText(Html.fromHtml(html));
+        // IX
+
+        // X
+        html = html_start;
+        html += "On the appeared dialog box you can set necessary filter as follow:";
+        html += "<br>";
+        html += "<br>";
+        html += "<b>Select types of operations.</b>";
+        html += "<br>";
+        html += "Possible to select all of them or part.";
+        html += "To do that use check box ‘Select/Unselect All’ and checkboxes on scrolling list of operations";
+        html += "<br>";
+        html += "<br>";
+        html += "<b>The date range</b>";
+        html += "<br>";
+        html += "Use dropdawn components to set <b>From Till</b>  Date.";
+
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_10);
+        tv.setText(Html.fromHtml(html));
+        // X
+
+        // XI
+        html = html_start;
+        html += "If there is data on the selected criteria, you will get a list of the transactions.";
+        html += "In the parentheses indicates the number of the transactions";
+        html += "<br>";
+        html += "<br>";
+        html += "It includes:";
+        html += "<br>";
+        html += "<br>";
+        html += "1. The Code of transaction.";
+        html += "<br>";
+        html += "<br>";
+        html += "2. The Date of the transaction.";
+        html += "<br>";
+        html += "<br>";
+        html += "3. The Type of the Operation.";
+        html += "<br>";
+        html += "   The left icon shows if it is inbound or outbound";
+        html += "<br>";
+        html += "<br>";
+        html += "4. The Amount of money";
+        html += "<br>";
+        html += "<br>";
+        html += "5. The Description";
+        html += "<br>";
+        html += "<br>";
+        html += "6. The name of the person who made the transaction";
+
+
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_11);
+        tv.setText(Html.fromHtml(html));
+        // XI
+
+        // XII
+        html = html_start;
+
+        html += "If there is no data matched to selected criteria, you receive an appropriate message";
+
+        html += html_end;
+
+        tv = (TextView)findViewById(R.id.help_text_12);
+        tv.setText(Html.fromHtml(html));
+        // XII
 
     }
 

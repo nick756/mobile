@@ -231,7 +231,7 @@
                     android:id="@+id/help_7"
                     android:src="@drawable/help7"
                     android:layout_centerVertical="true"
-                />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -240,10 +240,147 @@
                     android:layout_toRightOf="@+id/help_7"
                     android:paddingLeft="8dp"
                     android:paddingRight="2dp"
-                    android:layout_centerVertical="true"
-                />
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_8"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_8"
+                    android:src="@drawable/help8"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_8"
+                    android:layout_toRightOf="@+id/help_8"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Transactions"
+                android:id="@+id/textView9"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="30dp"
+            />
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_9"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_9"
+                    android:src="@drawable/help9"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_9"
+                    android:layout_toRightOf="@+id/help_9"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_10"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_10"
+                    android:src="@drawable/help10"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_10"
+                    android:layout_toRightOf="@+id/help_10"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_11"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_11"
+                    android:src="@drawable/help11"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_11"
+                    android:layout_toRightOf="@+id/help_11"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/p_12"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="260dp"
+                    android:id="@+id/help_12"
+                    android:src="@drawable/help12"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_text_12"
+                    android:layout_toRightOf="@+id/help_12"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="2dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
