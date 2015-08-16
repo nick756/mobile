@@ -104,7 +104,7 @@ public class Vocabulary implements Serializable {
             {"Date is wrong",                                       "Tarikh yang salah"},
             {"Base Functionality",                                  "Fungsi asas"},
             {"General",                                             "Umum"},
-            {"Login procedure",                                     "Prosedur log masuk"},
+            {"Login Procedure",                                     "Prosedur Log Masuk"},
             {"Operations List",                                     "Senarai operasi"},
             {"Perform Transactions",                                "Melaksanakan Urusniaga"},
             {"View Transactions",                                   "Lihat Urusniaga"},

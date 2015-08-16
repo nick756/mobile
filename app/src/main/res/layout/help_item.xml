@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name of the topic"
-        android:id="@+id/textTopic"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:gravity="center_horizontal"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:layout_marginBottom="10dp"
-        android:tag = "Caption"
-        />
-
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/base_item_help"
+    android:focusableInTouchMode="false"
+    android:background="@drawable/base_layout_background"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:layout_width="160dp"
@@ -23,7 +13,7 @@
         android:id="@+id/help_n"
         android:src="@drawable/help1"
         android:layout_centerVertical="false"
-        android:layout_below="@+id/textTopic" />
+    />
 
     <TextView
         android:layout_width="match_parent"
@@ -33,7 +23,6 @@
         android:paddingLeft="8dp"
         android:paddingRight="2dp"
         android:layout_centerVertical="false"
-        android:layout_below="@+id/textTopic"
         android:text="sgjsadgfkjaghsfkdjhgaskfd"
         android:tag = "Decription"
         android:textColor="@android:color/black" />
