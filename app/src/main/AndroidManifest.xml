@@ -44,6 +44,10 @@
             android:name=".HelpNActivity"
             android:label="@string/title_activity_help_n" >
         </activity>
+        <activity
+            android:name=".HelpItemActivity"
+            android:label="@string/title_activity_help_item" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.nova.sme.sme01;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -116,6 +117,8 @@ public class HelpNActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params;
         Button                 btn;
         String                 className = view.getClass().getSimpleName();
+        int                    height;
+        int                    width;
 
         if (className.indexOf("TextView") != -1) {
             view.setTag("main_background_color");
@@ -125,8 +128,15 @@ public class HelpNActivity extends AppCompatActivity {
         if (className.indexOf("Button") != -1) {
             btn = (Button)view;
             bt_vector.add(btn);
+
+            height = btn.getHeight();
+            if (height == 0) {
+                btn.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                height = btn.getMeasuredHeight();
+            }
+            width        = (int)((float)height*2.0f);
             params       = btn.getLayoutParams();
-            params.width = (int)((float)params.height*2.0f);
+            params.width = width;
         }
 
 
@@ -203,7 +213,13 @@ public class HelpNActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        int id = view.getId();
+        int id          = view.getId();
+//        CommonClass c_c = new CommonClass();
+//        c_c.help_id     = id;
+        Intent intent   = new Intent(this, HelpItemActivity.class);
+
+        intent.putExtra("help_id", id);
+        startActivity(intent);
         /*
         R.id.help_trouble
         R.id.help_colors

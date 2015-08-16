@@ -75,6 +75,7 @@ public class RegularLoginActivity extends AppCompatActivity {
     private Vector<View>                  views = new Vector<View>();//
     private CustomBar                     ccb;
     private FillWithOperationsList        fwol = null;
+    private ApplicationAttributes         attr;
 
 
     @Override
@@ -90,6 +91,13 @@ public class RegularLoginActivity extends AppCompatActivity {
         setContentView(R.layout.regular_login);
 
         FM = new FileManager(this);
+
+        this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (this.attr == null) {
+            this.attr = new ApplicationAttributes(this);
+            FM.writeToFile("attributes.bin", this.attr);
+        }
+
         CommonClass c_c = (CommonClass)getIntent().getSerializableExtra(MainActivity.MAIN_INFO);// do we need this? we can read info from the file actually
         if (c_c != null) {
             this.params.getFromCommonClass(c_c);
@@ -199,10 +207,6 @@ public class RegularLoginActivity extends AppCompatActivity {
     }
 
     private void setAttributes() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         attr.setButtons(base_layout, logout_button);
 
 //        attr.setButtons(base_layout, logout_button);
@@ -217,10 +221,6 @@ public class RegularLoginActivity extends AppCompatActivity {
     }
 
     private void updateURL() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         base_http                 = attr.getBaseUrl();//
         url_request_operations    = base_http + "getoperations/?";
         url_request_operations   += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
@@ -244,13 +244,13 @@ public class RegularLoginActivity extends AppCompatActivity {
                     button.setVisibility(View.GONE);
             }
         } else {
-            ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-            if (attr != null) {
+//            ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+//            if (attr != null) {
                 MyColors colors = attr.getColors();
 
                 if (fwol != null)
                     colors.setColors(fwol.getBases());
-            }
+//            }
         }
         FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f); // TO SEE CLOSELY !
     }

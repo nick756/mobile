@@ -244,18 +244,14 @@ public class MyDialog {
     }
 
      protected ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
-        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        FileManager FM = new FileManager(base_layout.getContext());
+        ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes(base_layout.getContext());
 
 
         attr.setButtons(base_layout, buttons);
-/*
-        MyColors colors = attr.getColors();
-        Vector<View> views = new Vector<View>();
-        views.add(text_message);
-        views.add(dialog_layout);
-*/
+        FM.writeToFile("attributes.bin", attr);
         return attr;
      }
      protected void SetColors() {

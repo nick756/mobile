@@ -37,17 +37,19 @@ import static java.sql.DriverManager.println;
 
 public class HelpActivity extends AppCompatActivity {
     private RelativeLayout base_layout;
-    private Button         logout_button;
-    private FormResizing   FR;
-    private FileManager    FM;
-    private Vocabulary     voc;
-    private CustomBar      ccb;
-    private Vector<View>   views = new Vector<View>();
-    private String         url_logout;
-    private Parameters     params               = new Parameters();
-    private String         params_file_name     = "parameters.bin";
-    private String         html_start           = "";
-    private String         html_end             = "";
+    private Button                logout_button;
+    private FormResizing          FR;
+    private FileManager           FM;
+    private Vocabulary            voc;
+    private CustomBar             ccb;
+    private Vector<View>          views = new Vector<View>();
+    private String                url_logout;
+    private Parameters            params               = new Parameters();
+    private String                params_file_name     = "parameters.bin";
+    private String                html_start           = "";
+    private String                html_end             = "";
+
+    private ApplicationAttributes attr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,13 @@ public class HelpActivity extends AppCompatActivity {
         this.FM          = new FileManager(this);
         this.voc         = new Vocabulary();
         this.params      = (Parameters)FM.readFromFile(params_file_name);this.voc.setLanguage(params.getLanguage());
+
+        this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (this.attr == null) {
+            this.attr = new ApplicationAttributes(this);
+            FM.writeToFile("attributes.bin", this.attr);
+        }
+
 
         html_start += "<html>";
         html_start += "<body style='margin:0 auto; width:100%; text-align:center'>";
@@ -365,10 +374,6 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void setAttributes() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         attr.setButtons(base_layout, logout_button);
 
         MyColors colors = attr.getColors();
@@ -397,10 +402,6 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void updateURL() {
-        ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         String base_http = attr.getBaseUrl();
 
         url_logout       = base_http + "logout/?";

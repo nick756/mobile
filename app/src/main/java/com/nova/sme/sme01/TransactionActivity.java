@@ -86,6 +86,8 @@ public class TransactionActivity extends AppCompatActivity  {
     private Vector<View> views = new Vector<View>();
 
     private CustomBar ccb;
+    private ApplicationAttributes         attr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,13 @@ public class TransactionActivity extends AppCompatActivity  {
         this.FM        = new FileManager(this);
         this.FR        = new FormResizing(this, base_layout);
         this.voc       = new Vocabulary();
-//        this.my_dialog = new MyDialog(voc, base_layout);
+
+        this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (this.attr == null) {
+            this.attr = new ApplicationAttributes(this);
+            FM.writeToFile("attributes.bin", this.attr);
+        }
+
 
         this.operationList   = (ListOperations) FM.readFromFile(this.operations_list_name);
         this.operations_list = this.operationList.getOperationsList();
@@ -166,9 +174,6 @@ public class TransactionActivity extends AppCompatActivity  {
 
 
     private void setAttributes() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
         attr.setButtons(base_layout, logout_button);
 
         attr.setButtons(base_layout, logout_button);
@@ -180,10 +185,6 @@ public class TransactionActivity extends AppCompatActivity  {
 
     }
     private void updateURL() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         base_http  = attr.getBaseUrl();//
         base_url   = base_http + "addtransaction/?" + "id=" + params.getId() + "&companyID=" + params.getcompanyID();
         url_logout = base_http + "logout/?"         + "id=" + params.getId() + "&companyID=" + params.getcompanyID();

@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
     private Vector<View>                  views = new Vector<View>(); // to change background
     private Button                        logout_button;
+    private ApplicationAttributes         attr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
          // to hide keyboard, that appeares without our permiossion as default
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+
+
         cap_text    = (TextView)findViewById(R.id.cap_text);cap_text.setTag("text_background_color");
         base_layout = (android.widget.RelativeLayout) findViewById(R.id.base_layout);base_layout.setTag("main_background_color");
 
@@ -115,6 +118,12 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         voc       = new Vocabulary();
         FM        = new FileManager(this);
+
+        this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (this.attr == null) {
+            this.attr = new ApplicationAttributes(this);
+            FM.writeToFile("attributes.bin", this.attr);
+        }
 
         params = (Parameters) FM.readFromFile(params_file_name);
         if (params == null)
@@ -188,10 +197,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     }
 
     private void setAttributes() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
@@ -200,15 +205,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             ccb.setBackgound();
     }
     private void updateURL() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
-
         base_http      = attr.getBaseUrl();
         base_url_login = base_http + "login/?";
-
-//        url_logout                = base_http + "logout/?";
-//        url_logout               += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
     }
 
     private void getParams() {

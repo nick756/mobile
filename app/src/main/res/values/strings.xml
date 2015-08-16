@@ -15,5 +15,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_help_n">HelpNActivity</string>
+    <string name="title_activity_help_item">HelpItemActivity</string>
 
 </resources>

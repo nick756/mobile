@@ -170,9 +170,12 @@ public class GetFilterViewTransactions {
         }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
-        if (attr == null)
+        FileManager FM = new FileManager(base_layout.getContext());
+        ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
+        if (attr == null) {
             attr = new ApplicationAttributes(base_layout.getContext());
+            FM.writeToFile("attributes.bin", attr);
+        }
 //        if (attr == null) return;
 
         this.dialog_layout = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
@@ -221,11 +224,13 @@ public class GetFilterViewTransactions {
     }
 
     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {
-        ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
+        FileManager FM = new FileManager(base_layout.getContext());
+        ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes(base_layout.getContext());
 
         attr.setButtons(base_layout, buttons);
+        FM.writeToFile("attributes.bin", attr);
         return attr;
     }
 

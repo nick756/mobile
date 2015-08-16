@@ -30,6 +30,7 @@ public class CommonClass implements Serializable {
     public String dateFrom;
     public String dateTill;
     public String operationName;
+    public int    help_id;
 
     public CommonClass(String code, String id, String originator,  String descr, String name, String role, String company, String companyID) {
         this.code       = code;
