@@ -66,14 +66,16 @@ public class CustomBar {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
 
+
             actionBar.setCustomView(layout);
+
             float button_factor = 0.25f;
             int width = base_layout.getWidth();
             float height;
             float h_margin;
             button = (Button) activity.findViewById(R.id.logout_button);
-            if (button != null)
-                button.setWidth((int) ((float) width * button_factor));
+//            if (button != null)
+//                button.setWidth((int) ((float) width * button_factor));
 
             setBackgound();
         } catch(Exception err) {

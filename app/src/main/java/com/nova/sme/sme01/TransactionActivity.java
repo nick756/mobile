@@ -339,7 +339,7 @@ public class TransactionActivity extends AppCompatActivity  {
             new AboutDialog(FR, voc, base_layout, logout_button).show();
             return true;
         } else if (id == R.id.action_help) {
-            startActivity(new Intent(this, HelpActivity.class));
+            startActivity(new Intent(this, HelpNActivity.class));
             return true;
         }
 

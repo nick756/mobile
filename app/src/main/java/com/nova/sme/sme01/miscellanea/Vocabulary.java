@@ -102,7 +102,21 @@ public class Vocabulary implements Serializable {
             {"Reset",                                               "Set semula"},
             {"Select/Unselect All",                                 "Pilih/Nyahpilih Semua"},
             {"Date is wrong",                                       "Tarikh yang salah"},
-
+            {"Base Functionality",                                  "Fungsi asas"},
+            {"General",                                             "Umum"},
+            {"Login procedure",                                     "Prosedur log masuk"},
+            {"Operations List",                                     "Senarai operasi"},
+            {"Perform Transactions",                                "Melaksanakan Urusniaga"},
+            {"View Transactions",                                   "Lihat Urusniaga"},
+            {"Setting",                                             "Menetapkan"},
+            {"Select Language",                                     "Pilih Bahasa"},
+            {"URL Address",                                         "URL Alamat"},
+            {"Buttons Themes",                                      "Butang Tema"},
+            {"Colors Themes",                                       "Warna Tema"},
+            {"Miscellanea",                                         "Miscellanea"},
+            {"Troubleshooting",                                     "Penyelesaian masalah"},
+            {"Help",                                                "Bantuan"},
+            {"About",                                               "Mengenai"},
 
     };
 
@@ -173,6 +187,13 @@ public class Vocabulary implements Serializable {
             change_caption(views.get(i));
     }
 */
+
+    public void change_views_captions(Vector<View> views) {
+
+        for (int i = 0; i < views.size(); i ++)
+            change_caption(views.get(i));
+    }
+
     public boolean change_caption(View view) {
         String class_name = view.getClass().getName().toString();
         if (class_name.indexOf("Button") != -1) {
@@ -225,6 +246,8 @@ public class Vocabulary implements Serializable {
             bt.setText(getMalay(bt.getText().toString()));
         else
             bt.setText(getEnglish(bt.getText().toString()));
+
+//        bt.setPadding(10, 0, 10, 0);
     }
 
     public void change_captions(Vector<Button> btns) {
@@ -235,6 +258,8 @@ public class Vocabulary implements Serializable {
                 bt.setText(getMalay(bt.getText().toString()));
             else
                 bt.setText(getEnglish(bt.getText().toString()));
+
+ //           bt.setPadding(10, 0, 10, 0);
         }
     }
 

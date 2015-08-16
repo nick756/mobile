@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:id="@+id/base_help_n">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/help_scroll_n"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Base Functionality"
+                android:id="@+id/textView10"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="General"
+                    android:id="@+id/textView101"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_general"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView101"
+                    android:layout_alignBottom="@+id/textView101"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login procedure"
+                    android:id="@+id/textView11"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_login"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView11"
+                    android:layout_alignBottom="@+id/textView11"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Operations List"
+                    android:id="@+id/textView12"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_op_list"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView12"
+                    android:layout_alignBottom="@+id/textView12"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Perform Transactions"
+                    android:id="@+id/textView13"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_per_trans"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignBottom="@+id/textView13"
+                    android:layout_alignTop="@+id/textView13"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Transactions"
+                    android:id="@+id/textView14"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_view_trans"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView14"
+                    android:layout_alignBottom="@+id/textView14"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Setting"
+                android:id="@+id/textView100"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="25dp" />
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Language"
+                    android:id="@+id/textView15"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_language"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView15"
+                    android:layout_alignBottom="@+id/textView15"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="URL Address"
+                    android:id="@+id/textView16"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_url"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView16"
+                    android:layout_alignBottom="@+id/textView16"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buttons Themes"
+                    android:id="@+id/textView17"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_buttons"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView17"
+                    android:layout_alignBottom="@+id/textView17"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Colors Themes"
+                    android:id="@+id/textView18"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_colors"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView18"
+                    android:layout_alignBottom="@+id/textView18"
+                    android:onClick="onClick" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Miscellanea"
+                android:id="@+id/textView102"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="25dp"
+                />
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Troubleshooting"
+                    android:id="@+id/textView19"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_trouble"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action"
+                    android:layout_alignTop="@+id/textView19"
+                    android:layout_alignBottom="@+id/textView19"
+                    android:onClick="onClick"
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

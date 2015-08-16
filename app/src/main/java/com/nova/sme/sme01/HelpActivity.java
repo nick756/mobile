@@ -69,7 +69,7 @@ public class HelpActivity extends AppCompatActivity {
         this.FR          = new FormResizing(this, base_layout);
         this.FM          = new FileManager(this);
         this.voc         = new Vocabulary();
-        this.params      = (Parameters)FM.readFromFile(params_file_name);
+        this.params      = (Parameters)FM.readFromFile(params_file_name);this.voc.setLanguage(params.getLanguage());
 
         html_start += "<html>";
         html_start += "<body style='margin:0 auto; width:100%; text-align:center'>";
