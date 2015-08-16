@@ -115,13 +115,10 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void tuneSizes() {
-        float factor     = 374.0f/630.0f;//455.0f/747.0f;
+        float factor     = 374.0f/630.0f;
         int   real_width = FR.getRealWidth();
         float imgWidth   = real_width*0.4f;
         float imgHeight  = imgWidth/factor;
-
-        //"@drawable/help1"
-//        Vector<Integer> imageIds     = new Vector<Integer>();//return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
 
         int [] ids = {
                         R.id.help_1,
@@ -187,13 +184,13 @@ public class HelpActivity extends AppCompatActivity {
 
         html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
         html += " The Type of the Operation is placed on the right side of either";
-        html += "<br>";
+//        html += "<br>";
         html += "icon <img src='data_import.png'/>";
+//        html += "<br>";
+        html += " or <img src='data_export.png'/>";
         html += "<br>";
-        html += "or <img src='data_export.png'/>";
-        html += "<br>";
-        html += " The description of the operation is placed on the right side of";
-        html += "<br>";
+        html += " The description of the operation is placed on the right side of ";
+//        html += "<br>";
         html += "icon <img src='gold.png'/>";
 
         html += html_end;
@@ -348,7 +345,7 @@ public class HelpActivity extends AppCompatActivity {
             }
 
             Drawable d = getResources().getDrawable(id);
-            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            d.setBounds(0, 0, d.getIntrinsicWidth()/2, d.getIntrinsicHeight()/2);
             return d;
         }
     }
