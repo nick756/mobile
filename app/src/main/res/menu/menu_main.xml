@@ -4,7 +4,7 @@
     tools:context=".MainActivity">
 
 
-     <item android:title="Settings" android:orderInCategory="101">
+     <item android:title="Application Settings" android:orderInCategory="101">
         <menu>
             <item android:id="@+id/action_language"
                 android:title="Select Language"

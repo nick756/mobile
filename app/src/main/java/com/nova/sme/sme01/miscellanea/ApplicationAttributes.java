@@ -138,7 +138,7 @@ public class ApplicationAttributes implements Serializable {
         }
     }
     private void set_button(Button btn, Context ctx, int id) {
-         int     sdk = android.os.Build.VERSION.SDK_INT;
+        int     sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             btn.setBackgroundDrawable(ctx.getResources().getDrawable(id));
         } else {
@@ -153,7 +153,7 @@ public class ApplicationAttributes implements Serializable {
         } catch (Exception e) {
             err = e.getMessage().toString();
         }
-        return -1;
+        return -1;//@drawable/login_button_selector
     }
     */
 }

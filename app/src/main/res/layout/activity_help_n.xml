@@ -43,7 +43,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_general"
@@ -51,10 +51,14 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView101"
                     android:layout_alignBottom="@+id/textView101"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+
+                    android:background="@drawable/login_button_selector"
+                    android:text=">>"
+                    android:singleLine="false"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
 
@@ -75,7 +79,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_login"
@@ -83,10 +87,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView11"
                     android:layout_alignBottom="@+id/textView11"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -106,7 +112,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_op_list"
@@ -114,10 +120,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView12"
                     android:layout_alignBottom="@+id/textView12"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:text=">>"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -137,7 +145,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_per_trans"
@@ -145,10 +153,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignBottom="@+id/textView13"
                     android:layout_alignTop="@+id/textView13"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -168,7 +178,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_view_trans"
@@ -176,16 +186,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView14"
                     android:layout_alignBottom="@+id/textView14"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Setting"
+                android:text="Application Settings"
                 android:id="@+id/textView100"
                 android:padding="5dp"
                 android:textSize="20sp"
@@ -210,7 +222,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_language"
@@ -218,10 +230,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView15"
                     android:layout_alignBottom="@+id/textView15"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
 
@@ -242,7 +256,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_url"
@@ -250,10 +264,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView16"
                     android:layout_alignBottom="@+id/textView16"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -273,7 +289,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_buttons"
@@ -281,10 +297,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView17"
                     android:layout_alignBottom="@+id/textView17"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
 
@@ -305,7 +323,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_colors"
@@ -313,10 +331,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView18"
                     android:layout_alignBottom="@+id/textView18"
-                    android:onClick="onClick" />
+                    android:onClick="onClick"
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
             <TextView
@@ -348,7 +368,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
-                <ImageView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/help_trouble"
@@ -356,11 +376,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action"
                     android:layout_alignTop="@+id/textView19"
                     android:layout_alignBottom="@+id/textView19"
                     android:onClick="onClick"
-                    />
+                    android:background="@drawable/login_button_selector"
+                    android:textStyle="bold"
+                    android:text=">>" />
             </RelativeLayout>
 
 

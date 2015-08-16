@@ -25,16 +25,18 @@ import java.util.Vector;
 import static java.sql.DriverManager.println;
 
 public class HelpNActivity extends AppCompatActivity {
-    private RelativeLayout base_layout;
-    private Button         logout_button;
-    private FormResizing   FR;
-    private FileManager    FM;
-    private Vocabulary     voc;
-    private CustomBar      ccb;
-    private Vector<View>   views = new Vector<View>();
-    private String         url_logout;
-    private Parameters     params               = new Parameters();
-    private String         params_file_name     = "parameters.bin";
+    private RelativeLayout       base_layout;
+    private Button               logout_button;
+    private FormResizing         FR;
+    private FileManager          FM;
+    private Vocabulary           voc;
+    private CustomBar            ccb;
+    private String               url_logout;
+    private Parameters           params               = new Parameters();
+    private String               params_file_name     = "parameters.bin";
+    private Vector<View>         views                = new Vector<View>();
+    private Vector<Button>       bt_vector            = new <Button>Vector();
+    private ApplicationAttributes attr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,12 @@ public class HelpNActivity extends AppCompatActivity {
         this.voc         = new Vocabulary();
         this.params      = (Parameters)FM.readFromFile(params_file_name);
 
-        this.voc.setLanguage(params.getLanguage());
+        if (this.params != null)
+            this.voc.setLanguage(params.getLanguage());
+
+        attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null)
+            attr = new ApplicationAttributes(this);
 
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -87,30 +94,41 @@ public class HelpNActivity extends AppCompatActivity {
             }
         });
 
+//b.setCompoundDrawablesWithIntrinsicBound(null,R.drawable.home_icon_test,null,nu‌​ll)
 
     }
 
     private void setAttributes() {
-        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (attr == null)
-            attr = new ApplicationAttributes(this);
+//        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
 
         attr.setButtons(base_layout, logout_button);
+        attr.setButtons(base_layout, bt_vector);
 
         MyColors colors = attr.getColors();
         colors.setColors(views);
 
         if (ccb != null)
             ccb.setBackgound();
+        //android:drawableLeft="@mipmap/ic_action"
     }
 
     private void addTextViews(View view) {
-        String className = view.getClass().getSimpleName();
+        ViewGroup.LayoutParams params;
+        Button                 btn;
+        String                 className = view.getClass().getSimpleName();
 
         if (className.indexOf("TextView") != -1) {
             view.setTag("main_background_color");
             views.add(view);
         }
+
+        if (className.indexOf("Button") != -1) {
+            btn = (Button)view;
+            bt_vector.add(btn);
+            params       = btn.getLayoutParams();
+            params.width = (int)((float)params.height*2.0f);
+        }
+
 
         if ((view instanceof ViewGroup)) {
             ViewGroup vg = (ViewGroup) view;
@@ -132,7 +150,6 @@ public class HelpNActivity extends AppCompatActivity {
             for (int i = 0; i < vg.getChildCount(); i++)
                 addLayouts(vg.getChildAt(i));
         }
-
     }
 
 
@@ -166,7 +183,7 @@ public class HelpNActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_help_n, menu);
+ //       getMenuInflater().inflate(R.menu.menu_help_n, menu);
         return true;
     }
 
@@ -200,7 +217,6 @@ public class HelpNActivity extends AppCompatActivity {
         R.id.help_general
 
          */
-
     }
 
  }

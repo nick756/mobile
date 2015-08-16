@@ -117,6 +117,7 @@ public class Vocabulary implements Serializable {
             {"Troubleshooting",                                     "Penyelesaian masalah"},
             {"Help",                                                "Bantuan"},
             {"About",                                               "Mengenai"},
+            {"Application Settings",                                "Tetapan Aplikasi"},
 
     };
 
@@ -246,8 +247,6 @@ public class Vocabulary implements Serializable {
             bt.setText(getMalay(bt.getText().toString()));
         else
             bt.setText(getEnglish(bt.getText().toString()));
-
-//        bt.setPadding(10, 0, 10, 0);
     }
 
     public void change_captions(Vector<Button> btns) {
@@ -258,8 +257,6 @@ public class Vocabulary implements Serializable {
                 bt.setText(getMalay(bt.getText().toString()));
             else
                 bt.setText(getEnglish(bt.getText().toString()));
-
- //           bt.setPadding(10, 0, 10, 0);
         }
     }
 

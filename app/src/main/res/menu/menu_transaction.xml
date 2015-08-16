@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.nova.sme.sme01.TransactionActivity">
 
-    <item android:title="Settings" android:orderInCategory="101">
+    <item android:title="Application Settings" android:orderInCategory="101">
         <menu>
             <item android:id="@+id/action_language"
                 android:title="Select Language"

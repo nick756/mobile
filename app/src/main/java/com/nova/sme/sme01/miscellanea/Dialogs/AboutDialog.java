@@ -152,7 +152,6 @@ public class AboutDialog extends MyDialog {
                 }
             });
         }
-
     }
 
 }
