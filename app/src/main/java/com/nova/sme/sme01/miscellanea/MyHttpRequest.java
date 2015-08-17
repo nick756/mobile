@@ -272,7 +272,6 @@ public class MyHttpRequest {
         Code = 0
         Code = 3 Expired Session
     */
-//<result code='0' id='4'><originator>194.219.45.10</originator><resDescription>Successful Operation</resDescription><dateStart>25/07/2015</dateStart><dateStop>25/07/2015</dateStop><recordCount>3</recordCount><records><record><tranCode>24</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>622.33</amount><descr>'test 7'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>25</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>222.55</amount><descr>'test 8'</descr><operator>Andreano Choppolo</operator></record><record><tranCode>26</tranCode><date>25/07/2015</date><type>IN: Additional Capital</type><amount>554.22</amount><descr>'test 12'</descr><operator>Andreano Choppolo</operator></record></records></result>
     private void implementViewTransactions(String xml, Serializer serializer) {
         String       code;
         boolean      empty = true;
@@ -284,9 +283,15 @@ public class MyHttpRequest {
                 List<Record> list = xml_List_transactions.getRecordsList();
 
                 if (list == null) {
+                    if (gif_doalog != null)
+                        gif_doalog.dismiss();
+
                     empty_list("List of transactions is empty");
                     return;
                 } else if (list.size() == 0) {
+                    if (gif_doalog != null)
+                        gif_doalog.dismiss();
+
                     empty_list("List of transactions is empty");
                     return;
                 }
@@ -311,13 +316,14 @@ public class MyHttpRequest {
                     }
 
                     if (empty) {
+                        if (gif_doalog != null)
+                            gif_doalog.dismiss();
+
                         empty_list("List of transactions is empty");
                         return;
                     }
                 }
 
-                if (gif_doalog != null)
-                    gif_doalog.dismiss();
 
 
                 FileManager FM = new FileManager(activity);
@@ -330,7 +336,13 @@ public class MyHttpRequest {
                 Intent intent = new Intent(activity, TransactionsViewActivity.class );
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(MainActivity.MAIN_INFO, c_c);
+
+                if (gif_doalog != null)
+                    gif_doalog.dismiss();
+
                 activity.startActivity(intent);
+
+
 
             } else {// Expired Session or any error
 /*

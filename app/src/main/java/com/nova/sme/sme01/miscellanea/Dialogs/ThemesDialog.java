@@ -66,11 +66,11 @@ public class ThemesDialog {
     }
     protected void setButtonHeight(Button button) {
         if (logout_button == null) return;
-        ViewGroup.LayoutParams params = logout_button.getLayoutParams();
-        int height                    = params.height;
+        ViewGroup.LayoutParams params;// = logout_button.getLayoutParams();
+//        int height                    = params.height;
 
         params = button.getLayoutParams();
-        params.height = height;
+        params.height = logout_button.getHeight();//height;
     }
 
     public ThemesDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {

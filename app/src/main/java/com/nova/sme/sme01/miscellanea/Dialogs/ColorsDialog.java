@@ -252,9 +252,8 @@ public class ColorsDialog extends ThemesDialog {
 
         action_bar.startAnimation();
 
-        setButtonHeight(OkButton);
-        setButtonHeight(CancelButton);//reset_btn
-        setButtonHeight(reset_btn);
+        for(int j = 0; j < btns.size(); j ++)
+            setButtonHeight(btns.get(j));
 
     }
 

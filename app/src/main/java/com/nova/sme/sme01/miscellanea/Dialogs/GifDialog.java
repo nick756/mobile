@@ -37,8 +37,6 @@ public class GifDialog {
 
         WebView web = (WebView)dialog.findViewById(R.id.web_view_loader);
         web.loadUrl("file:///android_asset/gif.html");//preloader.gif");
- //       web.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
