@@ -49,12 +49,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="General"
+                    android:text="General Information"
                     android:id="@+id/textView101"
                     android:padding="5dp"
                     android:textColor="@android:color/black"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="false" />
 
                 <Button
                     android:layout_width="wrap_content"

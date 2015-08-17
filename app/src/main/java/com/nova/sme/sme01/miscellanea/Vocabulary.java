@@ -118,6 +118,7 @@ public class Vocabulary implements Serializable {
             {"Help",                                                "Bantuan"},
             {"About",                                               "Mengenai"},
             {"Application Settings",                                "Tetapan Aplikasi"},
+            {"General Information",                                 "Informasi Am"},
 
     };
 

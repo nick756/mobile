@@ -85,7 +85,18 @@ public class ApplicationAttributes implements Serializable {
     }
 
     private void fillButtonsBackgroundIds(Context ctx) {
-//        String ssss = ctx.getResources().getResourceEntryName(2130837608);//2130837596);
+        button_background_ids.add(2130837608);
+        button_background_ids.add(2130837566);
+        button_background_ids.add(2130837587);
+        button_background_ids.add(2130837590);
+        button_background_ids.add(2130837569);
+        button_background_ids.add(2130837572);
+        button_background_ids.add(2130837575);
+        button_background_ids.add(2130837578);
+        button_background_ids.add(2130837581);
+        button_background_ids.add(2130837584);
+/*
+
         Resources res = ctx.getResources();
         int cnt;
         XmlResourceParser xpp = res.getLayout(R.layout.buttons);// .getXml(R.layout.buttons);
@@ -104,8 +115,6 @@ public class ApplicationAttributes implements Serializable {
                             if (attr_name.equals("background")) {
                                 background_id = xpp.getAttributeResourceValue(j, 0);
                                 button_background_ids.add(background_id);
-
-//                                ssss = xpp.getClassAttribute();
                             }
                          }
                     }
@@ -117,13 +126,7 @@ public class ApplicationAttributes implements Serializable {
         } catch (java.io.IOException e) {
 
         }
-
-  //      String sss = res.getText(R.layout.buttons).toString()
-//        res.get
- //       InputStream is = res.openRawResource(R.raw .layout.buttons);
-
- //       DOMParser dom_parser = new DOMParser(res.getXml(R.layout.buttons), is);
-  //      DOMParser dom_parser = new DOMParser(res.getString(R.layout.buttons), null);
+*/
     }
 
     public MyColors getColors(){return colors;}

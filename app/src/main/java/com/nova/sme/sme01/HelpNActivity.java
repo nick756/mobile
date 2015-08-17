@@ -54,10 +54,8 @@ public class HelpNActivity extends AppCompatActivity {
         this.FR          = new FormResizing(this, base_layout);
         this.FM          = new FileManager(this);
         this.voc         = new Vocabulary();
-        this.params      = (Parameters)FM.readFromFile(params_file_name);
 
-        if (this.params != null)
-            this.voc.setLanguage(params.getLanguage());
+        getParams();
 
         attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (attr == null)
@@ -234,5 +232,13 @@ public class HelpNActivity extends AppCompatActivity {
 
          */
     }
+    private void getParams() {
+        this.params = (Parameters) FM.readFromFile(params_file_name);
+        if (this.params == null)
+            this.params = new Parameters();
+        else
+            voc.setLanguage(params.getLanguage());
+    }
+
 
  }

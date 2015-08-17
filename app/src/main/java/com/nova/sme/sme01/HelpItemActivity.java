@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +65,12 @@ public class HelpItemActivity extends AppCompatActivity {
         this.FR          = new FormResizing(this, base_layout);
         this.FM          = new FileManager(this);
         this.voc         = new Vocabulary();
-        this.params      = (Parameters)FM.readFromFile(params_file_name);this.voc.setLanguage(params.getLanguage());
+
+        getParams();
+//        this.params      = (Parameters)FM.readFromFile(params_file_name);
+
+//        if (this.params != null)
+//            this.voc.setLanguage(params.getLanguage());
 
         this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (this.attr == null) {
@@ -221,24 +227,18 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "<br>";
                 html += "It includes:";
                 html += "<br>";
-//                html += "<br>";
                 html += "1. The Code of transaction.";
-//                html += "<br>";
                 html += "<br>";
                 html += "2. The Date of the transaction.";
-//                html += "<br>";
                 html += "<br>";
                 html += "3. The Type of the Operation.";
                 html += "<br>";
                 html += "   The left icon shows if it is inbound or outbound";
                 html += "<br>";
-//                html += "<br>";
                 html += "4. The Amount of money";
                 html += "<br>";
-//                html += "<br>";
                 html += "5. The Description";
                 html += "<br>";
-//                html += "<br>";
                 html += "6. The name of the person who made the transaction";
                 html += html_end;
 
@@ -418,7 +418,37 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_general:
+                caption.setText("General Information");
 
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                r_layout.removeView(img);
+
+                html  = html_start;
+                html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
+                html += "<br>";
+                html += "<br>";
+                html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
+                html += "<br>";
+                html += "<br>";
+                html += "The official site is: <a href='http://103.6.239.242/sme/'>";
+                html += "<br>";
+                html += "www.103.6.239.242/sme/</a>";
+                html += "<br>";
+                html += "<br>";
+                html += "Technical support: <a href='mailto:krasnikovn@yandex.ru'>";
+                html += "<br>";
+                html += "krasnikovn@yandex.ru</a>";
+
+                html += html_end;
+
+                content.setText(Html.fromHtml(html));
+                content.setMovementMethod(LinkMovementMethod.getInstance());
                 break;
 
 
@@ -513,5 +543,14 @@ public class HelpItemActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
+
+    private void getParams() {
+        this.params = (Parameters) FM.readFromFile(params_file_name);
+        if (this.params == null)
+            this.params = new Parameters();
+        else
+            voc.setLanguage(params.getLanguage());
+    }
+
 
 }

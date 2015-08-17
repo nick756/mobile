@@ -121,7 +121,8 @@ public class TransactionActivity extends AppCompatActivity  {
         this.params         = (Parameters)     FM.readFromFile(this.params_file_name);
  //       this.url_logout    += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
-        this.voc.setLanguage(this.params.getLanguage());
+        if (this.params != null)
+            this.voc.setLanguage(this.params.getLanguage());
 
         this.year_spinner         = (Spinner)findViewById(R.id.year_spinner);
         this.month_spinner        = (Spinner)findViewById(R.id.month_spinner);
