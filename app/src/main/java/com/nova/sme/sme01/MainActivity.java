@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
     private Vector<View>                  views = new Vector<View>(); // to change background
     private Button                        logout_button;
-    private ApplicationAttributes         attr;
+//    private ApplicationAttributes         attr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,13 +116,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         voc       = new Vocabulary();
         FM        = new FileManager(this);
-
+/*
         this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
         if (this.attr == null) {
             this.attr = new ApplicationAttributes(this);
             FM.writeToFile("attributes.bin", this.attr);
         }
-
+*/
         params = (Parameters) FM.readFromFile(params_file_name);
         if (params == null)
             params = new Parameters();
@@ -195,6 +195,12 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     }
 
     private void setAttributes() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null) {
+            attr = new ApplicationAttributes(this);
+            FM.writeToFile("attributes.bin", attr);
+        }
+
         attr.setButtons(base_layout, logout_button);
         MyColors colors = attr.getColors();
         colors.setColors(views);
@@ -203,6 +209,12 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             ccb.setBackgound();
     }
     private void updateURL() {
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null) {
+            attr = new ApplicationAttributes(this);
+            FM.writeToFile("attributes.bin", attr);
+        }
+
         base_http      = attr.getBaseUrl();
         base_url_login = base_http + "login/?";
     }
