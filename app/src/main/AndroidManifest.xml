@@ -37,10 +37,6 @@
             android:label="@string/title_activity_transactions_view" >
         </activity>
         <activity
-            android:name=".HelpActivity"
-            android:label="@string/title_activity_help" >
-        </activity>
-        <activity
             android:name=".HelpNActivity"
             android:label="@string/title_activity_help_n" >
         </activity>
