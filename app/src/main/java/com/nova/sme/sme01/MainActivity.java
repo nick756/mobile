@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             println(err.getMessage().toString());//android.util.AndroidRuntimeException: You cannot combine custom titles with other title features
         }
 
- //       this.setTitle(R.string.app_name);// "@string/app_name");
-
         if (first_entry) {// try to put this on "onStart"
             if (Settings.System.getInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1)
                 autorotation = 1;

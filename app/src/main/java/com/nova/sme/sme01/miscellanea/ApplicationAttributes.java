@@ -13,8 +13,11 @@ import com.nova.sme.sme01.R;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Vector;
+
+import static java.sql.DriverManager.println;
 
 
 /*
@@ -46,11 +49,43 @@ public class ApplicationAttributes implements Serializable {
         base_url = "http://" + url;
     }
 
+/*
+ size = 12
+ size = 12
+ 0 = {java.lang.Integer@829650426936} "2130837596"
+1 = {java.lang.Integer@829650427688}  "2130837566"
+2 = {java.lang.Integer@829650428288}  "2130837587"
+3 = {java.lang.Integer@829650428888}  "2130837590"
+4 = {java.lang.Integer@829650429488}  "2130837569"
+5 = {java.lang.Integer@829650430088}  "2130837572"
+6 = {java.lang.Integer@829650430688}  "2130837575"
+7 = {java.lang.Integer@829650431288}  "2130837578"
+8 = {java.lang.Integer@829650431888}  "2130837581"
+9 = {java.lang.Integer@829650432488}  "2130837584"
+10 = {java.lang.Integer@829650433088} "2130837596"
+11 = {java.lang.Integer@829650433688} "2130837596"
+
+0 = {java.lang.Integer@831731759576}  "2130837608"
+1 = {java.lang.Integer@831731838792}  "2130837566"
+2 = {java.lang.Integer@831731751280}  "2130837587"
+3 = {java.lang.Integer@831731991776}  "2130837590"
+4 = {java.lang.Integer@831732029960}  "2130837569"
+5 = {java.lang.Integer@831731874624}  "2130837572"
+6 = {java.lang.Integer@831731722584}  "2130837575"
+7 = {java.lang.Integer@831731757496}  "2130837578"
+8 = {java.lang.Integer@831731723880}  "2130837581"
+9 = {java.lang.Integer@831732126928}  "2130837584"
+10 = {java.lang.Integer@831731755624} "2130837608"
+11 = {java.lang.Integer@831731740016} "2130837608"
+
+     */
+
     public ApplicationAttributes(Context ctx) {
         fillButtonsBackgroundIds(ctx);
     }
 
     private void fillButtonsBackgroundIds(Context ctx) {
+//        String ssss = ctx.getResources().getResourceEntryName(2130837608);//2130837596);
         Resources res = ctx.getResources();
         int cnt;
         XmlResourceParser xpp = res.getLayout(R.layout.buttons);// .getXml(R.layout.buttons);
@@ -69,8 +104,10 @@ public class ApplicationAttributes implements Serializable {
                             if (attr_name.equals("background")) {
                                 background_id = xpp.getAttributeResourceValue(j, 0);
                                 button_background_ids.add(background_id);
+
+//                                ssss = xpp.getClassAttribute();
                             }
-                        }
+                         }
                     }
                 }
                 eventType = xpp.next();
@@ -80,6 +117,13 @@ public class ApplicationAttributes implements Serializable {
         } catch (java.io.IOException e) {
 
         }
+
+  //      String sss = res.getText(R.layout.buttons).toString()
+//        res.get
+ //       InputStream is = res.openRawResource(R.raw .layout.buttons);
+
+ //       DOMParser dom_parser = new DOMParser(res.getXml(R.layout.buttons), is);
+  //      DOMParser dom_parser = new DOMParser(res.getString(R.layout.buttons), null);
     }
 
     public MyColors getColors(){return colors;}
