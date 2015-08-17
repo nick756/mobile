@@ -3,10 +3,7 @@ package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 
 import com.nova.sme.sme01.FormResizing;
@@ -28,10 +24,7 @@ import com.nova.sme.sme01.miscellanea.SelectableOperationList;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 
-import java.util.List;
 import java.util.Vector;
-
-import static java.sql.DriverManager.println;
 
 /*
  **********************************
@@ -124,7 +117,13 @@ public class GetFilterViewTransactions {
             http_request += "&dateFrom=" + from;
             http_request += "&dateTill=" + till;
 
-            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "ListTransactions");
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "ListTransactions", new GifDialog(base_layout));
+            //////////////////////////////////////////
+//                new GifDialog(base_layout);
+//                Intent intent = new Intent(base_layout.getContext(), GifActivity.class);
+//                activity.startActivity(intent);
+            /////////////////////////////////////////
+
             sol.save();
             dialog.dismiss();
             }

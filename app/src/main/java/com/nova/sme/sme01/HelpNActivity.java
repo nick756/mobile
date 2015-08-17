@@ -26,17 +26,17 @@ import java.util.Vector;
 import static java.sql.DriverManager.println;
 
 public class HelpNActivity extends AppCompatActivity {
-    private RelativeLayout       base_layout;
-    private Button               logout_button;
-    private FormResizing         FR;
-    private FileManager          FM;
-    private Vocabulary           voc;
-    private CustomBar            ccb;
-    private String               url_logout;
-    private Parameters           params               = new Parameters();
-    private String               params_file_name     = "parameters.bin";
-    private Vector<View>         views                = new Vector<View>();
-    private Vector<Button>       bt_vector            = new <Button>Vector();
+    private RelativeLayout        base_layout;
+    private Button                logout_button;
+    private FormResizing          FR;
+    private FileManager           FM;
+    private Vocabulary            voc;
+    private CustomBar             ccb;
+    private String                url_logout;
+    private Parameters            params               = new Parameters();
+    private String                params_file_name     = "parameters.bin";
+    private Vector<View>          views                = new Vector<View>();
+    private Vector<Button>        bt_vector            = new <Button>Vector();
     private ApplicationAttributes attr;
 
     @Override

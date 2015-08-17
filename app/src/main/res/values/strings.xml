@@ -16,5 +16,6 @@
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_help_n">HelpNActivity</string>
     <string name="title_activity_help_item">HelpItemActivity</string>
+    <string name="title_activity_gif">GifActivity</string>
 
 </resources>

@@ -11,6 +11,7 @@ import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.RegularLoginActivity;
 import com.nova.sme.sme01.TransactionsViewActivity;
+import com.nova.sme.sme01.miscellanea.Dialogs.GifDialog;
 import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
 import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operation;
@@ -46,6 +47,7 @@ public class MyHttpRequest {
     private FormResizing    FR;
     private String          className;
     private FileManager     FM;
+    private GifDialog       gif_doalog = null;
 
     public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
@@ -59,6 +61,21 @@ public class MyHttpRequest {
         FM = new FileManager(activity);
         new Http_Request().execute();
     }
+
+    public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className, GifDialog gif_doalog) {
+        this.activity    = activity;
+        this.url_request = url_request;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=27/01/2015&dateTill=27/07/2015
+        this.base_layout = base_layout;
+        this.voc         = voc;
+        this.className   = className;
+        this.FR          = FR;
+        this.my_dialog   = new MyDialog(FR, voc, base_layout);
+        this.gif_doalog  = gif_doalog;
+
+        FM = new FileManager(activity);
+        new Http_Request().execute();
+    }
+
 
     private class Http_Request extends AsyncTask<Void, String, String> {
         @Override
@@ -280,7 +297,7 @@ public class MyHttpRequest {
                     Record record;
                     String operationType;
                     for (int j = 0; j < list.size(); j ++) {
-                        record = list.get(j);
+                        record        = list.get(j);
                         operationType = record.getType();
                         if (operationType.indexOf("IN:") == 0)
                             operationType = operationType.substring(3).trim();
@@ -299,6 +316,8 @@ public class MyHttpRequest {
                     }
                 }
 
+                if (gif_doalog != null)
+                    gif_doalog.dismiss();
 
 
                 FileManager FM = new FileManager(activity);
@@ -309,9 +328,10 @@ public class MyHttpRequest {
                 c_c.dateTill    = xml_List_transactions.getDateStop();
 
                 Intent intent = new Intent(activity, TransactionsViewActivity.class );
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(MainActivity.MAIN_INFO, c_c);
                 activity.startActivity(intent);
+
             } else {// Expired Session or any error
 /*
             Николай писал:
@@ -343,13 +363,13 @@ public class MyHttpRequest {
 
     private boolean inList(String operationType, Vector<ShortedOperation> asked_operations) {
         ShortedOperation wo;
-        String        name;
+        String           name;
         for (int j = 0; j < asked_operations.size(); j ++) {
             wo   = asked_operations.get(j);//Purchase of Office Equipment
             name = wo.name.trim();
             if (name.equals(operationType))//Purchase of Office Equipment
                 return wo.checked;
-         }
+        }
         return false;
     }
 

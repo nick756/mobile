@@ -221,7 +221,7 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 img.setImageResource(R.drawable.help11);
                 html = html_start;
-                html += "If there is data on the selected criteria, you will get a list of the transactions.";
+                html += "If there is data on the selected criteria, you will get a list of the transactions. ";
                 html += "In the parentheses indicates the number of the transactions";
                 html += "<br>";
                 html += "<br>";
