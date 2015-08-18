@@ -145,7 +145,7 @@ public class GetFilterViewTransactions {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sol.setAllCheckBoxes(isChecked);
+            sol.setAllCheckBoxes(isChecked);
             }
         });
         // set theme

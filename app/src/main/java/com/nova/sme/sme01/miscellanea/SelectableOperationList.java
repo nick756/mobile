@@ -48,7 +48,10 @@ public class SelectableOperationList {
 
     private RelativeLayout fromtill_layout;
 
-    private Vector<ShortedOperation> operations;// = new Vector<WideOperation>();
+//    private Vector<ShortedOperation> operations;// = new Vector<WideOperation>();
+
+    // updated logic, instead of operatios
+    private OperationsSelector operationsSelector;
 
     public SelectableOperationList(Dialog dialog, Vocabulary voc, RelativeLayout base_layout, FormResizing FR) {
         this.voc         = voc;
@@ -59,15 +62,19 @@ public class SelectableOperationList {
         this.dialog      = dialog;
         this.textFit     = new TextResizing(base_layout.getContext());
 
-        fillOperations();
+ //       fillOperations();
+        fillOperationsN();
 
-        LinearLayout layout             = (LinearLayout)dialog.findViewById(R.id.from_till_layout);
+
+        LinearLayout layout     = (LinearLayout)dialog.findViewById(R.id.from_till_layout);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        for (int i = 0; i < operations.size(); i++) {
+        Vector<ShortOperation> shortOperations = operationsSelector.getOperations();
+
+        for (int i = 0; i < shortOperations.size(); i++) {
             LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.operation_item_check, null);
             layout.addView(ll);
-            setValues(ll, operations.get(i));
+            setValues(ll, shortOperations.get(i));
         }
 
         fromtill_layout = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
@@ -90,14 +97,14 @@ public class SelectableOperationList {
     }
 
     private void set_CheckBoxes(boolean checked, View view) {
-        String className = view.getClass().getName().toUpperCase().trim();
+        String   className = view.getClass().getName().toUpperCase().trim();
         CheckBox cb;
         if (className.indexOf(new String("CheckBox").toUpperCase()) != -1) {
             cb = (CheckBox) view;
             cb.setChecked(checked);
 
-            ShortedOperation wo = (ShortedOperation)cb.getTag();
-            wo.checked       = checked;
+            ShortOperation so = (ShortOperation)cb.getTag();
+            so.checked       = checked;
         } else  if ((view instanceof ViewGroup)) {
             ViewGroup vg = (ViewGroup) view;
             for (int i = 0; i < vg.getChildCount(); i++)
@@ -106,18 +113,15 @@ public class SelectableOperationList {
     }
 
     public void save() {
-        FM.writeToFile("wideOperations.bin", operations);
+        operationsSelector.initChecked();
+        FM.writeToFile("OperationsSelector.bin", operationsSelector);
     }
 
     public boolean isEmpty() {
-        for (int i = 0; i < operations.size(); i ++)
-            if (operations.get(i).checked)
-                return false;
-
-        return true;
+        return operationsSelector.isEmpty();
     }
 
-    private void setValues(LinearLayout layout, ShortedOperation wo) {
+    private void setValues(LinearLayout layout, ShortOperation so) {
         try {
             View           view;
             String         tag;
@@ -139,30 +143,30 @@ public class SelectableOperationList {
                         tag  = (String) view.getTag();
                         if (tag.equals("image")) {
                             img = (ImageView) view;
-                            if(wo.in_out.equals("IN"))
+                            if(so.in_out.equals("IN"))
                                 img.setImageResource(R.mipmap.ic_in_bound);
                             else
                                 img.setImageResource(R.mipmap.ic_out_bound);
                         } else if (tag.equals("text")) {
                             text = (TextView) view;
-                            text.setText(wo.name);
+                            text.setText(so.name);
 
-                            len      = wo.name.length();
+                            len      = so.name.length();
                             curr_max = maxType.length();
                             if ((len > curr_max) && (len <= max_len))
-                                maxType = wo.name;
+                                maxType = so.name;
                             texts.add(text);
                         } else if (tag.equals("check")) {
                             cb = (CheckBox) view;
-                            cb.setChecked(wo.checked);
-                            cb.setTag(wo);
+                            cb.setChecked(so.checked);
+                            cb.setTag(so);
 
                             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                     CheckBox        cb  = (CheckBox) buttonView;
-                                    ShortedOperation wo = (ShortedOperation)cb.getTag();
-                                    wo.checked          = isChecked;
+                                    ShortOperation  so  = (ShortOperation)cb.getTag();
+                                    so.checked          = isChecked;
                                 }
                             });
                         }
@@ -175,13 +179,11 @@ public class SelectableOperationList {
         }
     }
 
-    public Vector<ShortedOperation> getOperations() {return operations;}
+    private void fillOperationsN() {
+        this.operationsSelector = (OperationsSelector) FM.readFromFile("OperationsSelector.bin");
+        if (operationsSelector == null) {
+            this.operationsSelector = new OperationsSelector();
 
-    private void fillOperations() {
-        ShortedOperation wo;
-        this.operations = (Vector<ShortedOperation>)FM.readFromFile("wideOperations.bin");
-        if (operations == null) {
-            this.operations  = new Vector<ShortedOperation>();
             ListOperations listOpeartions   = (ListOperations) FM.readFromFile("operations_list.bin");
             if (listOpeartions == null)
                 return;
@@ -191,24 +193,12 @@ public class SelectableOperationList {
             if (operations_list.size() == 0)
                 return;
 
-            Operation operation;
-            for (int j = 0; j < operations_list.size(); j ++) {
-                operation = operations_list.get(j);
 
-                wo      = new ShortedOperation();
-                wo.name = operation.getName().trim();
-                if (operation.getInbound().equals("true"))
-                    wo.in_out = "IN";
-                else
-                    wo.in_out = "OUT";
+            for (int j = 0; j < operations_list.size(); j ++)
+                operationsSelector.addOperation(operations_list.get(j));
 
-                wo.checked = true;
-                operations.add(wo);
-            }
-
-            FM.writeToFile("wideOperations.bin", operations);
-        } else {
-
+            operationsSelector.initChecked();
+            FM.writeToFile("OperationsSelector.bin", operationsSelector);
         }
     }
 

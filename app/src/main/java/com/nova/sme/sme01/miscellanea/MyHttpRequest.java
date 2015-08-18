@@ -31,6 +31,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Vector;
 
+import static java.sql.DriverManager.println;
+
 /*
  *******************************
  *                             *
@@ -297,24 +299,24 @@ public class MyHttpRequest {
                 }
 
                 // additional  stuff
-                Vector<ShortedOperation> asked_operations = (Vector<ShortedOperation>) FM.readFromFile("wideOperations.bin");
-                if (asked_operations != null) {
+                OperationsSelector operationSelector = (OperationsSelector) FM.readFromFile("OperationsSelector.bin");
+                if (operationSelector != null) {
                     Record record;
                     String operationType;
                     for (int j = 0; j < list.size(); j ++) {
                         record        = list.get(j);
                         operationType = record.getType();
-                        if (operationType.indexOf("IN:") == 0)
-                            operationType = operationType.substring(3).trim();
-                        else if (operationType.indexOf("OUT:") == 0)
-                            operationType = operationType.substring(4).trim();
 
-                        if (inList(operationType, asked_operations)) {
+                        if (operationType.indexOf("Bank Charges") != -1 || operationType.indexOf("Capital Injection") != -1)
+                            println("");
+
+                        if (operationSelector.isCheckedFullName(operationType)) {
                             empty = false;
                             break;
                         }
                     }
-
+                    //OUT:Bank Charges
+                    //IN:Capital Injection
                     if (empty) {
                         if (gif_doalog != null)
                             gif_doalog.dismiss();
@@ -322,9 +324,8 @@ public class MyHttpRequest {
                         empty_list("List of transactions is empty");
                         return;
                     }
+
                 }
-
-
 
                 FileManager FM = new FileManager(activity);
                 FM.writeToFile("transactions_view.bin", xml_List_transactions);
@@ -363,7 +364,6 @@ public class MyHttpRequest {
     }
 
     private void empty_list(String message) {
- //       MyDialog my_dialog = new MyDialog(null, voc, base_layout);
         my_dialog.show(voc.getTranslatedString(message), R.mipmap.ic_zero);
     }
 
@@ -372,18 +372,5 @@ public class MyHttpRequest {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
         activity.startActivity(intent);
     }
-
-    private boolean inList(String operationType, Vector<ShortedOperation> asked_operations) {
-        ShortedOperation wo;
-        String           name;
-        for (int j = 0; j < asked_operations.size(); j ++) {
-            wo   = asked_operations.get(j);//Purchase of Office Equipment
-            name = wo.name.trim();
-            if (name.equals(operationType))//Purchase of Office Equipment
-                return wo.checked;
-        }
-        return false;
-    }
-
 
 }

@@ -41,9 +41,11 @@ public class FillWithTransactionsList {
     private float          textsize   = 0;
 
     private Vector<TextView>      texts = new Vector<TextView>();
-    private Vector<ShortedOperation> asked_operations;
+//    private Vector<ShortedOperation> asked_operations;
 
     private int            transactionsNumber = 0;
+    // updated stuff
+    private OperationsSelector operationSelector;
 
     public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity     = activity;
@@ -53,14 +55,20 @@ public class FillWithTransactionsList {
         this.base_layout  = base_layout;
         this.textFit      = new TextResizing(activity);
 
-
         FileManager FM   = new FileManager(activity);
-        asked_operations = (Vector<ShortedOperation>) FM.readFromFile("wideOperations.bin");
+ //       asked_operations = (Vector<ShortedOperation>) FM.readFromFile("wideOperations.bin");
+
+        operationSelector = (OperationsSelector) FM.readFromFile("OperationsSelector.bin");
+        if (operationSelector == null) {
+            operationSelector = new OperationsSelector();
+            FM.writeToFile("OperationsSelector.bin", operationSelector);
+        }
+
 
 
         implement();
     }
-
+/*
     private boolean let(String operationName) {
         if (asked_operations == null)
             return true;
@@ -76,7 +84,7 @@ public class FillWithTransactionsList {
 
         return false;
     }
-
+*/
     private boolean implement() {
         if (this.listTransactions == null) {
             clean_scroll();
@@ -103,8 +111,10 @@ public class FillWithTransactionsList {
             ViewGroup.MarginLayoutParams params;
             transactionsNumber = 0;
             for (int i = 0; i < list.size(); i++) {
-                if (!let(list.get(i).getType()))
+                if (!operationSelector.isCheckedFullName(list.get(i).getType()))
                     continue;
+//                if (!let(list.get(i).getType()))
+//                    continue;
 
                 transactionsNumber ++;
 

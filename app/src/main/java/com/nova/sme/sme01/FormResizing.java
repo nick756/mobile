@@ -163,7 +163,7 @@ public class FormResizing {
 //                    params.height = (int) new_height;
 
                     for (int k = 0; k < sub_element.getChildCount(); k ++) {
-                        view = sub_element.getChildAt(k);
+                        view      = sub_element.getChildAt(k);
                         className = view.getClass().getSimpleName().toUpperCase().trim();
                         if (className.indexOf(new String("Image").toUpperCase()) != -1) {
                             ib            = (ImageView) view;
@@ -216,9 +216,15 @@ public class FormResizing {
         ViewGroup.LayoutParams params;
 
         if (button != null) {
-            params = button.getLayoutParams();
-            params.height = (int) new_height;
-            params.width  = (int)(width*0.25f);
+            if (log_button_height != 0) {
+                params = button.getLayoutParams();
+                params.height = log_button_height;
+                params.width  = (int)(width*0.25f);
+            } else {
+                params = button.getLayoutParams();
+                params.height = (int) new_height;
+                params.width = (int) (width * 0.25f);
+            }
         }
 
 
