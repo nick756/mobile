@@ -149,6 +149,7 @@ public class HelpItemActivity extends AppCompatActivity {
         float             imgWidth   = real_width*0.4f;
         float             imgHeight  = imgWidth/factor;
         Vector<ImageView> images     = new Vector<ImageView>();
+        String            br         = "<br>";
 
 
 //        Html.ImageGetter imageGetter;
@@ -164,9 +165,69 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_url:
+                caption.setText("URL Addrers");
+
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help14);
+                html = html_start;
+                html += "You will be informed if the server’s url address need to be changed.";
+                html += br + br;
+                html += "Be very careful while filling out the url address, single incorrect symbol follows failure to connect.";
+                html += html_end;
+
+                content.setText(Html.fromHtml(html, new ImageGetter(), null));
 
                 break;
+            case R.id.help_settings_general:
+                caption.setText("General Information");
+
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                r_layout.removeView(img);
+
+                html  = html_start;
+                html += "The <b>Application Setting</b> menu item includes four items as follow:";
+                html += br;
+                html += br;
+                html += "1.    <b>Select Language</b>. Two languages are available – English and Malay.";
+                html += br;
+                html += br;
+                html += "2.    <b>URL Address</b>. It should be used if by some reason the Server’s url address is changed.";
+                html += br;
+                html += br;
+                html += "3/4.  <b>Buttons Themes & Colors Themes</b>. You can set your own background style.";
+                html += html_end;
+                content.setText(Html.fromHtml(html));
+                break;
             case R.id.help_language:
+                caption.setText("Select Language");
+
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help13);
+
+                html  = html_start;
+                html += "The mobile application changes all texts and captions in accordance with the selected language on the fly.";
+                html += br;
+                html += br;
+                html += "The selection is saved so that after restarting appropriated language is used.";
+                html += html_end;
+
+                content.setText(Html.fromHtml(html, new ImageGetter(), null));
 
                 break;
             case R.id.help_view_trans:
@@ -196,16 +257,16 @@ public class HelpItemActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.help10);
                 html = html_start;
                 html += "On the appeared dialog box you can set necessary filter as follow:";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "<b>Select types of operations.</b>";
-                html += "<br>";
+                html += br;
                 html += "Possible to select all of them or part.";
                 html += "To do that use check box ‘Select/Unselect All’ and checkboxes on scrolling list of operations";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "<b>The date range</b>";
-                html += "<br>";
+                html += br;
                 html += "Use dropdawn components to set <b>From Till</b>  Date.";
                 html += html_end;
 
@@ -223,22 +284,22 @@ public class HelpItemActivity extends AppCompatActivity {
                 html = html_start;
                 html += "If there is data on the selected criteria, you will get a list of the transactions. ";
                 html += "In the parentheses indicates the number of the transactions";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "It includes:";
-                html += "<br>";
+                html += br;
                 html += "1. The Code of transaction.";
-                html += "<br>";
+                html += br;
                 html += "2. The Date of the transaction.";
-                html += "<br>";
+                html += br;
                 html += "3. The Type of the Operation.";
-                html += "<br>";
+                html += br;
                 html += "   The left icon shows if it is inbound or outbound";
-                html += "<br>";
+                html += br;
                 html += "4. The Amount of money";
-                html += "<br>";
+                html += br;
                 html += "5. The Description";
-                html += "<br>";
+                html += br;
                 html += "6. The name of the person who made the transaction";
                 html += html_end;
 
@@ -274,7 +335,7 @@ public class HelpItemActivity extends AppCompatActivity {
                 html = html_start;
                 html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
                 html += "next form make necessary selection and ";
-                html += "<br>";
+                html += br;
                 html += "press image button <img src='action_button.png'/>";
                 html += "<br><br>";
                 html += "with preselected type of operation (in image it is 'Advance from Directors').";
@@ -293,8 +354,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.help6);
                 html = html_start;
                 html += "To obtain the full list of available Operations touch the area  showed by arrow. Then using scrolling to make  a choice.";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "The application makes control of the filled data.";
                 html += "So the transaction is being considered if the Description & Amount field is not empty. The Date can not be more then current.";
                 html += html_end;
@@ -349,7 +410,7 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += " The Type of the Operation is placed on the right side of either ";
                 html += "icon <img src='data_import.png'/>";
                 html += " or <img src='data_export.png'/>";
-                html += "<br>";
+                html += br;
                 html += " The description of the operation is placed on the right side of ";
                 html += "icon <img src='gold.png'/>";
                 html += html_end;
@@ -388,7 +449,7 @@ public class HelpItemActivity extends AppCompatActivity {
                 html  = html_start;
                 html += "Successful first time login on an android device  is followed by screen with a single option:";
                 html += "'Synchronize Operations List'";
-                html += "<br>";
+                html += br + br;
                 html += "This option entails transfer of list of allowed operations to mobile client.";
                 html += html_end;
 
@@ -405,6 +466,7 @@ public class HelpItemActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.help3);
                 html  = html_start;
                 html += "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  ";
+                html += br + br;
                 html += "If a User needs to manage more than one company using android device, two login names must be used ";
                 html += "(In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization ";
                 html += "to be performed by  pressing button RESET OPERATIONS  LIST.";
@@ -414,14 +476,13 @@ public class HelpItemActivity extends AppCompatActivity {
                 // III
 
 
-                setImgSize(images, (int) imgWidth, (int) imgHeight);
+ //               setImgSize(images, (int) imgWidth, (int) imgHeight);
 
                 break;
             case R.id.help_general:
                 caption.setText("General Information");
 
                 r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
-
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);
@@ -431,18 +492,18 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 html  = html_start;
                 html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "The official site is: <a href='http://103.6.239.242/sme/'>";
-                html += "<br>";
+                html += br;
                 html += "www.103.6.239.242/sme/</a>";
-                html += "<br>";
-                html += "<br>";
+                html += br;
+                html += br;
                 html += "Technical support: <a href='mailto:krasnikovn@yandex.ru'>";
-                html += "<br>";
+                html += br;
                 html += "krasnikovn@yandex.ru</a>";
 
                 html += html_end;
@@ -453,6 +514,8 @@ public class HelpItemActivity extends AppCompatActivity {
 
 
         }
+        if (images.size() > 0)
+            setImgSize(images, (int) imgWidth, (int) imgHeight);
     }
     private class ImageGetter implements Html.ImageGetter {
 

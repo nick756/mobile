@@ -226,6 +226,42 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="General Information"
+                    android:id="@+id/textView1012"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="false" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/help_settings_general"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignTop="@+id/textView1012"
+                    android:layout_alignBottom="@+id/textView1012"
+                    android:onClick="onClick"
+
+                    android:background="@drawable/login_button_selector"
+                    android:text=">>"
+                    android:singleLine="false"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Select Language"
                     android:id="@+id/textView15"
                     android:padding="5dp"
