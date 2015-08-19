@@ -158,9 +158,9 @@ public class TransactionActivity extends AppCompatActivity  {
                 FR.resizeCalendar(base_layout, base_calendar_layout, year_spinner, month_spinner, day_spinner, 0.062f);
                 FR.resizeAmounts(base_layout,
                         (RelativeLayout) findViewById(R.id.base_amount_id),
-                        (EditText) findViewById(R.id.sum_id),
-                        (EditText) findViewById(R.id.sub_sum_id),
-                        (Button) findViewById(R.id.submit_transaction_button), 0.062f);
+                        (EditText)       findViewById(R.id.sum_id),
+                        (EditText)       findViewById(R.id.sub_sum_id),
+                        (Button)         findViewById(R.id.submit_transaction_button), 0.062f);
 
                 voc.TranslateAll(base_layout);
                 setAttributes();
@@ -333,6 +333,7 @@ public class TransactionActivity extends AppCompatActivity  {
                 MenuCaptions(inner_menu);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -356,7 +357,6 @@ public class TransactionActivity extends AppCompatActivity  {
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -435,7 +435,8 @@ public class TransactionActivity extends AppCompatActivity  {
                                                        s_opearion,
                                                        s_date,
                                                        descr,
-                                                       s_amount);
+                                                       s_amount,
+                                                       logout_button);
         ct.show();
     }
 

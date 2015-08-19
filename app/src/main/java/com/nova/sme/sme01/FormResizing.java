@@ -31,10 +31,9 @@ import java.util.Vector;
  */
 
 public class FormResizing {
-    private Activity/*AppCompatActivity*/ activity;
+    private Activity activity;
     private android.widget.RelativeLayout base_layout;
 
- //   private int   base_height = 0;
     private float   width_virt     = 1080.0f;
     private float   height_virt    = 1696.0f;
     private float   width_margin   = 0.0f;
@@ -42,6 +41,7 @@ public class FormResizing {
     private int     real_width;
     private int     real_height;
     private int     log_button_height = 0;
+    private Button  logout_button = null;
 
     public FormResizing(/*AppCompatActivity*/Activity activity, RelativeLayout base_layout) {
         this.base_layout = base_layout;
@@ -137,6 +137,7 @@ public class FormResizing {
 
             log_button_height = params.height;
         }
+        this.logout_button = logout_button;
     }
     public int  getLogButtonHeight(){return log_button_height;}
     public void setLogButtonHeight(int height){log_button_height = height;}
@@ -216,14 +217,19 @@ public class FormResizing {
         ViewGroup.LayoutParams params;
 
         if (button != null) {
-            if (log_button_height != 0) {
-                params = button.getLayoutParams();
-                params.height = log_button_height;
-                params.width  = (int)(width*0.25f);
-            } else {
-                params = button.getLayoutParams();
-                params.height = (int) new_height;
-                params.width = (int) (width * 0.25f);
+            if (logout_button != null) {
+                int height = logout_button.getHeight();
+
+                if (height == 0) {
+                    logout_button.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    height = logout_button.getMeasuredHeight();
+                }
+
+                if (log_button_height > 0)
+                    height = Math.min(height, log_button_height); // I know, I know.... hoodoo
+
+                params        = button.getLayoutParams();
+                params.height = height;
             }
         }
 

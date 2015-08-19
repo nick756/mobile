@@ -140,7 +140,10 @@
             android:onClick="submitClick"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/login_button_selector" />
+            android:background="@drawable/login_button_selector"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
 

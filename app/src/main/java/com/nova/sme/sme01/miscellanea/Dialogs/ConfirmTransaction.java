@@ -34,7 +34,7 @@ import java.util.Vector;
  ********************************
  *                              *
  *   Confirmation transaction   *
- *   Before sending request     *
+ *   before sending request     *
  *   to server                  *
  *                              *
  ********************************
@@ -54,19 +54,21 @@ public class ConfirmTransaction {
 
     private Button    okButton;
     private Button    cancelButton;
+    private Button    logout_button;
 
 
-    public ConfirmTransaction(Activity activity, Vocabulary voc, FormResizing   FR, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum) {
-        this.activity     = activity;
-        this.voc          = voc;
-        this.FR           = FR;
-        this.base_layout  = base_layout;
-        this.http_request = http_request;
+    public ConfirmTransaction(Activity activity, Vocabulary voc, FormResizing   FR, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum, Button logout_button) {
+        this.activity      = activity;
+        this.voc           = voc;
+        this.FR            = FR;
+        this.base_layout   = base_layout;
+        this.http_request  = http_request;
+        this.opearion      = s_opearion;
+        this.date          = s_date;
+        this.descr         = s_descr;
+        this.amount        = s_sum;
+        this.logout_button = logout_button;
 
-        this.opearion = s_opearion;
-        this.date     = s_date;
-        this.descr    = s_descr;
-        this.amount   = s_sum;
     }
     void send_request() {
         new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
@@ -141,11 +143,7 @@ public class ConfirmTransaction {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
-
         dialog.getWindow().setAttributes(lp);
-
-        setButtonsSize();
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
@@ -172,9 +170,13 @@ public class ConfirmTransaction {
 
         attr.getColors().setColors(views);
 
+        setButtonsSize();
+
     }
     private void setButtonsSize() {
-        int height = FR.getLogButtonHeight();
+        if (logout_button == null) return;
+
+        int height = logout_button.getHeight();
         if (height > 0) {
             ViewGroup.LayoutParams prms = okButton.getLayoutParams();
             prms.height                 = height;
@@ -191,7 +193,6 @@ public class ConfirmTransaction {
         ApplicationAttributes attr = (ApplicationAttributes) FM.readFromFile("attributes.bin");
         if (attr == null)
             attr = new ApplicationAttributes(base_layout.getContext());
-
 
         attr.setButtons(base_layout, buttons);
         FM.writeToFile("attributes.bin", attr);

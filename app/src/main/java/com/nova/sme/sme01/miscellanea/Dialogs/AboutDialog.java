@@ -52,8 +52,7 @@ public class AboutDialog extends MyDialog {
     }
     private void setButtonHeight(Button button) {
         if (logout_button == null) return;
-        ViewGroup.LayoutParams params;// = logout_button.getLayoutParams();
-//        int height                    = params.height;
+        ViewGroup.LayoutParams params;
 
         params = button.getLayoutParams();
         params.height = logout_button.getHeight();//height;
