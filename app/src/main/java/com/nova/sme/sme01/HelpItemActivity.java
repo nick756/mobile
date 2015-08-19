@@ -206,8 +206,8 @@ public class HelpItemActivity extends AppCompatActivity {
     private void fillContent() {
         LayoutInflater inflater  = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
         LinearLayout   l_layout  = (LinearLayout) findViewById(R.id.help_scroll_base);// to be filled
+        TextView       caption   = (TextView) findViewById(R.id.textTopic);
         RelativeLayout r_layout;
-        TextView       caption  = (TextView) findViewById(R.id.textTopic);
         TextView       content;
         ImageView      img;
         String         html;
