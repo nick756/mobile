@@ -48,6 +48,7 @@ public class FormResizing {
         this.activity = activity;
     }
 
+    public Button getLogoutButton(){return  logout_button;}
     public void resize() {
         float width_area  = base_layout.getWidth();  // 1080
         float height_area = base_layout.getHeight(); // 1752

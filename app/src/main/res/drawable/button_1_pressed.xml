@@ -9,7 +9,7 @@
         android:startColor="#E8E8E8"
         android:endColor="#8F8F8F"
         android:type="linear"
-        />
+    />
      <stroke
         android:width="3dp"
         android:color="#878787"

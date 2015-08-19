@@ -43,7 +43,7 @@ public class FileManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();//java.io.NotSerializableException: com.nova.sme.sme01.miscellanea.Parameters$AllowedOperations
+            e.printStackTrace();//java.io.NotSerializableException: com.nova.sme.sme01.miscellanea.Dialogs.ButtonsDialog
         }
         return false;
     }

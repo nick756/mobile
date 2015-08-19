@@ -158,15 +158,9 @@ public class GetFilterViewTransactions {
 
         dialog.getWindow().setAttributes(lp);
         resize(lp.width);
+        setButtonHeight(okButton);
+        setButtonHeight(cancelButton);
 
-        int height = FR.getLogButtonHeight();
-        if (height > 0) {
-            ViewGroup.LayoutParams prms = okButton.getLayoutParams();
-            prms.height                 = height;
-
-            prms        = cancelButton.getLayoutParams();
-            prms.height = height;
-        }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         FileManager FM = new FileManager(base_layout.getContext());
@@ -175,7 +169,6 @@ public class GetFilterViewTransactions {
             attr = new ApplicationAttributes(base_layout.getContext());
             FM.writeToFile("attributes.bin", attr);
         }
-//        if (attr == null) return;
 
         this.dialog_layout = (RelativeLayout) dialog.findViewById(R.id.from_till_base_layout);
         this.dialog_layout.setTag("dialog_background_color");
@@ -186,6 +179,28 @@ public class GetFilterViewTransactions {
         sv = (ScrollView) dialog.findViewById(R.id.from_till_scrollview);
         new refresh(this.dialog_layout);
     }
+    private void setButtonHeight(Button button) {
+        Button logout_button = FR.getLogoutButton();
+        if (logout_button == null) return;
+
+        int                    log_button_height = FR.getLogButtonHeight();
+        int                    height            = logout_button.getHeight();
+        ViewGroup.LayoutParams params;
+
+        if (height == 0) {
+            logout_button.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            height = logout_button.getMeasuredHeight();
+        }
+
+        if (log_button_height > 0)
+            height = Math.min(height, log_button_height); // I know, I know.... hoodoo
+
+        params = button.getLayoutParams();
+        params.height = height;
+
+    }
+
+
 
     private void resize(float width) {              // width of stroke
         width -= convertDpToPixels(6 * 2 + 5 * 2 + 5 * 2 + 6 * 2 + 2 * 2);// width of stroke

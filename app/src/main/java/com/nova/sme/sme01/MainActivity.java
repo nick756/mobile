@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.nova.sme.sme01.miscellanea.ButtonsSupport;
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.Dialogs.ButtonsDialog;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.FileManager;
@@ -33,6 +35,7 @@ import com.nova.sme.sme01.xml_reader_classes.ListOperations;
 import com.nova.sme.sme01.xml_reader_classes.Operator;
 import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -44,6 +47,10 @@ import static java.sql.DriverManager.println;
  *                                                *
  **************************************************
  */
+
+
+
+
 
 public class MainActivity extends AppCompatActivity /*implements View.OnClickListener */{//AppCompatActivity
     public static String  MAIN_INFO;
@@ -78,7 +85,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     private Button                        logout_button;
 //    private ApplicationAttributes         attr;
 
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -116,21 +123,11 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         voc       = new Vocabulary();
         FM        = new FileManager(this);
-/*
-        this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (this.attr == null) {
-            this.attr = new ApplicationAttributes(this);
-            FM.writeToFile("attributes.bin", this.attr);
-        }
-*/
-        params = (Parameters) FM.readFromFile(params_file_name);
+        params    = (Parameters) FM.readFromFile(params_file_name);
         if (params == null)
             params = new Parameters();
 
         voc.setLanguage(params.getLanguage());
-
-//        my_dialog        = new MyDialog(null, voc, base_layout);
- //       this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
         WindowMetrics wm = new WindowMetrics();wm.init(this);
         FM.writeToFile("windowMetrics.bin", wm);
@@ -399,7 +396,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
-            new ThemesDialog(base_layout, voc, FM, logout_button).show();
+//            new ThemesDialog(base_layout, voc, FM, logout_button).show();
+            new ButtonsDialog(base_layout, voc, FM, logout_button).show();
+
             return true;
         } else if (id == R.id.action_url_address) {
             new HttpDialog(FR, voc, base_layout, logout_button).show();

@@ -33,6 +33,14 @@ import java.util.Vector;
 
 import static java.sql.DriverManager.println;
 
+/*
+ ********************************
+ *                              *
+ *  Show selected help item     *
+ *                              *
+ ********************************
+ */
+
 public class HelpItemActivity extends AppCompatActivity {
 
     private RelativeLayout        base_layout;

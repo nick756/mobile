@@ -49,7 +49,7 @@ import static java.sql.DriverManager.println;
  ********************************
  *                              *
  *  Dialog for selecting themes *
- *  (so far buttons only        *
+ *  (so far buttons only)       *
  *                              *
  ********************************
  */
