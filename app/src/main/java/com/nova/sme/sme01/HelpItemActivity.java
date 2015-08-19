@@ -163,8 +163,12 @@ public class HelpItemActivity extends AppCompatActivity {
         if (image_path.length() == 0) {
             r_layout.removeView(img);
         } else {
-            img.setImageDrawable(getImageFromAsset(image_path));
-            images.add(img);
+//            try {
+                img.setImageDrawable(getImageFromAsset(image_path));
+                images.add(img);
+//            } catch(Exception e) {
+
+//            }
         }
         if (use_icon)
             content.setText(Html.fromHtml(html, new ImageGetter(), null));
@@ -173,7 +177,7 @@ public class HelpItemActivity extends AppCompatActivity {
 
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }
-
+/*
     private void fillItem(Vector<ImageView> images, LayoutInflater inflater, LinearLayout   l_layout, String html, int image_id, boolean use_icon) {
         TextView       content;
         ImageView      img;
@@ -198,7 +202,7 @@ public class HelpItemActivity extends AppCompatActivity {
 
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }
-
+*/
     private void fillContent() {
         LayoutInflater inflater  = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
         LinearLayout   l_layout  = (LinearLayout) findViewById(R.id.help_scroll_base);// to be filled
@@ -258,7 +262,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "<b>RESET OPERATION LIST</b> on the main form.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help22, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help22, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help22.png", false);
 
                 ////////////////////////////////////////////////////////////////////////////
                 html  = html_start;
@@ -268,7 +273,8 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, 0, false);
+//                fillItem(images, inflater, l_layout, html, 0, false);
+                fillItem(images, inflater, l_layout, html, "", false);
 
                 break;
             case R.id.help_colors:
@@ -298,14 +304,16 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "To get default color theme use <b>Reset</b> button.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help20, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help20, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help20.png", false);
 
             ////////////////////////////////////////////////////////////////////////////
                 html = html_start;
                 html += "To change a color of the <b>Action Bar</b> select the first item.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help16.png", false);
 
             ////////////////////////////////////////////////////////////////////////////
 
@@ -313,7 +321,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "To change a color of the <b> Application’s Background</b> select the second item.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help17, false);
+  //              fillItem(images, inflater, l_layout, html, R.drawable.help17, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help17.png", false);
 
                 ////////////////////////////////////////////////////////////////////////////
 
@@ -321,7 +330,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "To change a color of the <b>Dialog Box’s Caption</b> select the third  item.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help18, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help18, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help18.png", false);
 
                 ////////////////////////////////////////////////////////////////////////////
 
@@ -329,7 +339,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "To change a background color of the <b>Dalog Box</b> select the fourth item.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help19, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help19, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help19.png", false);
 
                 ////////////////////////////////////////////////////////////////////////////
 
@@ -345,7 +356,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "If the selection is accepted, all buttons of the application obtain this color configuration.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help15, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help15, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help15.png", false);
 
                 break;
             case R.id.help_url:
@@ -356,7 +368,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "Be very careful while filling out the url address, single incorrect symbol follows failure to connect.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help16.png", false);
 
                 break;
             case R.id.help_settings_general:
@@ -375,7 +388,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "3/4.  <b>Buttons Themes & Colors Themes</b>. You can set your own background style.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, 0, false);
+//                fillItem(images, inflater, l_layout, html, 0, false);
+                fillItem(images, inflater, l_layout, html, "", false);
                 break;
             case R.id.help_language:
                 caption.setText("Select Language");
@@ -387,7 +401,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "The selection is saved so that after restarting appropriated language is used.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help13, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help13, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help13.png", false);
 
                 break;
             case R.id.help_view_trans:
@@ -397,7 +412,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "To view transactions go to the main page and press button VIEW TRANSACTIONS";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help9, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help9, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help9.png", false);
                 // IX
 
                 // X
@@ -416,7 +432,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "Use dropdawn components to set <b>From Till</b>  Date.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help10, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help10, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help10.png", false);
                 // X
 
                 // XI
@@ -442,7 +459,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "6. The name of the person who made the transaction";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help11, false);
+                //fillItem(images, inflater, l_layout, html, R.drawable.help11, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help11.png", false);
                 // XI
 
                 // XII
@@ -450,7 +468,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "If there is no data matched to selected criteria, you receive an appropriate message";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help12, false);
+                //fillItem(images, inflater, l_layout, html, R.drawable.help12, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help12.png", false);
                 // XII
 
                 break;
@@ -466,7 +485,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "with preselected type of operation (in image it is 'Advance from Directors').";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help5, true);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help5, true);
+                fillItem(images, inflater, l_layout, html, "helpImages/help5.png", false);
                 // V
 
                 // VI
@@ -478,7 +498,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "So the transaction is being considered if the Description & Amount field is not empty. The Date can not be more then current.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help6, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help6, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help6.png", false);
                 // VI
 
                 // VII
@@ -486,7 +507,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "Before sending a request to cash flow procedure the dialog box asks confirmation.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help7, false);
+                //fillItem(images, inflater, l_layout, html, R.drawable.help7, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help7.png", false);
                 // VII
 
                 // VIII
@@ -494,7 +516,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "If everything goes well, you get the positive feedback message, otherwise negative one informs the transaction failed.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help8, false);
+                //fillItem(images, inflater, l_layout, html, R.drawable.help8, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help8.png", false);
                 // VIII
 
                 break;
@@ -512,7 +535,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "icon <img src='gold.png'/>";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help4, true);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help4, true);
+                fillItem(images, inflater, l_layout, html, "helpImages/help4.png", false);
                 // IV
 
                 break;
@@ -522,7 +546,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "First time login assumes pre-registration of User and Business on the server side before any operations on the mobile application.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help1, false);
+                //fillItem(images, inflater, l_layout, html, R.drawable.help1, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help1.png", false);
                 // I
 
                 // II
@@ -533,7 +558,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "This option entails transfer of list of allowed operations to mobile client.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help2, false);
+//                fillItem(images, inflater, l_layout, html, R.drawable.help2, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help2.png", false);
                 // II
 
                 // III
@@ -545,7 +571,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "to be performed by  pressing button RESET OPERATIONS  LIST.";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, R.drawable.help3, false);
+                //fillItem(images, inflater, l_layout, html, R.drawable.help3, false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help3.png", false);
                 // III
                 break;
             case R.id.help_general:
@@ -568,7 +595,8 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "krasnikovn@yandex.ru</a>";
                 html += html_end;
 
-                fillItem(images, inflater, l_layout, html, 0, false);
+//                fillItem(images, inflater, l_layout, html, 0, false);
+                fillItem(images, inflater, l_layout, html, "", false);
                 break;
 
 
