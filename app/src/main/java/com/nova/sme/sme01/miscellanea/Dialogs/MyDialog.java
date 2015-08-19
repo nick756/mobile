@@ -97,8 +97,8 @@ public class MyDialog {
         dialog.getWindow().setAttributes(lp);
 
         int height;
-        if (FR != null) {
-            height = FR.getLogButtonHeight();
+        if (this.FR != null) {
+            height = this.FR.getLogButtonHeight();
             if (height > 0) {
                 ViewGroup.LayoutParams prms = dialogButton.getLayoutParams();
                 prms.height                 = height;

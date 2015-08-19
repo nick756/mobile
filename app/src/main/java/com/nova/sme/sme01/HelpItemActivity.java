@@ -134,11 +134,36 @@ public class HelpItemActivity extends AppCompatActivity {
 
     }
 
+    private void fillItem(Vector<ImageView> images, LayoutInflater inflater, LinearLayout   l_layout, String html, int image_id, boolean use_icon) {
+        TextView       content;
+        ImageView      img;
+        RelativeLayout r_layout;
+
+        r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+        l_layout.addView(r_layout);
+
+        img     = (ImageView) r_layout.getChildAt(0);
+        content = (TextView)  r_layout.getChildAt(1);
+
+        if (image_id == 0) {
+            r_layout.removeView(img);
+        } else {
+            img.setImageResource(image_id);
+            images.add(img);
+        }
+        if (use_icon)
+            content.setText(Html.fromHtml(html, new ImageGetter(), null));
+        else
+            content.setText(Html.fromHtml(html));
+
+        content.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
     private void fillContent() {
         LayoutInflater inflater  = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
         LinearLayout   l_layout  = (LinearLayout) findViewById(R.id.help_scroll_base);// to be filled
         RelativeLayout r_layout;
-        TextView       caption   = (TextView) findViewById(R.id.textTopic);
+        TextView       caption  = (TextView) findViewById(R.id.textTopic);
         TextView       content;
         ImageView      img;
         String         html;
@@ -156,36 +181,70 @@ public class HelpItemActivity extends AppCompatActivity {
 
         switch(this.help_id) {
             case R.id.help_trouble:
-
-                break;
-            case R.id.help_colors:
-
-                break;
-            case R.id.help_buttons:
-
-                break;
-            case R.id.help_url:
-                caption.setText("URL Addrers");
+                caption.setText("Troubleshooting");
+                ////////////////////////////////////////////////////////////////////////////
+/*
 
                 r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
+                img.setImageResource(R.drawable.help21);
 
-                img.setImageResource(R.drawable.help14);
+*/
                 html = html_start;
-                html += "You will be informed if the server’s url address need to be changed.";
+                html += "If you get such a response after attempt of logging then it could be:";
                 html += br + br;
-                html += "Be very careful while filling out the url address, single incorrect symbol follows failure to connect.";
+                html += "<b>1.	Internet connection problem.</b>";
+                html += br + br;
+                html += "a. Check your mobile internet settings";
+                html += br + br;
+                html += "b. If you are at  the office (home) then try to reboot the rooter,  check for overheating, verify router cables are securely connected.";
+                html += br + br;
+                html += br + br;
+                html += "<b>2.	Url Address is not correct</b>";
+                html += br + br;
+                html += "Be sure that url address is correct, look at the Menu->Application Setting->Url Address.";
+                html += "Ask technical support (<a href='mailto:krasnikovn@yandex.ru'>krasnikovn@yandex.ru</a>) if necessary.";
+                html += br + br;
+                html += br + br;
+                html += "<b>3.	Problem in the server side.</b>";
+                html += br + br;
+                html += "Connect to the technical support team.";
+
                 html += html_end;
 
-                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+//                content.setText(Html.fromHtml(html));
+//                content.setMovementMethod(LinkMovementMethod.getInstance());
 
-                break;
-            case R.id.help_settings_general:
-                caption.setText("General Information");
+                fillItem(images, inflater, l_layout, html, R.drawable.help21, false);
 
+                ////////////////////////////////////////////////////////////////////////////
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help22);
+*/
+                html  = html_start;
+                html += "See Menu->Help->Login Procedure in details";
+                html += br + br;
+                html += "Necessary to login with old username+password";
+                html += " and press";
+                html += br;
+                html += "<b>RESET OPERATION LIST</b> on the main form.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help22, false);
+
+                ////////////////////////////////////////////////////////////////////////////
+/*
                 r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
 
                 l_layout.addView(r_layout);
@@ -194,6 +253,183 @@ public class HelpItemActivity extends AppCompatActivity {
                 content = (TextView)  r_layout.getChildAt(1);
 
                 r_layout.removeView(img);
+*/
+                html  = html_start;
+                html += "If during the job you make a long pause, the server could stop the session.";
+                html += br;
+                html += "It leads to a breakdown of communication and the application  returns to the login form. Then you need to login again.";
+
+                html += html_end;
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, 0, false);
+
+                break;
+            case R.id.help_colors:
+                caption.setText("Colors Themes");
+            ////////////////////////////////////////////////////////////////////////////
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help20);
+*/
+                html = html_start;
+                html += "This dialog box lets to change color theme of the application.";
+                html += br + br;
+                html += "There are four items to be selected as:";
+                html += br + br;
+                html += "1. Action bar background (placed on the top)";
+                html += br + br;
+                html += "2.	Background of the application";
+                html += br + br;
+                html += "3.	The caption on dialog boxes";
+                html += br + br;
+                html += "4.	The background color of the dialog box";
+                html += br + br;
+                html += "The selected object is shown by <b> flickering border. </b>";
+                html += br + br;
+                html += "To set a color of the selected item use three sliders:";
+                html += br + br;
+                html += "<b> <font color='Red'> Red</font>, <font color='green'> Green</font></b> and <b><font color='blue'>Blue.</font></b>";
+                html += br + br;
+                html += "The final color is a mixing of these three components.";
+                html += br + br;
+                html += "To get default color theme use <b>Reset</b> button.";
+                html += html_end;
+
+ //               content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help20, false);
+
+            ////////////////////////////////////////////////////////////////////////////
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help16);*/
+                html = html_start;
+                html += "To change a color of the <b>Action Bar</b> select the first item.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
+
+            ////////////////////////////////////////////////////////////////////////////
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help17);*/
+                html = html_start;
+                html += "To change a color of the <b> Application’s Background</b> select the second item.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help17, false);
+
+                ////////////////////////////////////////////////////////////////////////////
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help18);*/
+                html = html_start;
+                html += "To change a color of the <b>Dialog Box’s Caption</b> select the third  item.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help18, false);
+
+                ////////////////////////////////////////////////////////////////////////////
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help19);*/
+                html = html_start;
+                html += "To change a background color of the <b>Dalog Box</b> select the fourth item.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help19, false);
+                ////////////////////////////////////////////////////////////////////////////
+
+                break;
+            case R.id.help_buttons:
+                caption.setText("Buttons Themes");
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help15);*/
+                html  = html_start;
+                html += "To select a button press either a button or radio button on the left side.";
+                html += br + br;
+                html += "The text color of the button is setting by a slider";
+                html += br + br;
+                html += "If the selection is accepted, all buttons of the application obtain this color configuration.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help15, false);
+
+                break;
+            case R.id.help_url:
+                caption.setText("URL Addrers");
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);images.add(img);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                img.setImageResource(R.drawable.help14);*/
+                html = html_start;
+                html += "You will be informed if the server’s url address need to be changed.";
+                html += br + br;
+                html += "Be very careful while filling out the url address, single incorrect symbol follows failure to connect.";
+                html += html_end;
+
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
+
+                break;
+            case R.id.help_settings_general:
+                caption.setText("General Information");
+/*
+                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+
+                l_layout.addView(r_layout);
+
+                img     = (ImageView) r_layout.getChildAt(0);
+                content = (TextView)  r_layout.getChildAt(1);
+
+                r_layout.removeView(img);*/
 
                 html  = html_start;
                 html += "The <b>Application Setting</b> menu item includes four items as follow:";
@@ -207,18 +443,20 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += br;
                 html += "3/4.  <b>Buttons Themes & Colors Themes</b>. You can set your own background style.";
                 html += html_end;
-                content.setText(Html.fromHtml(html));
+ //               content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, 0, false);
                 break;
             case R.id.help_language:
                 caption.setText("Select Language");
-
+/*
                 r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help13);
+                img.setImageResource(R.drawable.help13);*/
 
                 html  = html_start;
                 html += "The mobile application changes all texts and captions in accordance with the selected language on the fly.";
@@ -227,34 +465,37 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "The selection is saved so that after restarting appropriated language is used.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+//                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help13, false);
 
                 break;
             case R.id.help_view_trans:
                 caption.setText("View Transactions");
                 // IX
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help9);
+                img.setImageResource(R.drawable.help9);*/
                 html = html_start;
                 html += "To view transactions go to the main page and press button VIEW TRANSACTIONS";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+                fillItem(images, inflater, l_layout, html, R.drawable.help9, false);
                 // IX
 
                 // X
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help10);
+                img.setImageResource(R.drawable.help10);*/
                 html = html_start;
                 html += "On the appeared dialog box you can set necessary filter as follow:";
                 html += br;
@@ -270,17 +511,18 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "Use dropdawn components to set <b>From Till</b>  Date.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+ //               content.setText(Html.fromHtml(html));
+                fillItem(images, inflater, l_layout, html, R.drawable.help10, false);
                 // X
 
                 // XI
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+ /*               r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help11);
+                img.setImageResource(R.drawable.help11);*/
                 html = html_start;
                 html += "If there is data on the selected criteria, you will get a list of the transactions. ";
                 html += "In the parentheses indicates the number of the transactions";
@@ -303,35 +545,39 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "6. The name of the person who made the transaction";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+ //               content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help11, false);
                 // XI
 
                 // XII
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help12);
+                img.setImageResource(R.drawable.help12);*/
                 html = html_start;
                 html += "If there is no data matched to selected criteria, you receive an appropriate message";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help12, false);
                 // XII
 
                 break;
             case R.id.help_per_trans:
                 caption.setText("Perform Transactions");
                 // V
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help5);
+                img.setImageResource(R.drawable.help5);*/
                 html = html_start;
                 html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
                 html += "next form make necessary selection and ";
@@ -341,17 +587,18 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "with preselected type of operation (in image it is 'Advance from Directors').";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+//                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+                fillItem(images, inflater, l_layout, html, R.drawable.help5, true);
                 // V
 
                 // VI
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help6);
+                img.setImageResource(R.drawable.help6);*/
                 html = html_start;
                 html += "To obtain the full list of available Operations touch the area  showed by arrow. Then using scrolling to make  a choice.";
                 html += br;
@@ -360,50 +607,56 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "So the transaction is being considered if the Description & Amount field is not empty. The Date can not be more then current.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help6, false);
                 // VI
 
                 // VII
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help7);
+                img.setImageResource(R.drawable.help7);*/
                 html = html_start;
                 html += "Before sending a request to cash flow procedure the dialog box asks confirmation.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help7, false);
                 // VII
 
                 // VIII
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+  /*              r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help8);
+                img.setImageResource(R.drawable.help8);*/
                 html = html_start;
                 html += "If everything goes well, you get the positive feedback message, otherwise negative one informs the transaction failed.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help8, false);
                 // VIII
 
                 break;
             case R.id.help_op_list:
                 caption.setText("Operations List");
                 // IV
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+/*                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help4);
+                img.setImageResource(R.drawable.help4);*/
                 html = html_start;
 
                 html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
@@ -415,13 +668,15 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "icon <img src='gold.png'/>";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+//                content.setText(Html.fromHtml(html, new ImageGetter(), null));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help4, true);
                 // IV
 
                 break;
             case R.id.help_login: // start from here, one item i sneeded
                 caption.setText("Login Procedure");
-
+/*
                 r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 //  I
                 l_layout.addView(r_layout);
@@ -429,23 +684,25 @@ public class HelpItemActivity extends AppCompatActivity {
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help1);
+                img.setImageResource(R.drawable.help1);*/
                 html  = html_start;
                 html += "First time login assumes pre-registration of User and Business on the server side before any operations on the mobile application.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help1, false);
                 // I
 
 
                 // II
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+  /*              r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help2);
+                img.setImageResource(R.drawable.help2);*/
                 html  = html_start;
                 html += "Successful first time login on an android device  is followed by screen with a single option:";
                 html += "'Synchronize Operations List'";
@@ -453,17 +710,19 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "This option entails transfer of list of allowed operations to mobile client.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+//                content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help2, false);
                 // II
 
                 // III
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+   /*             r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);images.add(img);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                img.setImageResource(R.drawable.help3);
+                img.setImageResource(R.drawable.help3);*/
                 html  = html_start;
                 html += "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  ";
                 html += br + br;
@@ -472,7 +731,9 @@ public class HelpItemActivity extends AppCompatActivity {
                 html += "to be performed by  pressing button RESET OPERATIONS  LIST.";
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
+  //              content.setText(Html.fromHtml(html));
+
+                fillItem(images, inflater, l_layout, html, R.drawable.help3, false);
                 // III
 
 
@@ -482,13 +743,13 @@ public class HelpItemActivity extends AppCompatActivity {
             case R.id.help_general:
                 caption.setText("General Information");
 
-                r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
+  /*              r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
                 l_layout.addView(r_layout);
 
                 img     = (ImageView) r_layout.getChildAt(0);
                 content = (TextView)  r_layout.getChildAt(1);
 
-                r_layout.removeView(img);
+                r_layout.removeView(img);*/
 
                 html  = html_start;
                 html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
@@ -508,8 +769,10 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 html += html_end;
 
-                content.setText(Html.fromHtml(html));
-                content.setMovementMethod(LinkMovementMethod.getInstance());
+//                content.setText(Html.fromHtml(html));
+//                content.setMovementMethod(LinkMovementMethod.getInstance());
+
+                fillItem(images, inflater, l_layout, html, 0, false);
                 break;
 
 

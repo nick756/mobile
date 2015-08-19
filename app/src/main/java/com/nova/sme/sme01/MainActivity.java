@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         voc.setLanguage(params.getLanguage());
 
-        my_dialog        = new MyDialog(null, voc, base_layout);
+//        my_dialog        = new MyDialog(null, voc, base_layout);
  //       this.url_logout  = this.base_url_logout +  "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
         WindowMetrics wm = new WindowMetrics();wm.init(this);
@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             });
 
             setAttributes();
+            my_dialog = new MyDialog(FR, voc, base_layout);
 
             }
         });
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             password.setText("");
             user_name.setText("");
 
-            new MyHttpRequest(null, this, base_layout, voc, login_request, "XML_Login");
+            new MyHttpRequest(FR, this, base_layout, voc, login_request, "XML_Login");
             //http//103.6.239.242/sme/mobile//login/?name=andrea&passw=1234
             //http://103.6.239.242/sme/mobile/login/?name=vlad&passw=1234
             //http://103.6.239.242/sme/mobile//login/?name=andrea&passw=1234
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                     if (checkIndentity(xml_login)) {
                         resultIntent = new Intent(base_layout.getContext(), RegularLoginActivity.class);
                     } else {
-                        String msg = "Only a single Company (Business) can be managed from Mobile Application. If a User needs to manage more than one company using smart phone, two login names must be used, and each time re-synchronization to be performed.";
+                        String msg = "Re-synchronization is needed";//Only a single Company (Business) can be managed from Mobile Application. If a User needs to manage more than one company using smart phone, two login names must be used, and each time re-synchronization to be performed.";
                         my_dialog.show(msg);
                         return;
                     }
