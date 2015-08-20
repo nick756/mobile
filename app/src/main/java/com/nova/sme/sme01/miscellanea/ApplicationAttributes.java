@@ -32,7 +32,9 @@ import static java.sql.DriverManager.println;
 
 public class ApplicationAttributes implements Serializable {
 //    private Button  button;
-    private MyColors        colors                = new MyColors();
+    private Context         context;
+    private WindowMetrics   wm;
+    private MyColors        colors;//                = new MyColors();
     private int             selected_button       = 0;// default
     private int             selected_button_color = Color.rgb(0, 0, 0);// default
 
@@ -49,42 +51,38 @@ public class ApplicationAttributes implements Serializable {
         base_url = "http://" + url;
     }
 
-/*
- size = 12
- size = 12
- 0 = {java.lang.Integer@829650426936} "2130837596"
-1 = {java.lang.Integer@829650427688}  "2130837566"
-2 = {java.lang.Integer@829650428288}  "2130837587"
-3 = {java.lang.Integer@829650428888}  "2130837590"
-4 = {java.lang.Integer@829650429488}  "2130837569"
-5 = {java.lang.Integer@829650430088}  "2130837572"
-6 = {java.lang.Integer@829650430688}  "2130837575"
-7 = {java.lang.Integer@829650431288}  "2130837578"
-8 = {java.lang.Integer@829650431888}  "2130837581"
-9 = {java.lang.Integer@829650432488}  "2130837584"
-10 = {java.lang.Integer@829650433088} "2130837596"
-11 = {java.lang.Integer@829650433688} "2130837596"
-
-0 = {java.lang.Integer@831731759576}  "2130837608"
-1 = {java.lang.Integer@831731838792}  "2130837566"
-2 = {java.lang.Integer@831731751280}  "2130837587"
-3 = {java.lang.Integer@831731991776}  "2130837590"
-4 = {java.lang.Integer@831732029960}  "2130837569"
-5 = {java.lang.Integer@831731874624}  "2130837572"
-6 = {java.lang.Integer@831731722584}  "2130837575"
-7 = {java.lang.Integer@831731757496}  "2130837578"
-8 = {java.lang.Integer@831731723880}  "2130837581"
-9 = {java.lang.Integer@831732126928}  "2130837584"
-10 = {java.lang.Integer@831731755624} "2130837608"
-11 = {java.lang.Integer@831731740016} "2130837608"
-
-     */
-
     public ApplicationAttributes(Context ctx) {
         fillButtonsBackgroundIds(ctx);
+
+        this.context   = context;
+        FileManager FM = new FileManager(ctx);
+        this.wm        = (WindowMetrics)FM.readFromFile("windowMetrics.bin");
+
+        colors         = new MyColors(wm);
     }
 
     private void fillButtonsBackgroundIds(Context ctx) {
+        String names[] = {
+                "login_button_selector",
+                "button_1_selector",
+                "button_8_selector",
+                "button_9_selector",
+                "button_2_selector",
+                "button_3_selector",
+                "button_4_selector",
+                "button_5_selector",
+                "button_6_selector",
+                "button_7_selector",
+
+        };
+        int id = 0;
+        for (int j = 0; j < names.length;j ++) {
+            id = getResourceID(ctx, names[j]);
+            button_background_ids.add(id);
+        }
+
+
+/*
         button_background_ids.add(2130837608);
         button_background_ids.add(2130837566);
         button_background_ids.add(2130837587);
@@ -95,6 +93,7 @@ public class ApplicationAttributes implements Serializable {
         button_background_ids.add(2130837578);
         button_background_ids.add(2130837581);
         button_background_ids.add(2130837584);
+*/
 /*
 
         Resources res = ctx.getResources();
@@ -129,7 +128,16 @@ public class ApplicationAttributes implements Serializable {
 */
     }
 
-    public MyColors getColors(){return colors;}
+    public MyColors getColors(){
+        WindowMetrics w_m = colors.getWM();
+        if (w_m == null) {
+            FileManager FM = new FileManager(context);
+            wm = (WindowMetrics)FM.readFromFile("windowMetrics.bin");
+            colors.setWM(wm);
+        }
+
+        return colors;
+    }
 
     public  Vector<Integer> getButtonColors(){return buttons_text_colors;}
 
@@ -189,18 +197,33 @@ public class ApplicationAttributes implements Serializable {
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             btn.setBackgroundDrawable(ctx.getResources().getDrawable(id));
         } else {
-            btn.setBackground(ctx.getResources().getDrawable(id));
+            try {
+                btn.setBackground(ctx.getResources().getDrawable(id));
+            } catch(Exception e) {
+                println(e.getMessage().toString());
+            }
         }
         btn.setTextColor(selected_button_color);
     }
     /*
-    private int getResourceID(Context ctx) {
+    login_button_selector
+    button_1_selector
+    button_8_selector
+    button_9_selector
+    button_2_selector
+    button_3_selector
+    button_4_selector
+    button_5_selector
+    button_6_selector
+    button_7_selector
+*/
+    private int getResourceID(Context ctx, String resName) {
         try {
             return ctx.getResources().getIdentifier(resName, "drawable", ctx.getApplicationInfo().packageName);
         } catch (Exception e) {
-            err = e.getMessage().toString();
+            println(e.getMessage().toString());
         }
         return -1;//@drawable/login_button_selector
     }
-    */
+
 }

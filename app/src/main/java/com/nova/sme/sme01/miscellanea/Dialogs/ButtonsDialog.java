@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,16 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.ButtonsSupport;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.MyColors;
+import com.nova.sme.sme01.miscellanea.ShapeBuilder;
 import com.nova.sme.sme01.miscellanea.ViewsGroup;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
+import com.nova.sme.sme01.miscellanea.WindowMetrics;
 
 import java.io.Serializable;
 import java.util.Vector;
 import java.util.jar.Attributes;
+
+import static java.sql.DriverManager.println;
 
 /*
  ***********************************
@@ -41,6 +46,7 @@ public class ButtonsDialog {
     private FileManager      FM;
     private Button           logout_button;
     private items            itemsObject;
+    private WindowMetrics    wm;
 
     public ButtonsDialog(RelativeLayout base_layout, Vocabulary voc, FileManager FM, Button logout_button) {
         this.base_layout   = base_layout;
@@ -49,6 +55,9 @@ public class ButtonsDialog {
         this.logout_button = logout_button;
 
         itemsObject = new items();
+
+        wm = (WindowMetrics)FM.readFromFile("windowMetrics.bin");
+
     }
     protected void setButtonHeight(Button button) {
         if (logout_button == null) return;
@@ -103,7 +112,7 @@ public class ButtonsDialog {
 
         MyColors colors = attr.getColors();
 
-        LinearLayout ll;
+        LinearLayout ll;//new_buttons_base
         ll = (LinearLayout) dialog.findViewById(R.id.new_buttons_base);ll.setTag("dialog_background_color");
         colors.setColor(ll);
 
@@ -133,8 +142,8 @@ public class ButtonsDialog {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    rbtn.setChecked(true);
-                    arrange(me);
+//                rbtn.setChecked(true);
+//                arrange(me);
                 }
             });
             rbtn.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +186,8 @@ public class ButtonsDialog {
                 if (item.rbtn.isChecked())
                     item.rbtn.setChecked(false);
             }
+            if (!object.rbtn.isChecked())
+                object.rbtn.setChecked(true);
         }
     }
     private class items {
@@ -205,10 +216,16 @@ public class ButtonsDialog {
             int position;
             if (savedData != null) {
                 selected = savedData.selected;
+                if (selected > objects.size() - 1)
+                    selected = 0;
                 for (int j = 0; j < savedData.positions.size(); j ++) {
-                    position = savedData.positions.get(j);
-                    objects.get(j).seek_position = position;
-                    objects.get(j).sbar.setProgress(position);
+                    try {
+                        position = savedData.positions.get(j);
+                        objects.get(j).seek_position = position;
+                        objects.get(j).sbar.setProgress(position);
+                    } catch(Exception e) {
+
+                    }
                 }
             }
             objects.get(selected).arrange(objects.get(selected));
@@ -225,14 +242,18 @@ public class ButtonsDialog {
         }
     }
 
-    private void fillScroll(Dialog dialog) {
-        Context        context  =  base_layout.getContext();
-        LinearLayout   base     = (LinearLayout) dialog.findViewById(R.id.buttons_base_scroll_n);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout   ll;
-        itemObject     item;
+    private void fillGroup(ShapeBuilder sb, LayoutInflater inflater, LinearLayout base, int start_color, int end_color, int start_incr, int end_incr) {
+        int          stroke_color = Color.rgb(0x87, 0x87, 0x87);
+        LinearLayout ll;
+        itemObject   item;
 
-        for (int j = 0; j < 50; j ++) {
+        int start = start_color;
+        int end   = end_color;
+        int color_start, color_end;
+
+        int strokeSize = (int)(3.0f*wm.density);
+        int radius     = (int)(8.0f*wm.density);
+        for (int j = 0; j < 5; j ++) {
             ll = (LinearLayout) inflater.inflate(R.layout.button_item, null);
             base.addView(ll);
 
@@ -243,7 +264,59 @@ public class ButtonsDialog {
             item.init();
 
             itemsObject.add(item);
+
+            setButtonHeight(item.btn);
+
+            try {
+                start += start_incr;
+                end   += end_incr;
+                color_start = Color.rgb(start, start, start);
+                color_end   = Color.rgb(end, end, end);
+
+                Drawable d = sb.buildSelectorShapeFromColors(color_start, color_end, stroke_color, color_end, color_start, stroke_color, strokeSize, radius);
+                item.btn.setBackgroundDrawable(d);
+            } catch (Exception e) {
+                println(e.getMessage().toString());
+            }
         }
+    }
+
+    private void fillScroll(Dialog dialog) {
+        Context        context  =  base_layout.getContext();
+        LinearLayout   base     = (LinearLayout) dialog.findViewById(R.id.buttons_base_scroll_n);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout   ll;
+        itemObject     item;
+
+        // default button\
+        ll = (LinearLayout) inflater.inflate(R.layout.button_item, null);
+        base.addView(ll);
+
+        item      = new itemObject();
+        item.btn  = (Button)      ll.getChildAt(0);
+        item.rbtn = (RadioButton) ll.getChildAt(1);
+        item.sbar = (SeekBar)     ll.getChildAt(2);
+        item.init();
+/*
+        int nn = base_layout.getContext().getResources().getIdentifier("button_1_selector", "drawable", base_layout.getContext().getApplicationInfo().packageName);
+        int nm = R.drawable.button_1_selector;
+
+        if (nn != nm)
+            println("");
+*/
+//        item.btn.setBackground(base_layout.getContext().getResources().getDrawable(R.drawable.button_2_selector));
+        itemsObject.add(item);
+        setButtonHeight(item.btn);
+
+        ShapeBuilder sb = new ShapeBuilder();
+
+        fillGroup(sb, inflater, base, 255, 0, -8, 8);
+        fillGroup(sb, inflater, base, 0, 255, 8, -8);
+
+        fillGroup(sb, inflater, base, 220, 102, 6, -8);
+        fillGroup(sb, inflater, base, 102, 220, -8, 6);
+
+
         itemsObject.init();
     }
     private ApplicationAttributes setDialogButtonsTheme(Vector<Button> buttons) {

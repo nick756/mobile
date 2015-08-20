@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
     private Vector<View>                  views = new Vector<View>(); // to change background
     private Button                        logout_button;
-//    private ApplicationAttributes         attr;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,32 +131,34 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         WindowMetrics wm = new WindowMetrics();wm.init(this);
         FM.writeToFile("windowMetrics.bin", wm);
 
+
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-            base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-            FR.resize();
-            pv.set_parent_margins(FR.get_width_margin(), FR.get_height_margin());
-            pv.Placing();
+                base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                FR.resize();
+                pv.set_parent_margins(FR.get_width_margin(), FR.get_height_margin());
+                pv.Placing();
 
-            voc.TranslateAll(base_layout);
+                voc.TranslateAll(base_layout);
 
 
-            logout_button         = create_custom_bar();
-            logout_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+                logout_button         = create_custom_bar();
+                logout_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
 
-            setAttributes();
-            my_dialog = new MyDialog(FR, voc, base_layout);
+                setAttributes();
+                my_dialog = new MyDialog(FR, voc, base_layout);
 
             }
         });
+
     }
     public void UpdateCustomBar(){
         if (ccb != null)
@@ -396,8 +397,8 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             new Select_Language(base_layout, voc, FM, params, logout_button, params_file_name);
             return true;
         } else if (id == R.id.action_themes) {
-//            new ThemesDialog(base_layout, voc, FM, logout_button).show();
-            new ButtonsDialog(base_layout, voc, FM, logout_button).show();
+            new ThemesDialog(base_layout, voc, FM, logout_button).show();
+//            new ButtonsDialog(base_layout, voc, FM, logout_button).show();
 
             return true;
         } else if (id == R.id.action_url_address) {

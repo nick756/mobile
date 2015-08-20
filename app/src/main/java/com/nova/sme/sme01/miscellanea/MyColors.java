@@ -22,7 +22,8 @@ import java.util.Vector;
 
 public class MyColors implements Serializable {
     // colors
-    private int selected_color_choise = 0;
+    private int             selected_color_choise = 0;
+    private WindowMetrics   wm;
 
     private int actionbar_background_color = -1;
     private int main_background_color      = -1;
@@ -67,6 +68,9 @@ public class MyColors implements Serializable {
     public int getDialog_background_color() {
         return dialog_background_color;
     }
+
+    public WindowMetrics getWM(){return wm;}
+    public void setWM(WindowMetrics wm) {this.wm = wm;}
 
     public void setColor(View view) {
         String tag   = (String) view.getTag();
@@ -128,8 +132,11 @@ public class MyColors implements Serializable {
 
             shape = new GradientDrawable();
             shape.setColor(color);
-            shape.setCornerRadius(6);
-            shape.setStroke(2, Color.BLACK);
+//            shape.setCornerRadius(6);
+//            shape.setStroke(2, Color.BLACK);
+
+            shape.setCornerRadius((int) (6.0f * wm.density));
+            shape.setStroke((int) (2.0f * wm.density), Color.BLACK);
             view.setBackgroundDrawable(shape);
         } else {
             if (view.getClass().getSimpleName().toUpperCase().indexOf(new String("RelativeLayout").toUpperCase()) != -1) {
@@ -141,6 +148,10 @@ public class MyColors implements Serializable {
             }
 
         }
+    }
+
+    public MyColors(WindowMetrics   wm) {
+        this.wm = wm;
     }
 
     public MyColors() {

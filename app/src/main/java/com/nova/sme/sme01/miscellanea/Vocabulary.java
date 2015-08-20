@@ -184,12 +184,6 @@ public class Vocabulary implements Serializable {
         else
             return getMalay(str);
     }
-/*
-    public void change_captions(Vector<View> views) {
-        for (int i = 0; i < views.size(); i ++)
-            change_caption(views.get(i));
-    }
-*/
 
     public void change_views_captions(Vector<View> views) {
 
