@@ -3,6 +3,7 @@ package com.nova.sme.sme01;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -268,10 +269,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             user_name.setText("");
 
             new MyHttpRequest(FR, this, base_layout, voc, login_request, "XML_Login");
-            //http//103.6.239.242/sme/mobile//login/?name=andrea&passw=1234
-            //http://103.6.239.242/sme/mobile/login/?name=vlad&passw=1234
-            //http://103.6.239.242/sme/mobile//login/?name=andrea&passw=1234
-         }
+          }
     }
 
     public void reset_block_login_button() {
@@ -422,8 +420,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
         } else if (id == R.id.action_send_image) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+//            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            Bitmap.CompressFormat.JPEG.toString();
+//            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -449,13 +448,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                 imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
 
-                new SendPhotoDialog(FR, voc, base_layout, logout_button, imgDecodableString).show();
-//                ImageView imgView = (ImageView) findViewById(R.id.imgView);
-                // Set the Image in ImageView after decoding the String
-//                imgView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
-
+                new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
             } else {
-//                Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+
             }
         } catch (Exception e) {
             println(e.getMessage().toString());

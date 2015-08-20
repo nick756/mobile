@@ -22,7 +22,10 @@ import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -84,15 +87,14 @@ public class MyHttpRequest {
         protected String doInBackground(Void... params) {
             String error;
 
-            ListTransactions xml_List_transactions;
-            URI uri;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=23/07/2015&dateTill=23/07/2015
-            try {//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=25/07/2015&dateTill=25/07/2015
-                URL url = new URL(url_request);//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=25/01/2015&dateTill=25/07/2015
+//            ListTransactions xml_List_transactions;
+            URI uri;
+            try {
+                URL url = new URL(url_request);
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
                 RestTemplate               restTemplate = new RestTemplate();
                 StringHttpMessageConverter converter    = new StringHttpMessageConverter();
-
                 restTemplate.getMessageConverters().add(converter);
 
                 String xml = restTemplate.getForObject(uri, String.class);
@@ -102,19 +104,12 @@ public class MyHttpRequest {
                 error = e.getMessage();
             } catch (RestClientException e){
                 error = e.getMessage();
-            } catch (Exception e) {//Unable to satisfy @org.simpleframework.xml.Element(data=false, name=, required=true, type=void) on field 'records' private com.nova.sme.sme01.xml_reader_classes.Records com.nova.sme.sme01.xml_reader_classes.Transactions.records for class com.nova.sme.sme01.xml_reader_classes.Transactions at line 1
+            } catch (Exception e) {
                 error = e.getMessage();
             }
             return null;
         }
-        //http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=21/07/2015&dateTill=22/07/2015
-        //http://103.6.239.242/sme/mobile/listtransactions?id=4&dateFrom=21/06/2014&dateTill=22/07/2015
-        /*
-        todo
-        1. check if operator is the same
-        2. size as a recordCount
 
-         */
         @Override
         protected void onPostExecute(String xml) {
             String code;
@@ -148,6 +143,24 @@ public class MyHttpRequest {
                 }
             }
         }
+    }
+
+    private void temp(String fileToUpload, String data, String url_request) {
+//        String fileToUpload = "";// = dir.getPath() + File.separator + fileName;
+/*
+        URL url = new URL(url_request);
+        URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+        MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>();
+        parts.add("file", new FileSystemResource(fileToUpload));
+
+        RestTemplate               restTemplate = new RestTemplate();
+        StringHttpMessageConverter converter    = new StringHttpMessageConverter();
+        restTemplate.getMessageConverters().add(converter);
+
+        restTemplate.postForObject(uri, data, String.class);
+
+*/
+//        String response = rest.postForObject(uploadUri, parts, String.class, authToken, folderId);
     }
 
     private void implementXmlLogin(String xml, Serializer serializer) {

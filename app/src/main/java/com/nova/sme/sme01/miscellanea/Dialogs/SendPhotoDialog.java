@@ -8,9 +8,14 @@ package com.nova.sme.sme01.miscellanea.Dialogs;
  ******************************
  */
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,21 +31,33 @@ import android.widget.TextView;
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
+import com.nova.sme.sme01.miscellanea.FileManager;
+import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.TextResizing;
+import com.nova.sme.sme01.miscellanea.UploadImage;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 
+import org.springframework.util.support.Base64;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
 
 public class SendPhotoDialog extends MyDialog {
     private ApplicationAttributes attr;
     private Button                logout_button;
     private String                image_path;
+    private Activity              activity;
+    private Bitmap                bitmap;
 
 
-    public SendPhotoDialog(FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout_button, String image_path) {
+    public SendPhotoDialog(Activity activity, FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout_button, String image_path) {
         super(FR, voc, base_layout);
         this.logout_button = logout_button;
         this.image_path    = image_path;
+        this.activity      = activity;
     }
     private void setButtonHeight(Button button) {
         if (logout_button == null) return;
@@ -68,11 +85,10 @@ public class SendPhotoDialog extends MyDialog {
 
 
         // COLORS //
-        dialog_layout = (RelativeLayout) dialog.findViewById(R.id.photo_base);dialog_layout.setTag("dialog_background_color");
-        views.add(dialog_layout);
-
         LinearLayout ll = (LinearLayout) dialog.findViewById(R.id.back_buttons_photo);ll.setTag("dialog_background_color");
         views.add(ll);
+        dialog_layout   = (RelativeLayout) dialog.findViewById(R.id.photo_base);dialog_layout.setTag("dialog_background_color");
+        views.add(dialog_layout);
         // COLORS //
 
         // set theme
@@ -85,13 +101,13 @@ public class SendPhotoDialog extends MyDialog {
         dialog.getWindow().setAttributes(lp);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
-//        ViewGroup.LayoutParams prms;
-
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ///
+                // prepare url, data & send
+                String url = getHttp();
+                new UploadImage(bitmap, url, new GifDialog(base_layout, "file:///android_asset/gif_upload_image.html"));
+
                 dialog.dismiss();
             }
         });
@@ -103,12 +119,48 @@ public class SendPhotoDialog extends MyDialog {
         });
 
         ImageView img = (ImageView)dialog.findViewById(R.id.photo_id);
-        img.setImageBitmap(BitmapFactory.decodeFile(image_path));
+
+
+        bitmap = BitmapFactory.decodeFile(image_path);
+        img.setImageBitmap(bitmap);
 
         SetColors();
 
         setButtonHeight(okButton);
         setButtonHeight(cancelButton);
+
+        // test size of dialog box here !
     }
+
+    private String getHttp() {
+        String http = "";
+
+        FileManager FM = new FileManager(activity);
+        ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
+        if (attr == null) {
+            attr = new ApplicationAttributes(activity);
+            FM.writeToFile("attributes.bin", attr);
+        }
+
+        http = attr.getBaseUrl();
+        http += "addInvoice/?";
+
+
+        Parameters params = (Parameters) FM.readFromFile("parameters.bin");
+        http += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
+
+
+        return http;
+    }
+/*
+    private String getImageBytes() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        byte[] ba = baos.toByteArray();
+
+        return Base64.encodeBytes(ba);
+    }
+*/
 
 }

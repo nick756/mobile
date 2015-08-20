@@ -17,12 +17,22 @@ public class GifDialog {
     private Context        context;
     private RelativeLayout base_layout;
     private Dialog         dialog;
+    private String         url_address = "";
 
     public GifDialog(RelativeLayout base_layout) {
         this.base_layout = base_layout;
         this.context     = base_layout.getContext();
         show();
     }
+    public GifDialog(RelativeLayout base_layout, String  url_address) {
+        this.base_layout = base_layout;
+        this.context     = base_layout.getContext();
+        this.url_address = url_address;
+
+        show();
+    }
+
+    public Context getContext() {return base_layout.getContext();}
     private void show() {
         /*final Dialog */dialog = new Dialog(this.context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,7 +46,10 @@ public class GifDialog {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         WebView web = (WebView)dialog.findViewById(R.id.web_view_loader);
-        web.loadUrl("file:///android_asset/gif.html");//preloader.gif");
+        if (url_address.length() == 0)
+            web.loadUrl("file:///android_asset/gif.html");//preloader.gif");
+        else
+            web.loadUrl(url_address);//preloader.gif");
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);

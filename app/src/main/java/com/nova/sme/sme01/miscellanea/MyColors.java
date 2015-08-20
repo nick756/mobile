@@ -31,6 +31,24 @@ public class MyColors implements Serializable {
     private int dialog_background_color    = -1;
     private int exception_id_1               = R.id.relativeLayout;//linearLayout
     private int exception_id_2               = R.id.linearLayout;//linearLayout
+    private int exception_id_3               = R.id.back_buttons_photo;
+
+
+
+
+    private int[] exceptions = {
+            R.id.relativeLayout,
+            R.id.linearLayout,
+            R.id.back_buttons_photo,
+    };
+
+    private boolean isException(int id) {
+        for (int j = 0; j < exceptions.length; j ++)
+            if (exceptions[j] == id)
+                return true;
+
+        return false;
+    }
     // colors
 
     public void setSelected_color_choise(int val) {
@@ -127,7 +145,7 @@ public class MyColors implements Serializable {
     }
     private void setLayoutColor(int color, View view) {
         int id = view.getId();
-        if (color == dialog_background_color && (id != exception_id_1) && (id != exception_id_2)) {
+        if ((color == dialog_background_color) && !isException(id)) {//(id != exception_id_1) && (id != exception_id_2)) {
             GradientDrawable shape;
 
             shape = new GradientDrawable();

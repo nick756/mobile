@@ -2,7 +2,11 @@ package com.nova.sme.sme01;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
+import com.nova.sme.sme01.miscellanea.Dialogs.SendPhotoDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
@@ -34,6 +39,7 @@ import static java.sql.DriverManager.println;
 
 
 public class TransactionsViewActivity extends AppCompatActivity {
+    private static final int RESULT_LOAD_IMG = 12;
     private Vocabulary                    voc;
     private FormResizing                  FR;
     private RelativeLayout                base_layout;
@@ -208,8 +214,11 @@ public class TransactionsViewActivity extends AppCompatActivity {
         } else if (id == R.id.action_help) {
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
+        } else if (id == R.id.action_send_image) {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Bitmap.CompressFormat.JPEG.toString();
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -250,5 +259,35 @@ public class TransactionsViewActivity extends AppCompatActivity {
             voc.setLanguage(params.getLanguage());
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String imgDecodableString;
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+
+                new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
+            } else {
+
+            }
+        } catch (Exception e) {
+            println(e.getMessage().toString());
+        }
+
+    }
 
 }

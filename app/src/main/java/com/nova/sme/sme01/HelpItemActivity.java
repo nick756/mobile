@@ -185,32 +185,7 @@ public class HelpItemActivity extends AppCompatActivity {
 
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }
-/*
-    private void fillItem(Vector<ImageView> images, LayoutInflater inflater, LinearLayout   l_layout, String html, int image_id, boolean use_icon) {
-        TextView       content;
-        ImageView      img;
-        RelativeLayout r_layout;
 
-        r_layout = (RelativeLayout) inflater.inflate(R.layout.help_item, null);
-        l_layout.addView(r_layout);
-
-        img     = (ImageView) r_layout.getChildAt(0);
-        content = (TextView)  r_layout.getChildAt(1);
-
-        if (image_id == 0) {
-            r_layout.removeView(img);
-        } else {
-            img.setImageResource(image_id);
-            images.add(img);
-        }
-        if (use_icon)
-            content.setText(Html.fromHtml(html, new ImageGetter(), null));
-        else
-            content.setText(Html.fromHtml(html));
-
-        content.setMovementMethod(LinkMovementMethod.getInstance());
-    }
-*/
     private void fillContent() {
         LayoutInflater inflater  = (LayoutInflater) getSystemService(getBaseContext().LAYOUT_INFLATER_SERVICE);
         LinearLayout   l_layout  = (LinearLayout) findViewById(R.id.help_scroll_base);// to be filled
