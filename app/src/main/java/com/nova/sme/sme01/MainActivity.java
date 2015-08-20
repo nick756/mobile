@@ -386,6 +386,10 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         for (int i = 0; i < menu.size(); i ++) {
             item = menu.getItem(i);
+            if (item.getItemId() == R.id.action_send_image) {
+                item.setVisible(false);
+                continue;
+            }
             voc.change_caption(item);
 
             inner_menu = item.getSubMenu();
