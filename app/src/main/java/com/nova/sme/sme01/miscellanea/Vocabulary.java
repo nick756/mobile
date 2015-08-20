@@ -120,6 +120,7 @@ public class Vocabulary implements Serializable {
             {"Application Settings",                                "Tetapan Aplikasi"},
             {"General Information",                                 "Informasi Am"},
             {"Re-synchronization is needed",                        "Semula penyegerakan diperlukan"},
+            {"Upload Photo",                                        "Upload Gambar"},
 
     };
 
