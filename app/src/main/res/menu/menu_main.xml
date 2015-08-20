@@ -31,11 +31,21 @@
         </menu>
     </item>
 
-    <item android:id="@+id/action_send_image"
-        android:title="Upload Photo"
-        android:orderInCategory="201"
-        app:showAsAction="never"
-        />
+    <item android:title="Upload Photo" android:orderInCategory="201" android:id="@+id/action_send_image">
+        <menu>
+            <item android:id="@+id/action_from_gallery"
+                android:title="From Gallery"
+                android:orderInCategory="1003"
+                app:showAsAction="never"
+                />
+
+            <item android:id="@+id/action_from_camera"
+                android:title="From Camera"
+                android:orderInCategory="1004"
+                app:showAsAction="never"
+            />
+        </menu>
+    </item>
 
     <item android:id="@+id/action_help"
         android:title="Help"

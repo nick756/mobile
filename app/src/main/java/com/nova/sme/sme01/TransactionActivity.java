@@ -33,6 +33,7 @@ import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
 import com.nova.sme.sme01.miscellanea.MyHttpRequest;
 import com.nova.sme.sme01.miscellanea.Parameters;
 import com.nova.sme.sme01.miscellanea.Dialogs.Select_Language;
+import com.nova.sme.sme01.miscellanea.RequestFromCamera;
 import com.nova.sme.sme01.miscellanea.SimpleCalendar;
 import com.nova.sme.sme01.miscellanea.SpinnerModel;
 import com.nova.sme.sme01.miscellanea.Dialogs.ThemesDialog;
@@ -57,6 +58,8 @@ import static java.sql.DriverManager.println;
 
 public class TransactionActivity extends AppCompatActivity  {
     private static final int RESULT_LOAD_IMG = 12;
+
+    private RequestFromCamera             rfc;
     private RelativeLayout                base_layout;
     private Parameters                    params               = new Parameters();
     private String                        params_file_name     = "parameters.bin";
@@ -362,10 +365,12 @@ public class TransactionActivity extends AppCompatActivity  {
         } else if (id == R.id.action_help) {
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
-        } else if (id == R.id.action_send_image) {
+        } else if (id == R.id.action_from_gallery) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             Bitmap.CompressFormat.JPEG.toString();
             startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+        } else if (id == R.id.action_from_camera) {
+            this.rfc = new RequestFromCamera(this, 13);
         }
 
 
@@ -477,15 +482,16 @@ public class TransactionActivity extends AppCompatActivity  {
                 cursor.close();
 
                 new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
-            } else {
-
+            } else  if (requestCode == this.rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
+                try {
+                    new SendPhotoDialog(this, FR, voc, base_layout, logout_button, rfc.getRealPathFromURI()).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             println(e.getMessage().toString());
         }
-
     }
-
-
 
 }

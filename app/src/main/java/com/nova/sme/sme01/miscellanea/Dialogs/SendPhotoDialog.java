@@ -19,9 +19,11 @@ import android.os.ParcelFileDescriptor;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -50,7 +52,10 @@ public class SendPhotoDialog extends MyDialog {
     private Button                logout_button;
     private String                image_path;
     private Activity              activity;
-    private Bitmap                bitmap;
+    private Bitmap                bitmap = null;
+    private Dialog                dialog;
+
+    private android.view.WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
 
     public SendPhotoDialog(Activity activity, FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout_button, String image_path) {
@@ -59,6 +64,16 @@ public class SendPhotoDialog extends MyDialog {
         this.image_path    = image_path;
         this.activity      = activity;
     }
+    public SendPhotoDialog(Activity activity, FormResizing FR, Vocabulary voc, RelativeLayout base_layout, Button logout_button, Bitmap bitmap) {
+        super(FR, voc, base_layout);
+        this.logout_button = logout_button;
+        this.image_path    = "";
+        this.activity      = activity;
+        this.bitmap        = bitmap;
+    }
+
+
+
     private void setButtonHeight(Button button) {
         if (logout_button == null) return;
         ViewGroup.LayoutParams params;
@@ -68,14 +83,14 @@ public class SendPhotoDialog extends MyDialog {
     }
 
     public void show() {
-        final Dialog dialog = new Dialog(base_layout.getContext());
+        dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.photo);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
 
         ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
         lp.width  = (int)((float)base_layout.getWidth()*0.9f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -97,9 +112,6 @@ public class SendPhotoDialog extends MyDialog {
         attr = setDialogButtonsTheme(btns);
         voc.change_captions(btns);
 
-        dialog.show();
-        dialog.getWindow().setAttributes(lp);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,16 +132,38 @@ public class SendPhotoDialog extends MyDialog {
 
         ImageView img = (ImageView)dialog.findViewById(R.id.photo_id);
 
+        if (bitmap == null)
+            bitmap = BitmapFactory.decodeFile(image_path);
 
-        bitmap = BitmapFactory.decodeFile(image_path);
+
         img.setImageBitmap(bitmap);
 
         SetColors();
 
+        dialog.show();
+
+//        dialog.getWindow().setAttributes(lp);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         setButtonHeight(okButton);
         setButtonHeight(cancelButton);
 
-        // test size of dialog box here !
+        ViewTreeObserver vto = dialog_layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                dialog.getWindow().setAttributes(lp);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+                int width  = dialog_layout.getWidth();//320
+                int height = dialog_layout.getHeight();//297
+
+                ViewGroup.LayoutParams params = dialog_layout.getLayoutParams();
+            }
+        });
+
+        //dialog_layout
     }
 
     private String getHttp() {

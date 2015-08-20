@@ -67,8 +67,9 @@ public class UploadImage {
                 URL url = new URL(url_request);
                 uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
-                RestTemplate restTemplate = new RestTemplate();
+                RestTemplate               restTemplate = new RestTemplate();
                 StringHttpMessageConverter converter    = new StringHttpMessageConverter();
+
                 restTemplate.getMessageConverters().add(converter);
 
                 String xml = restTemplate.postForObject(uri, data, String.class);//restTemplate.getForObject(uri, String.class);
