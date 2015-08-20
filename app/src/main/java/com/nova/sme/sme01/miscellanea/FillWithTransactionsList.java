@@ -56,8 +56,6 @@ public class FillWithTransactionsList {
         this.textFit      = new TextResizing(activity);
 
         FileManager FM   = new FileManager(activity);
- //       asked_operations = (Vector<ShortedOperation>) FM.readFromFile("wideOperations.bin");
-
         operationSelector = (OperationsSelector) FM.readFromFile("OperationsSelector.bin");
         if (operationSelector == null) {
             operationSelector = new OperationsSelector();

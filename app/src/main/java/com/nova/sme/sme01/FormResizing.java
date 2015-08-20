@@ -121,9 +121,10 @@ public class FormResizing {
             }
         }
         if (logout_button != null) {
-            params = logout_button.getLayoutParams();
-            params.height     = (int) new_button_height;
-            log_button_height = params.height;
+            params             = logout_button.getLayoutParams();
+            params.height      = (int) new_button_height;
+            log_button_height  = params.height;
+            this.logout_button = logout_button;
         }
     }
     void resizeLoginButton(RelativeLayout base_layout, Button logout_button, float factor) {
