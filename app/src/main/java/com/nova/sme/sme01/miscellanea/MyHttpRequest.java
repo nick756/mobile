@@ -3,8 +3,10 @@ package com.nova.sme.sme01.miscellanea;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nova.sme.sme01.CommonClass;
 import com.nova.sme.sme01.FormResizing;
@@ -24,6 +26,7 @@ import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -56,7 +59,10 @@ public class MyHttpRequest {
     private String          className;
     private FileManager     FM;
     private GifDialog       gif_doalog = null;
-    private Bitmap          bitmap;
+
+    private String          photoPath = "";
+//    private Bitmap          bitmap;
+    private String          data = "";
 
     public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
@@ -81,11 +87,12 @@ public class MyHttpRequest {
         this.my_dialog   = new MyDialog(FR, voc, base_layout);
         this.gif_doalog  = gif_doalog;
 
+
         FM = new FileManager(activity);
         new Http_Request().execute();
     }
 
-    public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className, GifDialog gif_doalog, Bitmap bitmap) {
+    public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className, GifDialog gif_doalog, String photoPath) {
         this.activity    = activity;
         this.url_request = url_request;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=27/01/2015&dateTill=27/07/2015
         this.base_layout = base_layout;
@@ -94,10 +101,49 @@ public class MyHttpRequest {
         this.FR          = FR;
         this.my_dialog   = new MyDialog(FR, voc, base_layout);
         this.gif_doalog  = gif_doalog;
-        this.bitmap      = bitmap;
+        this.photoPath   = photoPath;
+
+
+        Bitmap bitmap;
+
+        try {
+            bitmap = BitmapFactory.decodeFile(photoPath);
+
+        } catch (OutOfMemoryError e) {
+            bitmap = null;
+        } catch (Exception e) {
+            bitmap = null;
+        }
+
+        if (bitmap != null){
+            getStringByte(bitmap, 90);
+            if (data.length() == 0) {
+                Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(gif_doalog.getContext(), "DATA IS OK", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+        }
 
         FM = new FileManager(activity);
         new Http_Request().execute();
+    }
+
+    private void getStringByte(Bitmap bitmap, int n) {
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        try {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, n, bao);
+            bitmap.recycle();
+            byte[] ba = bao.toByteArray();
+            data = Base64.encodeBytes(ba, Base64.ENCODE);
+        } catch (OutOfMemoryError e) {
+            data = "";
+        } catch (java.io.IOException e) {
+            data = "";
+        } catch (Exception e) {
+            data = "";
+        }
     }
 
 
@@ -116,17 +162,10 @@ public class MyHttpRequest {
                 StringHttpMessageConverter converter    = new StringHttpMessageConverter();
                 restTemplate.getMessageConverters().add(converter);
 
-
-
                 String xml = "";
-                if (bitmap != null && className.equals("AddTransaction")) {
-                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
-
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
-                    byte[] ba   = bao.toByteArray();
-                    String data = Base64.encodeBytes(ba);
-
-                    xml = restTemplate.postForObject(uri, data, String.class);
+                if (className.equals("AddTransaction") && photoPath.length() > 0 && data.length() > 0) {
+                    xml = restTemplate.postForObject(uri, data, String.class);//restTemplate.getForObject(uri, String.class);
+ //                   Toast.makeText(gif_doalog.getContext(), "OKOKOKOK", Toast.LENGTH_LONG).show();
                 } else {
                     xml = restTemplate.getForObject(uri, String.class);
                 }
@@ -232,8 +271,10 @@ public class MyHttpRequest {
         AddTransaction xml_transaction;
         String         code;
 
-        if (gif_doalog != null)
+        if (gif_doalog != null) {
             gif_doalog.dismiss();
+            Toast.makeText(gif_doalog.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
+        }
 
         try {
             xml_transaction = serializer.read(AddTransaction.class, xml);

@@ -89,10 +89,14 @@ public class ConfirmTransaction {
 
     }
     void send_request() {
-        if (bitmap != null)
-            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), bitmap);
-        else
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), this.photoPath);
+
+        } else {
             new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
+        }
     }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
@@ -168,6 +172,7 @@ public class ConfirmTransaction {
                 bitmap          = BitmapFactory.decodeFile(photoPath);
 
                 photo.setImageBitmap(bitmap);
+//                bitmap.recycle();
              }
         } catch(Exception e) {
             bitmap = null;
