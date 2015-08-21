@@ -88,12 +88,24 @@
             android:layout_marginLeft="14dp"
             android:textColor="@android:color/black" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photo_attachment"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/before_description" />
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ok_transaction"
         android:text="Perform"
-        android:layout_below="@+id/before_description"
+        android:layout_below="@+id/photo_attachment"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/login_button_selector"
@@ -108,7 +120,7 @@
         android:id="@+id/cancel_button_trans_id"
         android:layout_toRightOf="@+id/ok_transaction"
         android:layout_marginLeft="15dp"
-        android:layout_below="@+id/before_description"
+        android:layout_below="@+id/photo_attachment"
         android:layout_marginTop="5dp"
         android:background="@drawable/login_button_selector"
         android:layout_marginBottom="5dp" />

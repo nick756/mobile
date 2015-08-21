@@ -16,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
@@ -58,6 +60,8 @@ import static java.sql.DriverManager.println;
 
 public class TransactionActivity extends AppCompatActivity  {
     private static final int RESULT_LOAD_IMG = 12;
+    private boolean                       photo_attached = false;
+    private String                        photoPath      = "";
 
     private RequestFromCamera             rfc;
     private RelativeLayout                base_layout;
@@ -365,13 +369,13 @@ public class TransactionActivity extends AppCompatActivity  {
         } else if (id == R.id.action_help) {
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
-        } else if (id == R.id.action_from_gallery) {
+        } /*else if (id == R.id.action_from_gallery) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             Bitmap.CompressFormat.JPEG.toString();
             startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
         } else if (id == R.id.action_from_camera) {
             this.rfc = new RequestFromCamera(this, 13);
-        }
+        }*/
 
 
         return super.onOptionsItemSelected(item);
@@ -382,6 +386,29 @@ public class TransactionActivity extends AppCompatActivity  {
         FM.writeToFile(params_file_name, this.params);
     }
 */
+
+    public void photoClick(View view) {
+        switch (view.getId()) {
+            case R.id.folder_button:
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Bitmap.CompressFormat.JPEG.toString();
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                break;
+            case R.id.camera_button:
+                this.rfc = new RequestFromCamera(this, 13);
+                break;
+            case R.id.delete_photo__button:
+                if (photo_attached) {
+                    photo_attached = false;
+                    photoPath      = "";
+                    // change icon
+                    ImageView ib = (ImageView) view;//findViewById(R.id.delete_photo__button);
+                    ib.setImageResource(R.mipmap.ic_cancel_photo);
+                }
+                break;
+        }
+
+    }
 
     public void submitClick(View view) {
         Operation s_opearion;
@@ -452,7 +479,7 @@ public class TransactionActivity extends AppCompatActivity  {
                                                        s_date,
                                                        descr,
                                                        s_amount,
-                                                       logout_button);
+                                                       logout_button, photo_attached ? photoPath:"");
         ct.show();
     }
 
@@ -463,29 +490,40 @@ public class TransactionActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String imgDecodableString;
         try {
             // When an Image is picked
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                // Get the Image from data
+                try {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
 
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    photoPath       = cursor.getString(columnIndex);
+                    cursor.close();
 
-                // Get the cursor
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                // Move to first row
-                cursor.moveToFirst();
+ //                   new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
+                    photo_attached = true;
 
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imgDecodableString = cursor.getString(columnIndex);
-                cursor.close();
+                    ImageView img = (ImageView) findViewById(R.id.delete_photo__button);
+                    img.setImageResource(R.mipmap.ic_checked_photo);
 
-                new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
+                } catch(Exception e) {
+                    photo_attached = false;
+                }
+
             } else  if (requestCode == this.rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
                 try {
-                    new SendPhotoDialog(this, FR, voc, base_layout, logout_button, rfc.getRealPathFromURI()).show();
+//                    new SendPhotoDialog(this, FR, voc, base_layout, logout_button, rfc.getRealPathFromURI()).show();
+                    photo_attached = true;
+                    photoPath      = rfc.getRealPathFromURI();
+
+                    ImageView img = (ImageView) findViewById(R.id.delete_photo__button);
+                    img.setImageResource(R.mipmap.ic_checked_photo);
+
                 } catch (Exception e) {
+                    photo_attached = false;
                     e.printStackTrace();
                 }
             }

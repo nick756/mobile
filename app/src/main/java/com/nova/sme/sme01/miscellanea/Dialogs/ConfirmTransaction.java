@@ -4,6 +4,8 @@ package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -43,7 +45,7 @@ import java.util.Vector;
 public class ConfirmTransaction {
     private Activity       activity;
     private Vocabulary     voc;
-    private FormResizing FR;
+    private FormResizing   FR;
     private RelativeLayout base_layout;
     private String         http_request;
 
@@ -56,8 +58,21 @@ public class ConfirmTransaction {
     private Button    cancelButton;
     private Button    logout_button;
 
+    private String    photoPath;// to be attached
+    private Bitmap    bitmap = null;
 
-    public ConfirmTransaction(Activity activity, Vocabulary voc, FormResizing   FR, RelativeLayout base_layout, String http_request, Operation s_opearion, String s_date, String s_descr, String s_sum, Button logout_button) {
+
+    public ConfirmTransaction(Activity activity,
+                              Vocabulary voc,
+                              FormResizing   FR,
+                              RelativeLayout base_layout,
+                              String http_request,
+                              Operation s_opearion,
+                              String s_date,
+                              String s_descr,
+                              String s_sum,
+                              Button logout_button,
+                              String photoPath) {
         this.activity      = activity;
         this.voc           = voc;
         this.FR            = FR;
@@ -69,9 +84,12 @@ public class ConfirmTransaction {
         this.amount        = s_sum;
         this.logout_button = logout_button;
 
+        this.photoPath     = photoPath;
+
+
     }
     void send_request() {
-        new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
+        new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), bitmap);
     }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
@@ -139,6 +157,18 @@ public class ConfirmTransaction {
         Vector<Button> btns = new Vector<Button>();
         btns.add(okButton);btns.add(cancelButton);
         setDialogButtonsTheme(btns);
+
+        // attachment photo
+        try {
+            if (photoPath.length() > 0) {
+                ImageView photo = (ImageView) dialog.findViewById(R.id.photo_attachment);
+                bitmap          = BitmapFactory.decodeFile(photoPath);
+
+                photo.setImageBitmap(bitmap);
+             }
+        } catch(Exception e) {
+            bitmap = null;
+        }
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();

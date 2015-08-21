@@ -56,9 +56,6 @@ import static java.sql.DriverManager.println;
  */
 
 public class RegularLoginActivity extends AppCompatActivity {
-    private static final int RESULT_LOAD_IMG = 12;
-
-    private RequestFromCamera             rfc;
     private TextView                      user;
     private TextView                      company_name;
     private TextView                      role;
@@ -345,12 +342,6 @@ public class RegularLoginActivity extends AppCompatActivity {
         } else if (id == R.id.action_help) {
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
-        } else if (id == R.id.action_from_gallery) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            Bitmap.CompressFormat.JPEG.toString();
-            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-        } else if (id == R.id.action_from_camera) {
-            this.rfc = new RequestFromCamera(this, 13);
         }
 
 
@@ -443,40 +434,5 @@ public class RegularLoginActivity extends AppCompatActivity {
         // forbid returning to the first page
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        String imgDecodableString;
-        try {
-            // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                try {
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    imgDecodableString = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
-                } catch(Exception e) {
-
-                }
-            } else  if (requestCode == this.rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
-                try {
-                    new SendPhotoDialog(this, FR, voc, base_layout, logout_button, rfc.getRealPathFromURI()).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-        } catch (Exception e) {
-            println(e.getMessage().toString());
-        }
-
-    }
 
 }

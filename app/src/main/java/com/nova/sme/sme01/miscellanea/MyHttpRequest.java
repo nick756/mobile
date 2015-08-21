@@ -2,6 +2,7 @@ package com.nova.sme.sme01.miscellanea;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.RelativeLayout;
 
@@ -26,9 +27,11 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.support.Base64;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
@@ -47,12 +50,13 @@ public class MyHttpRequest {
     private String          url_request;
     private RelativeLayout  base_layout;
     private Activity        activity;
-    private MyDialog my_dialog;
+    private MyDialog        my_dialog;
     private Vocabulary      voc;
     private FormResizing    FR;
     private String          className;
     private FileManager     FM;
     private GifDialog       gif_doalog = null;
+    private Bitmap          bitmap;
 
     public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
@@ -81,6 +85,21 @@ public class MyHttpRequest {
         new Http_Request().execute();
     }
 
+    public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className, GifDialog gif_doalog, Bitmap bitmap) {
+        this.activity    = activity;
+        this.url_request = url_request;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=27/01/2015&dateTill=27/07/2015
+        this.base_layout = base_layout;
+        this.voc         = voc;
+        this.className   = className;
+        this.FR          = FR;
+        this.my_dialog   = new MyDialog(FR, voc, base_layout);
+        this.gif_doalog  = gif_doalog;
+        this.bitmap      = bitmap;
+
+        FM = new FileManager(activity);
+        new Http_Request().execute();
+    }
+
 
     private class Http_Request extends AsyncTask<Void, String, String> {
         @Override
@@ -97,7 +116,20 @@ public class MyHttpRequest {
                 StringHttpMessageConverter converter    = new StringHttpMessageConverter();
                 restTemplate.getMessageConverters().add(converter);
 
-                String xml = restTemplate.getForObject(uri, String.class);
+
+
+                String xml = "";
+                if (bitmap != null && className.equals("AddTransaction")) {
+                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
+
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+                    byte[] ba   = bao.toByteArray();
+                    String data = Base64.encodeBytes(ba);
+
+                    xml = restTemplate.postForObject(uri, data, String.class);
+                } else {
+                    xml = restTemplate.getForObject(uri, String.class);
+                }
 
                 return xml;
             } catch (java.net.URISyntaxException e) {
@@ -199,15 +231,17 @@ public class MyHttpRequest {
     private void implementTransaction(String xml, Serializer serializer) {
         AddTransaction xml_transaction;
         String         code;
-//        MyDialog       my_dialog;
+
+        if (gif_doalog != null)
+            gif_doalog.dismiss();
+
         try {
             xml_transaction = serializer.read(AddTransaction.class, xml);
             code            = xml_transaction.getCode();
             if (code.equals("0")) {
-//                my_dialog = new MyDialog(null, voc, base_layout);
                 my_dialog.show(voc.getTranslatedString("Success"), R.mipmap.ic_success, "RegularActivity");
             } else if (code.equals("1")) {
- //               my_dialog = new MyDialog(null, voc, base_layout);
+
                 my_dialog.show(voc.getTranslatedString("Operation Failed"), R.mipmap.ic_failture);
             } else  { // Session expired or other error
 /*

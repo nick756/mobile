@@ -98,8 +98,11 @@
         android:layout_below="@+id/transaction_description_id"
         android:layout_margin="2dp"
         android:background="@color/main_background_color"
-        android:padding="1dp"
-        android:id="@+id/base_amount_id">
+        android:id="@+id/base_amount_id"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp">
 
         <EditText
             android:layout_width="100dp"
@@ -126,25 +129,62 @@
             android:layout_centerVertical="true"
             android:background="@drawable/text_base_layout"
             android:maxLength="2"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp" />
 
-        <Button
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/base_amount_id"
+        android:id="@+id/base_photo_id"
+        android:background="@drawable/base_layout_background">
+
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/submit_transaction_button"
-            android:layout_margin="2dp"
-            android:onClick="submitClick"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/login_button_selector"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:layout_centerVertical="true" />
+            android:id="@+id/folder_button"
+            android:focusableInTouchMode="false"
+            android:onClick="photoClick"
+            android:src="@mipmap/ic_folder_plus" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/camera_button"
+            android:focusableInTouchMode="false"
+            android:layout_toRightOf="@+id/folder_button"
+            android:onClick="photoClick"
+            android:src="@mipmap/ic_camera"
+            android:layout_marginLeft="10dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/delete_photo__button"
+            android:onClick="photoClick"
+            android:src="@mipmap/ic_cancel_photo"
+            android:layout_toRightOf="@+id/camera_button"
+            android:layout_marginLeft="20dp" />
+
     </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submit_transaction_button"
+        android:onClick="submitClick"
+        android:background="@drawable/login_button_selector"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/base_photo_id"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="12dp" />
 
 
 </RelativeLayout>

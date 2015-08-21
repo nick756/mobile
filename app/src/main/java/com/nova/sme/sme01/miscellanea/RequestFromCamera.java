@@ -29,6 +29,7 @@ public class RequestFromCamera {
     }
 
     public Uri getUri(){return imageUri;}
+ //   public void setUri(String imageUri) {this.imageUri = imageUri;}
 
     public int getId(){return id;}
 
