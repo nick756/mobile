@@ -131,11 +131,15 @@ public class MyHttpRequest {
     }
 
     private void getStringByte(Bitmap bitmap, int n) {
-        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, n, bao);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, n, baos);
             bitmap.recycle();
-            byte[] ba = bao.toByteArray();
+            byte[] ba = baos.toByteArray();
+
+            baos.reset();
+            baos.close();baos = null;
+
             data = Base64.encodeBytes(ba, Base64.ENCODE);
         } catch (OutOfMemoryError e) {
             data = "";
@@ -273,7 +277,7 @@ public class MyHttpRequest {
 
         if (gif_doalog != null) {
             gif_doalog.dismiss();
-            Toast.makeText(gif_doalog.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
+            Toast.makeText(base_layout.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
         }
 
         try {
