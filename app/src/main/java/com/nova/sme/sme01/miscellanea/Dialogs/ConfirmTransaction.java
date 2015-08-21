@@ -89,7 +89,10 @@ public class ConfirmTransaction {
 
     }
     void send_request() {
-        new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), bitmap);
+        if (bitmap != null)
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), bitmap);
+        else
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
     }
     public void show() {
         final Dialog dialog = new Dialog(base_layout.getContext());
