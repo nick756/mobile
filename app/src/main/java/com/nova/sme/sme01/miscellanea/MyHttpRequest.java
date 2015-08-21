@@ -168,8 +168,7 @@ public class MyHttpRequest {
 
                 String xml = "";
                 if (className.equals("AddTransaction") && photoPath.length() > 0 && data.length() > 0) {
-                    xml = restTemplate.postForObject(uri, data, String.class);//restTemplate.getForObject(uri, String.class);
- //                   Toast.makeText(gif_doalog.getContext(), "OKOKOKOK", Toast.LENGTH_LONG).show();
+                    xml = restTemplate.postForObject(uri, data, String.class);
                 } else {
                     xml = restTemplate.getForObject(uri, String.class);
                 }

@@ -169,13 +169,16 @@ public class ConfirmTransaction {
         try {
             if (photoPath.length() > 0) {
                 ImageView photo = (ImageView) dialog.findViewById(R.id.photo_attachment);
-                bitmap          = BitmapFactory.decodeFile(photoPath);
+                bitmap = BitmapFactory.decodeFile(photoPath);
 
                 photo.setImageBitmap(bitmap);
-//                bitmap.recycle();
-             }
+            }
+        } catch(OutOfMemoryError e) {
+            bitmap = null;
+            photoPath = "";
         } catch(Exception e) {
             bitmap = null;
+            photoPath = "";
         }
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));

@@ -144,6 +144,12 @@ public class TransactionActivity extends AppCompatActivity  {
 
 //        simple_calendar = new SimpleCalendar(this, this.year_spinner, this.month_spinner, this.day_spinner);
 
+        RelativeLayout rl_1 = (RelativeLayout) findViewById(R.id.base_amount_id);rl_1.setTag("main_background_color");
+        RelativeLayout rl_2 = (RelativeLayout) findViewById(R.id.base_photo_id); rl_2.setTag("main_background_color");
+        views.add(rl_1);
+        views.add(rl_2);
+
+
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
@@ -298,6 +304,8 @@ public class TransactionActivity extends AppCompatActivity  {
         views.add(base_layout);
         views.add(ccb.getBase());
         views.add(ccb.getTitle());
+
+
 
         return button;
 
