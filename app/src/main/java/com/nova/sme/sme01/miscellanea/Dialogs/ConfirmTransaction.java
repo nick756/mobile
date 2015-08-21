@@ -32,6 +32,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Vector;
 
+import static java.sql.DriverManager.println;
+
 /*
  ********************************
  *                              *
@@ -61,6 +63,8 @@ public class ConfirmTransaction {
     private String    photoPath;// to be attached
     private Bitmap    bitmap = null;
 
+    private RelativeLayout dialog_layout;
+
 
     public ConfirmTransaction(Activity activity,
                               Vocabulary voc,
@@ -83,6 +87,7 @@ public class ConfirmTransaction {
         this.descr         = s_descr;
         this.amount        = s_sum;
         this.logout_button = logout_button;
+
 
         this.photoPath     = photoPath;
 
@@ -193,9 +198,9 @@ public class ConfirmTransaction {
 
         Vector<View> views = new Vector<View>();
 
-        RelativeLayout rl = (RelativeLayout) dialog.findViewById(R.id.base_layout_before_transaction_id);
-        rl.setTag("dialog_background_color");
-        views.add(rl);
+        dialog_layout = (RelativeLayout) dialog.findViewById(R.id.base_layout_before_transaction_id);
+        dialog_layout.setTag("dialog_background_color");
+        views.add(dialog_layout);
 
         TextView tv1        = (TextView)       dialog.findViewById(R.id.date_transaction_id);               tv1.setTag("dialog_background_color");
         TextView tv2        = (TextView)       dialog.findViewById(R.id.amount_transaction_id);             tv2.setTag("dialog_background_color");
@@ -212,6 +217,30 @@ public class ConfirmTransaction {
         attr.getColors().setColors(views);
 
         setButtonsSize();
+        //
+        ViewTreeObserver vto = dialog_layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                float height      = (float)dialog_layout.getHeight();//297
+                float base_height = (float)base_layout.getHeight();
+
+
+                if (height > base_layout.getHeight()) {
+                    println("");
+                    float factor = height/base_height;
+
+                    ImageView photo    = (ImageView) dialog.findViewById(R.id.photo_attachment);
+                    float photo_height = (float)photo.getHeight();
+                    float new_height   = photo_height/factor;
+                    photo.setMaxHeight((int)new_height);
+                }
+
+                ViewGroup.LayoutParams params = dialog_layout.getLayoutParams();
+            }
+        });
+
 
     }
     private void setButtonsSize() {

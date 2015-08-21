@@ -59,7 +59,8 @@ import static java.sql.DriverManager.println;
  */
 
 public class TransactionActivity extends AppCompatActivity  {
-    private static final int RESULT_LOAD_IMG = 12;
+    private static final int RESULT_LOAD_IMG  = 12;
+    private static final int RESULT_PHOTO_IMG = 14;
     private boolean                       photo_attached = false;
     private String                        photoPath      = "";
 
@@ -403,7 +404,7 @@ public class TransactionActivity extends AppCompatActivity  {
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
                 break;
             case R.id.camera_button:
-                this.rfc = new RequestFromCamera(this, 13);
+                this.rfc = new RequestFromCamera(this, RESULT_PHOTO_IMG);
                 break;
             case R.id.delete_photo__button:
                 if (photo_attached) {
@@ -415,7 +416,6 @@ public class TransactionActivity extends AppCompatActivity  {
                 }
                 break;
         }
-
     }
 
     public void submitClick(View view) {
@@ -511,8 +511,7 @@ public class TransactionActivity extends AppCompatActivity  {
                     photoPath       = cursor.getString(columnIndex);
                     cursor.close();
 
- //                   new SendPhotoDialog(this, FR, voc, base_layout, logout_button, imgDecodableString).show();
-                    photo_attached = true;
+                     photo_attached = true;
 
                     ImageView img = (ImageView) findViewById(R.id.delete_photo__button);
                     img.setImageResource(R.mipmap.ic_checked_photo);
@@ -521,9 +520,10 @@ public class TransactionActivity extends AppCompatActivity  {
                     photo_attached = false;
                 }
 
-            } else  if (requestCode == this.rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
+            } else  if (requestCode == rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
                 try {
-//                    new SendPhotoDialog(this, FR, voc, base_layout, logout_button, rfc.getRealPathFromURI()).show();
+//                    if (rfc == null)
+//                        rfc = new RequestFromCamera(this, RESULT_PHOTO_IMG);
                     photo_attached = true;
                     photoPath      = rfc.getRealPathFromURI();
 

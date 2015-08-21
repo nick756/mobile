@@ -108,7 +108,6 @@ public class MyHttpRequest {
 
         try {
             bitmap = BitmapFactory.decodeFile(photoPath);
-
         } catch (OutOfMemoryError e) {
             bitmap = null;
         } catch (Exception e) {
