@@ -116,11 +116,16 @@ public class SendPhotoDialog extends MyDialog {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String tag = (String) v.getTag();
+                if (tag != null)
+                    if (tag == "1")
+                        return;
+
+                v.setTag("1");
                 // prepare url, data & send
                 String url = getHttp();
-                new UploadImage(bitmap, url, new GifDialog(base_layout, "file:///android_asset/gif_upload_image.html"));
-
                 dialog.dismiss();
+                new UploadImage(bitmap, url, new GifDialog(base_layout, "file:///android_asset/gif_upload_image.html"));
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -142,12 +147,12 @@ public class SendPhotoDialog extends MyDialog {
 
         dialog.show();
 
-//        dialog.getWindow().setAttributes(lp);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         setButtonHeight(okButton);
         setButtonHeight(cancelButton);
-
+/*
         ViewTreeObserver vto = dialog_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
@@ -162,7 +167,7 @@ public class SendPhotoDialog extends MyDialog {
                 ViewGroup.LayoutParams params = dialog_layout.getLayoutParams();
             }
         });
-
+*/
         //dialog_layout
     }
 
