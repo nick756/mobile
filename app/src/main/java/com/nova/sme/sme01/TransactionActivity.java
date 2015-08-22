@@ -99,6 +99,7 @@ public class TransactionActivity extends AppCompatActivity  {
     private Vector<View> views = new Vector<View>();
 
     private CustomBar ccb;
+    private String typePost = "base64";
 //    private ApplicationAttributes         attr;
 
 
@@ -191,6 +192,7 @@ public class TransactionActivity extends AppCompatActivity  {
         if (ccb != null)
             ccb.setBackgound();
     }
+    public String gettypePost() {return typePost;}
 
 
     private void setAttributes() {
@@ -332,7 +334,8 @@ public class TransactionActivity extends AppCompatActivity  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.transaction_menu, menu);
         return true;
     }
     @Override
@@ -377,13 +380,18 @@ public class TransactionActivity extends AppCompatActivity  {
         } else if (id == R.id.action_help) {
             startActivity(new Intent(this, HelpNActivity.class));
             return true;
-        } /*else if (id == R.id.action_from_gallery) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            Bitmap.CompressFormat.JPEG.toString();
-            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-        } else if (id == R.id.action_from_camera) {
-            this.rfc = new RequestFromCamera(this, 13);
-        }*/
+        } else if (id == R.id.base64) {
+           item.setChecked(true);
+           typePost = "base64";
+        } else if (id == R.id.multiPart) {
+           item.setChecked(true);
+           typePost = "multiPart";
+        } else if (id == R.id.singleFile) {
+           item.setChecked(true);
+           typePost = "singleFile";
+        }
+
+
 
 
         return super.onOptionsItemSelected(item);

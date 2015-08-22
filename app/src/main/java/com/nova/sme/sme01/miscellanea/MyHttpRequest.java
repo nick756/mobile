@@ -13,6 +13,7 @@ import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.MainActivity;
 import com.nova.sme.sme01.R;
 import com.nova.sme.sme01.RegularLoginActivity;
+import com.nova.sme.sme01.TransactionActivity;
 import com.nova.sme.sme01.TransactionsViewActivity;
 import com.nova.sme.sme01.miscellanea.Dialogs.GifDialog;
 import com.nova.sme.sme01.miscellanea.Dialogs.MyDialog;
@@ -25,16 +26,30 @@ import com.nova.sme.sme01.xml_reader_classes.XML_Login;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.support.Base64;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.core.io.Resource;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
@@ -63,6 +78,7 @@ public class MyHttpRequest {
     private String          photoPath = "";
 //    private Bitmap          bitmap;
     private String          data = "";
+    private String          typePost = "";
 
     public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className) {
         this.activity    = activity;
@@ -103,30 +119,42 @@ public class MyHttpRequest {
         this.gif_doalog  = gif_doalog;
         this.photoPath   = photoPath;
 
-
-        Bitmap bitmap;
-
-        try {
-            bitmap = BitmapFactory.decodeFile(photoPath);
-        } catch (OutOfMemoryError e) {
-            bitmap = null;
-        } catch (Exception e) {
-            bitmap = null;
-        }
-/*
-        if (bitmap != null){
-            getStringByte(bitmap, 90);
-            if (data.length() == 0) {
-                Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(gif_doalog.getContext(), "DATA IS OK", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
-        }
-*/
         FM = new FileManager(activity);
-        new Http_Request().execute();
+
+        TransactionActivity ta = (TransactionActivity) activity;
+        this.typePost = ta.gettypePost();
+
+        if (typePost.equals("base64")) {
+            Bitmap bitmap;
+
+            try {
+                bitmap = BitmapFactory.decodeFile(photoPath);
+            } catch (OutOfMemoryError e) {
+                bitmap = null;
+            } catch (Exception e) {
+                bitmap = null;
+            }
+
+            if (bitmap != null){
+                getStringByte(bitmap, 90);
+                if (data.length() == 0) {
+                    Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(gif_doalog.getContext(), "DATA IS OK", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+            }
+
+
+            new Http_Request().execute();
+        } else {
+            new Http_Request_N().execute();
+        }
+
+
+
+
     }
 
     private void getStringByte(Bitmap bitmap, int n) {
@@ -149,6 +177,75 @@ public class MyHttpRequest {
         }
     }
 
+    private class Http_Request_N extends AsyncTask<Void, String, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            String error;
+
+            URI uri;
+            try {
+                URL url = new URL(url_request);
+                uri     = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+
+                String       xml = "";
+                RestTemplate restTemplate = new RestTemplate(true);
+
+                if (typePost.equals("multiPart")) {
+                    MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>();
+                    parts.add("file", new FileSystemResource(photoPath));
+
+                    xml = restTemplate.postForObject(uri, parts, String.class);
+                } else {
+                    xml = restTemplate.postForObject(uri, new FileSystemResource(photoPath), String.class);
+                }
+
+                return xml;
+            } catch (java.net.URISyntaxException e) {
+                error = e.getMessage();
+            } catch (RestClientException e) {//I/O error: class path resource [storage/emulated/0/DCIM/Camera/IMG_20140404_140717.jpg] cannot be resolved to URL because it does not exist
+                error = e.getMessage();      //Could not write request: no suitable HttpMessageConverter found for request type [java.io.FileInputStream]
+            } catch (Exception e) {
+                error = e.getMessage();
+            } finally {
+
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String xml) {
+            String code;
+
+            if (className.equals("BaseXML")) {// request logout
+                goStartPage();
+                return;
+            }
+
+            if (xml != null) {
+                Serializer serializer = new Persister();
+
+                if ( xml.indexOf("Session expired") != -1) {
+                    goStartPage();
+                    return;
+                }
+                if (className.equals("ListTransactions")) {
+                    implementViewTransactions(xml, serializer);
+                } else if (className.equals("AddTransaction")) {
+                    implementTransaction(xml, serializer);
+                } else if (className.equals("ListOperations")) {//GetOperations")) {
+                    implementGetOperations(xml, serializer);
+                } else if (className.equals("XML_Login")) {
+                    implementXmlLogin(xml, serializer);
+                }
+            } else {
+                if (className.equals("XML_Login")) {
+                    implementXmlLogin(null, null);
+                } else {
+                    goStartPage();
+                }
+            }
+        }
+
+     }
 
     private class Http_Request extends AsyncTask<Void, String, String> {
         @Override
@@ -179,6 +276,9 @@ public class MyHttpRequest {
                 error = e.getMessage();
             } catch (Exception e) {
                 error = e.getMessage();
+            } finally {
+                if (data.length() > 0)
+                    data = "";
             }
             return null;
         }

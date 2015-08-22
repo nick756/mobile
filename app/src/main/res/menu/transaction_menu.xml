@@ -1,0 +1,65 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+
+        <item android:title="Select Post type" android:orderInCategory="11">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item android:id="@+id/base64"
+                          android:titleCondensed="Options"
+                          android:title="base64"
+                          android:icon="@android:drawable/ic_menu_preferences"
+                          android:checked="true"
+                          >
+                    </item>
+                    <item android:id="@+id/multiPart" android:titleCondensed="Options" android:title="Multipart" android:icon="@android:drawable/ic_menu_preferences">
+                    </item>
+                    <item android:id="@+id/singleFile" android:titleCondensed="Options" android:title="Singlepart" android:icon="@android:drawable/ic_menu_preferences">
+                    </item>
+                </group>
+            </menu>
+        </item>
+
+
+    <item android:title="Application Settings" android:orderInCategory="101">
+        <menu>
+            <item android:id="@+id/action_language"
+                android:title="Select Language"
+                android:orderInCategory="100"
+                app:showAsAction="never"
+                />
+
+            <item android:id="@+id/action_url_address"
+                android:title="Url Address"
+                android:orderInCategory="103"
+                app:showAsAction="never"
+                />
+
+            <item android:id="@+id/action_themes"
+                android:title="Buttons Themes"
+                android:orderInCategory="104"
+                app:showAsAction="never"
+                />
+            <item android:id="@+id/colors_themes"
+                android:title="Colors Themes"
+                android:orderInCategory="104"
+                app:showAsAction="never"
+                />
+        </menu>
+    </item>
+
+    <item android:id="@+id/action_help"
+        android:title="Help"
+        android:orderInCategory="202"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/action_about"
+        android:title="About"
+        android:orderInCategory="203"
+        app:showAsAction="never"
+        />
+
+</menu>
