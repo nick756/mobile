@@ -113,7 +113,7 @@ public class MyHttpRequest {
         } catch (Exception e) {
             bitmap = null;
         }
-
+/*
         if (bitmap != null){
             getStringByte(bitmap, 90);
             if (data.length() == 0) {
@@ -124,7 +124,7 @@ public class MyHttpRequest {
         } else {
             Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
         }
-
+*/
         FM = new FileManager(activity);
         new Http_Request().execute();
     }
@@ -275,7 +275,7 @@ public class MyHttpRequest {
 
         if (gif_doalog != null) {
             gif_doalog.dismiss();
-            Toast.makeText(base_layout.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
+//            Toast.makeText(base_layout.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
         }
 
         try {

@@ -59,8 +59,7 @@ import static java.sql.DriverManager.println;
  */
 
 public class TransactionActivity extends AppCompatActivity  {
-    private static final int RESULT_LOAD_IMG  = 12;
-    private static final int RESULT_PHOTO_IMG = 14;
+    private static final int RESULT_LOAD_IMG = 12;
     private boolean                       photo_attached = false;
     private String                        photoPath      = "";
 
@@ -404,7 +403,7 @@ public class TransactionActivity extends AppCompatActivity  {
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
                 break;
             case R.id.camera_button:
-                this.rfc = new RequestFromCamera(this, RESULT_PHOTO_IMG);
+                this.rfc = new RequestFromCamera(this, 14);
                 break;
             case R.id.delete_photo__button:
                 if (photo_attached) {
@@ -522,10 +521,8 @@ public class TransactionActivity extends AppCompatActivity  {
 
             } else  if (requestCode == rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
                 try {
-//                    if (rfc == null)
-//                        rfc = new RequestFromCamera(this, RESULT_PHOTO_IMG);
                     photo_attached = true;
-                    photoPath      = rfc.getRealPathFromURI();
+                    photoPath      = rfc.getRealPathFromURI(this);
 
                     ImageView img = (ImageView) findViewById(R.id.delete_photo__button);
                     img.setImageResource(R.mipmap.ic_checked_photo);
@@ -539,5 +536,14 @@ public class TransactionActivity extends AppCompatActivity  {
             println(e.getMessage().toString());
         }
     }
+/*
+    private String getRealPathFromURI() {
+        String[] proj    = { MediaStore.Images.Media.DATA };
+        Cursor cursor    = managedQuery(imageUri, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+*/
 
 }
