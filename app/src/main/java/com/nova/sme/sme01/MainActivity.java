@@ -28,6 +28,7 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ButtonsDialog;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
+import com.nova.sme.sme01.miscellanea.Dialogs.GifDialog;
 import com.nova.sme.sme01.miscellanea.Dialogs.SendPhotoDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
@@ -141,6 +142,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         FM.writeToFile("windowMetrics.bin", wm);
 
 
+
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
@@ -165,9 +167,14 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                 setAttributes();
                 my_dialog = new MyDialog(FR, voc, base_layout);
 
+       //         new GifDialog(base_layout);
+
             }
         });
 
+    }
+    public void tempclick(View view) {
+//        new GifDialog(base_layout);
     }
     public void UpdateCustomBar(){
         if (ccb != null)

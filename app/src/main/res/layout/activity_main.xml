@@ -27,7 +27,9 @@
             android:textAlignment="center"
             android:textColor="#D1DADA"
             android:background="@color/text_back_ground"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="tempclick"
+            android:clickable="true" />
 
         <EditText
             android:id="@+id/user_name"

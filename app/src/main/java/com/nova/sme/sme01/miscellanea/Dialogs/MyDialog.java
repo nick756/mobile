@@ -52,6 +52,7 @@ public class MyDialog {
         this.FR          = FR;
     }
 
+
     public void show(String message) {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -159,18 +160,33 @@ public class MyDialog {
 
         dialog.getWindow().setAttributes(lp);
 
-        int height;
-        if (FR != null) {
-            height = FR.getLogButtonHeight();
-            if (height > 0) {
-                ViewGroup.LayoutParams prms = dialogButton.getLayoutParams();
-                prms.height                 = height;
-            }
-        }
+        setButtonHeight(dialogButton);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         SetColors();
     }
+
+    private void setButtonHeight(Button button) {
+        Button logout_button = FR.getLogoutButton();
+        if (logout_button == null) return;
+
+        int                    log_button_height = FR.getLogButtonHeight();
+        int                    height            = logout_button.getHeight();
+        ViewGroup.LayoutParams params;
+
+        if (height == 0) {
+            logout_button.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            height = logout_button.getMeasuredHeight();
+        }
+
+        if (log_button_height > 0)
+            height = Math.min(height, log_button_height); // I know, I know.... hoodoo
+
+        params = button.getLayoutParams();
+        params.height = height;
+
+    }
+
     public void show(String message, int id, String togo) {
         this.togo = togo;
 
@@ -224,15 +240,7 @@ public class MyDialog {
 
         dialog.getWindow().setAttributes(lp);
 
-        int height;
-        if (FR != null) {
-            height = FR.getLogButtonHeight();
-            if (height > 0) {
-                ViewGroup.LayoutParams prms = dialogButton.getLayoutParams();
-                prms.height                 = height;
-            }
-        }
-
+        setButtonHeight(dialogButton);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         SetColors();
     }
