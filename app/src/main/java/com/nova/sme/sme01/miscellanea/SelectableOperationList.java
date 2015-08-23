@@ -84,6 +84,7 @@ public class SelectableOperationList {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
+                 fromtill_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                  tuneIconsSizes(fromtill_layout, 0.6f);
             }
         });

@@ -119,6 +119,7 @@ public class FillWithOperationsList {
                 @SuppressWarnings("deprecation")
                 @Override
                 public void onGlobalLayout() {
+                    sv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     //setFontSize();
                 }
             });

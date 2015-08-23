@@ -108,7 +108,15 @@ public class MyHttpRequest {
         new Http_Request().execute();
     }
 
-    public MyHttpRequest(FormResizing  FR, Activity activity, RelativeLayout base_layout, Vocabulary voc, String url_request, String className, GifDialog gif_doalog, String photoPath) {
+    public MyHttpRequest(FormResizing   FR,
+                         Activity       activity,
+                         RelativeLayout base_layout,
+                         Vocabulary     voc,
+                         String         url_request,
+                         String         className,
+                         GifDialog      gif_doalog,
+                         String         photoPath,
+                         Bitmap         preparedBitmap) {
         this.activity    = activity;
         this.url_request = url_request;//http://103.6.239.242/sme/mobile/listtransactions/?id=4&dateFrom=27/01/2015&dateTill=27/07/2015
         this.base_layout = base_layout;
@@ -125,36 +133,14 @@ public class MyHttpRequest {
         this.typePost = ta.gettypePost();
 
         if (typePost.equals("base64")) {
-            Bitmap bitmap;
-
-            try {
-                bitmap = BitmapFactory.decodeFile(photoPath);
-            } catch (OutOfMemoryError e) {
-                bitmap = null;
-            } catch (Exception e) {
-                bitmap = null;
-            }
-
-            if (bitmap != null){
-                getStringByte(bitmap, 90);
-                if (data.length() == 0) {
-                    Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(gif_doalog.getContext(), "DATA IS OK", Toast.LENGTH_LONG).show();
-                }
-            } else {
+            getStringByte(preparedBitmap, 100);
+            if (data.length() == 0)
                 Toast.makeText(gif_doalog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
-            }
-
 
             new Http_Request().execute();
         } else {
             new Http_Request_N().execute();
         }
-
-
-
-
     }
 
     private void getStringByte(Bitmap bitmap, int n) {
@@ -277,8 +263,10 @@ public class MyHttpRequest {
             } catch (Exception e) {
                 error = e.getMessage();
             } finally {
-                if (data.length() > 0)
+                if (data.length() > 0) {
                     data = "";
+                    System.gc();
+                }
             }
             return null;
         }

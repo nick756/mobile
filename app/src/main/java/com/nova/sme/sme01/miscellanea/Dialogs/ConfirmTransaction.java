@@ -4,10 +4,13 @@ package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -16,7 +19,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nova.sme.sme01.FormResizing;
 import com.nova.sme.sme01.R;
@@ -29,6 +34,7 @@ import com.nova.sme.sme01.xml_reader_classes.Operation;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -62,8 +68,10 @@ public class ConfirmTransaction {
 
     private String    photoPath;// to be attached
     private Bitmap    bitmap = null;
+    private Bitmap    preparedBitmap;// to send
 
     private RelativeLayout dialog_layout;
+    private Dialog         dialog;
 
 
     public ConfirmTransaction(Activity activity,
@@ -94,17 +102,15 @@ public class ConfirmTransaction {
 
     }
     void send_request() {
-        if (bitmap != null) {
-            bitmap.recycle();
-            bitmap = null;
-            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), this.photoPath);
+        if (preparedBitmap != null) {
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), this.photoPath, this.preparedBitmap);
 
         } else {
             new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
         }
     }
     public void show() {
-        final Dialog dialog = new Dialog(base_layout.getContext());
+        dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.before_transaction);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
@@ -162,29 +168,13 @@ public class ConfirmTransaction {
             public void onClick(View v) {
             send_request();
             dialog.dismiss();
-            }
+             }
         });
 
         // set theme
         Vector<Button> btns = new Vector<Button>();
         btns.add(okButton);btns.add(cancelButton);
         setDialogButtonsTheme(btns);
-
-        // attachment photo
-        try {
-            if (photoPath.length() > 0) {
-                ImageView photo = (ImageView) dialog.findViewById(R.id.photo_attachment);
-                bitmap = BitmapFactory.decodeFile(photoPath);
-
-                photo.setImageBitmap(bitmap);
-            }
-        } catch(OutOfMemoryError e) {
-            bitmap = null;
-            photoPath = "";
-        } catch(Exception e) {
-            bitmap = null;
-            photoPath = "";
-        }
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
@@ -217,32 +207,117 @@ public class ConfirmTransaction {
         attr.getColors().setColors(views);
 
         setButtonsSize();
+
+        imageStuff();
         //
         ViewTreeObserver vto = dialog_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-                float height      = (float)dialog_layout.getHeight();//297
-                float base_height = (float)base_layout.getHeight();
+                dialog_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
+                if (photoPath.length() == 0)
+                    return;
 
-                if (height > base_layout.getHeight()) {
-                    println("");
-                    float factor = height/base_height;
-
-                    ImageView photo    = (ImageView) dialog.findViewById(R.id.photo_attachment);
-                    float photo_height = (float)photo.getHeight();
-                    float new_height   = photo_height/factor;
-                    photo.setMaxHeight((int)new_height);
-                }
-
-                ViewGroup.LayoutParams params = dialog_layout.getLayoutParams();
+                imageStuff();
             }
         });
-
-
     }
+
+    private void imageStuff() {
+        float base_layout_height   = (float)base_layout.getHeight();
+        float height               = (float)dialog_layout.getHeight();
+        float max_available_height = base_layout_height - height;
+        float width                = (float)dialog_layout.getWidth();
+
+        if (max_available_height < 0)
+            return;
+
+        ImageView photo = (ImageView) dialog.findViewById(R.id.photo_attachment);
+
+        BitmapFactory.Options options  = new BitmapFactory.Options();
+        options.inJustDecodeBounds     = true;
+
+        bitmap = BitmapFactory.decodeFile(photoPath, options);
+        float imageHeight = (float) options.outHeight;    //1836 3264
+        float imageWidth  = (float) options.outWidth;     //3264 1836
+        float factor      = imageHeight/imageWidth;
+
+        if (max_available_height > options.outHeight && width > options.outWidth) {
+            try {
+                bitmap         = BitmapFactory.decodeFile(photoPath);
+                preparedBitmap = BitmapFactory.decodeFile(photoPath);
+            } catch(OutOfMemoryError e) {
+                Toast.makeText(dialog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+                bitmap = null;
+            } catch(Exception e) {
+                Toast.makeText(dialog.getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                bitmap = null;
+            }
+        } else {
+            float reqWidth  = width;
+            float reqHeight = reqWidth*factor;
+
+            if (reqHeight > max_available_height) {
+                reqHeight = max_available_height*.9f;
+                reqWidth  = reqHeight/factor;
+            }
+
+            try {
+                bitmap = decodeSampledBitmapFromResource((int)reqWidth, (int)reqHeight);
+            } catch(OutOfMemoryError e) {
+                Toast.makeText(dialog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+                bitmap = null;
+            } catch(Exception e) {
+                Toast.makeText(dialog.getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                bitmap = null;
+            }
+
+            try {
+                preparedBitmap = decodeSampledBitmapFromResource((int)reqWidth, (int)reqHeight, 4);
+            } catch(OutOfMemoryError e) {
+                Toast.makeText(dialog.getContext(), "OUT OF MEMORY", Toast.LENGTH_LONG).show();
+                preparedBitmap = null;
+            } catch(Exception e) {
+                Toast.makeText(dialog.getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                preparedBitmap = null;
+            }
+        }
+
+        if (bitmap != null) {
+            photo.setImageBitmap(bitmap);
+            new post_me(dialog_layout);
+        }
+    }
+
+    class post_me {
+
+        public post_me(RelativeLayout rl) {
+            rl.post(new Runnable() {
+                public void run() {
+                    addCorrection();
+                }
+            });
+        }
+    }
+
+    private void addCorrection() {
+        ImageView photo = (ImageView) dialog.findViewById(R.id.photo_attachment);
+        float height, base_height;
+
+        height      = (float) dialog_layout.getHeight();
+        base_height = (float) base_layout.getHeight();
+
+        if (height > base_height) {
+            float factor = height / base_height;
+
+            float photo_height = (float) photo.getHeight();
+            float new_height   = photo_height / factor;
+            photo.setMaxHeight((int) new_height);
+        }
+    }
+
     private void setButtonsSize() {
         if (logout_button == null) return;
 
@@ -267,6 +342,51 @@ public class ConfirmTransaction {
         attr.setButtons(base_layout, buttons);
         FM.writeToFile("attributes.bin", attr);
         return attr;
+    }
+    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        int height       = options.outHeight;
+        int width        = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            int halfHeight = height / 2;
+            int halfWidth  = width  / 2;
+
+            while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth)
+                inSampleSize *= 2;
+
+        }
+
+        return inSampleSize;
+    }
+    public Bitmap decodeSampledBitmapFromResource(int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds    = true;
+
+        BitmapFactory.decodeFile(photoPath, options);
+         // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(photoPath, options);
+    }
+    public Bitmap decodeSampledBitmapFromResource(int reqWidth, int reqHeight, int inSampleSize) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds    = true;
+
+        BitmapFactory.decodeFile(photoPath, options);
+        // Calculate inSampleSize
+        options.inSampleSize = inSampleSize;
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(photoPath, options);
     }
 
 }

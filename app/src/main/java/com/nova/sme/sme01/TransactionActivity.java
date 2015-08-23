@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
@@ -426,6 +427,13 @@ public class TransactionActivity extends AppCompatActivity  {
     }
 
     public void submitClick(View view) {
+ //       String tag = (String) view.getTag();
+ //       if (tag != null) {
+ //           Toast.makeText(this, "Wait please", Toast.LENGTH_LONG).show();
+ //           return;
+ //       }
+        view.setTag("1");
+
         Operation s_opearion;
         String    s_date;
         String    s_descr;
@@ -527,17 +535,21 @@ public class TransactionActivity extends AppCompatActivity  {
                     photo_attached = false;
                 }
 
-            } else  if (requestCode == rfc.getId() && resultCode == RESULT_OK/* &&  data != null*/) {
-                try {
-                    photo_attached = true;
-                    photoPath      = rfc.getRealPathFromURI(this);
+            } else  if (/*requestCode == rfc.getId() && */resultCode == RESULT_OK/* &&  data != null*/) {
+                if (rfc != null) {
+                    if (requestCode == rfc.getId()) {
+                        try {
+                            photo_attached = true;
+                            photoPath = rfc.getRealPathFromURI(this);
 
-                    ImageView img = (ImageView) findViewById(R.id.delete_photo__button);
-                    img.setImageResource(R.mipmap.ic_checked_photo);
+                            ImageView img = (ImageView) findViewById(R.id.delete_photo__button);
+                            img.setImageResource(R.mipmap.ic_checked_photo);
 
-                } catch (Exception e) {
-                    photo_attached = false;
-                    e.printStackTrace();
+                        } catch (Exception e) {
+                            photo_attached = false;
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
