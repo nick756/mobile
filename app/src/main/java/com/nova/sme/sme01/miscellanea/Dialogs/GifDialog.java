@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,6 +22,15 @@ import java.io.InputStream;
 
 import static java.sql.DriverManager.println;
 
+/*
+ ********************************
+ *                              *
+ *  Show animated gif while the *
+ *  image is being sending      *
+ *  to a server                 *
+ *                              *
+ ********************************
+ */
 public class GifDialog {
     private Context        context;
     private RelativeLayout base_layout;
@@ -63,12 +73,11 @@ public class GifDialog {
 
         web = (WebView)dialog.findViewById(R.id.web_view_loader);
         if (url_address.length() == 0)
-            web.loadUrl("file:///android_asset/gif.html");
+            web.loadUrl("file:///android_asset/gif_2.html");
         else
             web.loadUrl(url_address);
 
-
-//        setWebSize();
+        web.setBackgroundColor(Color.TRANSPARENT);
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
@@ -76,10 +85,7 @@ public class GifDialog {
 
         dialog_layout = (RelativeLayout) dialog.findViewById(R.id.base_gif);
 
-
-//        dialog_layout.removeView(web);
-
-        setWebSize();
+//        setWebSize();
 /*
         ViewTreeObserver vto = dialog_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -108,6 +114,7 @@ public class GifDialog {
         });
 */
     }
+/*
      private void setWebSize() {
         float gif_width;
         ViewGroup.LayoutParams params;
@@ -145,7 +152,7 @@ public class GifDialog {
 
         return 0;
     }
-
+*/
     public void dismiss() {
         dialog.dismiss();
     }

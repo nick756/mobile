@@ -103,8 +103,7 @@ public class ConfirmTransaction {
     }
     void send_request() {
         if (preparedBitmap != null) {
-            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), this.photoPath, this.preparedBitmap);
-
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout, "file:///android_asset/gif.html"), this.photoPath, this.preparedBitmap);
         } else {
             new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
         }

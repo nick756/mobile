@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:id="@+id/base_gif"
-    android:alpha="0.5">
+    >
 
 
     <WebView
@@ -12,6 +12,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/web_view_loader"
         android:layout_centerInParent="true"
-        android:alpha="0.99"
     />
 </RelativeLayout>

@@ -58,9 +58,6 @@ import static java.sql.DriverManager.println;
  */
 
 
-
-
-
 public class MainActivity extends AppCompatActivity /*implements View.OnClickListener */{
     private static final int RESULT_LOAD_IMG = 12;//AppCompatActivity
     public static String  MAIN_INFO;

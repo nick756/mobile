@@ -363,7 +363,7 @@ public class MyHttpRequest {
 
         if (gif_doalog != null) {
             gif_doalog.dismiss();
-            Toast.makeText(base_layout.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
+//            Toast.makeText(base_layout.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
         }
 
         try {
