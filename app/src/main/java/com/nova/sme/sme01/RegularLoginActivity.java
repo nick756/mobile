@@ -25,7 +25,6 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.Dialogs.GetFilterViewTransactions;
-import com.nova.sme.sme01.miscellanea.Dialogs.SendPhotoDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;

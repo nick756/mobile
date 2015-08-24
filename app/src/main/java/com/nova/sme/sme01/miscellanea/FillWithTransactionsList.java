@@ -37,14 +37,12 @@ public class FillWithTransactionsList {
     private String         maxLimit = "Purchase of Plants and Machineries";
     private String         maxName  = "Telephone, Fax and Internet";
 
-
     private float          textsize   = 0;
 
     private Vector<TextView>      texts = new Vector<TextView>();
-//    private Vector<ShortedOperation> asked_operations;
 
     private int            transactionsNumber = 0;
-    // updated stuff
+
     private OperationsSelector operationSelector;
 
     public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
@@ -61,28 +59,9 @@ public class FillWithTransactionsList {
             operationSelector = new OperationsSelector();
             FM.writeToFile("OperationsSelector.bin", operationSelector);
         }
-
-
-
         implement();
     }
-/*
-    private boolean let(String operationName) {
-        if (asked_operations == null)
-            return true;
 
-        if (operationName.indexOf("IN:") == 0)
-            operationName = operationName.substring(3).trim();
-        else if (operationName.indexOf("OUT:") == 0)
-            operationName = operationName.substring(4).trim();
-
-        for (int j = 0; j < asked_operations.size(); j ++)
-            if (asked_operations.get(j).name.equals(operationName))
-                return asked_operations.get(j).checked;
-
-        return false;
-    }
-*/
     private boolean implement() {
         if (this.listTransactions == null) {
             clean_scroll();
@@ -111,8 +90,6 @@ public class FillWithTransactionsList {
             for (int i = 0; i < list.size(); i++) {
                 if (!operationSelector.isCheckedFullName(list.get(i).getType()))
                     continue;
-//                if (!let(list.get(i).getType()))
-//                    continue;
 
                 transactionsNumber ++;
 

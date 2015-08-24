@@ -21,7 +21,7 @@ import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
-import com.nova.sme.sme01.miscellanea.Dialogs.SendPhotoDialog;
+import com.nova.sme.sme01.miscellanea.Dialogs.GifDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithTransactionsList;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
@@ -57,6 +57,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
     private Vector<View> views = new Vector<View>();
     private CustomBar ccb;
+ //   private GifDialog gif_dialog;
  //   private ApplicationAttributes         attr;
 
     @Override
@@ -76,15 +77,8 @@ public class TransactionsViewActivity extends AppCompatActivity {
         this.FM      = new FileManager(this);
         this.FR      = new FormResizing(this, base_layout);
         this.voc     = new Vocabulary();
-/*
-        this.attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
-        if (this.attr == null) {
-            this.attr = new ApplicationAttributes(this);
-            FM.writeToFile("attributes.bin", this.attr);
-        }
-*/
+
         getParams();
- //       this.url_logout += "id=" + this.params.getId() + "&companyID=" + this.params.getcompanyID();
 
         this.xml_List_transactions = (ListTransactions) FM.readFromFile("transactions_view.bin");
 
@@ -96,36 +90,37 @@ public class TransactionsViewActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.tv_date_till_id);
         tv.setText(c_c.dateTill);
 
-        fwt =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
-        int real_number = fwt.getActualTransactions();
-        TextView t_v = (TextView)findViewById(R.id.trans_count);
-        t_v.setText("(" + Integer.toString(real_number) + ")");
-
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
             @Override
             public void onGlobalLayout() {
-                base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                FR.resize();
+            base_layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            FR.resize();
 
-                logout_button = create_custom_bar();
-//                voc.change_caption(logout_button);
-                logout_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        logout_request();
-                    }
-                });
+            logout_button = create_custom_bar();
+            logout_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    logout_request();
+                }
+            });
 
-                FR.resizeLoginButton(base_layout, logout_button, 0.062f);
-                voc.TranslateAll(base_layout);
-//                fwt.setFontSize();
+            FR.resizeLoginButton(base_layout, logout_button, 0.062f);
+            voc.TranslateAll(base_layout);
 
-                 setAttributes();
+            setAttributes();
+
+            fillWithTransactions();
 
             }
         });
+    }
+    private void fillWithTransactions() {
+        fwt             =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
+        int real_number = fwt.getActualTransactions();
+        TextView t_v    = (TextView)findViewById(R.id.trans_count);
+        t_v.setText("(" + Integer.toString(real_number) + ")");
     }
     public CustomBar getCustomBar(){return ccb;}
 

@@ -29,7 +29,6 @@ import com.nova.sme.sme01.miscellanea.Dialogs.ButtonsDialog;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.Dialogs.GifDialog;
-import com.nova.sme.sme01.miscellanea.Dialogs.SendPhotoDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
 import com.nova.sme.sme01.miscellanea.MyColors;

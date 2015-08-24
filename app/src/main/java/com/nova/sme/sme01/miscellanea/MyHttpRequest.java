@@ -516,8 +516,9 @@ public class MyHttpRequest {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(MainActivity.MAIN_INFO, c_c);
 
-                if (gif_doalog != null)
+                if (gif_doalog != null) {
                     gif_doalog.dismiss();
+                }
 
                 activity.startActivity(intent);
 
