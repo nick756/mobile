@@ -75,16 +75,16 @@ public class ConfirmTransaction {
 
 
     public ConfirmTransaction(Activity activity,
-                              Vocabulary voc,
+                              Vocabulary     voc,
                               FormResizing   FR,
                               RelativeLayout base_layout,
-                              String http_request,
-                              Operation s_opearion,
-                              String s_date,
-                              String s_descr,
-                              String s_sum,
-                              Button logout_button,
-                              String photoPath) {
+                              String         http_request,
+                              Operation      s_opearion,
+                              String         s_date,
+                              String         s_descr,
+                              String         s_sum,
+                              Button         logout_button,
+                              String         photoPath) {
 
         this.activity      = activity;
         this.voc           = voc;
@@ -96,10 +96,7 @@ public class ConfirmTransaction {
         this.descr         = s_descr;
         this.amount        = s_sum;
         this.logout_button = logout_button;
-
-
         this.photoPath     = photoPath;
-
 
     }
     void send_request() {
