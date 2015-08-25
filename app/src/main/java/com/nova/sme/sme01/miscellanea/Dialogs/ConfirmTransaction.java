@@ -85,6 +85,7 @@ public class ConfirmTransaction {
                               String s_sum,
                               Button logout_button,
                               String photoPath) {
+
         this.activity      = activity;
         this.voc           = voc;
         this.FR            = FR;
@@ -103,7 +104,7 @@ public class ConfirmTransaction {
     }
     void send_request() {
         if (preparedBitmap != null) {
-            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout, "file:///android_asset/gif.html"), this.photoPath, this.preparedBitmap);
+            new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction", new GifDialog(base_layout), this.photoPath, this.preparedBitmap);
         } else {
             new MyHttpRequest(FR, activity, base_layout, voc, http_request, "AddTransaction");
         }
@@ -118,7 +119,6 @@ public class ConfirmTransaction {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.width  = (int)((float)base_layout.getWidth()*0.9f);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
 
         TextView text = (TextView) dialog.findViewById(R.id.date_transaction_id);
         text.setText(this.date);
