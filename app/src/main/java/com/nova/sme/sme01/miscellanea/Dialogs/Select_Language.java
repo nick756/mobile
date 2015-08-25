@@ -1,6 +1,7 @@
 package com.nova.sme.sme01.miscellanea.Dialogs;
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,7 @@ public class Select_Language {
         final Dialog dialog = new Dialog(base_layout.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.activity_select__language);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0x88000000));
 
         final TextView text     = (TextView)    dialog.findViewById(R.id.select_language);
         final RadioButton en_rb = (RadioButton) dialog.findViewById(R.id.EngRB);
@@ -102,6 +104,8 @@ public class Select_Language {
         });
 
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
 
         ApplicationAttributes attr = (ApplicationAttributes) new FileManager(base_layout.getContext()).readFromFile("attributes.bin");
         if (attr == null) return;
