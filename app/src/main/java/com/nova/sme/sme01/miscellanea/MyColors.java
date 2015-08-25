@@ -31,7 +31,7 @@ public class MyColors implements Serializable {
     private int dialog_background_color    = -1;
     private int exception_id_1               = R.id.relativeLayout;//linearLayout
     private int exception_id_2               = R.id.linearLayout;//linearLayout
-    private int exception_id_3               = R.id.back_buttons_photo;
+//    private int exception_id_3               = R.id.back_buttons_photo;
 
 
 
@@ -39,7 +39,7 @@ public class MyColors implements Serializable {
     private int[] exceptions = {
             R.id.relativeLayout,
             R.id.linearLayout,
-            R.id.back_buttons_photo,
+//            R.id.back_buttons_photo,
     };
 
     private boolean isException(int id) {

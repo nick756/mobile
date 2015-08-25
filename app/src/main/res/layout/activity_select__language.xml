@@ -38,7 +38,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English"
+            android:drawableRight="@mipmap/ic_gb_flag"
             android:id="@+id/EngRB"
             android:checked="true"
             android:layout_margin="3dp"
@@ -51,7 +51,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Malay"
+            android:drawableRight="@mipmap/ic_my_flag"
             android:id="@+id/MalayRB"
             android:layout_margin="3dp"
             android:textColor="#000000"

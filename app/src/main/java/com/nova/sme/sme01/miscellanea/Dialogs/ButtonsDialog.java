@@ -142,8 +142,8 @@ public class ButtonsDialog {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                rbtn.setChecked(true);
-//                arrange(me);
+                rbtn.setChecked(true);
+                arrange(me);
                 }
             });
             rbtn.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +253,8 @@ public class ButtonsDialog {
 
         int strokeSize = (int)(3.0f*wm.density);
         int radius     = (int)(8.0f*wm.density);
-        for (int j = 0; j < 5; j ++) {
+
+        for (int j = 0; j < 3; j ++) {
             ll = (LinearLayout) inflater.inflate(R.layout.button_item, null);
             base.addView(ll);
 
@@ -310,11 +311,9 @@ public class ButtonsDialog {
 
         ShapeBuilder sb = new ShapeBuilder();
 
-        fillGroup(sb, inflater, base, 255, 0, -8, 8);
-        fillGroup(sb, inflater, base, 0, 255, 8, -8);
+        fillGroup(sb, inflater, base, 255, 0, -24, 24);
 
-        fillGroup(sb, inflater, base, 220, 102, 6, -8);
-        fillGroup(sb, inflater, base, 102, 220, -8, 6);
+
 
 
         itemsObject.init();
