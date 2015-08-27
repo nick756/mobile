@@ -12,11 +12,11 @@
         android:text="List of transactions"
         android:id="@+id/tv_caption_id"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
         android:padding="2dp"
         android:layout_marginTop="2dp"
         android:layout_centerHorizontal="true"
-        />
+        android:textSize="16sp"
+        android:textIsSelectable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
 
         android:layout_toRightOf="@+id/tv_caption_id"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
 
     <TextView
@@ -39,10 +39,10 @@
         android:id="@+id/tv_caption_from_id"
         android:layout_below="@+id/tv_caption_id"
         android:padding="2dp"
-        android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,9 +51,9 @@
         android:id="@+id/tv_date_from_id"
         android:layout_alignTop="@+id/tv_caption_from_id"
         android:layout_toRightOf="@+id/tv_caption_from_id"
-        android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:padding="2dp" />
+        android:padding="2dp"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,11 +62,11 @@
         android:id="@+id/tv_date_till_id"
         android:layout_alignTop="@+id/tv_date_from_id"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
         android:padding="2dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp" />
+        android:layout_marginRight="15dp"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,12 +76,47 @@
         android:layout_alignTop="@+id/tv_date_from_id"
         android:padding="2dp"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:layout_toLeftOf="@+id/tv_date_till_id" />
+        android:layout_toLeftOf="@+id/tv_date_till_id"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date_from_id"
+        android:id="@+id/base_sorting"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sorting"
+            android:text="Sort by:"
+            android:layout_marginLeft="15dp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_sorting"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+
+            android:layout_toRightOf="@+id/sorting"
+            android:background="@drawable/text_base_layout">
+
+        </Spinner>
+
+
+    </LinearLayout>
+
 
     <ScrollView android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:layout_below="@+id/tv_date_till_id"
+        android:layout_below="@+id/base_sorting"
         android:layout_marginTop="5dp"
         android:id="@+id/tv_spinner_id">
         android:layout_width="match_parent"

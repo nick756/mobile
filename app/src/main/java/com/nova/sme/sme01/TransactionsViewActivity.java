@@ -13,9 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nova.sme.sme01.miscellanea.Dialogs.AboutDialog;
 import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
@@ -90,6 +95,11 @@ public class TransactionsViewActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.tv_date_till_id);
         tv.setText(c_c.dateTill);
 
+        LinearLayout ll = (LinearLayout) findViewById(R.id.base_sorting); ll.setTag("main_background_color");
+        views.add(ll);
+
+        setSpinner();
+
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @SuppressWarnings("deprecation")
@@ -115,6 +125,33 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void setSpinner() {
+        // spinner         // возрастание    убывание
+        String items[] = {"Date ascending", "Date descending", "Operation type", "Highest amount fisrt", "Lowest amount first"};
+        for (int j = 0; j < items.length; j ++)
+            items[j] = voc.getTranslatedString(items[j]);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_sorting);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // показываем позиция нажатого элемента
+                //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+
     }
     private void fillWithTransactions() {
         fwt             =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);

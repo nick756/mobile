@@ -121,6 +121,14 @@ public class Vocabulary implements Serializable {
             {"General Information",                                 "Informasi Am"},
             {"Re-synchronization is needed",                        "Semula penyegerakan diperlukan"},
             {"Upload Photo",                                        "Upload Gambar"},
+            {"Date",                                                "Tarikh"},
+            {"Operation type",                                      "Denis operasi"},
+            {"Highest amount first",                                "Jumlah tertinggi dahulu"},
+            {"Lowest amount first",                                 "Jumlah terendah pertama"},
+            {"Date descending",                                     "Trtarikh menurun"},
+            {"Date ascending",                                      "Tarikh menaik"},
+
+
 
     };
 
