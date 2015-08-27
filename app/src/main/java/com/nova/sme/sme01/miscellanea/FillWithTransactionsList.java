@@ -163,11 +163,14 @@ public class FillWithTransactionsList {
                             type      = type.substring(4);
                             ci.in_out = R.mipmap.ic_out_bound;
                         }
+                        type = type.trim();
                         text.setText(type);
 
-                        if (type.length() > maxName.length() && type.length() <= maxLimit.length())
-                            maxName = type;
-
+                        if (type.length() > maxName.length())
+                            if (type.length() <= maxLimit.length())
+                                maxName = type;
+                        // Purchase of Plants and Machineries
+                        //Purchase of Plants and Machineries
                         li.type = text;
                         ci.type = type;
                     } else if (tag.equals("amount")) {
@@ -235,7 +238,7 @@ public class FillWithTransactionsList {
         for (int i = 0; i < texts.size();i ++) {
             tv = texts.elementAt(i);
             if (i == 0)
-                textsize = textFit.getSizeWidth(tv, this.maxName, 1.5f, this.base_layout.getWidth());
+                textsize = textFit.getSizeWidth(tv, this.maxName, 1.4f, this.base_layout.getWidth());
 
             if (textsize > 0)
                 tv.setTextSize(textsize);
