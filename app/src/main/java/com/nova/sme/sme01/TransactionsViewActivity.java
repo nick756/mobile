@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +69,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
     private String items[]               = {"Date ascending", "Date descending", "Operation type", "Highest amount first", "Lowest amount first"};
     private ArrayList<String> list_items = new ArrayList<String>(Arrays.asList(items));
+    private ScrollView        scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
         LinearLayout ll = (LinearLayout) findViewById(R.id.base_sorting); ll.setTag("main_background_color");
         views.add(ll);
 
+        scrollView = (ScrollView) findViewById(R.id.tv_spinner_id);
         setSpinner();
 
         ViewTreeObserver vto = base_layout.getViewTreeObserver();
@@ -166,8 +170,15 @@ public class TransactionsViewActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (fwt != null)
+                if (fwt != null) {
                     fwt.Sort(position);
+
+                    scrollView.post(new Runnable() {
+                        public void run() {
+                            scrollView.smoothScrollTo(0, 0);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -176,11 +187,17 @@ public class TransactionsViewActivity extends AppCompatActivity {
         });
         spinner.setTag("translate me");
     }
-    private void fillWithTransactions() {
+     private void fillWithTransactions() {
         fwt             =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
         int real_number = fwt.getActualTransactions();
         TextView t_v    = (TextView)findViewById(R.id.trans_count);
         t_v.setText("(" + Integer.toString(real_number) + ")");
+
+
+        if (real_number == 1) { // nothing to sort
+            LinearLayout ll =(LinearLayout) findViewById(R.id.base_sorting);
+            ll.setVisibility(View.GONE);
+        }
     }
     public CustomBar getCustomBar(){return ccb;}
 

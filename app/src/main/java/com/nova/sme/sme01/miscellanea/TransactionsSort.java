@@ -34,13 +34,7 @@ public class TransactionsSort {
     public TransactionsSort() {
 
     }
-/*
-    public void add(layout_item li, content_item ci) {
-        layout_items.add(li);
-        content_items.add(ci);
-        sorted_by_date.add(ci);
-    }
-*/
+
     public layout_item createLayoutItem() {
         layout_item li = new layout_item();
         layout_items.add(li);
