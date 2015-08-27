@@ -1,7 +1,6 @@
 package com.nova.sme.sme01.miscellanea;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nova.sme.sme01.xml_reader_classes.Operation;
@@ -10,7 +9,6 @@ import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
 /*
@@ -30,10 +28,16 @@ public class TransactionsSort {
     public TransactionsSort() {
 
     }
+    public void add(layout_item li, content_item ci) {
+        layout_items.add(li);
+        content_items.add(ci);
+        sorted_by_date.add(ci);
+    }
+/*
     public void init() { // just after filling
         Collections.copy(sorted_by_date, content_items); // it is sorted by date on the server side
     }
-
+*/
     public void sort(int index) {
 
     }
