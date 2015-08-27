@@ -4,18 +4,25 @@ package com.nova.sme.sme01.miscellanea;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.nova.sme.sme01.R;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+
+import static java.sql.DriverManager.println;
 
 /*
  **************************************************
@@ -127,9 +134,9 @@ public class Vocabulary implements Serializable {
             {"Lowest amount first",                                 "Jumlah terendah pertama"},
             {"Date descending",                                     "Trtarikh menurun"},
             {"Date ascending",                                      "Tarikh menaik"},
+            {"Sort by:",                                            "Disusun mengikut:"},
 
-
-
+//TranslateAll
     };
 
     public Vocabulary() {
@@ -292,12 +299,36 @@ public class Vocabulary implements Serializable {
             for (int i = 0; i < layout.getChildCount(); i ++) {
                 view = layout.getChildAt(i);
                 try {
-                    if (change_caption(view))
+                    if (!change_caption(view))
                         TranslateAll(view);
                 } catch(Exception err) {
 
                 }
             }
+        } else if (class_name.indexOf("Spinner") >= 0) {
+            String tag = (String) view.getTag();
+            if (tag == null) return;
+
+            if (tag.equals("translate me")) {
+                ArrayList<String> temp = new ArrayList<String>();
+                String  item_name;
+                Spinner spinner              = (Spinner) view;
+                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
+                for (int j = 0; j < adapter.getCount(); j ++) {
+                    item_name = adapter.getItem(j);
+                    temp.add(getTranslatedString(item_name));
+                }
+                try {
+                    adapter.clear();
+                    for (int j = 0; j < temp.size(); j++)
+                        adapter.add(temp.get(j));
+                } catch(Exception e) {
+                    println(e.getMessage().toString());
+                }
+                temp.clear();
+                temp = null;
+            }
+
         }
     }
 

@@ -39,6 +39,8 @@ import com.nova.sme.sme01.miscellanea.RequestFromCamera;
 import com.nova.sme.sme01.miscellanea.Vocabulary;
 import com.nova.sme.sme01.xml_reader_classes.ListTransactions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 
 import static java.sql.DriverManager.println;
@@ -62,8 +64,9 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
     private Vector<View> views = new Vector<View>();
     private CustomBar ccb;
- //   private GifDialog gif_dialog;
- //   private ApplicationAttributes         attr;
+
+    private String items[]               = {"Date ascending", "Date descending", "Operation type", "Highest amount first", "Lowest amount first"};
+    private ArrayList<String> list_items = new ArrayList<String>(Arrays.asList(items));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,14 +129,34 @@ public class TransactionsViewActivity extends AppCompatActivity {
             }
         });
     }
+    private void translateSpinner() {
+        Spinner  spinner = (Spinner) findViewById(R.id.spinner_sorting);
+        ArrayList<String> temp = new ArrayList<String>();
+        String  item_name;
+
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
+        for (int j = 0; j < adapter.getCount(); j ++) {
+            item_name = adapter.getItem(j);
+            temp.add(voc.getTranslatedString(item_name));
+        }
+        try {
+            adapter.clear();
+            for (int j = 0; j < temp.size(); j++)
+                adapter.add(temp.get(j));
+        } catch(Exception e) {
+            println(e.getMessage().toString());
+        }
+        temp.clear();
+    }
     private void setSpinner() {
-        // spinner         // возрастание    убывание
-        String items[] = {"Date ascending", "Date descending", "Operation type", "Highest amount fisrt", "Lowest amount first"};
-        for (int j = 0; j < items.length; j ++)
-            items[j] = voc.getTranslatedString(items[j]);
+        String item;
+        for (int j = 0; j < list_items.size(); j ++) {
+            item = list_items.get(j);
+            item = voc.getTranslatedString(item);
+            list_items.set(j, item);
+        }
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list_items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_sorting);
@@ -143,15 +166,15 @@ public class TransactionsViewActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // показываем позиция нажатого элемента
-                //Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+                if (fwt != null)
+                    fwt.Sort(position);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
-
-
+        spinner.setTag("translate me");
     }
     private void fillWithTransactions() {
         fwt             =  new FillWithTransactionsList(this, this.xml_List_transactions, R.id.tv_list_transactions, voc, base_layout);
@@ -277,6 +300,8 @@ public class TransactionsViewActivity extends AppCompatActivity {
             voc.change_caption(logout_button);
 
         setAttributes();
+        translateSpinner();
+
         super.onResume();
     }
     private void getParams() {

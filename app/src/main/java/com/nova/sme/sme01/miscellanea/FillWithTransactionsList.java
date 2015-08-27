@@ -37,13 +37,12 @@ public class FillWithTransactionsList {
     private String         maxLimit = "Purchase of Plants and Machineries";
     private String         maxName  = "Telephone, Fax and Internet";
 
-    private float          textsize   = 0;
+    private float               textsize   = 0;
+    private Vector<TextView>    texts = new Vector<TextView>();
+    private int                 transactionsNumber = 0;
 
-    private Vector<TextView>      texts = new Vector<TextView>();
-
-    private int            transactionsNumber = 0;
-
-    private OperationsSelector operationSelector;
+    private OperationsSelector  operationSelector;
+    private TransactionsSort    TS = new TransactionsSort();
 
     public FillWithTransactionsList(Activity activity, ListTransactions listTransactions, int id, Vocabulary voc, RelativeLayout base_layout) {
         this.activity     = activity;
@@ -60,6 +59,10 @@ public class FillWithTransactionsList {
             FM.writeToFile("OperationsSelector.bin", operationSelector);
         }
         implement();
+    }
+
+    public void Sort(int index) {
+        TS.sort(index);
     }
 
     private boolean implement() {
@@ -121,8 +124,12 @@ public class FillWithTransactionsList {
 
         DecimalFormat df = new DecimalFormat("###,###,###.00");
 
-        double  val;
-        String money;
+        double  val  = 0;
+        String money = "";
+
+        TransactionsSort.layout_item  li = TS.createLayoutItem();
+        TransactionsSort.content_item ci = TS.createContentItem();
+
         for (int i = 0; i < layout.getChildCount(); i ++) {
             inner_layout = (LinearLayout) layout.getChildAt(i);
             tag          = (String)inner_layout.getTag();
@@ -134,24 +141,35 @@ public class FillWithTransactionsList {
                     if (tag.equals("code")) {
                         text = (TextView) view;
                         text.setText(record.getTranCode());
+
+                        li.code = text;
+                        ci.code = record.getTranCode();
                     } else if (tag.equals("date")) {
                         text = (TextView) view;
                         text.setText(record.getDate());
+
+                        li.date = text;
+                        ci.date = record.getDate();
                     } else if (tag.equals("type")) {
                         type = record.getType().trim();
                         text = (TextView) view;
 
                         if (type.indexOf("IN:") == 0) {
-                            setTypeIcon(inner_layout, R.mipmap.ic_in_bound);
-                            type = type.substring(3);
+                            li.icon_type = setTypeIcon(inner_layout, R.mipmap.ic_in_bound);
+                            type      = type.substring(3);
+                            ci.in_out = R.mipmap.ic_in_bound;
                         } else {
-                            setTypeIcon(inner_layout, R.mipmap.ic_out_bound);
-                            type = type.substring(4);
+                            li.icon_type = setTypeIcon(inner_layout, R.mipmap.ic_out_bound);
+                            type      = type.substring(4);
+                            ci.in_out = R.mipmap.ic_out_bound;
                         }
                         text.setText(type);
 
                         if (type.length() > maxName.length() && type.length() <= maxLimit.length())
                             maxName = type;
+
+                        li.type = text;
+                        ci.type = type;
                     } else if (tag.equals("amount")) {
                         text = (TextView) view;
                         boolean err = false;
@@ -162,14 +180,25 @@ public class FillWithTransactionsList {
                         } catch(Exception e) {
                             err = true;
                         }
-                        if (err)
+                        if (err) {
                             text.setText(record.getAmount());
+                        } else {
+                            li.amount     = text;
+                            ci.amount     = money;
+                            ci.amount_dbl = val;
+                        }
                     } else if (tag.equals("descr")) {
                         text = (TextView) view;
                         text.setText(record.getDescr());
+
+                        li.descr = text;
+                        ci.descr = record.getDescr();
                     } else if (tag.equals("operator")) {
                         text = (TextView) view;
                         text.setText(record.getOperator());
+
+                        li.operator = text;
+                        ci.operator = record.getOperator();
                     }
                     if (view.getClass().getSimpleName().toUpperCase().indexOf("TEXTVIEW") != -1)
                         texts.add(text);
@@ -177,7 +206,7 @@ public class FillWithTransactionsList {
             }
         }
     }
-    private void setTypeIcon(LinearLayout   inner_layout, int id) {
+    private ImageView setTypeIcon(LinearLayout   inner_layout, int id) {
         int    cnt = inner_layout.getChildCount();
         View   view;
         String tag;
@@ -189,10 +218,11 @@ public class FillWithTransactionsList {
                 if (tag.equals("in_or_out")) {
                     img = (ImageView) view;
                     img.setImageResource(id);
-                    return;
+                    return img;
                 }
             }
         }
+        return null;
     }
 
     private void clean_scroll() {
