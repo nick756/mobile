@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         params.height = height;
 
         FR.setLogButtonHeight(height);
+        FR.setLogoutButton(button);
 
         return button;
     }
@@ -264,7 +265,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             user_name.setText("");
 
 
-            new MyHttpRequest(null, this, base_layout, voc, login_request, "XML_Login");
+            new MyHttpRequest(FR, this, base_layout, voc, login_request, "XML_Login");
         } else { // debugging, temporarily
             this.login_request = this.base_url_login + "name=andrea&passw=1234";
             block_login_button = true;

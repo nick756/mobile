@@ -96,7 +96,7 @@ public class MyDialog {
         dialog.show();
 
         dialog.getWindow().setAttributes(lp);
-
+/*
         int height;
         if (this.FR != null) {
             height = this.FR.getLogButtonHeight();
@@ -104,9 +104,10 @@ public class MyDialog {
                 ViewGroup.LayoutParams prms = dialogButton.getLayoutParams();
                 prms.height                 = height;
             }
-        }
+        }*/
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         SetColors();
+        setButtonHeight(dialogButton);
         //custom_dialog_icon
     }
 

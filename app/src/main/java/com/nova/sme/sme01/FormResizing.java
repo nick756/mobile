@@ -49,6 +49,7 @@ public class FormResizing {
     }
 
     public Button getLogoutButton(){return  logout_button;}
+    public void   setLogoutButton(Button btn) {logout_button = btn;}
     public void resize() {
         float width_area  = base_layout.getWidth();  // 1080
         float height_area = base_layout.getHeight(); // 1752
