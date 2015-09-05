@@ -55,14 +55,14 @@ public class Vocabulary implements Serializable {
     };
 */
     private String arr[][] = {
-            {"Synchronize Operations List",                         "Menyegerak Senarai Operasi"},   // correct
-            {"Lock Company",                                        "Syarikat Lock"},                // correct
-            {"Log Out",                                             "Log Keluar"},                   // correct
-            {"Logout",                                              "Log Keluar"},                   // correct
-            {"Perform Transaction",                                 "Melaksanakan Transaks"},        // correct
-            {"View Transactions",                                   "Lihat Transaksi"},              // correct
-            {"Synchronize Operations List",                         "Menyegerak Senarai Operasi"},   // correct
-            {"User Name",                                           "Gelaran"},
+            {"Synchronize Operations List",                         "Menyegerak Senarai Operasi"},
+            {"Lock Company",                                        "Syarikat Lock"},
+            {"Log Out",                                             "Log Keluar"},
+            {"Logout",                                              "Log Keluar"},
+            {"Perform Transaction",                                 "Lalukan Transaksi"},      // correct
+            {"View Transactions",                                   "Senaraikan Transaksi"},   // correct
+            {"Synchronize Operations List",                         "Selaraskan Transaksi"},   // correct
+            {"User Name",                                           "ID Pengguna"},
             {"Password",                                            "Kata laluan"},
             {"Login",                                               "Log Masuk"},
             {"User Login",                                          "Log masuk pengguna"},
@@ -73,10 +73,10 @@ public class Vocabulary implements Serializable {
             {"Unknown error",                                       "Ralat tidak diketahui"},
             {"English",                                             "Bahasa Inggeris"},
             {"Malay",                                               "Melayu"},
-            {"Ok",                                                  "Okey"},
-            {"OK",                                                  "OKey"},
+            {"Ok",                                                  "OK"}, // correct
+            {"OK",                                                  "OK"}, // correct
             {"Settings",                                            "Tetapan"},
-            {"Url Address",                                         "Url Alamat"},
+            {"Url Address",                                         "Alamat URL"}, // correct
             {"Color's Themes",                                      "Tema warna ini"},
             {"First Time Login",                                    "Login Kali Pertama"},
             {"Regular Login",                                       "Log Masuk Biasa"},
@@ -86,7 +86,7 @@ public class Vocabulary implements Serializable {
             {"Error of saving Operations List",                     "Ralat penjimatan Senarai Operasi"},
             {"Error occured",                                       "Ralat berlaku"},
             {"Operations List is empty",                            "Senarai Operasi kosong"},
-            {"Reset Operations List",                               "Set Semula Senarai Operasi"},
+            {"Reset Operations List",                               "Setsenua Senarai Operasi"},// correct
             {"Please, select operation",                            "Sila, pilih operasi"},
             {"Submit",                                              "Hantar"},
             {"Success",                                             "Kejayaan"},
