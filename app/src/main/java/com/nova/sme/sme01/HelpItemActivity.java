@@ -389,10 +389,13 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_view_trans:
-                caption.setText("View Transactions");
+                caption.setText(voc.getTranslatedString("View Transactions"));
                 // IX
                 html = html_start;
-                html += "To view transactions go to the main page and press button VIEW TRANSACTIONS";
+                if (voc.getLanguage().equals("EN"))
+                    html += "To view transactions go to the main page and press button VIEW TRANSACTIONS";
+                else
+                    html += "Untuk melihat senarai transaksi yang telah dilakukan, sila ke laman utama dan pilih “Lihat Transaksi” – Ini akan membuka kotak dialog yang baru";
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help9, false);
@@ -401,18 +404,29 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // X
                 html = html_start;
-                html += "On the appeared dialog box you can set necessary filter as follow:";
-                html += br;
-                html += br;
-                html += "<b>Select types of operations.</b>";
-                html += br;
-                html += "Possible to select all of them or part.";
-                html += "To do that use check box ‘Select/Unselect All’ and checkboxes on scrolling list of operations";
-                html += br;
-                html += br;
-                html += "<b>The date range</b>";
-                html += br;
-                html += "Use dropdawn components to set <b>From Till</b>  Date.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "On the appeared dialog box you can set necessary filter as follow:";
+                    html += br;
+                    html += br;
+                    html += "<b>Select types of operations.</b>";
+                    html += br;
+                    html += "Possible to select all of them or part.";
+                    html += "To do that use check box ‘Select/Unselect All’ and checkboxes on scrolling list of operations";
+                    html += br;
+                    html += br;
+                    html += "<b>The date range</b>";
+                    html += br;
+                    html += "Use dropdawn components to set <b>From Till</b>  Date.";
+                } else {
+                    html += "Pilih Jenis-jenis Operasi.";
+                    html += br;
+                    html += br;
+                    html += "Anda boleh memilih kesemua jenis operasi untuk dilihat atau memilih jenis tertentu sahaja.";
+                    html += br;
+                    html += br;
+                    html += "Masukkan tarikh jangka masa yang anda mahukan, iaitu tarikh mula dan tarikh akhir jangkamasa yang anda perlukan.";
+
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help10, false);
@@ -421,25 +435,45 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // XI
                 html = html_start;
-                html += "If there is data on the selected criteria, you will get a list of the transactions. ";
-                html += "In the parentheses indicates the number of the transactions";
-                html += br;
-                html += br;
-                html += "It includes:";
-                html += br;
-                html += "1. The Code of transaction.";
-                html += br;
-                html += "2. The Date of the transaction.";
-                html += br;
-                html += "3. The Type of the Operation.";
-                html += br;
-                html += "   The left icon shows if it is inbound or outbound";
-                html += br;
-                html += "4. The Amount of money";
-                html += br;
-                html += "5. The Description";
-                html += br;
-                html += "6. The name of the person who made the transaction";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "If there is data on the selected criteria, you will get a list of the transactions. ";
+                    html += "In the parentheses indicates the number of the transactions";
+                    html += br;
+                    html += br;
+                    html += "It includes:";
+                    html += br;
+                    html += "1. The Code of transaction.";
+                    html += br;
+                    html += "2. The Date of the transaction.";
+                    html += br;
+                    html += "3. The Type of the Operation.";
+                    html += br;
+                    html += "   The left icon shows if it is inbound or outbound";
+                    html += br;
+                    html += "4. The Amount of money";
+                    html += br;
+                    html += "5. The Description";
+                    html += br;
+                    html += "6. The name of the person who made the transaction";
+                } else {
+                    html += "Sekiranya terdapat maklumat berdasarkan kriteria yang ditetapkan, anda akan melihat senarai transaksi yang telah dilakukan sepanjang tempoh masa tersebut. Senarai tersebut akan menunjukkan;";
+                    html += br;
+                    html += br;
+
+                    html += "1. Kod transaksi";
+                    html += br;
+                    html += "2. Tarikh transaksi dibuat";
+                    html += br;
+                    html += "3. Jenis transaksi";
+                    html += br;
+                    html += "Ikon menunjukkan transaksi keluar atau masuk";
+                    html += br;
+                    html += "4. Jumlah";
+                    html += br;
+                    html += "5. Keterangan/maklumat transaksi";
+                    html += br;
+                    html += "6. Nama pihak yang melakukan transaksi";
+                }
                 html += html_end;
 
                 //fillItem(images, inflater, l_layout, html, R.drawable.help11, false);
@@ -457,28 +491,45 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_per_trans:
-                caption.setText("Perform Transactions");
+                caption.setText(voc.getTranslatedString("Perform Transaction"));
                 // V
                 html = html_start;
-                html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
-                html += "next form make necessary selection and ";
-                html += br;
-                html += "press image button <img src='action_button.png'/>";
-                html += "<br><br>";
-                html += "with preselected type of operation (in image it is 'Advance from Directors').";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "There are two ways to perform transaction(s) such as pressing on button PERFORM TRANSACTION and on the ";
+                    html += "next form make necessary selection and ";
+                    html += br;
+                    html += "press image button <img src='action_button.png'/>";
+                    html += "<br><br>";
+                    html += "with preselected type of operation (in image it is 'Advance from Directors').";
+                } else {
+                    html += "Ada 2 cara untuk melakukan transaksi iaitu;";
+                    html += br + br;
+                    html += "Tekan butang “<b>Lakukan Transaksi</b>” & di mukasurat seterusnya isikan ruangan yang disediakan";
+                    html += br + br;
+                    html += "Tekan butang imej pada jenis-jenis operasi yang telah ditetapkan <img src='action_button.png'/>";
+                    html += br + br;
+                    html += "(dalam gambaran adalah operasi pendahuluan oleh Pengarah)";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help5, true);
-                fillItem(images, inflater, l_layout, html, "helpImages/help5.png", false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help5.png", true);
                 // V
 
                 // VI
                 html = html_start;
-                html += "To obtain the full list of available Operations touch the area  showed by arrow. Then using scrolling to make  a choice.";
-                html += br;
-                html += br;
-                html += "The application makes control of the filled data.";
-                html += "So the transaction is being considered if the Description & Amount field is not empty. The Date can not be more then current.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "To obtain the full list of available Operations touch the area  showed by arrow. Then using scrolling to make  a choice.";
+                    html += br;
+                    html += br;
+                    html += "The application makes control of the filled data.";
+                    html += "So the transaction is being considered if the Description & Amount field is not empty. The Date can not be more then current.";
+                } else {
+                    html += "Untuk melihat senarai penuh transaksi anda, sentuh pada ruang yang ditunjukkan dan buat pilihan anda";
+                    html += br;
+                    html += br;
+                    html += "Transaksi diandaikan akan dilakukan sekiranya ruang keterangan dan jumlah telah di isi";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help6, false);
@@ -487,7 +538,11 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // VII
                 html = html_start;
-                html += "Before sending a request to cash flow procedure the dialog box asks confirmation.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "Before sending a request to cash flow procedure the dialog box asks confirmation.";
+                } else {
+                    html += "Anda haruslah mengesahkan untuk membuat transaksi dengan menekan butang “Lakukan”. Untuk membatalkan transaksi tekan butang “Batal”";
+                }
                 html += html_end;
 
                 //fillItem(images, inflater, l_layout, html, R.drawable.help7, false);
@@ -496,7 +551,11 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // VIII
                 html = html_start;
-                html += "If everything goes well, you get the positive feedback message, otherwise negative one informs the transaction failed.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "If everything goes well, you get the positive feedback message, otherwise negative one informs the transaction failed.";
+                } else {
+                    html += "Apabila pengesahan untuk melakukan transaksi telah dibuat, anda akan mendapat jawapan positif “Berjaya” apabila transaksi anda diterima dan direkodkan. Sekiranya tidak, anda akan mendapat jawapan negatif “Gagal”";
+                }
                 html += html_end;
 
                 //fillItem(images, inflater, l_layout, html, R.drawable.help8, false);
@@ -505,28 +564,41 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_op_list:
-                caption.setText("Operations List");
+                caption.setText(voc.getTranslatedString("Operations List"));
                 // IV
                 html = html_start;
-
-                html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
-                html += " The Type of the Operation is placed on the right side of either ";
-                html += "icon <img src='data_import.png'/>";
-                html += " or <img src='data_export.png'/>";
-                html += br;
-                html += " The description of the operation is placed on the right side of ";
-                html += "icon <img src='gold.png'/>";
+                if (voc.getLanguage().equals("EN")) {
+                    html += " You can get updating <b>Operations List</b> again at any time by pressing button '<b>Synchronize Operations List</b>'.";
+                    html += " The Type of the Operation is placed on the right side of either ";
+                    html += "icon <img src='data_import.png'/>";
+                    html += " or <img src='data_export.png'/>";
+                    html += br;
+                    html += " The description of the operation is placed on the right side of ";
+                    html += "icon <img src='gold.png'/>";
+                } else {
+                    html += "<b>Senarai Operasi</b> boleh dikemaskini pada setiap masa dengan memilih “<b>Selaraskan Senarai Operasi</b>”.";
+                    html += br + br;
+                    html += "Jenis-jenis operasi berada di sebelah kanan ikon masuk ";
+                    html += "icon <img src='data_import.png'/>";
+                    html += " atau keluar <img src='data_export.png'/>";
+                    html += br + br;
+                    html += "Keterangan/Maklumat operasi pula berada di sebelah kanan ikon <img src='gold.png'/>";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help4, true);
-                fillItem(images, inflater, l_layout, html, "helpImages/help4.png", false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help4.png", true);
                 // IV
 
                 break;
             case R.id.help_login: // start from here, one item i sneeded
-                caption.setText("Login Procedure");
+                caption.setText(voc.getTranslatedString("Login Procedure"));
                 html  = html_start;
-                html += "First time login assumes pre-registration of User and Business on the server side before any operations on the mobile application.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "First time login assumes pre-registration of User and Business on the server side before any operations on the mobile application.";
+                } else {
+                    html += "Pendaftaran Pengguna dan entiti perniagaan hendaklah dilakukan terlebih dahulu di pihak server sebelum sebarang operasi menggunakan aplikasi mudahalih boleh dilaksanakan.";
+                }
                 html += html_end;
 
                 //fillItem(images, inflater, l_layout, html, R.drawable.help1, false);
@@ -535,10 +607,16 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // II
                 html  = html_start;
-                html += "Successful first time login on an android device  is followed by screen with a single option:";
-                html += "'Synchronize Operations List'";
-                html += br + br;
-                html += "This option entails transfer of list of allowed operations to mobile client.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "Successful first time login on an android device  is followed by screen with a single option:";
+                    html += "'Synchronize Operations List'";
+                    html += br + br;
+                    html += "This option entails transfer of list of allowed operations to mobile client.";
+                } else {
+                    html += "Setelah daftar masuk kali pertama berjaya, paparan di skrin hanyalah “Selaraskan Senarai Operasi”. ";
+                    html += br + br;
+                    html += "Pilihan ini membolehkan pindahan senarai operasi dari server kepada pengguna untuk merekodkan transaksi menggunakan perisian mudah alih ini.";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help2, false);
@@ -547,11 +625,17 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // III
                 html  = html_start;
-                html += "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  ";
-                html += br + br;
-                html += "If a User needs to manage more than one company using android device, two login names must be used ";
-                html += "(In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization ";
-                html += "to be performed by  pressing button RESET OPERATIONS  LIST.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "The important thing is that the only a single Company (Business) can be managed from Mobile Application.  ";
+                    html += br + br;
+                    html += "If a User needs to manage more than one company using android device, two login names must be used ";
+                    html += "(In other words  if it is necessary to login with OTHER username/login), and each time re-synchronization ";
+                    html += "to be performed by  pressing button RESET OPERATIONS  LIST.";
+                } else {
+                    html += "Hanya satu entiti perniagaan boleh diuruskan pada satu-satu masa secara mudah alih. Sekiranya pengguna memiliki lebih dari satu entiti perniagaan, setiap entiti perlu didaftarkan secara berasingan dan mempunyai daftar id pengguna yang berasingan untuk setiap satu entiti yang didaftarkan.";
+                    html += br + br;
+                    html += "Sekiranya pengguna ingin menukar entiti perniagaan yang diuruskan penukaran id pengguna hendaklah dibuat terlebih dahulu dan penyelarasan semula perlu dilakukan dengan menekan pilihan “Set Semula Senarai Operasi”. ";
+                }
                 html += html_end;
 
                 //fillItem(images, inflater, l_layout, html, R.drawable.help3, false);
@@ -559,7 +643,7 @@ public class HelpItemActivity extends AppCompatActivity {
                 // III
                 break;
             case R.id.help_general:
-                caption.setText("General Information");
+                caption.setText(voc.getTranslatedString("General Information"));
 
                 html  = html_start;
                 html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
@@ -604,7 +688,10 @@ public class HelpItemActivity extends AppCompatActivity {
             }
 
             Drawable d = getResources().getDrawable(id);
-            d.setBounds(0, 0, d.getIntrinsicWidth()/2, d.getIntrinsicHeight()/2);
+            if (source.equals("action_button.png"))
+                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            else
+                d.setBounds(0, 0, d.getIntrinsicWidth()/2, d.getIntrinsicHeight()/2);
             return d;
         }
     }
