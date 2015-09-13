@@ -756,7 +756,7 @@ public class HelpItemActivity extends AppCompatActivity {
                     html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
                     html += br;
                     html += br;
-                    html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
+                    html += "It allows a person to closely monitor cash flow and ensure that it is adequate.";
                     html += br;
                     html += br;
                     html += "The official site is: <a href='http://103.6.239.242/sme/'>";
@@ -771,7 +771,7 @@ public class HelpItemActivity extends AppCompatActivity {
                     html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
                     html += br;
                     html += br;
-                    html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
+                    html += "It allows a person to closely monitor cash flow and ensure that it is adequate.";
                     html += br;
                     html += br;
                     html += "The official site is: <a href='http://103.6.239.242/sme/'>";
@@ -782,7 +782,6 @@ public class HelpItemActivity extends AppCompatActivity {
                     html += "Technical support: <a href='mailto:krasnikovn@yandex.ru'>";
                     html += br;
                     html += "krasnikovn@yandex.ru</a>";
-
                 }
                 html += html_end;
 
