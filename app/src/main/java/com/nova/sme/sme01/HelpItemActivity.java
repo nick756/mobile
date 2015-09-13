@@ -261,30 +261,54 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_colors:
-                caption.setText("Colors Themes");
+                caption.setText(voc.getTranslatedString("Colors Themes"));
             ////////////////////////////////////////////////////////////////////////////
                 html = html_start;
-                html += "This dialog box lets to change color theme of the application.";
-                html += br + br;
-                html += "There are four items to be selected as:";
-                html += br + br;
-                html += "1. Action bar background (placed on the top)";
-                html += br + br;
-                html += "2.	Background of the application";
-                html += br + br;
-                html += "3.	The caption on dialog boxes";
-                html += br + br;
-                html += "4.	The background color of the dialog box";
-                html += br + br;
-                html += "The selected object is shown by <b> flickering border. </b>";
-                html += br + br;
-                html += "To set a color of the selected item use three sliders:";
-                html += br + br;
-                html += "<b> <font color='Red'> Red</font>, <font color='green'> Green</font></b> and <b><font color='blue'>Blue.</font></b>";
-                html += br + br;
-                html += "The final color is a mixing of these three components.";
-                html += br + br;
-                html += "To get default color theme use <b>Reset</b> button.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "This dialog box lets to change color theme of the application.";
+                    html += br + br;
+                    html += "There are four items to be selected as:";
+                    html += br + br;
+                    html += "1. Action bar background (placed on the top)";
+                    html += br + br;
+                    html += "2.	Background of the application";
+                    html += br + br;
+                    html += "3.	The caption on dialog boxes";
+                    html += br + br;
+                    html += "4.	The background color of the dialog box";
+                    html += br + br;
+                    html += "The selected object is shown by <b> flickering border. </b>";
+                    html += br + br;
+                    html += "To set a color of the selected item use three sliders:";
+                    html += br + br;
+                    html += "<b> <font color='Red'> Red</font>, <font color='green'> Green</font></b> and <b><font color='blue'>Blue.</font></b>";
+                    html += br + br;
+                    html += "The final color is a mixing of these three components.";
+                    html += br + br;
+                    html += "To get default color theme use <b>Reset</b> button.";
+                } else {
+                    html += "Kotak dialog ini membolehkan anda mengubah tema warna untuk aplikasi mudah alih anda.";
+                    html += br + br;
+                    html += "Terdapat 4 perkara untuk dipilih:";
+                    html += br + br;
+                    html += "1. Warna latar Action bar (yang teratas)";
+                    html += br + br;
+                    html += "2.	Warna latar Aplikasi";
+                    html += br + br;
+                    html += "3. Teks dalam kotak dialog";
+                    html += br + br;
+                    html += "4.	Warna latar kotak dialog";
+                    html += br + br;
+                    html += "Perkara yang dipilih akan menunjukan sempadan yang berkelip. Penukaran warna untuk setiap perkara boleh dilakukan setiap satu pada satu masa.";
+                    html += br + br;
+                    html += "Warna yang boleh dipilih menggunakan sliders:";
+                    html += br + br;
+                    html += "<b> <font color='Red'> Merah</font>, <font color='green'> Hijau</font></b> and <b><font color='blue'>Biru.</font></b>";
+                    html += br + br;
+                    html += "Pemilihan tiga komponen warna tersebut akan menghasilkan warna yang akan digunakan dalam aplikasi ini.";
+                    html += br + br;
+                    html += "Untuk kembali ke warna mengikut tetapan asal, sila tekan butang “Set Semula”.";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help20, false);
@@ -292,7 +316,10 @@ public class HelpItemActivity extends AppCompatActivity {
 
             ////////////////////////////////////////////////////////////////////////////
                 html = html_start;
-                html += "To change a color of the <b>Action Bar</b> select the first item.";
+                if (voc.getLanguage().equals("EN"))
+                    html += "To change a color of the <b>Action Bar</b> select the first item.";
+                else // TODO
+                    html += "To change a color of the <b>Action Bar</b> select the first item.";
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
@@ -301,7 +328,10 @@ public class HelpItemActivity extends AppCompatActivity {
             ////////////////////////////////////////////////////////////////////////////
 
                 html = html_start;
-                html += "To change a color of the <b> Application’s Background</b> select the second item.";
+                if (voc.getLanguage().equals("EN"))
+                    html += "To change a color of the <b> Application’s Background</b> select the second item.";
+                else
+                    html += "To change a color of the <b> Application’s Background</b> select the second item.";
                 html += html_end;
 
   //              fillItem(images, inflater, l_layout, html, R.drawable.help17, false);
@@ -310,7 +340,10 @@ public class HelpItemActivity extends AppCompatActivity {
                 ////////////////////////////////////////////////////////////////////////////
 
                 html = html_start;
-                html += "To change a color of the <b>Dialog Box’s Caption</b> select the third  item.";
+                if (voc.getLanguage().equals("EN"))
+                    html += "To change a color of the <b>Dialog Box’s Caption</b> select the third  item.";
+                else
+                    html += "To change a color of the <b>Dialog Box’s Caption</b> select the third  item.";
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help18, false);
@@ -329,14 +362,20 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_buttons:
-                caption.setText("Buttons Themes");
+                caption.setText(voc.getTranslatedString("Buttons Themes"));
 
                 html  = html_start;
-                html += "To select a button press either a button or radio button on the left side.";
-                html += br + br;
-                html += "The text color of the button is setting by a slider";
-                html += br + br;
-                html += "If the selection is accepted, all buttons of the application obtain this color configuration.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "To select a button press either a button or radio button on the left side.";
+                    html += br + br;
+                    html += "The text color of the button is setting by a slider";
+                    html += br + br;
+                    html += "If the selection is accepted, all buttons of the application obtain this color configuration.";
+                } else {
+                    html += "Pilih untuk menekan butang sebelah kiri atau butang radio. Warna teks akan berubah mengikut pilihan anda.";
+                    html += br + br;
+                    html += "Keseluruhan teks dalam aplikasi mudah alih ini akan berubah warna mengikut konfigurasi warna anda";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help15, false);
@@ -344,44 +383,76 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 break;
             case R.id.help_url:
-                caption.setText("URL Addrers");
+                caption.setText(voc.getTranslatedString("URL Address"));
                 html = html_start;
-                html += "You will be informed if the server’s url address need to be changed.";
-                html += br + br;
-                html += "Be very careful while filling out the url address, single incorrect symbol follows failure to connect.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "You will be informed if the server’s url address need to be changed.";
+                    html += br + br;
+                    html += "Be very careful while filling out the url address, single incorrect symbol follows failure to connect.";
+                } else {
+                    html += "Anda akan dimaklumkan sekiranya alamat URL server perlu diubah.";
+                    html += br + br;
+                    html += "Sila berhati-hati ketika mengisi alamat URL yang diberi, sekiranya ada kesilapan ketika pengisian akan menyebabkan anda tidak dapat disambungkan ke laman ini.";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help16, false);
-                fillItem(images, inflater, l_layout, html, "helpImages/help16.png", false);
+                fillItem(images, inflater, l_layout, html, "helpImages/help14.png", false);
 
                 break;
             case R.id.help_settings_general:
-                caption.setText("General Information");
+                caption.setText(voc.getTranslatedString("General Information"));
 
                 html  = html_start;
-                html += "The <b>Application Setting</b> menu item includes four items as follow:";
-                html += br;
-                html += br;
-                html += "1.    <b>Select Language</b>. Two languages are available – English and Malay.";
-                html += br;
-                html += br;
-                html += "2.    <b>URL Address</b>. It should be used if by some reason the Server’s url address is changed.";
-                html += br;
-                html += br;
-                html += "3/4.  <b>Buttons Themes & Colors Themes</b>. You can set your own background style.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "The <b>Application Setting</b> menu item includes four items as follow:";
+                    html += br;
+                    html += br;
+                    html += "1.    <b>Select Language</b>. Two languages are available – English and Malay.";
+                    html += br;
+                    html += br;
+                    html += "2.    <b>URL Address</b>. It should be used if by some reason the Server’s url address is changed.";
+                    html += br;
+                    html += br;
+                    html += "3.  <b>Buttons Themes</b>";
+                    html += br;
+                    html += br;
+                    html += "4. <b>Colors Themes</b>. You can set your own background style.";
+                } else {
+                    html += "Tetapan aplikasi merangkumi 4 perkara ;";
+                    html += br;
+                    html += br;
+                    html += "1.	Pilihan Bahasa antara Bahasa Inggeris atau Bahasa Malaysia";
+                    html += br;
+                    html += br;
+                    html += "2.	Alamat URL sekiranya berlaku perubahan atas apa-apa sebab";
+                    html += br;
+                    html += br;
+                    html += "3.	Butang Tema";
+                    html += br;
+                    html += br;
+                    html += "4.	Warna untuk anda memilih latarbelakang yang anda suka";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, 0, false);
                 fillItem(images, inflater, l_layout, html, "", false);
                 break;
             case R.id.help_language:
-                caption.setText("Select Language");
+                caption.setText(voc.getTranslatedString("Select Language"));
 
                 html  = html_start;
-                html += "The mobile application changes all texts and captions in accordance with the selected language on the fly.";
-                html += br;
-                html += br;
-                html += "The selection is saved so that after restarting appropriated language is used.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "The mobile application changes all texts and captions in accordance with the selected language on the fly.";
+                    html += br;
+                    html += br;
+                    html += "The selection is saved so that after restarting appropriated language is used.";
+                } else {
+                    html += "Aplikasi mudah alih ini akan menukar semua teks mengikut pilihan Bahasa yang anda buat.";
+                    html += br;
+                    html += br;
+                    html += "Pilihan anda akan disimpan dan dikekalkan untuk kegunaan aplikasi ini sehinggalah anda membuat penukaran lain.";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help13, false);
@@ -459,7 +530,6 @@ public class HelpItemActivity extends AppCompatActivity {
                     html += "Sekiranya terdapat maklumat berdasarkan kriteria yang ditetapkan, anda akan melihat senarai transaksi yang telah dilakukan sepanjang tempoh masa tersebut. Senarai tersebut akan menunjukkan;";
                     html += br;
                     html += br;
-
                     html += "1. Kod transaksi";
                     html += br;
                     html += "2. Tarikh transaksi dibuat";
@@ -482,7 +552,10 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 // XII
                 html = html_start;
-                html += "If there is no data matched to selected criteria, you receive an appropriate message";
+                if (voc.getLanguage().equals("EN"))
+                    html += "If there is no data matched to selected criteria, you receive an appropriate message";
+                else
+                    html +="Sekiranya tiada maklumat yang berkenaan dengan kriteria yang dipilih, anda akan mendapat respon “Senarai Transaksi Kosong”";
                 html += html_end;
 
                 //fillItem(images, inflater, l_layout, html, R.drawable.help12, false);
@@ -646,20 +719,38 @@ public class HelpItemActivity extends AppCompatActivity {
                 caption.setText(voc.getTranslatedString("General Information"));
 
                 html  = html_start;
-                html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
-                html += br;
-                html += br;
-                html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
-                html += br;
-                html += br;
-                html += "The official site is: <a href='http://103.6.239.242/sme/'>";
-                html += br;
-                html += "www.103.6.239.242/sme/</a>";
-                html += br;
-                html += br;
-                html += "Technical support: <a href='mailto:krasnikovn@yandex.ru'>";
-                html += br;
-                html += "krasnikovn@yandex.ru</a>";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
+                    html += br;
+                    html += br;
+                    html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
+                    html += br;
+                    html += br;
+                    html += "The official site is: <a href='http://103.6.239.242/sme/'>";
+                    html += br;
+                    html += "www.103.6.239.242/sme/</a>";
+                    html += br;
+                    html += br;
+                    html += "Technical support: <a href='mailto:krasnikovn@yandex.ru'>";
+                    html += br;
+                    html += "krasnikovn@yandex.ru</a>";
+                } else { // TODO
+                    html += "This is mobile version of Small and Medium Enterprise Cash Flow system.";
+                    html += br;
+                    html += br;
+                    html += "It allows an responsible person to closely monitor cash flow and ensure that it is adequate.";
+                    html += br;
+                    html += br;
+                    html += "The official site is: <a href='http://103.6.239.242/sme/'>";
+                    html += br;
+                    html += "www.103.6.239.242/sme/</a>";
+                    html += br;
+                    html += br;
+                    html += "Technical support: <a href='mailto:krasnikovn@yandex.ru'>";
+                    html += br;
+                    html += "krasnikovn@yandex.ru</a>";
+
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, 0, false);

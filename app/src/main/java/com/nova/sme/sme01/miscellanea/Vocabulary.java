@@ -60,7 +60,7 @@ public class Vocabulary implements Serializable {
         {"Log Out",                                             "Log Keluar"},
         {"Logout",                                              "Log Keluar"},
         {"Perform Transaction",                                 "Lakukan Transaksi"},      // correct
- //       {"View Transactions",                                   "Senaraikan Transaksi"},   // correct
+        {"View Transactions",                                   "Senaraikan Transaksi"},   // correct
         {"Synchronize Operations List",                         "Selaraskan Transaksi"},   // correct
         {"User Name",                                           "ID Pengguna"},
         {"Password",                                            "Kata laluan"},
@@ -114,7 +114,7 @@ public class Vocabulary implements Serializable {
         {"Login Procedure",                                     "Prosedur Log Masuk"},
         {"Operations List",                                     "Senarai operasi"},
         {"Perform Transactions",                                "Lakukan Urusniaga"},
-        {"View Transactions",                                   "Lihat Urusniaga"},
+//        {"View Transactions",                                   "Lihat Urusniaga"},
         {"Setting",                                             "Tetapan"},
         {"Select Language",                                     "Pilih Bahasa"},
         {"URL Address",                                         "Alamat URL"},
