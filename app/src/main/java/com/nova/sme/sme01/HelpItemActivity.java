@@ -208,27 +208,45 @@ public class HelpItemActivity extends AppCompatActivity {
 
         switch(this.help_id) {
             case R.id.help_trouble:
-                caption.setText("Troubleshooting");
+                caption.setText(voc.getTranslatedString("Troubleshooting"));
                 ////////////////////////////////////////////////////////////////////////////
                 html = html_start;
-                html += "If you get such a response after attempt of logging then it could be:";
-                html += br + br;
-                html += "<b>1.	Internet connection problem.</b>";
-                html += br + br;
-                html += "a. Check your mobile internet settings";
-                html += br + br;
-                html += "b. If you are at  the office (home) then try to reboot the rooter,  check for overheating, verify router cables are securely connected.";
-                html += br + br;
-                html += br + br;
-                html += "<b>2.	Url Address is not correct</b>";
-                html += br + br;
-                html += "Be sure that url address is correct, look at the Menu->Application Setting->Url Address.";
-                html += "Ask technical support (<a href='mailto:krasnikovn@yandex.ru'>krasnikovn@yandex.ru</a>) if necessary.";
-                html += br + br;
-                html += br + br;
-                html += "<b>3.	Problem in the server side.</b>";
-                html += br + br;
-                html += "Connect to the technical support team.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "If you get such a response after attempt of logging then it could be:";
+                    html += br + br;
+                    html += "<b>1.	Internet connection problem.</b>";
+                    html += br + br;
+                    html += "a. Check your mobile internet settings";
+                    html += br + br;
+                    html += "b. If you are at  the office (home) then try to reboot the rooter,  check for overheating, verify router cables are securely connected.";
+                    html += br + br;
+                    html += br + br;
+                    html += "<b>2.	Url Address is not correct</b>";
+                    html += br + br;
+                    html += "Be sure that url address is correct, look at the Menu->Application Setting->Url Address.";
+                    html += "Ask technical support (<a href='mailto:krasnikovn@yandex.ru'>krasnikovn@yandex.ru</a>) if necessary.";
+                    html += br + br;
+                    html += br + br;
+                    html += "<b>3.	Problem in the server side.</b>";
+                    html += br + br;
+                    html += "Connect to the technical support team.";
+                } else {
+                    html += "Sekiranya anda mendapat respon berikut ketika cuba daftar masuk, kemungkinan ianya :";
+                    html += br + br;
+                    html += "<b>1. Masalah sambungan Internet.</b>";
+                    html += br + br;
+                    html += "a. Periksa tetapan internet mudah alih anda";
+                    html += br + br;
+                    html += "b. Sekiranya menggunakan internet di pejabat/rumah, pastikan router tidak overheat, reboot semula router dan periksa sambungan kabel router";
+                    html += br + br;
+                    html += "<b>2. tAlamat URL tidak tepat</b>";
+                    html += br + br;
+                    html += "Pastikan alamat URL adalah tepat, lihat Menu- Tetapan Aplikasi- Alamat URL.";
+                    html += br + br;
+                    html += "<b>3. Masalah berkaitan Server.</b>";
+                    html += br + br;
+                    html += "Anda boleh berhubung dengan Unit Bantuan Teknikal (emel krasnikov@yandex.ru)";
+                }
 
                 html += html_end;
 
@@ -237,12 +255,18 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 ////////////////////////////////////////////////////////////////////////////
                 html  = html_start;
-                html += "See Menu->Help->Login Procedure in details";
-                html += br + br;
-                html += "Necessary to login with old username+password";
-                html += " and press";
-                html += br;
-                html += "<b>RESET OPERATION LIST</b> on the main form.";
+                if (voc.getLanguage().equals("EN")) {
+                    html += "See Menu->Help->Login Procedure in details";
+                    html += br + br;
+                    html += "Necessary to login with old username+password";
+                    html += " and press";
+                    html += br;
+                    html += "<b>RESET OPERATION LIST</b> on the main form.";
+                } else {
+                    html += "Lihat Menu –> Bantuan –> Prosedur Daftar Masuk";
+                    html += br + br;
+                    html += "Anda perlu mendaftar masuk dengan menggunakan ID Pengguna dan kata laluan asal dan tekan “<b>Set semula Senarai Operasi</b>”";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help22, false);
@@ -250,10 +274,15 @@ public class HelpItemActivity extends AppCompatActivity {
 
                 ////////////////////////////////////////////////////////////////////////////
                 html  = html_start;
-                html += "If during the job you make a long pause, the server could stop the session.";
-                html += br;
-                html += "It leads to a breakdown of communication and the application  returns to the login form. Then you need to login again.";
-
+                if (voc.getLanguage().equals("EN")) {
+                    html += "If during the job you make a long pause, the server could stop the session.";
+                    html += br;
+                    html += "It leads to a breakdown of communication and the application  returns to the login form. Then you need to login again.";
+                } else {
+                    html += "Sekiranya anda membiarkan sesi terlalu lama tanpa sebarang tindakan, server akan bertindak menghentikan sesi tersebut.";
+                    html += br;
+                    html += "Ia boleh menyebabkan hubungan terputus dan aplikasi ini akan kembali ke kotak daftar masuk di permulaan. Anda perlu mendaftar masuk semula untuk meneruskan sesi anda";
+                }
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, 0, false);
@@ -352,7 +381,11 @@ public class HelpItemActivity extends AppCompatActivity {
                 ////////////////////////////////////////////////////////////////////////////
 
                 html = html_start;
-                html += "To change a background color of the <b>Dalog Box</b> select the fourth item.";
+                if (voc.getLanguage().equals("EN"))
+                    html += "To change a background color of the <b>Dalog Box</b> select the fourth item.";
+                else
+                    html += "To change a background color of the <b>Dalog Box</b> select the fourth item.";
+
                 html += html_end;
 
 //                fillItem(images, inflater, l_layout, html, R.drawable.help19, false);
