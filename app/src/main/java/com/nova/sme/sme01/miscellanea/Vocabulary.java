@@ -136,6 +136,7 @@ public class Vocabulary implements Serializable {
         {"Date ascending",                                      "Tarikh menaik"},
         {"Sort by:",                                            "Susun mengikut:"},
         {"Help Topics",                                         "Topik Bantuan"},
+        {"Cash",                                                "Tunai"},
 
 //TranslateAll
     };

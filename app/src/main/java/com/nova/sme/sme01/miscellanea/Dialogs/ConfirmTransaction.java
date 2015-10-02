@@ -17,6 +17,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -72,6 +73,7 @@ public class ConfirmTransaction {
 
     private RelativeLayout dialog_layout;
     private Dialog         dialog;
+    private boolean        cash;
 
 
     public ConfirmTransaction(Activity activity,
@@ -83,6 +85,7 @@ public class ConfirmTransaction {
                               String         s_date,
                               String         s_descr,
                               String         s_sum,
+                              boolean        cash,
                               Button         logout_button,
                               String         photoPath) {
 
@@ -97,6 +100,7 @@ public class ConfirmTransaction {
         this.amount        = s_sum;
         this.logout_button = logout_button;
         this.photoPath     = photoPath;
+        this.cash          = cash;
 
     }
     void send_request() {
@@ -119,6 +123,7 @@ public class ConfirmTransaction {
 
         TextView text = (TextView) dialog.findViewById(R.id.date_transaction_id);
         text.setText(this.date);
+
 
         //----------------
         text             = (TextView) dialog.findViewById(R.id.amount_transaction_id);
@@ -166,6 +171,13 @@ public class ConfirmTransaction {
             dialog.dismiss();
              }
         });
+
+        CheckBox cb = (CheckBox) dialog.findViewById(R.id.cashId);
+
+        if (cb != null) {
+            cb.setChecked(cash);
+            voc.change_caption(cb);
+        }
 
         // set theme
         Vector<Button> btns = new Vector<Button>();

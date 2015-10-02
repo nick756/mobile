@@ -88,6 +88,16 @@
             android:layout_marginLeft="14dp"
             android:textColor="@android:color/black" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cash"
+        android:id="@+id/cashId"
+        android:layout_below="@+id/before_description"
+        android:padding="5dp"
+        android:layout_marginLeft="14dp"
+        android:textStyle="bold" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,7 +107,7 @@
         android:layout_margin="5dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:layout_below="@+id/before_description" />
+        android:layout_below="@+id/cashId" />
 
 
     <Button

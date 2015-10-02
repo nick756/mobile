@@ -15,6 +15,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -465,6 +466,20 @@ public class TransactionActivity extends AppCompatActivity  {
 
         http += "&operationDescription='" + descr +"'";
 
+        boolean cash = false;
+        CheckBox is_cash = (CheckBox) findViewById(R.id.cash_cb);
+        if (is_cash != null) {
+            if (is_cash.isChecked()) {
+                http += "&cash=true";
+                cash  = true;
+            } else {
+                http += "&cash=false";
+                cash  = false;
+            }
+        } else {
+            cash  = false;
+            http += "&cash=false";
+        }//http://103.6.239.242:80/sme/mobile/addtransaction/?id=4&companyID=2&date=03/10/2015&operationCode=3&operationDescription='test'&cash=true
 
         //-----------//
         edit = (EditText)findViewById(R.id.sum_id);
@@ -499,6 +514,7 @@ public class TransactionActivity extends AppCompatActivity  {
                                                        s_date,
                                                        descr,
                                                        s_amount,
+                                                       cash,
                                                        logout_button, photo_attached ? photoPath:"");
         ct.show();
     }

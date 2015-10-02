@@ -823,7 +823,6 @@ public class HelpItemActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params;
         ImageView              img;
 
-
         for (int i = 0; i < images.size(); i ++) {
             img           = images.get(i);
             params        = img.getLayoutParams();
