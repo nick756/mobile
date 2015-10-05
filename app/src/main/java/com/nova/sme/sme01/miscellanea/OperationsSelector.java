@@ -60,7 +60,7 @@ public class OperationsSelector implements Serializable {
         return checkedOperationsFullName.contains(value);
     }//OUT:Bank Charges
      //OUT: Bank Charges  OUT: Bank Charges
-     //IN:Capital Injection
+     //IN: Capital Injection
     public void initChecked() {
         checkedOperations.clear();
         checkedOperationsFullName.clear();

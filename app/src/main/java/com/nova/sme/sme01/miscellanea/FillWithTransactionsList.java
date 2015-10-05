@@ -158,10 +158,12 @@ public class FillWithTransactionsList {
                             li.icon_type = setTypeIcon(inner_layout, R.mipmap.ic_in_bound);
                             type      = type.substring(3);
                             ci.in_out = R.mipmap.ic_in_bound;
-                        } else {
+                        } else if (type.indexOf("OUT:") == 0) {
                             li.icon_type = setTypeIcon(inner_layout, R.mipmap.ic_out_bound);
                             type      = type.substring(4);
                             ci.in_out = R.mipmap.ic_out_bound;
+                        } else {
+                            type = type;
                         }
                         type = type.trim();
                         text.setText(type);

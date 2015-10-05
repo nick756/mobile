@@ -27,7 +27,26 @@ public class Records implements Serializable {
 
     @ElementList(required = false, inline=true, name="record")
     private List<Record> list;
-    public  List<Record> getRecordsList(){return this.list;}
+    public  List<Record> getRecordsList(){renameInOut(); return this.list;}
 
     public Records(){}
+
+    private void renameInOut() {
+        Record record;
+        String operationType;
+        for (int j = 0; j < this.list.size(); j ++) {
+            record        = list.get(j);
+            operationType = record.getType();
+
+            if (operationType.indexOf("KELUAR") == 0) { //OUT
+                operationType = operationType.replace("KELUAR", "OUT");
+                record.setType(operationType);
+                list.set(j, record);
+            } else if (operationType.indexOf("MASUK") == 0) {//IN
+                operationType = operationType.replace("MASUK", "IN");
+                record.setType(operationType);
+                list.set(j, record);
+            }
+        }
+    }
 }

@@ -176,6 +176,7 @@ public class ConfirmTransaction {
 
         if (cb != null) {
             cb.setChecked(cash);
+            cb.setEnabled(false);
             voc.change_caption(cb);
         }
 

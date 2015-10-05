@@ -56,4 +56,5 @@ public class ListTransactions implements Serializable {
     public List<Record> getRecordsList() {return records.getRecordsList(); }
 
     public ListTransactions(){}
+
 }
