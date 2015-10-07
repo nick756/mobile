@@ -90,7 +90,7 @@ public class FillWithTransactionsList {
 
             ViewGroup.MarginLayoutParams params;
             transactionsNumber = 0;
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {// todo
                 if (!operationSelector.isCheckedFullName(list.get(i).getType()))
                     continue;
 
@@ -156,14 +156,12 @@ public class FillWithTransactionsList {
 
                         if (type.indexOf("IN:") == 0) {
                             li.icon_type = setTypeIcon(inner_layout, R.mipmap.ic_in_bound);
-                            type      = type.substring(3);
-                            ci.in_out = R.mipmap.ic_in_bound;
+                            type         = type.substring(3);
+                            ci.in_out    = R.mipmap.ic_in_bound;
                         } else if (type.indexOf("OUT:") == 0) {
                             li.icon_type = setTypeIcon(inner_layout, R.mipmap.ic_out_bound);
-                            type      = type.substring(4);
-                            ci.in_out = R.mipmap.ic_out_bound;
-                        } else {
-                            type = type;
+                            type         = type.substring(4);
+                            ci.in_out    = R.mipmap.ic_out_bound;
                         }
                         type = type.trim();
                         text.setText(type);

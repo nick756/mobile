@@ -542,9 +542,9 @@ public class MyHttpRequest {
 
             return;
         } catch(RestClientException e) {
-
+            println(e.toString());
         } catch(Exception e) {
-
+            println(e.toString());
         }
         goStartPage();
     }

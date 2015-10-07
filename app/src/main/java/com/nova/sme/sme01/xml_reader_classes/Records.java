@@ -32,6 +32,9 @@ public class Records implements Serializable {
     public Records(){}
 
     private void renameInOut() {
+        if (this.list == null)
+            return;
+
         Record record;
         String operationType;
         for (int j = 0; j < this.list.size(); j ++) {
