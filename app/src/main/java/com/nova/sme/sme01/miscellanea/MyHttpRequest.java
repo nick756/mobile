@@ -484,17 +484,7 @@ public class MyHttpRequest {
                     for (int j = 0; j < list.size(); j ++) {
                         record        = list.get(j);
                         operationType = record.getType();
-/*
-                        if (operationType.indexOf("KELUAR") == 0) { //OUT
-                            operationType = operationType.replace("KELUAR", "OUT");
-                            record.setType(operationType);
-                            list.set(j, record);
-                        } else if (operationType.indexOf("MASUK") == 0) {//IN
-                            operationType = operationType.replace("MASUK", "IN");
-                            record.setType(operationType);
-                            list.set(j, record);
-                        }
-*/
+
                         if (operationSelector.isCheckedFullName(operationType)) {
                             empty = false;
                             break;
