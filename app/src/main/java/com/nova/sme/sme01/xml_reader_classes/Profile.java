@@ -28,9 +28,31 @@ public class Profile implements Serializable {
 
     @ElementList(required = false, inline=true, name="operation")
     private List<Operation> list;
-    public  List<Operation> getOperationsList(){return this.list;}
+    public  List<Operation> getOperationsList(){renameInOut();return this.list;}
 
     Profile(){}
+
+    private void renameInOut() {
+        if (this.list == null)
+            return;
+
+        Operation operation;
+        String operationType;
+        for (int j = 0; j < this.list.size(); j ++) {
+            operation     = list.get(j);
+            operationType = operation.getName();
+
+            if (operationType.indexOf("KELUAR:") == 0) { //OUT
+                operationType = operationType.replace("KELUAR:", "");//"OUT");
+                operation.setName(operationType);
+                list.set(j, operation);
+            } else if (operationType.indexOf("MASUK:") == 0) {//IN
+                operationType = operationType.replace("MASUK:", "");//"IN");
+                operation.setName(operationType);
+                list.set(j, operation);
+            }
+        }
+    }
 
     public void sort() {
         if (this.list != null)
@@ -44,5 +66,6 @@ public class Profile implements Serializable {
             return o1.getName().compareTo(o2.getName());
         }
     }
+
 
 }

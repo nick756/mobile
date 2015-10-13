@@ -382,6 +382,7 @@ public class RegularLoginActivity extends AppCompatActivity {
             }
                 break;
             case R.id.synch_oper_list:
+                FM.deleteFile("OperationsSelector.bin"); //###
                 this.operaions_list = null;
                 fill_operation_list();
 
