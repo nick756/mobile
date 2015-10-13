@@ -44,11 +44,11 @@ public class Profile implements Serializable {
 
             if (operationType.indexOf("KELUAR:") == 0) { //OUT
                 operationType = operationType.replace("KELUAR:", "");//"OUT");
-                operation.setName(operationType);
+                operation.setName(operationType.trim());
                 list.set(j, operation);
             } else if (operationType.indexOf("MASUK:") == 0) {//IN
                 operationType = operationType.replace("MASUK:", "");//"IN");
-                operation.setName(operationType);
+                operation.setName(operationType.trim());
                 list.set(j, operation);
             }
         }
