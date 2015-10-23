@@ -26,6 +26,7 @@ import com.nova.sme.sme01.miscellanea.ApplicationAttributes;
 import com.nova.sme.sme01.miscellanea.Dialogs.ColorsDialog;
 import com.nova.sme.sme01.miscellanea.CustomBar;
 import com.nova.sme.sme01.miscellanea.Dialogs.GetFilterViewTransactions;
+import com.nova.sme.sme01.miscellanea.Dialogs.GifDialog;
 import com.nova.sme.sme01.miscellanea.FileManager;
 import com.nova.sme.sme01.miscellanea.FillWithOperationsList;
 import com.nova.sme.sme01.miscellanea.Dialogs.HttpDialog;
@@ -266,7 +267,7 @@ public class RegularLoginActivity extends AppCompatActivity {
         fill_operation_list();
 
         updateURL();
-        new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations");
+        new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations", new GifDialog(base_layout));
     }
 
     private void fill_operation_list() { // if empty - we hide some buttons

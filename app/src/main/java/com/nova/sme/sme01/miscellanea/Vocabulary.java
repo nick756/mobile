@@ -137,6 +137,7 @@ public class Vocabulary implements Serializable {
         {"Sort by:",                                            "Susun mengikut:"},
         {"Help Topics",                                         "Topik Bantuan"},
         {"Cash",                                                "Tunai"},
+        {"Exit",                                                "Keluar"},
 
 //TranslateAll
     };

@@ -82,4 +82,36 @@ public class CustomBar {
             println(err.getMessage().toString());
         }
     }
+    public CustomBar(AppCompatActivity activity, RelativeLayout base_layout, String caption) {
+
+        try {
+            this.base_layout = base_layout;
+
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.getBaseContext().LAYOUT_INFLATER_SERVICE);
+            layout                  = (RelativeLayout) inflater.inflate(R.layout.custom_title_bar, null);
+            layout.setPadding(0, 10, 0, 10);
+
+            actionBar = activity.getSupportActionBar();
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+
+
+            actionBar.setCustomView(layout);
+
+            float button_factor = 0.25f;
+            int width = base_layout.getWidth();
+            float height;
+            float h_margin;
+            button = (Button) activity.findViewById(R.id.logout_button);
+
+            button.setText(caption);
+//            if (button != null)
+//                button.setWidth((int) ((float) width * button_factor));
+
+            setBackgound();
+        } catch(Exception err) {
+            println(err.getMessage().toString());
+        }
+    }
+
 }

@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     public Vector<View> getViews() {return  views;}
 
     private Button create_custom_bar() {
-        ccb = new CustomBar(this, base_layout);
+        ccb = new CustomBar(this, base_layout, "Exit");
 
         Button button = ccb.getButton();
         if (button != null)

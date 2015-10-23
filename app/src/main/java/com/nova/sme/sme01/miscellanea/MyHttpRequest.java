@@ -237,7 +237,7 @@ public class MyHttpRequest {
         @Override
         protected String doInBackground(Void... params) {
             String error;
-
+//http://103.6.239.242:80/sme/mobile/addtransaction/?id=4&companyID=2&date=23/10/2015&operationCode=1&operationDescription='tesy'&cash=false&operationAmount=22.00
 //            ListTransactions xml_List_transactions;
             URI uri;
             try {
@@ -343,6 +343,10 @@ public class MyHttpRequest {
  //       MyDialog my_dialog = new MyDialog(null, voc, base_layout);
         my_dialog.show(voc.getTranslatedString("Unknown error"), R.mipmap.ic_failture);
         main_activity.reset_block_login_button();
+
+        if (gif_doalog != null)
+            gif_doalog.dismiss();
+
     }
 
 
@@ -361,10 +365,10 @@ public class MyHttpRequest {
         AddTransaction xml_transaction;
         String         code;
 
-        if (gif_doalog != null) {
-            gif_doalog.dismiss();
+//       if (gif_doalog != null)
+//            gif_doalog.dismiss();
 //            Toast.makeText(base_layout.getContext(), "Image has been sent", Toast.LENGTH_LONG).show();
-        }
+
 
         try {
             xml_transaction = serializer.read(AddTransaction.class, xml);
@@ -387,6 +391,9 @@ public class MyHttpRequest {
 
         } catch(Exception e) {
 
+        } finally {
+            if (gif_doalog != null)
+                gif_doalog.dismiss();
         }
         goStartPage();
     }
@@ -426,6 +433,7 @@ public class MyHttpRequest {
                 xml_operations_list.sort();
                 RegularLoginActivity rla = (RegularLoginActivity) activity;
                 rla.passFunction(xml_operations_list);
+
                 return;
             } else  {// Expired Session or any error
 /*
@@ -439,7 +447,11 @@ public class MyHttpRequest {
 
         } catch(Exception e) {
 
+        } finally {
+            if (gif_doalog != null)
+                gif_doalog.dismiss();
         }
+
         goStartPage();
     }
 
@@ -513,9 +525,9 @@ public class MyHttpRequest {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(MainActivity.MAIN_INFO, c_c);
 
-                if (gif_doalog != null) {
-                    gif_doalog.dismiss();
-                }
+//                if (gif_doalog != null)
+//                    gif_doalog.dismiss();
+
 
                 activity.startActivity(intent);
 
@@ -535,6 +547,9 @@ public class MyHttpRequest {
             println(e.toString());
         } catch(Exception e) {
             println(e.toString());
+        } finally {
+            if (gif_doalog != null)
+                gif_doalog.dismiss();
         }
         goStartPage();
     }
@@ -544,6 +559,9 @@ public class MyHttpRequest {
     }
 
     private void goStartPage() {
+//        if (gif_doalog != null)
+//            gif_doalog.dismiss();
+
         Intent intent = new Intent(activity, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
         activity.startActivity(intent);
