@@ -250,6 +250,11 @@ public class RegularLoginActivity extends AppCompatActivity {
 
         url_request_transactions  = base_http + "listtransactions/?";
         url_request_transactions += "id=" + params.getId();
+
+        if (voc.getLanguage().equals("EN"))
+            url_request_transactions += "&language=en";
+        else
+            url_request_transactions += "&language=ms";
     }
 
     private void hide_buttons() {
@@ -263,11 +268,19 @@ public class RegularLoginActivity extends AppCompatActivity {
         }
 
         FM.deleteFile("OperationsSelector.bin"); //###
-        this.operaions_list = null;
-        fill_operation_list();
+        //operations_list
+        // do we have operation list?
+        if (this.operaions_list == null){
+            updateURL();
+            new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations", new GifDialog(base_layout));
+        } else {
+            passFunction(this.operaions_list);
+        }
+//        this.operaions_list = null;
+//        fill_operation_list();
 
-        updateURL();
-        new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations", new GifDialog(base_layout));
+//        updateURL();
+//        new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations", new GifDialog(base_layout));
     }
 
     private void fill_operation_list() { // if empty - we hide some buttons

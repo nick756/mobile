@@ -128,6 +128,14 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
         voc       = new Vocabulary();
         FM        = new FileManager(this);
+
+
+        // ADDED 23.10.2015
+        FM.deleteFile(this.params_file_name);
+        FM.deleteFile(this.operations_list_name);
+        FM.deleteFile("OperationsSelector.bin");
+        // ADDED 23.10.2015
+
         params    = (Parameters) FM.readFromFile(params_file_name);
         if (params == null)
             params = new Parameters();
