@@ -132,6 +132,12 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         if (params == null)
             params = new Parameters();
 
+          //ADDED 23.10.2015
+         ApplicationAttributes aa = (ApplicationAttributes) FM.readFromFile("attributes.bin");
+         if (aa != null)
+             params.setLangauge(aa.getLanguage());
+
+
         voc.setLanguage(params.getLanguage());
 
         WindowMetrics wm = new WindowMetrics();wm.init(this);
@@ -470,5 +476,4 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             System.out.println(err.getMessage());
         }
     }
-
 }

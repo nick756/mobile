@@ -131,6 +131,15 @@ public class Select_Language {
     private void  writeParameters() {
         this.params.setLangauge(voc.getLanguage());
         FM.writeToFile(params_file_name, this.params);
+
+
+        //ADDED 23.10.2015
+        ApplicationAttributes aa = (ApplicationAttributes) FM.readFromFile("attributes.bin");
+        if (aa == null)
+            aa = new ApplicationAttributes(base_layout.getContext());
+
+        aa.setLanguage(voc.getLanguage());
+        FM.writeToFile("attributes.bin", aa);
     }
 
 

@@ -42,6 +42,7 @@ public class ApplicationAttributes implements Serializable {
     private Vector<Integer> button_background_ids = new Vector<Integer>();
 
     private String          base_url              = "http://" + "103.6.239.242:80/sme/mobile/";
+    private String          language = "EN";
 
     public int    getSelectedButton()              {return selected_button;}
     public void   setSelectedButton(int selected) {selected_button = selected;}
@@ -50,6 +51,8 @@ public class ApplicationAttributes implements Serializable {
     public void   setBaseUrl(String url) {
         base_url = "http://" + url;
     }
+    public String getLanguage()                {return language;}
+    public void   setLanguage(String language) {this.language = language;}
 
     public ApplicationAttributes(Context ctx) {
         fillButtonsBackgroundIds(ctx);
