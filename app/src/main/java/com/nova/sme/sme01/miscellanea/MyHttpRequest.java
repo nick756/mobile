@@ -326,7 +326,7 @@ public class MyHttpRequest {
 
     private void implementXmlLogin(String xml, Serializer serializer) {
         XML_Login xml_login;
-        MainActivity main_activity = (MainActivity) activity;
+        MainActivity main_activity = (MainActivity) activity;// problem: is debug stop and press unlogin
 
         if (xml != null && serializer != null) {
             try {

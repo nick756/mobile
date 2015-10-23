@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -309,9 +310,18 @@ public class RegularLoginActivity extends AppCompatActivity {
     private void MenuCaptions(Menu menu) {
         MenuItem item;
         Menu     inner_menu;
+        int      id;
 
         for (int i = 0; i < menu.size(); i ++) {
             item = menu.getItem(i);
+
+            // ADDED 23.10.2015
+            id = item.getItemId();
+            if ((id == R.id.action_language) || (id == R.id.action_url_address)) {
+                item.setVisible(false);
+                continue;
+            }
+
             voc.change_caption(item);
 
             inner_menu = item.getSubMenu();

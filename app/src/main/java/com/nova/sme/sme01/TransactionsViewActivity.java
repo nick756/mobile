@@ -299,9 +299,18 @@ public class TransactionsViewActivity extends AppCompatActivity {
     private void MenuCaptions(Menu menu) {
         MenuItem item;
         Menu     inner_menu;
+        int      id;
 
         for (int i = 0; i < menu.size(); i ++) {
             item = menu.getItem(i);
+
+            // ADDED 23.10.2015
+            id = item.getItemId();
+            if ((id == R.id.action_language) || (id == R.id.action_url_address)) {
+                item.setVisible(false);
+                continue;
+            }
+
             voc.change_caption(item);
 
             inner_menu = item.getSubMenu();
