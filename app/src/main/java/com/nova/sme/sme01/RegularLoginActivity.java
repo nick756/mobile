@@ -188,12 +188,12 @@ public class RegularLoginActivity extends AppCompatActivity {
 
                 FR.resizeRegularLogins(base_layout, bt_vector, logout_button, 0.062f);// height's button/total_height
 
-                fill_operation_list();
- //               FR.resizeOperationListTemplate(R.id.reg_op_list_scrollView, 0.062f);
+ //               fill_operation_list();
 
                 my_dialog = new MyDialog(FR, voc, base_layout);
 
                 setAttributes();
+                hide_buttons();
             }
         });
 
@@ -251,17 +251,35 @@ public class RegularLoginActivity extends AppCompatActivity {
         url_request_transactions += "id=" + params.getId();
     }
 
+    private void hide_buttons() {
+        Button button;
+        for (int i = 0; i < bt_vector.size(); i ++) {
+            button = bt_vector.get(i);
+            if (button.getId() != R.id.synch_oper_list)
+                button.setVisibility(View.GONE);
+            if (button.getId() != R.id.reset_oper_list)
+                button.setVisibility(View.GONE);
+        }
+
+        FM.deleteFile("OperationsSelector.bin"); //###
+        this.operaions_list = null;
+        fill_operation_list();
+
+        updateURL();
+        new MyHttpRequest(this.FR,  this, base_layout, voc, url_request_operations, "ListOperations");
+    }
 
     private void fill_operation_list() { // if empty - we hide some buttons
         fwol =  new FillWithOperationsList(this, this.operaions_list, R.id.reg_op_list_scrollView, voc, base_layout);
         if (!fwol.implement()) {
             // hide some buttons
+/*
             Button button;
             for (int i = 0; i < bt_vector.size(); i ++) {
                 button = bt_vector.get(i);
                 if (button.getId() != R.id.synch_oper_list)
                     button.setVisibility(View.GONE);
-            }
+            }*/
         } else {
             ApplicationAttributes attr = (ApplicationAttributes)FM.readFromFile("attributes.bin");
             if (attr != null) {
@@ -412,8 +430,13 @@ public class RegularLoginActivity extends AppCompatActivity {
     }
     public void passFunction(ListOperations xml_operation_list) {
         if (lock_list(xml_operation_list)) {
-            for (int i = 0; i < bt_vector.size(); i ++)
-                bt_vector.get(i).setVisibility(View.VISIBLE);
+            // CHANGED 23.10.2015
+            for (int i = 0; i < bt_vector.size(); i ++) {
+                if (bt_vector.get(i).getId() == R.id.perform_transaction)
+                    bt_vector.get(i).setVisibility(View.VISIBLE);
+                if (bt_vector.get(i).getId() == R.id.view_transactions)
+                    bt_vector.get(i).setVisibility(View.VISIBLE);
+            }
             this.operaions_list = xml_operation_list;
             fill_operation_list();
         }
@@ -443,6 +466,5 @@ public class RegularLoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         // forbid returning to the first page
     }
-
 
 }

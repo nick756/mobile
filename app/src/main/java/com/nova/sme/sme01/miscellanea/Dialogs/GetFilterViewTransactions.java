@@ -138,8 +138,6 @@ public class GetFilterViewTransactions {
             }
         });
 
-
-
         CheckBox cb = (CheckBox) dialog.findViewById(R.id.seletcAllCB);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 

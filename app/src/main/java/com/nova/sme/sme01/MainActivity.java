@@ -260,6 +260,12 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         if (user.length() > 0 && pswd.length() > 0) {
             this.login_request = this.base_url_login + "name=" + user + "&passw=" + pswd;
 
+            // ADDED 23.10.2015
+            if (voc.getLanguage().equals("EN"))
+                this.login_request += "&language=en";
+            else
+                this.login_request += "&language=ms";
+
             block_login_button = true;
             password.setText("");
             user_name.setText("");
@@ -438,6 +444,13 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     protected void onStop() {
         params.setLangauge(voc.getLanguage());
         setAutoOrientationEnabled(autorotation);
+
+        // ADDED 23.10.2015
+        FM.deleteFile(this.params_file_name);
+        FM.deleteFile(this.operations_list_name);
+        FM.deleteFile("OperationsSelector.bin");
+
+
         super.onStop();
     }
     void writeParameters(XML_Login xml_login) {

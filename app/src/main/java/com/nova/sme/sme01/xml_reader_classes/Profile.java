@@ -57,7 +57,7 @@ public class Profile implements Serializable {
     public void sort() {
         if (this.list != null)
             if (this.list.size() > 1)
-                Collections.sort(this.list, new CustomComparator());
+                Collections.sort(this.list, new CompareByInBoundAndType());// CustomComparator());
     }
 
     private class CustomComparator implements Comparator<Operation> {
@@ -67,5 +67,32 @@ public class Profile implements Serializable {
         }
     }
 
+    private class CompareByInBoundAndType implements Comparator<Operation> {
+        @Override
+        public int compare(Operation o1, Operation o2) {
+            int in_compare = o2.getInbound().compareTo(o1.getInbound());
+            if (in_compare != 0) {
+                return in_compare;
+            } else {
+                return o1.getType().compareTo(o2.getType());
+            }
+        }
+    }
 
+    //getInbound()
+    //getType
+    /*
+public class PersonComparator implements Comparator<? extends Person> {
+
+  public int compare(Person p1, Person p2) {
+     int nameCompare = p1.name.compareToIgnoreCase(p2.name);
+     if (nameCompare != 0) {
+        return nameCompare;
+     } else {
+       return Integer.valueOf(p1.age).compareTo(Integer.valueOf(p2.age));
+     }
+  }
+}
+
+     */
 }

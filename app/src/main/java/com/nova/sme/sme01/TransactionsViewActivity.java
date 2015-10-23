@@ -175,7 +175,7 @@ public class TransactionsViewActivity extends AppCompatActivity {
 
                     scrollView.post(new Runnable() {
                         public void run() {
-                            scrollView.smoothScrollTo(0, 0);
+                        scrollView.smoothScrollTo(0, 0);
                         }
                     });
                 }

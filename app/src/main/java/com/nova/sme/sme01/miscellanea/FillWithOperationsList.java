@@ -179,7 +179,6 @@ public class FillWithOperationsList {
                         } else if (tag.equals("type")) {//type
                             text = (TextView) view;
                             text.setText(operation.getType().trim());
-
                             length = text.getText().toString().length();
                             if (length > maxType.length() && length <= maxLength)
                                 maxType = text.getText().toString();
