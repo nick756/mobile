@@ -458,9 +458,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         setAutoOrientationEnabled(autorotation);
 
         // ADDED 23.10.2015
-        FM.deleteFile(this.params_file_name);
-        FM.deleteFile(this.operations_list_name);
-        FM.deleteFile("OperationsSelector.bin");
+//        FM.deleteFile(this.params_file_name);
+//        FM.deleteFile(this.operations_list_name);
+//        FM.deleteFile("OperationsSelector.bin");
 
 
         super.onStop();

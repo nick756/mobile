@@ -431,6 +431,9 @@ public class MyHttpRequest {
                     return;
                 }
                 xml_operations_list.sort();
+
+ //               FM.writeToFile("operations_list.bin", xml_operations_list);
+
                 RegularLoginActivity rla = (RegularLoginActivity) activity;
                 rla.passFunction(xml_operations_list);
 
