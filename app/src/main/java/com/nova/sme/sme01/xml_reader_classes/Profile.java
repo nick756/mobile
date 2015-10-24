@@ -50,6 +50,14 @@ public class Profile implements Serializable {
                 operationType = operationType.replace("MASUK:", "");//"IN");
                 operation.setName(operationType.trim());
                 list.set(j, operation);
+            } else if (operationType.indexOf("OUT:") == 0) { //OUT
+                operationType = operationType.replace("OUT:", "");//"OUT");
+                operation.setName(operationType.trim());
+                list.set(j, operation);
+            } else if (operationType.indexOf("IN:") == 0) {//IN
+                operationType = operationType.replace("IN:", "");//"IN");
+                operation.setName(operationType.trim());
+                list.set(j, operation);
             }
         }
     }

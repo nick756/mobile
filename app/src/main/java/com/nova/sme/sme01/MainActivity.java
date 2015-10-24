@@ -114,8 +114,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
          // to hide keyboard, that appeares without our permiossion as default
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-
-
         cap_text    = (TextView)findViewById(R.id.cap_text);cap_text.setTag("text_background_color");
         base_layout = (android.widget.RelativeLayout) findViewById(R.id.base_layout);base_layout.setTag("main_background_color");
 

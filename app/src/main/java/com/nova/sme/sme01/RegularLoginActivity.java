@@ -245,6 +245,11 @@ public class RegularLoginActivity extends AppCompatActivity {
         url_request_operations    = base_http + "getoperations/?";
         url_request_operations   += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
 
+        if (voc.getLanguage().equals("EN"))
+            url_request_operations += "&language=en";
+        else
+            url_request_operations += "&language=ms";
+
         url_logout                = base_http + "logout/?";
         url_logout               += "id=" + params.getId() + "&companyID=" + params.getcompanyID();
 
